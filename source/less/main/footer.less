@@ -1,0 +1,101 @@
+.footer {
+  background-color: #353535;
+  border-top: 5px solid @red;
+
+  &-inner {
+    padding: 51px 0 20px;
+    color: #FFFFFF;
+  }
+
+  &-col {
+    float: left;
+    height: 159px;
+    border-right: 1px solid #575757;
+    margin-left: 21px;
+
+    &:first-child {
+      margin-left: 21px + @stupidMargin;
+    }
+
+    &:last-child {
+      border: 0;
+    }
+
+    &__holder {
+      ._clearfix();
+    }
+  }
+
+  &-header {
+    display: block;
+    font: 14px/17px @font-lb;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    letter-spacing: 0.05em;
+  }
+
+  .add-menu {
+    width: 203px;
+    padding-right: 30px;
+
+    li {
+      margin-bottom: 9px;
+
+      a {
+        color: #FFFFFF;
+        text-decoration: none;
+        letter-spacing: 0.05em;
+      }
+    }
+  }
+
+  .social-menu {
+    ._di();
+    width: 217px;
+    padding-right: 20px;
+    margin-top: 34px;
+    
+    li {
+      width: 32px;
+      height: 32px;
+      background-color: #FFFFFF;
+      margin-right: 14px;
+    }
+
+    a {
+      display: block;
+      text-align: center;
+      color: #353535;
+      text-decoration: none;
+      font-size: 16px;
+      line-height: 32px;
+    }
+
+    .icon{
+
+      &-fb {
+
+      }
+
+      &-tw {
+
+      }
+
+      &-ins {
+
+      }
+
+      &-vk {
+        font-size: 22px;
+        line-height: 30px;
+      }
+    }
+  }
+
+  .copyright {
+    text-align: center;
+    margin-top: 25px;
+    line-height: 23px;
+    letter-spacing: 0.05em;
+  }
+}
