@@ -368,7 +368,6 @@ $(document).ready(function() {
             }
         ];
         sliderConstructor(allSliders);
-
         $('.select_size').CustomSelect({visRows:4});
         $('.pitem-specs__spoilers .folding').folding({openHeight: 163});
     });
