@@ -33,7 +33,6 @@
 
         .list {
           margin: 0px 0 0 14px;
-          width: 185px;
 
           li {
             margin-bottom:  10px;
@@ -134,6 +133,28 @@
                 ._transform(rotate(-90deg));
               }
             }
+          }
+        }
+
+        .nano-content {
+          position: absolute;
+          top: 0;
+          left: 0;
+          overflow: scroll;
+          overflow-x: hidden;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: -17px;
+        }
+
+        .nano-scroll {
+          max-height: 190px;
+          overflow: hidden;
+          position: relative;
+
+          ul {
+            padding-right: 30px;
           }
         }
       }

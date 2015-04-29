@@ -43,6 +43,10 @@
       letter-spacing: 0.05em;
       min-width: 188px;
     }
+
+    .basket-items__body {
+      padding: 17px 11px 12px;
+    }
   }
 
   &-items {
@@ -70,9 +74,7 @@
       }
     }
 
-    &__body {
-      padding: 17px 11px 12px;
-    }
+
 
     &__list {
     }
@@ -115,14 +117,12 @@
     margin-bottom: 17px;
     border-bottom: 1px solid #e5e5e5;
 
-    & > * {
+    &__holder > * {
       display: table-cell;
       vertical-align: middle;
     }
 
     &__img {
-
-
       overflow: hidden;
 
       img {
@@ -180,5 +180,209 @@
       color: @red;
       font-size: 18px;
     }
+  }
+
+  //order
+  &_order {
+
+    .basket-item {
+      padding: 12px 0;
+      margin-bottom: 0;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &:nth-child(2n) {
+        background-color: #fcfcfc;
+      }
+
+
+      &__holder {
+        display: table;
+        width: 100%;
+      }
+
+      &s__header {
+
+        .basket-item {
+          display: table;
+          width: 100%;
+          padding: 0;
+
+          * {
+            color: #888888;
+            font: 12px/34px @font-lr;
+            text-transform: uppercase;
+            font-style: normal;
+            letter-spacing: 0.05em;
+          }
+        }
+
+      }
+
+      &__holder {
+        .wrap();
+      }
+
+      &__img {
+        width: 108px;
+        padding-left: 9px;
+
+        img {
+          width: 108px;
+          height: 108px;
+          border: none;
+        }
+      }
+
+      &__name {
+        width: 439px;
+        padding-left: 18px;
+        padding-right: 10px;
+        font: normal 12px/15.4px @font-lr;
+        color: #444444;
+        text-transform: uppercase;
+
+        .article {
+          display: block;
+          color: #888888;
+          font: 12px/1 @font-li;
+          text-transform: none;
+          margin-top: 5px;
+        }
+      }
+
+      &__size {
+        width: 110px;
+        text-align: center;
+      }
+
+      &__counter {
+        width: 111px;
+        text-align: center;
+      }
+
+      &__price {
+        color: #444444;
+        width: 111px;
+        text-align: center;
+      }
+
+      &__service {
+        width: 103px;
+        text-align: center;
+      }
+
+      &__delete {
+        display: inline-block;
+      }
+    }
+
+    .b-custom-select {
+      padding: 0 10px;
+      border: 1px solid #000000;
+      background-color: #ffffff;
+
+      &_expanded {
+        background-color: #888888;
+        border-color: #888888;
+      }
+    }
+
+    .basket {
+
+      &__bottom {
+        margin-top: 4px;
+        background-color: #f8f7f8;
+        ._clearfix();
+        height: 72px;
+      }
+
+      &-promocode {
+        float: left;
+        padding: 13px 0 0 6px;
+      }
+
+      &__total {
+        float: right;
+        font-size: 14px;
+        padding: 0px 70px 0 0;
+        /*width: 173px;*/
+        text-align: right;
+        
+        &:before {
+          content: "";
+          display: inline-block;
+          vertical-align: middle;
+          height: 72px;
+          width: 1px;
+        }
+
+        .cell {
+          display: inline-block;
+          vertical-align: middle;
+        }
+
+        .lbl {
+          display: inline;
+        }
+
+        .summ {
+          font-size: 14px;
+          display: inline;
+        }
+
+        .total {
+
+          &__sale {
+            margin-top: 8px;
+          }
+        }
+      }
+
+      &__buttons {
+        width: 589px;
+        margin: 21px auto 0;
+        ._clearfix();
+
+        .btn_back {
+          float: left;
+        }
+
+        .btn_order {
+          float: right;
+        }
+      }
+    }
+  }
+
+  &-promocode {
+
+    &__form {
+      margin-bottom: 3px;
+      
+      .inputtext {
+        width: 288px;
+      }
+
+      .btn-submit {
+        display: inline-block;
+        margin-left: 3px;
+        vertical-align: middle;
+        .sprite(@bar-code);
+        .transition(opacity);
+
+        &:hover {
+          opacity: .7;
+        }
+      }
+    }
+
+    &__hint {
+      color: #444444;
+      line-height: 16px;
+    }
+
   }
 }

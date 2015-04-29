@@ -368,7 +368,32 @@ $(document).ready(function() {
             }
         ];
         sliderConstructor(allSliders);
-        $('.select_size').CustomSelect({visRows:4});
+        $('.select_size, .select_size-order ').CustomSelect({visRows:4});
+        $('.select_delivery select').CustomSelect({visRows:5, modifier: 'delivery'});
         $('.pitem-specs__spoilers .folding').folding({openHeight: 163});
+        $('.left .folding').folding({openHeight: 200});
+        $('.content-text__side .folding').folding({openHeight: 500});
+
+        $('.tooltip').tooltip({
+            position: {
+                my: "left+20 top+10",
+                at: "left bottom"
+            }
+        });
+
+        $('.magazine-info__shipment').click(function(e){
+            e.preventDefault();
+            $(this).toggleClass('is-shipment-open');
+            $('.shipment-info').slideToggle();
+        });
+
+        $('.js-open-basket').click(function(e){
+            e.preventDefault();
+            $(this).toggleClass('active');
+            $('.basket-top .basket-items').slideToggle();
+        });
+
+
+        $(".phone-mask").mask("+7 (999) 999-99-99");
     });
 })(jQuery);

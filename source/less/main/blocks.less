@@ -380,6 +380,10 @@
   &_size {
     min-width: 103px;
   }
+
+  &_order {
+
+  }
 }
 @rw: 28px;
 .b-custom-select {
@@ -460,6 +464,13 @@
       background-color: #c9c8c9;
     }
   }
+
+  &_delivery {
+    background-color: #ffffff;
+    border: 1px solid #444444;
+    margin-top: -1px;
+    ._bs();
+  }
 }
 
 .b-custom-select__list {
@@ -524,6 +535,50 @@
   .transition(background-color);
 }
 
+.select_delivery {
+  position: relative;
+
+  select {
+    width: 100%;
+  }
+
+  .b-custom-select {
+    height: 31px;
+    background: transparent;
+    border: 1px solid #dddddd;
+    color: #6a6a6a;
+
+    &:hover {
+      border-color: #444444;
+      color: #444444;
+    }
+
+    &_expanded {
+      color: #444444;
+      border-color: #444444;
+    }
+
+    &__title {
+
+      &__text {
+        line-height: 28px;
+      }
+
+      &__icon:after {
+        top: 13px;
+        right: 13px;
+        left: auto;
+        margin: 0;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 6.5px 5.5px 0 5.5px;
+        border-color: #5f5f5f transparent transparent transparent;
+      }
+    }
+
+  }
+}
 
 .complect-slider {
 
@@ -787,5 +842,69 @@
     .btn-submit {
       margin: 16px 0 0 84px;
     }
+  }
+}
+
+.counter {
+  display: inline-block;
+
+  &__val {
+    display: inline-block;
+    color: #444444;
+    font-size: 14px;
+    line-height: 24px;
+  }
+
+  &__controls {
+    display: inline-block;
+    vertical-align: top;
+    height: 24px;
+    margin-left: 4px;
+  }
+
+  &__control {
+    display: block;
+    width: 12px;
+    height: 11px;
+    color: #ffffff;
+    line-height: 11px;
+    font-size: 12px;
+    background-color: #444444;
+    margin-bottom: 2px;
+    text-decoration: none;
+    font-family: Georgia;
+    text-align: center;
+  }
+}
+
+.nano-pane {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 4px;
+  width: 5px;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 2px;
+    width: 1px;
+    background: #999999;
+    .transition(background-color);
+  }
+
+  .nano-slider {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 5px;
+    background: #999999;
+    cursor: pointer;
+    .transition(background-color);
   }
 }

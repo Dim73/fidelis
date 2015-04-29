@@ -16,8 +16,11 @@
                 $link = $(pluginPrefix+'__title',$self),
                 $content = $(pluginPrefix+'__wrap',$self),
                 $inner = $(pluginPrefix+'__inner',$self),
+                $scroller = $('.nano-scroll', $self),
                 openHeight = opt.openHeight,
                 isOpened = false;
+
+            $scroller.nanoScroller();
 
             if ($inner.outerHeight() < openHeight) {
                 openHeight = $inner.outerHeight();
@@ -35,6 +38,8 @@
                 $self.toggleClass(opt.openClass, isOpened);
                 $content.height(!isOpened?0:openHeight);
             }
+
+
 
         })
     }

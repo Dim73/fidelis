@@ -75,7 +75,7 @@ $(function(){
 
             //Insert custom select
             $nativeSelect
-                .css({'position': 'absolute', 'opacity': 0.1, 'z-index': isTouch?10:-1})
+                .css({'position': 'absolute', 'opacity': 0,width: '100%', height: '100%', 'z-index': isTouch?10:-1})
                 .after($selectBoxContainer);
 
 
