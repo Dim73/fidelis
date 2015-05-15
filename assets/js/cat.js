@@ -4,9 +4,10 @@ $(document).ready(function() {
   var viewed = 0;
   var total = 0;
   var requeststatus=false;
+  var $costSlider = $("#price-slider");
   //filter.html('');
  //right toggle
-  $('.right .block .rheader a').click(function(e){
+  /*$('.left .block .rheader a').click(function(e){
     e.preventDefault();
     var par = $(this);
     $(this).parent('.rheader').parent('.block').children('.list').slideToggle(300,function(){
@@ -16,40 +17,62 @@ $(document).ready(function() {
     });
   });
   //right checkboxes
-  $('.right .block .scrollbox label, .right .block .square_sizes label').click(function(e){
+  $('.left .block .scrollbox label, .left .block .square_sizes label').click(function(e){
     var th = $(this);
     var chbox = th.children('input[type=checkbox]:checked').length;
     if(chbox==1) th.addClass('checked'); else th.removeClass('checked');
   });
-  $.each($('.right .block .scrollbox label, .right .block .square_sizes label'),function(ind,val){
+  $.each($('.left .block .scrollbox label, .left .block .square_sizes label'),function(ind,val){
     var th = $(val);
     var chbox = th.children('input[type=checkbox]:checked').length;
     if(chbox==1) th.addClass('checked'); else th.removeClass('checked');
-  });
+  });*/
+
   //right cost slider
-  $('.right .cost .slider').slider({
+    $costSlider
+
+    .slider({
+        min: 0,
+        max: $('#maxcost').data('max'),
+        range: true,
+        values: [0, $('#maxcost').data('max')],
+        change: function( event, ui ) {
+            console.log(ui);
+        },
+        slide: function( event, ui ) {
+            $('#mincost').val(ui.values[0]);
+            $('#maxcost').val(ui.values[1]);
+        }
+    })
+    .slider("float");
+
+  /*$('.left .cost .slider').slider({
     orientation: "horizontal",
       range: true,
       min: 0,//parseInt($('#mincost').attr('data-min')),
       max: parseInt($('#maxcost').attr('data-max')),
       step: 1,
-      values: [ /*parseInt($('#mincost').attr('data-min'))*/0, parseInt($('#maxcost').attr('data-max')) ],
+      values: [ *//*parseInt($('#mincost').attr('data-min'))*//*0, parseInt($('#maxcost').attr('data-max')) ],
       slide: function( event, ui ) {
         $('#mincost').val(ui.values[0]);
         $('#maxcost').val(ui.values[1]);
-    }});
+    }});*/
   if($('#mincost').val()!='' && $('#maxcost').val()!='')
-    $('.right .cost .slider').slider( "option", "values", [ parseInt($('#mincost').val()), parseInt($('#maxcost').val())]);
+      $costSlider.slider( "option", "values", [ parseInt($('#mincost').val()), parseInt($('#maxcost').val())]);
 
   function filtersidebars(ind,val) {
-    if (val.length==0) {
-      $('input[data-filter='+ind+']:not(:checked)').parent('label').parent('li').css('display','none');
+    if (val.length == 0) {
+      $('input[data-filter='+ind+']:not(:checked)').closest('li').hide();
+
     } else {
+
       $.each($('input[data-filter='+ind+']'),function(ind2,val2) {
-        if($.inArray(parseInt($(val2).attr('data-value')),val)>-1)
-          $(val2).parent('label').parent('li').css('display','block'); else
-          $(val2).parent('label').parent('li').css('display','none');
+
+        if($.inArray($(val2).data('value'),val) > -1)
+          $(val2).closest('li').show(); else
+          $(val2).closest('li').hide()
       });
+        $('.left .nano-scroll').nanoScroller();
     }
     //alert(ind+' '+val);
     //Hide clear lists
@@ -63,11 +86,11 @@ $(document).ready(function() {
     var t = $(html);
     //update top panel filter events
     if(t.hasClass('filter_item'))
-      t.children('a').click(function(e){
+      t.click(function(e){
         e.preventDefault();
-        var filt = $(this).parent('.filter_item');
-        var type = filt.attr('data-filter');
-        var value =  filt.attr('data-value');
+//        var filt = $(this).parent('.filter_item');
+        var type = t.data('filter');
+        var value =  t.data('value');
         switch (type) {
           case 'type':
           case 'style':
@@ -77,15 +100,14 @@ $(document).ready(function() {
           case 'cover':
           case 'metals':
           case 'size':         //////????
-              $('.right .list ul li label input[type=checkbox][data-filter='+type+'][data-value="'+value+'"]').click();
-              filt.remove();
+              $('.left input[type=checkbox][data-filter='+type+'][data-value="'+value+'"]').prop( "checked", false ).trigger('refresh');
+              t.remove();
              break;
           case 'cost':
-            var slide=$(".right .cost .slider");
-            slide.slider("option", "min", null);
-            slide.slider("option", "values", [null,null]);
+              $costSlider.slider("option", "min", null);
+              $costSlider.slider("option", "values", [null,null]);
             $('#mincost').val('');$('#maxcost').val('');
-            filt.remove();
+            t.remove();
             break;
         }
       });
@@ -104,9 +126,9 @@ $(document).ready(function() {
           if($('.pageswitch .active').length>0) f.push('actpage='+$($('.pageswitch .active').get(0)).text());
      }
      //update static links ^_^
-     $('.right .list ul a').attr('href',window.location.pathname+'?'+f.join('&'));
+     $('.left .list ul a').attr('href',window.location.pathname+'?'+f.join('&'));
      if (!requeststatus) {
-     $.ajax('/ajax/catalogue.html?'+f.join('&'),{
+     $.ajax('../../source/back/catalogue.html?'+f.join('&'),{///ajax/catalogue.html?
        cache:false,
        type:'get',
        dataType:'json',
@@ -122,12 +144,14 @@ $(document).ready(function() {
          $.each(data['filters'],filtersidebars);
          $('.itemlist').append(data['items']);
          $('.pageswitch').html(data['pageswitch']);
-         $('.right .cost .slider').slider( "option", "min",  /*parseInt(data['cost']['min'])*/0 );
-         $('.right .cost .slider').slider( "option", "max", /*parseInt(data['cost']['max'])*/ parseInt($('#maxcost').attr('data-max')) );
+         $costSlider.slider( "option", "min",  /*parseInt(data['cost']['min'])*/0 );
+         $costSlider.slider( "option", "max", /*parseInt(data['cost']['max'])*/ parseInt($('#maxcost').attr('data-max')) );
 
          viewed = $('.itemlist .item').length;
          total = data['count'];
-         InitAddBasket();
+//         InitAddBasket();
+          $('.left .nano-scroll').nanoScroller();
+           $('.left .folding').trigger('update');
        },
        complete:function(xhr,status) {
          requeststatus = false;
@@ -161,40 +185,40 @@ $(document).ready(function() {
 
   //add data-attrs to adding divs
   $.each($('#fcollections input[type=checkbox]:checked'),function(ind,val){filters['collection'].push($(val).attr('data-value'));
-      filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'<a href="#"><img src="/images/tag_del.png"></a></div>');});
+      filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'</div>');});
 
   $.each($('#fbrands input[type=checkbox]:checked'),function(ind,val){filters['brand'].push($(val).attr('data-value'));
-      filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'<a href="#"><img src="/images/tag_del.png"></a></div>');});
+      filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'</div>');});
 
-      //filterappend('<div class="filter_item">'+$(val).parent('label').text()+'<a href="#"><img src="/images/tag_del.png"></a></div>');});
+      //filterappend('<div class="filter_item">'+$(val).parent('label').text()+'</div>');});
 
   $.each($('#fstyles input[type=checkbox]:checked'),function(ind,val){filters['style'].push($(val).attr('data-value'));
-      //filterappend('<div class="filter_item">'+$(val).parent('label').text()+'<a href="#"><img src="/images/tag_del.png"></a></div>');});
-      filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'<a href="#"><img src="/images/tag_del.png"></a></div>');});
+      //filterappend('<div class="filter_item">'+$(val).parent('label').text()+'</div>');});
+      filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'</div>');});
   $.each($('#ftypes input[type=checkbox]:checked'),function(ind,val){filters['type'].push($(val).attr('data-value'));
-      //filterappend('<div class="filter_item">'+$(val).parent('label').text()+'<a href="#"><img src="/images/tag_del.png"></a></div>');});
-      filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'<a href="#"><img src="/images/tag_del.png"></a></div>');});
+      //filterappend('<div class="filter_item">'+$(val).parent('label').text()+'</div>');});
+      filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'</div>');});
   $.each($('#finserts input[type=checkbox]:checked'),function(ind,val){filters['insert'].push($(val).attr('data-value'));
-      //filterappend('<div class="filter_item">'+$(val).parent('label').text()+'<a href="#"><img src="/images/tag_del.png"></a></div>');});
-      filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'<a href="#"><img src="/images/tag_del.png"></a></div>');});
+      //filterappend('<div class="filter_item">'+$(val).parent('label').text()+'</div>');});
+      filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'</div>');});
   $.each($('#fcovers input[type=checkbox]:checked'),function(ind,val){filters['cover'].push($(val).attr('data-value'));
-      //filterappend('<div class="filter_item">'+$(val).parent('label').text()+'<a href="#"><img src="/images/tag_del.png"></a></div>');});
-      filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'<a href="#"><img src="/images/tag_del.png"></a></div>');});
+      //filterappend('<div class="filter_item">'+$(val).parent('label').text()+'</div>');});
+      filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'</div>');});
     $.each($('#fmetals input[type=checkbox]:checked'),function(ind,val){filters['metals'].push($(val).attr('data-value'));
-        filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'<a href="#"><img src="/images/tag_del.png"></a></div>');});
+        filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'</div>');});
   $.each($('#fsizes input[type=checkbox]:checked'),function(ind,val){filters['size'].push($(val).attr('data-value'));
-      filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'<a href="#"><img src="/images/tag_del.png"></a></div>');});
+      filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'</div>');});
 
-  if($('#ftypes a.selected').length==1) filters['type'].push($('#ftypes a.selected').attr('data-value'));
-  if($('#fcollections a.selected').length==1) filters['collection'].push($('#fcollections a.selected').attr('data-value'));
-  if($('#fbrands a.selected').length==1) filters['brand'].push($('#fbrands a.selected').attr('data-value'));
-  if($('#fstyles a.selected').length==1) filters['style'].push($('#fstyles a.selected').attr('data-value'));
-  if($('#finserts a.selected').length==1) filters['insert'].push($('#finserts a.selected').attr('data-value'));
-  if($('#fcovers a.selected').length==1) filters['cover'].push($('#fcovers a.selected').attr('data-value'));
-  if($('#fsizes a.selected').length==1) filters['size'].push($('#fsizes a.selected').attr('data-value'));
-  if($('#fmetals a.selected').length==1) filters['metals'].push($('#fmetals a.selected').attr('data-value'));
+  if($('#ftypes .selected').length==1) filters['type'].push($('#ftypes .selected').attr('data-value'));
+  if($('#fcollections .selected').length==1) filters['collection'].push($('#fcollections .selected').attr('data-value'));
+  if($('#fbrands .selected').length==1) filters['brand'].push($('#fbrands .selected').attr('data-value'));
+  if($('#fstyles .selected').length==1) filters['style'].push($('#fstyles .selected').attr('data-value'));
+  if($('#finserts .selected').length==1) filters['insert'].push($('#finserts .selected').attr('data-value'));
+  if($('#fcovers .selected').length==1) filters['cover'].push($('#fcovers .selected').attr('data-value'));
+  if($('#fsizes .selected').length==1) filters['size'].push($('#fsizes .selected').attr('data-value'));
+  if($('#fmetals .selected').length==1) filters['metals'].push($('#fmetals .selected').attr('data-value'));
 
-  filterappend('<div class="clear"></div>');
+  /*filterappend('<div class="clear"></div>');*/
 
 $(window).scroll(function() {
   if(filters['items_per_page']=='all'){
@@ -218,9 +242,8 @@ $(window).scroll(function() {
   }
 });
 
-
-  $('.filter_item a').click(function(e){
-    $(this).parent('.filter_item').remove();
+  $('.filter_item').click(function(e){
+    $(this).remove();
   });
 
 
@@ -240,13 +263,14 @@ $(window).scroll(function() {
   });
 
   //sidefilters with single check
-  $('.list ul[data-seltype=check] input[type=checkbox]').click(function(e){
+  $('.list ul[data-seltype=check] input[type=checkbox]').change(function(e){
     var chk = $(this);
     var si = $.inArray(chk.attr('data-value'),filters[chk.attr('data-filter')]);
 
+    console.log(si);
     if(si==-1) {
        filters[chk.attr('data-filter')].push(chk.attr('data-value'));
-       filterappend('<div class="filter_item" data-filter="'+chk.attr('data-filter')+'" data-value="'+chk.attr('data-value')+'">'+chk.parent('label').text()+'<a href="#"><img src="/images/tag_del.png"></a></div>');
+       filterappend('<div class="filter_item" data-filter="'+chk.attr('data-filter')+'" data-value="'+chk.attr('data-value')+'">'+chk.closest('label').text()+'</div>');
        filter.find('.clear').appendTo(filter);
        //add deltag by click on it
     }
@@ -266,12 +290,12 @@ $(window).scroll(function() {
     makefilter();
   });
   //sidefilters with multiple checks
-  $('.list ul[data-seltype=multi] input[type=checkbox], .square_sizes .squaresize').click(function(e){
+  $('.list ul[data-seltype=multi] input[type=checkbox], .square_sizes .squaresize').change(function(e){
     var chk = $(this);
     var si = $.inArray(chk.attr('data-value'),filters[chk.attr('data-filter')]);
     if(si==-1) {
        filters[chk.attr('data-filter')].push(chk.attr('data-value'));
-       filterappend('<div class="filter_item" data-filter="'+chk.attr('data-filter')+'" data-value="'+chk.attr('data-value')+'">'+chk.parent('label').text()+'<a href="#"><img src="/images/tag_del.png"></a></div>');
+       filterappend('<div class="filter_item" data-filter="'+chk.attr('data-filter')+'" data-value="'+chk.attr('data-value')+'">'+chk.closest('label').text()+'</div>');
        filter.find('.clear').appendTo(filter);
        //add deltag by click on it
     } else {
@@ -284,12 +308,12 @@ $(window).scroll(function() {
   });
 
 
-  $(".right .cost .slider").on( "slidechange", function( event, ui ) {
+  $costSlider.on( "slidechange", function( event, ui ) {
     if (ui.values[0]!=null && ui.values[1]!=null) {
 
     filters['cost']=JSON.stringify({'min':ui.values[0],'max':ui.values[1]});
     //filter.find('div[data-filter=cost]').remove();
-    //filterappend('<div class="filter_item" data-filter="cost" data-value="true">Цена: от '+ui.values[0]+' до '+ui.values[1]+'<a href="#"><img src="/images/tag_del.png"></a></div>');
+    //filterappend('<div class="filter_item" data-filter="cost" data-value="true">Цена: от '+ui.values[0]+' до '+ui.values[1]+'</div>');
     //filter.find('.clear').appendTo(filter);
     }
     $('.itemlist').html('');
@@ -298,16 +322,85 @@ $(window).scroll(function() {
   $('.block .list .cost #mincost').blur(function(){
     var v1 = parseInt($(this).val());
     if (v1>0) {$(this).val(v1);} else {v1=0;$(this).val('0');}
-    $(".right .cost .slider").slider( "values", 0, v1);
+    $(".left .cost .slider").slider( "values", 0, v1);
 
   });
   $('.block .list .cost #maxcost').blur(function(){
     var v1 = parseInt($(this).val());
     if (v1>0) {$(this).val(v1);} else {v1=0;$(this).val('0');}
-    $(".right .cost .slider").slider( "values", 1, v1);
+    $(".left .cost .slider").slider( "values", 1, v1);
   });
 
+
+
+    $('.itemlist').on('mouseenter','.item',function(){
+       var $self = $(this),
+           $slider = $('.slider-contaniner', $self);
+        if ($self.find('.stop').length) return;
+        if ($slider.data('plugin') == 'bxslider') {
+            console.log('enter');
+            $slider.data('bxslider').startAuto();
+        } else {
+            var thisSlider = $slider.bxSlider({
+                mode: 'fade',
+                slideWidth: 255,
+                pause: 2000,
+                auto: true,
+                pager: false,
+                controls: false
+            });
+
+            $slider.data('bxslider',thisSlider);
+        }
+        $self.addClass('hovered');
+    });
+
+    $('.itemlist').on('mouseleave','.item',function(){
+        var $self = $(this),
+            $slider = $('.slider-contaniner', $self);
+        if ($slider.data('plugin') == 'bxslider') {
+            console.log('leave');
+            $slider.data('bxslider').stopAuto();
+            $slider.data('bxslider').goToSlide(0);
+        }
+        $self.removeClass('hovered');
+    });
+
+    var videoPlay = false;
+
+    $('.itemlist').on('click','.play',function(){
+        var $self = $(this),
+            $parent =  $self.closest('.item'),
+            $containerVideo = $('.item-preview__video', $parent),
+            $video = $('video',$containerVideo),
+            $slider = $('.slider-contaniner',$parent);
+
+        if ($self.is('.stop')) {
+            $self.removeClass('stop');
+            $video[0].pause();
+            $containerVideo.fadeOut(500, function(){
+                if ($slider.data('bxslider') && $parent.is('.hovered')) {
+                    $slider.data('bxslider').startAuto();
+                }
+            })
+        } else {
+            $self.addClass('stop');
+            $containerVideo.fadeIn(500, function(){
+                if ($slider.data('bxslider')) {
+                    $slider.data('bxslider').stopAuto();
+                    $slider.data('bxslider').goToSlide(0);
+                }
+                $video[0].play();
+            })
+        }
+    });
+
+
 });
+
 //preload
+/*
 preloadImg=new Image();
 preloadImg.src= "/images/toggle_btnr.png";
+*/
+

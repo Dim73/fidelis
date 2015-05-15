@@ -1,8 +1,13 @@
 .order {
+  position: relative;
+
+  .order-step {
+    display: none;
+  }
 
   &__inner {
     position: relative;
-    padding-top: 218px;
+    padding-top: 218px - 60;
     width: 580px;
     margin: 0 auto;
 
@@ -12,13 +17,14 @@
       .sprite(@checkout);
       left: 50%;
       margin-left: -@checkout-width/2;
-      top: 109px;
+      top: 109px - 60;
     }
   }
 
   &-delivery {
     position: relative;
     overflow: hidden;
+    margin-bottom: 60px;
 
     &__top {
       margin-bottom: 22px;
@@ -43,7 +49,7 @@
       padding-right: 5px;
     }
 
-    .summ {
+    .summ, .rub {
       display: inline;
       color: @red;
     }
@@ -108,12 +114,12 @@
     text-align: center;
 
     .order__inner {
-      padding-top: 352px;
+      padding-top: 352px - 60;
       padding-bottom: 50px;
       width: 650px;
 
       &:before {
-        top: 131px;
+        top: 131px - 60;
       }
     }
 
@@ -131,6 +137,10 @@
       margin-bottom: 54px;
     }
   }
+}
+
+.selected_delivery {
+  display: none;
 }
 
 .delivery {
@@ -176,9 +186,10 @@
     }
 
     .error {
-      .inputtext, textarea {
-        border: 1px solid @red;
+      .inputtext, textarea, .b-custom-select{
+        border: 1px solid @red !important;
       }
+
     }
 
     label {
@@ -221,7 +232,7 @@
   }
 
   &__info {
-    display: block;
+    display: none;
     color: @cyan;
     font-size: 14px;
     font-family: @font-lb;
@@ -234,4 +245,18 @@
       margin-right: 3px;
     }
   }
+
+  &__address {
+    display: none;
+  }
+}
+
+.order-done:after {
+  content: "";
+  position: absolute;
+  z-index: 111;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
 }

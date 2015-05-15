@@ -1,0 +1,45 @@
+<script id="basket-item" type="x-tmpl-mustache">
+                <div class="basket-item" data-id="{{id}}">
+                    <div class="basket-item__holder">
+                        <div class="basket-item__img">
+                            <img src="{{img}}" alt=""/>
+                        </div>
+                        <div class="basket-item__name">
+                            {{name}}
+                            <span class="article">Артикул: {{articul}}</span>
+                        </div>
+                        <div class="basket-item__size">
+                            <div class="select-size__wrap">
+                                <select class="no-styler select_size-order">
+                                    {{#sizes}}
+                                    <option value="{{size}}" {{selected}}>{{size}}</option>
+                                    {{/sizes}}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="basket-item__counter">
+                            <div class="counter">
+                                <span class="counter__val">{{count}}</span>
+                                <div class="counter__controls">
+                                    <a class="counter__control control_up" data-control="inc" href="#">+</a>
+                                    <a class="counter__control control_up" data-control="desc" href="#">-</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="basket-item__price">
+
+                        </div>
+                        <div class="basket-item__service">
+                            <a class="basket-item__delete icon-close">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+</script>
+<script id="basket-sale" type="x-tmpl-mustache">
+    <div class="total__sale">
+        <span class="lbl">Итого c учетом {{sale}}% скидки:</span>
+        <span class="summ"></span><span class="rub">руб.</span>
+    </div>
+</script>
+<div class="fade fade-fixed"></div>

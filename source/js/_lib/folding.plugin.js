@@ -17,9 +17,11 @@
                 $content = $(pluginPrefix+'__wrap',$self),
                 $inner = $(pluginPrefix+'__inner',$self),
                 $scroller = $('.nano-scroll', $self),
-                openHeight = opt.openHeight,
+                optHeight = opt.openHeight,
+                openHeight  = opt.openHeight,
                 isOpened = false;
 
+            $scroller.css('max-height',openHeight);
             $scroller.nanoScroller();
 
             if ($inner.outerHeight() < openHeight) {
@@ -27,6 +29,7 @@
             }
 
             $self.is('.'+opt.openClass) && toggleC(true);
+
 
             $link.click(function(e){
                 e.preventDefault();
@@ -39,7 +42,16 @@
                 $content.height(!isOpened?0:openHeight);
             }
 
-
+            $self.bind('update', function(){
+                if ($inner.outerHeight() < optHeight) {
+                    openHeight = $inner.outerHeight();
+                } else {
+                    openHeight = optHeight
+                }
+                if (isOpened) {
+                    $content.height(openHeight);
+                }
+            });
 
         })
     }

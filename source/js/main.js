@@ -1,12 +1,15 @@
 //////////////////
 /****MAIN.JS****/
 ////////////////
-Array.prototype.unique = function() {
+Object.defineProperty(Array.prototype,"unique", {
+    enumerable: false,
+    value: function() {
         var o = {}, i, l = this.length, r = [];
         for(i=0; i<l;i+=1) o[this[i]] = this[i];
         for(i in o) r.push(o[i]);
         return r;
-};
+    }
+})
 
 function validateEmail(email) {
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -48,8 +51,6 @@ function validateEmail(email) {
   }
 
 $(document).ready(function() {
-	var strReplace = "Р";
-	$( ".rub" ).html( strReplace );
 	$('#requestcall').click(function(e){
 		e.preventDefault();
 		$('#callmeform').css('display','block');
@@ -294,7 +295,10 @@ $(document).ready(function() {
 
 (function($){
     $(function(){
-        $('select, input[type=checkbox]').not('.no-styler').styler({selectSearch:false});
+        setTimeout(function() {
+            $('select, input[type=checkbox]').not('.no-styler').styler({selectSearch:false});
+        }, 100);
+
 
         var allSliders = [
             {
@@ -365,11 +369,24 @@ $(document).ready(function() {
 
                     }
                 }
+            },
+            {
+                sliderClass: '.itemlist-slider',
+                options: {
+                    pager: false,
+                    maxSlides: 4,
+                    infiniteLoop: false,
+                    slideMargin: 0,
+                    slideWidth: 255,
+                    mode: 'horizontal',
+                    onSliderLoad: function() {
+
+                    }
+                }
             }
         ];
         sliderConstructor(allSliders);
         $('.select_size, .select_size-order ').CustomSelect({visRows:4});
-        $('.select_delivery select').CustomSelect({visRows:5, modifier: 'delivery'});
         $('.pitem-specs__spoilers .folding').folding({openHeight: 163});
         $('.left .folding').folding({openHeight: 200});
         $('.content-text__side .folding').folding({openHeight: 500});
@@ -381,19 +398,71 @@ $(document).ready(function() {
             }
         });
 
-        $('.magazine-info__shipment').click(function(e){
-            e.preventDefault();
-            $(this).toggleClass('is-shipment-open');
-            $('.shipment-info').slideToggle();
-        });
-
-        $('.js-open-basket').click(function(e){
+        /*$('.js-open-basket').click(function(e){
             e.preventDefault();
             $(this).toggleClass('active');
             $('.basket-top .basket-items').slideToggle();
-        });
-
+        });*/
 
         $(".phone-mask").mask("+7 (999) 999-99-99");
+
+        $('.popup .close').click(function(e){
+            e.preventDefault();
+            closePopup($(this).closest('.popup'));
+        });
+
+        $('.btn_cart-added').hover(function(){
+            $(this).removeClass('btn_red').text('купить');
+        });
+
+        $('body').on('click','.size_empty',function() {
+            $(this).removeClass('size_empty');
+        });
+
+        $('.basket-items__holder').dropdown({
+            link: '.js-basket-open'
+        });
+
+        $('.shipment-info__holder').dropdown({
+            link: '.js-shipment-info'
+        });
+
+        $('.address-info__holder').dropdown({
+            link: '.js-address-popup',
+            onOpen: function() {
+                var $map = $('#address-map');
+                var map, moscowPin;
+                ymaps.ready(function () {
+                     map = new ymaps.Map("address-map", {
+                        center: [55.74011678, 37.60888550],
+                        zoom: 15,
+                        controls: ['zoomControl']
+                    });
+                    moscowPin = new ymaps.Placemark(map.getCenter(), {
+                        hintContent: 'Fidelis style'
+                    }, {
+                        // Опции.
+                        // Необходимо указать данный тип макета.
+                        iconLayout: 'default#image'
+                    });
+                    map.geoObjects.add(moscowPin);
+                });
+            }
+        });
+
+        //menu img preview
+        var $menu = $('.main-menu'),
+            $collectionLink = $('.collection__link', $menu);
+            $collectionLink.menuImg({
+                collImg: function(self){
+                    return self.closest('.main-menu__collection').find('.collection__preview');
+                }
+            });
     });
 })(jQuery);
+
+function closePopup ($popup) {
+    $popup.fadeOut();
+    $('.fade:visible').fadeOut();
+    $(window).trigger('popupClosed', [$popup]);
+}

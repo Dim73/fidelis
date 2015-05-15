@@ -174,6 +174,7 @@
 			el.children(slider.settings.slideSelector).each(function() {
 			  $(this).data("origStyle", $(this).attr("style"));
 			});
+            el.data("plugin","bxslider");
 			// perform all DOM / CSS modifications
 			setup();
 		}
@@ -1375,12 +1376,12 @@ var sliderConstructor = function(sliders) {
             configClass = sliderConfig._class,
             configOpt = sliderConfig._options;
 
-        console.log('da');
         jQuery.each(sliderConfig.slidersArr, function(ind,slider){
             var self = slider;
             var restartAuto;
             var $selfSlider = (typeof self.sliderClass === 'object')?self.sliderClass:jQuery(self.sliderClass);
             var checkLength = self.checkLength?self.checkLength:1;
+
             $selfSlider.each(function(){
                 var $slider = jQuery(this);
                 if ($slider.find(configClass.item).length > checkLength) {

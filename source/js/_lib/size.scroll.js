@@ -3,7 +3,7 @@
  * author: Shashenko Andrei
  */
 
-$(function(){
+(function($){
     'use strict';
 
     $.fn.CustomSelect = function(options){
@@ -38,7 +38,9 @@ $(function(){
 
         this.each(function(){
             //Initialize
-            var $nativeSelect = $(this),
+
+            var
+                $nativeSelect = $(this),
                 defaultTitle = $nativeSelect.data('title'),
                 isDisabled = $nativeSelect.attr('disabled') == 'disabled',
                 isMultiple = $nativeSelect.attr('multiple') == 'multiple',
@@ -180,7 +182,7 @@ $(function(){
                 .bind('update', function(e){
                     $dropDown.trigger('hide');
                     createList();
-                });
+                }).data('plugin', 'select');
 
             //Events of input field
             $input
@@ -424,6 +426,7 @@ $(function(){
                 }
                 $dropDown.trigger('show');
             }
+
         });
 
         //Get width of the scroller
@@ -473,4 +476,4 @@ $(function(){
                 }
             });
     }
-});
+})(jQuery);

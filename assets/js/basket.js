@@ -10,7 +10,7 @@ $(document).ready(function() {
 	    success: function(data,status,xhr){
 		if (data>0){
                     window.location.reload();
-                } else alert('Ошибка запроса');
+                } else alert('пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ');
             }
         });
     });
@@ -37,4 +37,6 @@ $(document).ready(function() {
         });
     });
 
+
 });
+

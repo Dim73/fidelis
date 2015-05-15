@@ -1,4 +1,5 @@
 .basket {
+  position: relative;
 
   &-top {
     float: right;
@@ -15,7 +16,7 @@
       position: relative;
       top:  1px;
       vertical-align: bottom;
-      margin-right: 14px;
+      margin-right: 8px;
     }
 
     &__items {
@@ -41,31 +42,47 @@
       color: #FFFFFF;
       display: inline-block;
       letter-spacing: 0.05em;
-      min-width: 188px;
+      position: relative;
+      top: 2px;
     }
 
     .basket-items__body {
-      padding: 17px 11px 12px;
+      padding: 17px 0px 12px 11px;
+      border: 1px solid #e5e5e5;
+      background-color: #ffffff;
+    }
+
+    .basket-item__size, .article, .basket-item__counter {
+      display: none;
+    }
+
+    .basket-item {
+      width: 395px;
+    }
+
+    .nano-scroll {
+      max-height: 250px;
+      overflow: hidden;
+      position: relative;
     }
   }
 
   &-items {
 
-    .basket-top & {
-      position: absolute;
-      left: -205px;
-      top: 34px;
+    &__holder {
+      left: -347px;
+      top: 24px;
       width: 427px;
-      border: 1px solid #e5e5e5;
-      background-color: #ffffff;
-      display: none;
+    }
+
+    .basket-top & {
+      padding-top: 10px;
 
       &:before {
         content: "";
         position: absolute;
-        top: -9px;
-        left: 50%;
-        margin-left: -7px;
+        top: 2px;
+        right: 64px;
         width: 0;
         height: 0;
         border-style: solid;
@@ -81,7 +98,7 @@
     
     &__bottom {
       ._clearfix();
-      margin: -2px 0 0 2px;
+      margin: 15px 11px 0 2px;
 
       .btn {
         width: 114px;
@@ -116,6 +133,10 @@
     padding: 0px 5px 15px 2px;
     margin-bottom: 17px;
     border-bottom: 1px solid #e5e5e5;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
 
     &__holder > * {
       display: table-cell;
@@ -175,8 +196,7 @@
       margin-bottom: 7px;
     }
 
-    .summ {
-      display: block;
+    .summ, .rub {
       color: @red;
       font-size: 18px;
     }
@@ -184,14 +204,11 @@
 
   //order
   &_order {
+    margin-bottom: 60px;
 
     .basket-item {
       padding: 12px 0;
       margin-bottom: 0;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
 
       &:nth-child(2n) {
         background-color: #fcfcfc;
@@ -289,6 +306,10 @@
         border-color: #888888;
       }
     }
+    
+    .select_size-order {
+      width: 70px;
+    }
 
     .basket {
 
@@ -328,8 +349,9 @@
           display: inline;
         }
 
-        .summ {
+        .summ, .rub {
           font-size: 14px;
+          color: @red;
           display: inline;
         }
 

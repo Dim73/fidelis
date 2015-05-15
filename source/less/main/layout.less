@@ -10,6 +10,10 @@ body {
   background: #ffffff;
   color: #2c2c2c;
   position: relative;
+
+  &.popup-show {
+    overflow: hidden;
+  }
 }
 
 .main {
@@ -24,6 +28,7 @@ body {
 
 a {
   ._transition(color);
+  text-decoration: none;
 }
 
 h1 {

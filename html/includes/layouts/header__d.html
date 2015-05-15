@@ -5,46 +5,80 @@
         </a>
         <div class="magazine-info">
             <div class="col magazine-info__address">
-                <a class="magazine-info__title js-address-popup" href="#">Москва <i class="icon"></i></a>
-                <div class="desc">Берсеневская набережная д. 6 стр. 1</div>
-            </div>
-            <div class="col magazine-info__shipment">
-                <span class="magazine-info__title">Доставка <i class="icon"></i></span>
-                <div class="desc">Ежедневно с 10:00 до 22:00</div>
-                <div class="shipment-info">
-                    <div class="shipment-info__title">
-                        СТОИМОСТЬ ДОСТАВКИ
-                    </div>
-                    <div class="shipment-info__body">
-                        <div class="type-list">
-                            <div class="type-list__item">
-                                <span class="type-title">Курьером по Москве:</span>
-                                <div class="line">
-                                    <span class="name">СПСР Экспресс</span>
-                                    <span class="price">650Р</span>
-                                </div>
-                                <div class="line">
-                                    <span class="name">СПСР Экспресс</span>
-                                    <span class="price price-free">БЕСПЛАТНО</span>
+                <a class="js-address-popup" href="#">
+                    <span class="magazine-info__title">Москва <i class="icon"></i></span>
+                    <div class="desc">Берсеневская набережная д. 6 стр. 1</div>
+                </a>
+                <div class="address-info__holder">
+                    <div class="address-info">
+                        <div class="address-info__title dropdown-fade-to">
+                            АДРЕС
+                        </div>
+                        <div class="address-map__container">
+                            <div id="address-map" class="address-map"></div>
+                        </div>
+                        <div class="address-info__body">
+                            <div class="address-time">
+                                <div class="address_moscow">
+                                    <span>Режим работы шоурума:</span>
+                                    В буднии дни с 9:00 до 19:00 <br/>
+                                    Сб. Вс. - Выходной
                                 </div>
                             </div>
-                            <div class="type-list__item">
-                                <span class="type-title">по России:</span>
-                                <div class="line">
-                                    <span class="name">СПСР Экспресс</span>
-                                    <span class="price">650Р</span>
-                                </div>
-                                <div class="line">
-                                    <span class="name">СПСР Экспресс</span>
-                                    <span class="price">650Р</span>
-                                </div>
-                                <div class="line">
-                                    <span class="name">СПСР Экспресс</span>
-                                    <span class="price price-free">БЕСПЛАТНО</span>
-                                </div>
+                            <div class="address-select">
+                                <select name="" id="address-select">
+                                    <option value="moscow">Москва</option>
+                                    <option value="moscow">Воронеж</option>
+                                </select>
+                            </div>
+                            <div class="btn-holder">
+                                <a class="btn" href="#">ПОДРОБНЕЕ</a>
                             </div>
                         </div>
-                        <a class="btn" href="">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col magazine-info__shipment">
+                <a class="js-shipment-info" href="#">
+                    <span class="magazine-info__title">Доставка <i class="icon"></i></span>
+                    <div class="desc">Ежедневно с 10:00 до 22:00</div>
+                </a>
+                <div class="shipment-info__holder">
+                    <div class="shipment-info">
+                        <div class="shipment-info__title dropdown-fade-to">
+                            СТОИМОСТЬ ДОСТАВКИ
+                        </div>
+                        <div class="shipment-info__body">
+                            <div class="type-list">
+                                <div class="type-list__item">
+                                    <span class="type-title">Курьером по Москве:</span>
+                                    <div class="line">
+                                        <span class="name">СПСР Экспресс</span>
+                                        <span class="price">650Р</span>
+                                    </div>
+                                    <div class="line">
+                                        <span class="name">СПСР Экспресс</span>
+                                        <span class="price price-free">БЕСПЛАТНО</span>
+                                    </div>
+                                </div>
+                                <div class="type-list__item">
+                                    <span class="type-title">по России:</span>
+                                    <div class="line">
+                                        <span class="name">СПСР Экспресс</span>
+                                        <span class="price">650Р</span>
+                                    </div>
+                                    <div class="line">
+                                        <span class="name">СПСР Экспресс</span>
+                                        <span class="price">650Р</span>
+                                    </div>
+                                    <div class="line">
+                                        <span class="name">СПСР Экспресс</span>
+                                        <span class="price price-free">БЕСПЛАТНО</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="btn" href="">Подробнее</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -80,10 +114,10 @@
                         <div class="collection__inner wrap">
                             <div class="collection__list">
                                 <div class="col">
-                                    <div class="collection__item"><a class="collection__link" href="#">Silver Design (Breuning)</a></div>
-                                    <div class="collection__item"><a class="collection__link" href="#">Silver Diamond  (Breuning)</a></div>
-                                    <div class="collection__item"><a class="collection__link" href="#">Silver Colors  (Breuning)</a></div>
-                                    <div class="collection__item"><a class="collection__link" href="#">Fashion (Graziella)</a></div>
+                                    <div class="collection__item"><a class="collection__link" data-img="<!--#echo var="assets-path"-->/item.jpg" href="#">Silver Design (Breuning)</a></div>
+                                    <div class="collection__item"><a class="collection__link" data-img="<!--#echo var="assets-path"-->/item2.jpg" href="#">Silver Diamond  (Breuning)</a></div>
+                                    <div class="collection__item"><a class="collection__link" data-img="<!--#echo var="assets-path"-->/item.jpg" href="#">Silver Colors  (Breuning)</a></div>
+                                    <div class="collection__item"><a class="collection__link" data-img="<!--#echo var="assets-path"-->/menu-collection.jpg" href="#">Fashion (Graziella)</a></div>
                                     <div class="collection__item"><a class="collection__link" href="#">Chic (Graziella)</a></div>
                                     <div class="collection__item"><a class="collection__link" href="#">Classic (Graziella)</a></div>
                                     <div class="collection__item"><a class="collection__link" href="#">Базовая</a></div>
@@ -109,7 +143,7 @@
                                 </div>
                             </div>
                             <div class="collection__preview">
-                                <img src="<!--#echo var="assets-path"-->/menu-collection.jpg" alt=""/>
+                                <!--<img src="&lt;!&ndash;#echo var="assets-path"&ndash;&gt;/menu-collection.jpg" alt=""/>-->
                             </div>
                         </div>
                     </div>
@@ -151,7 +185,7 @@
                                 </div>
                             </div>
                             <div class="collection__preview">
-                                <img src="<!--#echo var="assets-path"-->/menu-collection.jpg" alt=""/>
+                                <!--<img src="&lt;!&ndash;#echo var="assets-path"&ndash;&gt;/menu-collection.jpg" alt=""/>-->
                             </div>
                         </div>
                     </div>
@@ -177,76 +211,49 @@
                     </a>
                 </li>
             </ul>
-            <div class="basket-top">
+            <div class="basket basket-top">
                     <div class="basket-top__items">
-                        <a class="js-open-basket" href="#">
+                        <a class="js-basket-open" href="#">
                             <span class="basket-top__icon">
-                                <span class="count">3</span>
+                                <span class="count"></span>
                             </span>
                         </a>
-                        <div class="basket-items">
-                            <div class="basket-items__body">
-                                <div class="basket-items__list">
-                                    <div class="basket-item">
-                                        <div class="basket-item__holder">
-                                            <div class="basket-item__img">
-                                                <img src="<!--#echo var="assets-path"-->/basket-item.jpg" alt=""/>
-                                            </div>
-                                            <div class="basket-item__name">
-                                                Фаланговое кольцо из серебра с фианитами в форме короны
-                                            </div>
-                                            <div class="basket-item__price">
-                                                19 100Р
-                                            </div>
-                                            <div class="basket-item__service">
-                                                <a class="basket-item__delete icon-close">
-                                                </a>
-                                            </div>
+                        <div class="basket-items__holder dropdown-holder">
+                            <div class="basket-items">
+                                <div class="basket-items__body dropdown-fade-to">
+                                    <div class="nano-scroll">
+                                        <div class="basket-items__list nano-content">
+                                           <!-- <div class="basket-item">
+                                                <div class="basket-item__holder">
+                                                    <div class="basket-item__img">
+                                                        <img src="&lt;!&ndash;#echo var="assets-path"&ndash;&gt;/basket-item.jpg" alt=""/>
+                                                    </div>
+                                                    <div class="basket-item__name">
+                                                        Фаланговое кольцо из серебра с фианитами в форме короны
+                                                    </div>
+                                                    <div class="basket-item__price">
+                                                        19 100Р
+                                                    </div>
+                                                    <div class="basket-item__service">
+                                                        <a class="basket-item__delete icon-close">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>-->
+
                                         </div>
                                     </div>
-                                    <div class="basket-item">
-                                        <div class="basket-item__holder">
-                                            <div class="basket-item__img">
-                                                <img src="<!--#echo var="assets-path"-->/basket-item.jpg" alt=""/>
-                                            </div>
-                                            <div class="basket-item__name">
-                                                Фаланговое кольцо из серебра с фианитами в форме короны
-                                            </div>
-                                            <div class="basket-item__price">
-                                                19 100Р
-                                            </div>
-                                            <div class="basket-item__service">
-                                                <a class="basket-item__delete icon-close">
-                                                </a>
+                                    <div class="basket-items__bottom">
+                                        <div class="btn-holder">
+                                            <a class="btn" href="#">В КОРЗИНУ</a>
+                                            <a class="btn btn__checkout" href="#">оформить</a>
+                                        </div>
+                                        <div class="basket__total">
+                                            <div class="total__summ">
+                                                <span class="lbl">Сумма заказа:</span>
+                                                <span class="summ"></span><span class="rub">руб.</span>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="basket-item">
-                                        <div class="basket-item__holder">
-                                            <div class="basket-item__img">
-                                                <img src="<!--#echo var="assets-path"-->/basket-item.jpg" alt=""/>
-                                            </div>
-                                            <div class="basket-item__name">
-                                                Фаланговое кольцо из серебра с фианитами в форме короны
-                                            </div>
-                                            <div class="basket-item__price">
-                                                19 100Р
-                                            </div>
-                                            <div class="basket-item__service">
-                                                <a class="basket-item__delete icon-close">
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="basket-items__bottom">
-                                    <div class="btn-holder">
-                                        <a class="btn" href="#">В КОРЗИНУ</a>
-                                        <a class="btn btn__checkout" href="#">оформить</a>
-                                    </div>
-                                    <div class="basket__total">
-                                        <span class="lbl">Сумма заказа:</span>
-                                        <span class="summ">61 600Р</span>
                                     </div>
                                 </div>
                             </div>
@@ -254,9 +261,8 @@
                     </div>
 
                     <span class="basket-top__info">
-                        Корзина (3 товара на 61 600 р)
+                        Корзина
                     </span>
-
             </div>
         </div>
     </div>
