@@ -390,23 +390,23 @@
     margin: 15px 0 0 11px;
 
     .shipment-title {
-      border-color: @cyan;
 
       &:hover {
         color: #1a5e58;
 
         & + .icon {
-          .sprite(@car-cyan-dark);
+          color: #1a5e58;
         }
       }
     }
 
     .icon {
       display: inline-block;
-      .sprite(@car-cyan);
-      margin-left: 9px;
+      margin-left: 5px;
       position: relative;
-      top: 4px;
+      top: 2px;
+      font-size: 16px;
+      .transition(color);
     }
   }
 

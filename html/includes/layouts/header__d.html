@@ -1,38 +1,40 @@
 <div class="header">
     <div class="header-top wrap">
         <a class="logo" href="#">
-            <img src="<!--#echo var="img-path"-->/logo.png" alt=""/>
+            <img src="<!--#echo var="img-path"-->/svg/logo.svg" alt=""/>
         </a>
         <div class="magazine-info">
             <div class="col magazine-info__address">
                 <a class="js-address-popup" href="#">
-                    <span class="magazine-info__title">Москва <i class="icon"></i></span>
+                    <span class="magazine-info__title">Москва <i class="icon icon-pin"></i></span>
                     <div class="desc">Берсеневская набережная д. 6 стр. 1</div>
                 </a>
-                <div class="address-info__holder">
+                <div class="address-info__holder dropdown_top">
                     <div class="address-info">
-                        <div class="address-info__title dropdown-fade-to">
+                        <div class="address-info__title dropdown-fade-to dropdown__header">
                             АДРЕС
                         </div>
-                        <div class="address-map__container">
-                            <div id="address-map" class="address-map"></div>
-                        </div>
-                        <div class="address-info__body">
-                            <div class="address-time">
-                                <div class="address_moscow">
-                                    <span>Режим работы шоурума:</span>
-                                    В буднии дни с 9:00 до 19:00 <br/>
-                                    Сб. Вс. - Выходной
+                        <div class="dropdown__body">
+                            <div class="address-map__container">
+                                <div id="address-map" class="address-map"></div>
+                            </div>
+                            <div class="address-info__body">
+                                <div class="address-time">
+                                    <div class="address_moscow">
+                                        <span>Режим работы шоурума:</span>
+                                        В буднии дни с 9:00 до 19:00 <br/>
+                                        Сб. Вс. - Выходной
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="address-select">
-                                <select name="" id="address-select">
-                                    <option value="moscow">Москва</option>
-                                    <option value="moscow">Воронеж</option>
-                                </select>
-                            </div>
-                            <div class="btn-holder">
-                                <a class="btn" href="#">ПОДРОБНЕЕ</a>
+                                <!--<div class="address-select">
+                                    <select name="" id="address-select">
+                                        <option value="moscow">Москва</option>
+                                        <option value="moscow">Воронеж</option>
+                                    </select>
+                                </div>-->
+                                <div class="btn-holder">
+                                    <a class="btn" href="#">ПОДРОБНЕЕ</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -40,21 +42,21 @@
             </div>
             <div class="col magazine-info__shipment">
                 <a class="js-shipment-info" href="#">
-                    <span class="magazine-info__title">Доставка <i class="icon"></i></span>
+                    <span class="magazine-info__title">Доставка <i class="icon icon-car2"></i></span>
                     <div class="desc">Ежедневно с 10:00 до 22:00</div>
                 </a>
-                <div class="shipment-info__holder">
+                <div class="shipment-info__holder dropdown_top">
                     <div class="shipment-info">
-                        <div class="shipment-info__title dropdown-fade-to">
+                        <div class="shipment-info__title dropdown-fade-to dropdown__header">
                             СТОИМОСТЬ ДОСТАВКИ
                         </div>
-                        <div class="shipment-info__body">
+                        <div class="shipment-info__body dropdown__body">
                             <div class="type-list">
                                 <div class="type-list__item">
                                     <span class="type-title">Курьером по Москве:</span>
                                     <div class="line">
                                         <span class="name">СПСР Экспресс</span>
-                                        <span class="price">650Р</span>
+                                        <span class="price">650<span class="rub"><span>руб</span></span></span>
                                     </div>
                                     <div class="line">
                                         <span class="name">СПСР Экспресс</span>
@@ -65,11 +67,11 @@
                                     <span class="type-title">по России:</span>
                                     <div class="line">
                                         <span class="name">СПСР Экспресс</span>
-                                        <span class="price">650Р</span>
+                                        <span class="price">650<span class="rub"><span>руб</span></span></span>
                                     </div>
                                     <div class="line">
                                         <span class="name">СПСР Экспресс</span>
-                                        <span class="price">650Р</span>
+                                        <span class="price">650<span class="rub"><span>руб</span></span></span>
                                     </div>
                                     <div class="line">
                                         <span class="name">СПСР Экспресс</span>
@@ -87,8 +89,37 @@
                 <div class="desc">в будние дни с 9:00 до 19:00</div>
             </div>
             <div class="col magazine-info__call">
-                <span class="magazine-info__title">+7 (495) 255 11 08 <i class="icon"></i></span>
-                <a href="#" class="desc js-call-popup">Заказать обратный звонок</a>
+                <a class="js-call" href="#">
+                    <span class="magazine-info__title">+7 (495) 255 11 08 <i class="icon icon-phone"></i></span>
+                    <div class="desc">+7  (800) 255 11 08 Бесплатно</div>
+                </a>
+                <div class="call-info__holder dropdown_top">
+                    <div class="call-info">
+                        <div class="call-info__title dropdown-fade-to dropdown__header">
+                            КОЛЛ-ЦЕНТР
+                        </div>
+                        <div class="call-info__body dropdown__body">
+                            <form class="call-form" action>
+                                <span class="call-form__title">ОБРАТНЫЙ ЗВОНОК</span>
+                                <div class="row">
+                                    <label for="call-i-name">Ваше имя</label>
+                                    <input class="inputtext" name="name" id="call-i-name" type="text"/>
+                                </div>
+                                <div class="row">
+                                    <label for="call-i-phone">Телефон</label>
+                                    <input class="inputtext phone-mask"  name="name" id="call-i-phone" type="text"/>
+                                </div>
+                                <div class="call-info__info">Колл-центр работает ежедневно с 9:00 до 22:00</div>
+                                <div class="btn-holder">
+                                    <a class="btn btn-submit" href="#">
+                                        ПЕРЕЗВОНИТЕ МНЕ
+                                        <input type="submit" class="submit" value=""/>
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -214,7 +245,7 @@
             <div class="basket basket-top">
                     <div class="basket-top__items">
                         <a class="js-basket-open" href="#">
-                            <span class="basket-top__icon">
+                            <span class="basket-top__icon icon-basket">
                                 <span class="count"></span>
                             </span>
                         </a>

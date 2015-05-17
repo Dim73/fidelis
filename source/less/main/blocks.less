@@ -2,7 +2,8 @@
 .magazine-info {
 
   .header & {
-    float: left;
+    float: right;
+    width: 785px;
     ._clearfix();
     margin-top: 7px;
   }
@@ -16,6 +17,12 @@
 
   .col {
     float: left;
+    position: relative;
+    margin-right: 32px;
+
+    &:last-child {
+      margin-right: 0;
+    }
   }
 
   .desc {
@@ -35,6 +42,7 @@
 
   .icon {
     display: inline-block;
+    font-size: 16px;
   }
 
   .desc {
@@ -45,14 +53,14 @@
   &__address {
 
     .header & {
-      margin-right: 39px;
       position: relative;
 
       .magazine-info__title {
         color: @red;
         text-decoration: none;
         border-bottom: 1px dotted #e30c19;
-        display: inline;
+        display: inline-block;
+        margin-bottom: 1px;
       }
     }
 
@@ -63,16 +71,16 @@
     .js-address-popup {
       display: block;
       text-decoration: none;
+
+      & > * {
+        ._transition(color);
+      }
     }
 
-
-
     .icon {
-      .sprite(@pin);
       margin-left: 2px;
 
       .footer & {
-        .sprite(@pin-white);
       }
     }
 
@@ -86,33 +94,31 @@
     position: relative;
 
     .header & {
-      margin-right: 36px;
-      cursor: pointer;
     }
 
     .icon {
-      .sprite(@car);
       margin-left: 3px;
 
       .footer & {
-        .sprite(@car-white);
       }
     }
 
     .js-shipment-info {
       display: block;
       text-decoration: none;
+
+      & > * {
+        ._transition(color);
+      }
     }
 
     .active {
 
       & > * {
         color: @cyan;
-        ._transition(color);
       }
 
       .icon {
-        .sprite(@car-cyan);
       }
     }
   }
@@ -120,24 +126,39 @@
   &__selfshipment {
 
     .header & {
-      margin-right: 39px;
     }
 
     .icon {
       .sprite(@clock);
     }
+
+
+    .magazine-info__title {
+      margin-top: -1px;
+    }
   }
 
   &__call {
+    float: right !important;
+
+    & > a {
+      display: block;
+
+      & > * {
+        ._transition(color);
+      }
+    }
 
     .icon {
-      .sprite(@mobile);
     }
 
     .desc {
-      color: @red;
-      text-decoration: none;
-      border-bottom: 1px dotted #e30c19;
+
+    }
+
+    .active > * {
+      color: #ff7f00;
+      border-bottom: none;
     }
   }
 
@@ -152,6 +173,45 @@
     }
   }
 }
+
+
+.dropdown {
+
+  &_top {
+    width: 324px;
+    position: absolute;
+    overflow: hidden;
+    height: 0;
+    ._transition(height);
+  }
+
+  &__header {
+    text-align: center;
+    height: 48px;
+    font: 14px/52px @font-lsb;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 10;
+    .boxShadow(0 2px 4px 0 #BDBDBD);
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: -18px;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 18px 18px 18px;
+    }
+  }
+
+  &__body {
+    background-color: #FFFFFF;
+    margin: 0 2px;
+  }
+}
+
 
 .breadcrumbs {
   float: left;
@@ -215,43 +275,24 @@
   &__holder {
     position: absolute;
     top: 63px - 18;
-    left: -143px;
-    width: 388px;
-    height: 0;
-    overflow: hidden;
-    ._transition(height);
+    left: -124px;
   }
 
-  
   .header & {
     padding-top: 18px;
   }
 
   &__title {
     background-color: @cyan;
-    text-align: center;
-    height: 48px;
-    font: 14px/52px @font-lsb;
-    color: #FFFFFF;
-    text-transform: uppercase;
-    position: relative;
 
     &:before {
-      content: "";
-      position: absolute;
-      top: -18px;
       left: 50%;
       margin-left: -9px;
-      width: 0;
-      height: 0;
-      border-style: solid;
-      border-width: 0 18px 18px 18px;
       border-color: transparent transparent #27938c transparent;
     }
   }
   
   &__body {
-    background-color: #FFFFFF;
     padding: 15px 26px 13px;
     text-align: center;
   }
@@ -296,6 +337,10 @@
       }
     }
   }
+
+  .rub {
+    font-size: 11px;
+  }
 }
 
 .address {
@@ -306,46 +351,29 @@
     &__holder {
       position: absolute;
       top: 63px - 18;
-      left: -143px;
-      width: 388px;
-      overflow: hidden;
-      height: 0;
-      ._transition(height);
+      left: -110px;
     }
 
     &__title {
       background-color: @red;
-      text-align: center;
-      height: 48px;
-      font: 14px/52px @font-lb;
-      color: #FFFFFF;
-      text-transform: uppercase;
-      position: relative;
 
       &:before {
-        content: "";
-        position: absolute;
-        top: -18px;
         left: 50%;
         margin-left: -17px;
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 0 18px 18px 18px;
         border-color: transparent transparent @red transparent;
       }
     }
 
     &__body {
-      background-color: #FFFFFF;
       padding-bottom: 12px;
       position: relative;
+      background-color: #ffffff;
     }
   }
 
   &-map {
     height: 204px;
-    width: 388px;
+    
 
     &__container {
       border-top: 1px solid #999999;
@@ -370,7 +398,7 @@
 
     .header & {
       position: absolute;
-      right: 20px;
+      right: 0px;
       top: 12px;
     }
     
@@ -442,6 +470,78 @@
           }
         }
       }
+    }
+  }
+}
+
+.call {
+
+  &-info {
+    padding-top: 18px;
+
+    &__holder {
+      position: absolute;
+      top: 63px - 18;
+      right: 0;
+    }
+
+    &__title {
+      background-color: #ff7f00;
+
+      &:before {
+        right: 72px;
+        border-color: transparent transparent #ff7f00 transparent;
+      }
+    }
+
+    &__body {
+      padding: 21px 20px 30px;
+      position: relative;
+      .transition(all);
+      overflow: hidden;
+
+      &.toggle {
+        height: 20px !important;
+        padding-bottom: 21px;
+      }
+    }
+
+    &__info {
+      color: #444444;
+      margin: 22px 0 23px;
+      text-align: center;
+    }
+
+    .succeful-msg {
+      display: block;
+      margin-bottom: 10px;
+    }
+  }
+
+  &-form {
+    opacity: 1;
+    .transition(opacity);
+
+    &__title {
+      display: block;
+      font-family: @font-lb;
+      text-transform: uppercase;
+      color: #ff7f00;
+      margin-bottom: 19px;
+    }
+
+    .row {
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: block;
+      color: #2d2d2d;
+      margin-bottom: 5px;
+    }
+
+    .inputtext {
+      width: 100%;
     }
   }
 }
@@ -526,6 +626,10 @@
   display: block;
   font: bold 14px/1 Arial;
   margin-top: 20px;
+
+  .rub {
+
+  }
 }
 
 ///tooltip
@@ -1156,6 +1260,7 @@
 
   &-fixed {
     position: fixed;
+    z-index: 500;
   }
 }
 

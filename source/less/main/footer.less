@@ -3,15 +3,16 @@
   border-top: 5px solid @red;
 
   &-inner {
-    padding: 51px 0 20px;
+    padding: 41px 0 14px;
     color: #FFFFFF;
   }
 
   &-col {
     float: left;
-    height: 159px;
+    height: 163px;
     border-right: 1px solid #575757;
     margin-left: 21px;
+    padding-top: 10px;
 
     &:first-child {
       margin-left: 21px + @stupidMargin;
@@ -52,8 +53,8 @@
   .social-menu {
     ._di();
     width: 217px;
-    padding-right: 20px;
-    margin-top: 34px;
+    padding-right: 17px;
+    margin-top: -1px;
     
     li {
       width: 32px;
@@ -92,10 +93,33 @@
     }
   }
 
+  &__bottom {
+    border-top: 1px solid #575757;
+    padding-bottom: 16px;
+    ._clearfix();
+  }
+
   .copyright {
-    text-align: center;
-    margin-top: 25px;
     line-height: 23px;
     letter-spacing: 0.05em;
+    color: #ffffff;
+    float: left;
+    margin: 13px 0 0 24px;
+
+    img {
+      width: 19px;
+      position: relative;
+      top: 5px;
+    }
+  }
+
+  .pay {
+    float: right;
+    margin: 25px 0 0 0;
+
+    img {
+      display: block;
+      width: 326px;
+    }
   }
 }

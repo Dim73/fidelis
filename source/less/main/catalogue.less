@@ -428,11 +428,25 @@
     }
 
     &:after {
-      content: "Р";
-      position: static;
+      content: "\e800";
+      position: relative;
+      left: 0;
+      top: 1px;
       margin: 0;
       border: none;
       background: none;
+      font-family: 'icomoon';
+      speak: none;
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1;
+      font-size: 13px;
+
+      /* Better Font Rendering =========== */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
   }
 }
@@ -647,11 +661,11 @@
   }
 
   &_popular {
-    margin-top: 20px;
+    margin-top: 45px;
 
     .item {
       width: 255px;
-      height: 432px;
+      height: 419px;
       margin: 0;
       padding: 0;
     }
@@ -664,6 +678,57 @@
       color: #303030;
       letter-spacing: 0.05em;
       margin-bottom: 20px;
+    }
+  }
+
+  &-slider {
+    position: relative;
+
+    .bx-prev, .bx-next {
+      position: absolute;
+      top: 175px;
+      font-size: 0px;
+      color: #e4e4e4;
+      font-family: 'icomoon';
+      speak: none;
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1;
+
+      /* Better Font Rendering =========== */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+
+      &:before {
+        font-size: 30px;
+      }
+
+      &:hover {
+        color: #6a6a6a;
+      }
+
+      &.disabled {
+        color: #e4e4e4;
+      }
+    }
+
+
+    .bx-prev {
+      left: -90px;
+
+      &:before {
+        content: "\e607";
+      }
+    }
+
+    .bx-next {
+      right: -90px;
+
+      &:before {
+        content: "\e608";
+      }
     }
   }
 }

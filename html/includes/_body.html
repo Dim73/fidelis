@@ -5,7 +5,7 @@
                             <img src="{{img}}" alt=""/>
                         </div>
                         <div class="basket-item__name">
-                            {{name}}
+                            <a href="{{link}}" class="basket-item__link">{{name}}</a>
                             <span class="article">Артикул: {{articul}}</span>
                         </div>
                         <div class="basket-item__size">
@@ -39,7 +39,7 @@
 <script id="basket-sale" type="x-tmpl-mustache">
     <div class="total__sale">
         <span class="lbl">Итого c учетом {{sale}}% скидки:</span>
-        <span class="summ"></span><span class="rub">руб.</span>
+        <span class="summ"></span><span class="rub"><span>руб</span></span>
     </div>
 </script>
 <div class="fade fade-fixed"></div>

@@ -48,9 +48,9 @@
                 if ($thisLink.is($linkVideo)) return;
 
                 if (videoPlay) {
-                    $linkVideo.trigger('click');
+                    toggleVideo();
+                    $containerVideo.fadeOut();
                 }
-                $containerVideo.fadeOut();
 
                 if (!!loadImages[thisIndex]) {
                     switchImg(loadImages[thisIndex], $thisLink);
@@ -78,6 +78,10 @@
             }
 
             $linkVideo.click(function(){
+                toggleVideo();
+            });
+
+            function toggleVideo() {
                 if (videoPlay) {
                     $linkVideo.removeClass('pause');
                     $video[0].pause();
@@ -88,8 +92,7 @@
                     });
                 }
                 videoPlay = !videoPlay;
-            });
-
+            }
 
             $item.eq(0).trigger('click');
         })

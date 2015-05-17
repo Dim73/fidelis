@@ -23,6 +23,42 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-rouble:before {
+  content: "\e800";
+}
+
+.icon-heart:before {
+  content: "\e609";
+}
+
+.icon-basket:before {
+  content: "\e60a";
+}
+
+.icon-car2:before {
+  content: "\e60b";
+}
+
+.icon-phone:before {
+  content: "\e60c";
+}
+
+.icon-pin:before {
+  content: "\e60d";
+}
+
+.icon-zoom:before {
+  content: "\e606";
+}
+
+.icon-slider-left:before {
+  content: "\e607";
+}
+
+.icon-slider-right:before {
+  content: "\e608";
+}
+
 .icon-card:before {
   content: "\e600";
 }
@@ -69,6 +105,33 @@
 
 .icon-vk:before {
   content: "\e804";
+}
+
+.rub {
+  font-family: 'icomoon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  top: 1px;
+  margin-left: 1px;
+  font-size: .9em;
+
+  span {
+    font-size: 0;
+  }
+
+  &:before {
+    content: "\e800";
+
+  }
 }
 
 .icon-close {
@@ -216,6 +279,16 @@ a.btn, .btn {
 
   &-holder {
     text-align: center;
+  }
+
+  &_white {
+    background-color: transparent;
+    border-color: #ffffff;
+    color: #ffffff;
+
+    &:hover {
+      background-color: transparent;
+    }
   }
 }
 
@@ -439,7 +512,7 @@ a.btn, .btn {
 
 .error {
 
-  & > input[type=text], textarea {
+  & > .inputtext {
     border: 1px solid @red !important;
   }
 }
