@@ -284,8 +284,8 @@ $(document).ready(function() {
                     controls: false,
                     pager: true,
                     auto: false,
-                    onSliderLoad: function() {
-
+                    onSliderLoad: function(e) {
+                        this.$self.addClass('loaded');
                     }
                 }
             }
@@ -351,6 +351,7 @@ $(document).ready(function() {
             }
         });
 
+        //subscribe
         $('.subscribe').subscribe();
 
         //menu img preview
@@ -415,6 +416,46 @@ $(document).ready(function() {
                $fade.stop().fadeOut(400);
            }
         });
+
+
+        //banner prlx
+        var $banner = $('.main-banner'),
+            $img = $('.slider-item__prlx .bg', $banner),
+            bannerHeight = $banner.height(),
+            windowSelector = $(window),
+            documentSelector = $(document),
+            windowHeight = windowSelector.outerHeight(),
+            bufferRatio = $banner.data('ratio'),
+            bannerOffsetTop = $banner.offset().top;
+
+
+        $(window).bind('scroll.banner', function(){
+            var documentScrollTop,
+                startScrollTop,
+                endScrollTop;
+
+
+            documentScrollTop = documentSelector.scrollTop();
+
+            startScrollTop = documentScrollTop + windowHeight;
+            endScrollTop = documentScrollTop - bannerHeight;
+
+            if((startScrollTop > bannerOffsetTop) && (endScrollTop < bannerOffsetTop)){
+
+                var y = documentScrollTop - bannerOffsetTop;
+                var newPositionTop =  parseInt(y / bufferRatio);
+                /*if(!parallaxInvert) {
+                    newPositionTop =  parseInt(y / bufferRatio);
+                } else {
+                    newPositionTop = -parseInt(y / bufferRatio) - parseInt(windowHeight / bufferRatio)
+                }*/
+
+                console.log(bufferRatio);
+                $img.css({ top: newPositionTop});
+            }
+        });
+
+        $(window).trigger('scroll.banner');
     });
 })(jQuery);
 

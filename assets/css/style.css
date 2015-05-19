@@ -3655,6 +3655,15 @@ h1 {
 }
 .main-banner__slider {
   position: relative;
+  opacity: 0;
+  -webkit-transition: opacity 0.3s ease 0s;
+  -moz-transition: opacity 0.3s ease 0s;
+  -o-transition: opacity 0.3s ease 0s;
+  -ms-transition: opacity 0.3s ease 0s;
+  transition: opacity 0.3s ease 0s;
+}
+.main-banner__slider.loaded {
+  opacity: 1;
 }
 .main-banner .bg {
   position: absolute;

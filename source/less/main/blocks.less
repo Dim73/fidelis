@@ -1270,6 +1270,12 @@
 
   &__slider {
     position: relative;
+    opacity: 0;
+    .transition(opacity);
+
+    &.loaded {
+      opacity: 1;
+    }
   }
 
   .bg {
