@@ -204,7 +204,7 @@
             $.ajax({
                 url: '../../source/back/item.json',
                 cache: false,
-                type: 'post',
+                type: 'get',
                 dataType: 'json',
                 data: {id : id},
                 success: function(data,status,xhr){

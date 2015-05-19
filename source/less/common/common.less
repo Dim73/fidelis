@@ -286,6 +286,10 @@ a.btn, .btn {
     border-color: #ffffff;
     color: #ffffff;
 
+    &:after {
+      border-color: transparent transparent transparent #ffffff;
+    }
+
     &:hover {
       background-color: transparent;
     }
@@ -514,5 +518,39 @@ a.btn, .btn {
 
   & > .inputtext {
     border: 1px solid @red !important;
+  }
+}
+
+.scroll-top {
+  position: fixed;
+  width: 100%;
+  z-index: 666;
+  left: 0;
+  bottom: 0;
+  display: none;
+
+  .wrap {
+    position: relative;
+  }
+
+  &__link {
+    position: absolute;
+    bottom: 20px;
+    right: -90px;
+    width: 45px;
+    height: 45px;
+    background-color: #353535;
+    ._radius(50%);
+    text-align: center;
+
+    &:after {
+      content: "";
+      margin-top: 16px;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 12px 13px 12px;
+      border-color: transparent transparent #ffffff transparent;
+    }
   }
 }

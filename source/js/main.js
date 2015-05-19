@@ -274,6 +274,20 @@ $(document).ready(function() {
 
                     }
                 }
+            },
+            {
+                sliderClass: '.main-banner__slider',
+                options: {
+                    infiniteLoop: true,
+                    slideMargin: 0,
+                    slideWidth: 1020,
+                    controls: false,
+                    pager: true,
+                    auto: false,
+                    onSliderLoad: function() {
+
+                    }
+                }
             }
         ];
         sliderConstructor(allSliders);
@@ -352,6 +366,32 @@ $(document).ready(function() {
         Tipped.create('.tooltip', '', {
             maxWidth: 290
         });
+
+        //scrollTop
+        var $st = $('.scroll-top'),
+            $stLink = $('.scroll-top__link');
+
+        $stLink.click(function(e){
+            e.preventDefault();
+            $('html, body').animate({
+                scrollTop: 0
+            })
+        });
+
+        $(window).scroll(function(){
+            var $this = $(this);
+            var thisScroll = $this.scrollTop();
+            if (thisScroll > 300) {
+                if (!$st.is(':visible')) {
+                    $st.stop().fadeIn();
+                }
+            } else {
+                if ($st.is(':visible') && !$st.is(':animated')) {
+                    $st.stop().fadeOut();
+                }
+            }
+        });
+
     });
 })(jQuery);
 
