@@ -97,12 +97,12 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
                 $dropContent = $self.children(),
                 isOpen = false,
                 fadeTop = 0,
-                $fade = $('<div class="fade"></div>');
+                $fade = $('.fade-fixed');// $('<div class="fade"></div>');
 
-            $('body').append($fade);
+            //$('body').append($fade);
 
             $fade.css({
-                position: 'absolute'
+                "z-index": 400
             });
 
             $link.click(function(e){
@@ -115,17 +115,17 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
                 if (flag) {
                     opt.onOpen();
                     $self.height($dropContent.outerHeight());
-                    console.log($fade.offset().top, !$fade.offset().top);
-                    if (!fadeTop) {
+                   /* if (!fadeTop) {
                         fadeTop = $(opt.fadeTo, $self).offset().top;
                         $fade.css({top: fadeTop, height: $fade.height() - fadeTop});
-                    }
-                    $fade.stop().fadeIn();
+                    }*/
+                    $fade.stop().fadeIn(400);
                 } else {
                     $self.height(0);
-                    $fade.stop().fadeOut();
+                    $fade.stop().fadeOut(400);
                 }
                 $link.toggleClass('active',flag);
+                window.dropDownIsOpen = flag;
             }
 
             $(window).bind('click',function(e){
@@ -135,6 +135,11 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
                     isOpen = !isOpen;
                 }
             });
+
+            $self.bind('close',function(){
+                toggleSelf(false);
+                isOpen = false;
+            })
         })
     }
 })(jQuery);
@@ -4084,6 +4089,29 @@ $(document).ready(function() {
             }
         });
 
+        //main menu
+        var $h= $('.header-menu'),
+            hTop = $h.offset().top,
+            $fade = $('.fade-fixed');
+
+        $(window).scroll(function(e){
+            var $this = $(this),
+                thisScroll = $this.scrollTop();
+            if (!$h.is('.fixed') && thisScroll > hTop) {
+                $('.dropdown_top').trigger('close');
+            }
+            $h.toggleClass('fixed',thisScroll > hTop);
+        });
+
+        $('.main-menu__item',$h).hover(function(){
+            if ($('.main-menu__collection',$(this)).length) {
+                $fade.stop().fadeIn(400);
+            }
+        },function(){
+           if (!window.dropDownIsOpen) {
+               $fade.stop().fadeOut(400);
+           }
+        });
     });
 })(jQuery);
 

@@ -17,12 +17,12 @@
                 $dropContent = $self.children(),
                 isOpen = false,
                 fadeTop = 0,
-                $fade = $('<div class="fade"></div>');
+                $fade = $('.fade-fixed');// $('<div class="fade"></div>');
 
-            $('body').append($fade);
+            //$('body').append($fade);
 
             $fade.css({
-                position: 'absolute'
+                "z-index": 400
             });
 
             $link.click(function(e){
@@ -35,17 +35,17 @@
                 if (flag) {
                     opt.onOpen();
                     $self.height($dropContent.outerHeight());
-                    console.log($fade.offset().top, !$fade.offset().top);
-                    if (!fadeTop) {
+                   /* if (!fadeTop) {
                         fadeTop = $(opt.fadeTo, $self).offset().top;
                         $fade.css({top: fadeTop, height: $fade.height() - fadeTop});
-                    }
-                    $fade.stop().fadeIn();
+                    }*/
+                    $fade.stop().fadeIn(400);
                 } else {
                     $self.height(0);
-                    $fade.stop().fadeOut();
+                    $fade.stop().fadeOut(400);
                 }
                 $link.toggleClass('active',flag);
+                window.dropDownIsOpen = flag;
             }
 
             $(window).bind('click',function(e){
@@ -55,6 +55,11 @@
                     isOpen = !isOpen;
                 }
             });
+
+            $self.bind('close',function(){
+                toggleSelf(false);
+                isOpen = false;
+            })
         })
     }
 })(jQuery);

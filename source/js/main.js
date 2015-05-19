@@ -392,6 +392,29 @@ $(document).ready(function() {
             }
         });
 
+        //main menu
+        var $h= $('.header-menu'),
+            hTop = $h.offset().top,
+            $fade = $('.fade-fixed');
+
+        $(window).scroll(function(e){
+            var $this = $(this),
+                thisScroll = $this.scrollTop();
+            if (!$h.is('.fixed') && thisScroll > hTop) {
+                $('.dropdown_top').trigger('close');
+            }
+            $h.toggleClass('fixed',thisScroll > hTop);
+        });
+
+        $('.main-menu__item',$h).hover(function(){
+            if ($('.main-menu__collection',$(this)).length) {
+                $fade.stop().fadeIn(400);
+            }
+        },function(){
+           if (!window.dropDownIsOpen) {
+               $fade.stop().fadeOut(400);
+           }
+        });
     });
 })(jQuery);
 

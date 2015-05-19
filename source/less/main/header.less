@@ -3,6 +3,8 @@
 .header {
   position: relative;
   z-index: 500; /* collection menu!!! */
+  height: 150px;
+  background-color: #ffffff;
 
   .logo {
     display: block;
@@ -30,6 +32,13 @@
     position: relative; /* no relative in menu above!!! */
     /*-webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,.5);
     box-shadow: 0 1px 2px 0 rgba(0,0,0,.5);*/
+
+    &.fixed {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+    }
   }
 
   .main-menu {
@@ -109,6 +118,7 @@
             }
 
             &__collection {
+              z-index: 101;
               left: 0;
               opacity: 1;
               ._transition(opacity,.4s,.1s);
@@ -131,6 +141,7 @@
     /**submenu collection**/
     &__collection {
       position: absolute;
+      z-index: 100;
       width: 100%;
       top: @menuHeight;
       background-color: #FFFFFF;

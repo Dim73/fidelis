@@ -3825,6 +3825,8 @@ h1 {
   position: relative;
   z-index: 500;
   /* collection menu!!! */
+  height: 150px;
+  background-color: #ffffff;
   /*** main menu ***/
 }
 .header .logo {
@@ -3858,6 +3860,12 @@ h1 {
   /* no relative in menu above!!! */
   /*-webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,.5);
     box-shadow: 0 1px 2px 0 rgba(0,0,0,.5);*/
+}
+.header-menu.fixed {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
 }
 .header .main-menu {
   float: left;
@@ -3923,6 +3931,7 @@ h1 {
   opacity: 1;
 }
 .header .main-menu__item.hasSubmenu:hover .main-menu__collection {
+  z-index: 101;
   left: 0;
   opacity: 1;
   -webkit-transition: opacity 0.4s 0.1s ease-in-out, left 0.1s 0s ease-in-out;
@@ -3938,6 +3947,7 @@ h1 {
 }
 .header .main-menu__collection {
   position: absolute;
+  z-index: 100;
   width: 100%;
   top: 48px;
   background-color: #FFFFFF;
@@ -4154,8 +4164,8 @@ h1 {
   display: inline-block;
   position: relative;
   vertical-align: bottom;
-  margin-right: 8px;
-  font-size: 18px;
+  margin-right: 6px;
+  font-size: 17px;
   color: #ffffff;
 }
 .basket-top__items {
@@ -4183,7 +4193,7 @@ h1 {
   display: inline-block;
   letter-spacing: 0.05em;
   position: relative;
-  top: 2px;
+  top: 1px;
 }
 .basket-top .basket-items__body {
   padding: 17px 0px 12px 11px;
@@ -4207,6 +4217,7 @@ h1 {
   left: -347px;
   top: 24px;
   width: 427px;
+  transform: translate3d(0, 0, 0);
 }
 .basket-top .basket-items {
   padding-top: 10px;
