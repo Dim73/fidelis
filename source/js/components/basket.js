@@ -581,6 +581,7 @@
             e.preventDefault();
             order.nextStep(1);
         });
+
         //catalog item add
         $('.itemlist').length && (function(){
             //size option
@@ -605,6 +606,7 @@
                 if ($(this).is('.btn_cart-added')) return;
                 $curItem = $(this).closest('.js-item-data');
                 var itemData = eval('('+$curItem.data('item')+')');
+                var imgSrc = $curItem.find('.slider-item:first-child img').attr('src');
                 self.id = itemData.id;
                 if (itemData.sizes) {
                     var renderData = {
@@ -613,7 +615,8 @@
                             for ( property in this ) {
                                 return property;
                             }
-                        }
+                        },
+                        img: imgSrc
                     };
                     var rendered = Mustache.render(htmlInner, renderData);
                     $sizePopupInner.html(rendered);

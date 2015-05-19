@@ -338,13 +338,12 @@ $(window).scroll(function() {
            $slider = $('.slider-contaniner', $self);
         if ($self.find('.stop').length) return;
         if ($slider.data('plugin') == 'bxslider') {
-            console.log('enter');
             $slider.data('bxslider').startAuto();
         } else {
             var thisSlider = $slider.bxSlider({
                 mode: 'fade',
                 slideWidth: 255,
-                pause: 2000,
+                pause: 1300,
                 auto: true,
                 pager: false,
                 controls: false
@@ -359,9 +358,8 @@ $(window).scroll(function() {
         var $self = $(this),
             $slider = $('.slider-contaniner', $self);
         if ($slider.data('plugin') == 'bxslider') {
-            console.log('leave');
-            $slider.data('bxslider').stopAuto();
             $slider.data('bxslider').goToSlide(0);
+            $slider.data('bxslider').stopAuto();
         }
         $self.removeClass('hovered');
     });

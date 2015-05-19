@@ -74,7 +74,7 @@
                                     <div class="slider-contaniner">
                                         <div class="slider-item">
                                             <a href="#">
-                                                <img src="<!--#echo var="assets-path"-->/item.jpg" alt=""/>
+                                                <img src="<!--#echo var="assets-path"-->/item2.jpg" alt=""/>
                                             </a>
                                         </div>
                                     </div>
@@ -166,13 +166,16 @@
                         <div class="list">
                             <div class="nano-scroll">
                                 <div class="nano-content">
-                                    <ul data-seltype="check" id="fstyle">
-                                        <li style=""><label><input type="checkbox" data-filter="style" data-value="30">Breuning (Германия)</label></li>
-                                        <li style=""><label><input type="checkbox" data-filter="style" data-value="27">Dea (Италия)</label></li>
-                                        <li><label><input type="checkbox" data-filter="style" data-value="23">Graziella (Италия)</label></li>
-                                        <li><label><input type="checkbox" data-filter="style" data-value="31">Graziella Золото</label></li>
-                                        <li class="back"><label><input type="checkbox" disabled data-filter="style" data-value="31">Graziella Золото</label></li>
-
+                                    <ul data-seltype="single" id="ftypes">
+                                        <li><a class="selected" data-filter="type" data-value="19" href="/cat/type/19.html">Аксессуары</a></li>
+                                        <li><a class="back" data-filter="type" data-value="11" href="/cat/type/11.html">Браслеты</a></li>
+                                        <li><a class="back" data-filter="type" data-value="12" href="/cat/type/12.html">Броши</a></li>
+                                        <li><a class="back" data-filter="type" data-value="15" href="/cat/type/15.html">Бусы</a></li>
+                                        <li><a class="back" data-filter="type" data-value="6" href="/cat/type/6.html">Колье</a></li>
+                                        <li><a class="back" data-filter="type" data-value="13" href="/cat/type/13.html">Кольца</a></li>
+                                        <li><a class="back" data-filter="type" data-value="10" href="/cat/type/10.html">Подвески</a></li>
+                                        <li><a class="back" data-filter="type" data-value="2" href="/cat/type/2.html">Серьги</a></li>
+                                        <li><a class="back" data-filter="type" data-value="14" href="/cat/type/14.html">Цепи</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -194,7 +197,7 @@
                                         <ul data-seltype="check" id="ftypes">
                                             <li style=""><label><input type="checkbox"
                                                                                      data-filter="collection"
-                                                                                     data-value="30" checked>Breuning (Германия)</label>
+                                                                                     data-value="30" checked>Graziella</label>
                                             </li>
                                             <li style=""><label><input type="checkbox"
                                                                                      data-filter="collection"
@@ -423,6 +426,7 @@
 </div>
 
 <script id="template-popup-size" type="x-tmpl-mustache">
+        <img class="item-img" src="{{img}}" alt=""/>
         <div class="pitem-size">
             <div class="select-size__wrap">
                 <select class="no-styler select_size">

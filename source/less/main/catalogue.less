@@ -6,6 +6,8 @@
     border-top: 1px solid #6a6a6a;
     margin: 14px 0 55px;
     padding-top: 12px;
+    position: relative;
+    z-index: 5;
 
     .right {
       float: right;
@@ -40,11 +42,27 @@
             &:last-child {
               margin-bottom: 0;
             }
+
+            a {
+              color: #303030;
+              display: inline-block;
+              margin-left: 14px;
+
+              &:hover {
+                color: #888888;
+                text-decoration: underline;
+              }
+            }
           }
 
           label {
             color: #303030;
             cursor: pointer;
+
+            &:hover {
+              color: #888888;
+              text-decoration: underline;
+            }
           }
 
           .back {
@@ -170,6 +188,13 @@
         text-decoration: none;
         border-bottom: 1px dotted @grey4;
         margin-right: 16px;
+        ._transition(border-color);
+        ._transition(color);
+
+        &:hover:not([class=active]) {
+          color: #888888;
+          border-color: transparent;
+        }
 
         &.active {
           border: 1px solid #f1868d;
@@ -188,6 +213,8 @@
 
   .line-filter {
     ._clearfix();
+    position: relative;
+    z-index: 10;
 
     .itemsfilter {
       float: left;
@@ -199,23 +226,36 @@
 
       .setcatcount {
         display: inline-block;
+        margin-left: 2px;
       }
 
       .jq-selectbox {
 
         &__select {
           cursor: pointer;
-          padding: 5px 5px 0;
+          padding: 4px 4px 0 9px;
+
+          &:hover {
+
+            .jq-selectbox__select-text {
+              color: #888888;
+              border-color: transparent;
+            }
+          }
         }
 
         &__select-text {
           border-bottom: 1px dotted #2e2e2e;
           display: inline-block;
+          ._transition(color);
+          ._transition(border-color);
         }
 
         &__trigger {
           display: inline-block;
-          margin-left: 7px;
+          position: relative;
+          top: -1px;
+          margin-left: 0px;
           width: 0;
           height: 0;
           border-style: solid;
@@ -224,16 +264,21 @@
         }
 
         &__dropdown {
-          background-color: #ffffff;
-          padding: 5px 5px;
-          border: 1px solid #000000;
+          background-color: #f8f7f8;
+          padding: 5px 0px;
+          border: 1px solid #dddddd;
           border-top: none;
           width: 100%;
           ._bs();
 
           li {
             cursor: pointer;
-            line-height: 20px;
+            line-height: 24px;
+            padding: 0 0px 0 8px;
+
+            &:hover, &.sel {
+              background-color: #dddddd;
+            }
           }
 
         }
@@ -243,10 +288,11 @@
           .jq-selectbox {
 
             &__select {
-              padding: 4px 4px 0;
-              border-top: 1px solid #000000;
-              border-left: 1px solid #000000;
-              border-right: 1px solid #000000;
+              padding: 3px 3px 0 8px;
+              border-top: 1px solid #dddddd;
+              border-left: 1px solid #dddddd;
+              border-right: 1px solid #dddddd;
+              background-color: #f8f7f8;
 
               &-text {
                 border: none;
@@ -267,28 +313,41 @@
     .pageswitch {
       float: right;
       color: #888888;
+      font-size: 0;
 
       a:not(.arrow) {
         display: inline-block;
         text-align: center;
         color: #888888;
         text-decoration: none;
-        margin: 0 6px;
+        padding: 3px 5px;
+        margin: 0 1px;
+        ._transition(background-color);
+        font-size: 12px;
 
         &.active {
           color: #2d2d2d;
         }
+
+        &:hover {
+          background-color: #dddddd;
+        }
+      }
+
+      span {
+        font-size: 12px;
       }
 
       .arrow {
         position: relative;
+        top: -1px;
 
         &-next {
-          margin-left: 7px;
+          margin-left: 9px;
         }
 
         &-prev {
-          margin-right: 7px;
+          margin-right: 9px;
         }
       }
     }
@@ -301,6 +360,7 @@
       cursor: pointer;
       height: 18px;
       border: 1px solid #dfdfdf;
+      background-color: #FBFBFB;
       color: #444444;
       padding: 0 10px;
       display: inline-block;
@@ -309,7 +369,12 @@
 
       &:after {
         content: "x";
-        padding-left: 4px;
+        padding-left: 8px;
+        ._transition(color);
+      }
+
+      &:hover:after {
+        color: @red;
       }
     }
   }
@@ -317,15 +382,16 @@
 
 .size-popup {
   position: absolute;
-  z-index: 999;
+  z-index: 450;
   width: 255px;
-  background-color: #ffffff;
+  background-color: #e4e4e4;
   display: none;
   opacity: 0;
 
   &:before {
     content: "";
     position: absolute;
+    z-index: 10;
     top: -8px;
     left: 50%;
     margin-left: -8px;
@@ -333,7 +399,7 @@
     height: 0;
     border-style: solid;
     border-width: 0 8px 8px 8px;
-    border-color: transparent transparent #ffffff transparent;
+    border-color: transparent transparent #e4e4e4 transparent;
 
   }
 
@@ -341,6 +407,10 @@
     position: absolute;
     top: 10px;
     right: 10px;
+
+    &:before, &:after {
+      background-color: #020202;
+    }
   }
   
   .size__inner {
@@ -348,8 +418,29 @@
     text-align: center;
   }
 
+  .item-img {
+    position: absolute;
+    left: 0;
+    top: -255px;
+  }
+
   select {
     width: 100%;
+  }
+
+  .b-custom-select {
+    .boxShadow(inset 0 0 0 1px #444444);
+
+    &_expanded {
+      .boxShadow(inset 0 0 0 1px transparent);
+    }
+  }
+
+  .size_empty {
+
+    .b-custom-select {
+      .boxShadow(inset 0 0 0 1px transparent);
+    }
   }
 
   .pitem-size {
@@ -360,6 +451,13 @@
   .btn {
     width: 100%;
     margin-top: 17px;
+    background-color: #ffffff;
+
+    &:hover {
+      background-color: @red;
+      border-color: @red;
+      color: #ffffff;
+    }
   }
 
   .cost {
@@ -477,6 +575,10 @@
           opacity: 0;
         }
       }
+
+      .description a {
+        color: #444444;
+      }
     }
 
     &-inner {
@@ -548,6 +650,12 @@
 
     .btn {
       width: 183px;
+    }
+
+    .js-buy:hover {
+      background-color: @red;
+      border-color: @red;
+      color: #ffffff;
     }
   }
 
@@ -635,12 +743,20 @@
     &.stop {
 
       &:before {
-        border: none;
+       /* border: none;
         top: 6px;
         left: 6px;
         width: 8px;
         height: 8px;
-        background-color: #444444;
+        background-color: #444444;*/
+        margin: 0px 0 0 0px;
+        background-color: transparent;
+        width: 2px;
+        height: 10px;
+        border-left: 2px solid #444444;
+        border-right: 2px solid #444444;
+        border-top: none;
+        border-bottom: none;
       }
     }
   }

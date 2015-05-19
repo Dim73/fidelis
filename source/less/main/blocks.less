@@ -66,6 +66,17 @@
 
     .footer & {
       margin-bottom: 17px;
+
+      .icon {
+        .transition(color);
+      }
+
+      &:hover {
+
+        .icon {
+          color: @red;
+        }
+      }
     }
 
     .js-address-popup {
@@ -74,6 +85,11 @@
 
       & > * {
         ._transition(color);
+      }
+
+      &:hover > * {
+        color: @red;
+        border-color: transparent;
       }
     }
 
@@ -86,7 +102,7 @@
 
     .active > * {
       color: @red;
-      border-bottom: none;
+      border-color: transparent !important;
     }
   }
 
@@ -103,12 +119,30 @@
       }
     }
 
+    .footer & {
+
+      .icon {
+        .transition(color);
+      }
+
+      &:hover {
+
+        .icon {
+          color: @cyan;
+        }
+      }
+    }
+
     .js-shipment-info {
       display: block;
       text-decoration: none;
 
       & > * {
         ._transition(color);
+      }
+
+      &:hover > * {
+        color: @cyan;
       }
     }
 
@@ -146,6 +180,10 @@
 
       & > * {
         ._transition(color);
+      }
+
+      &:hover > * {
+        color: #ff7f00;
       }
     }
 
@@ -226,6 +264,10 @@
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+
+    &:hover {
+      color: #444444;
+    }
   }
 
   span {

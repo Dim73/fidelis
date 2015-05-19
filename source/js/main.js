@@ -191,106 +191,6 @@ $(document).ready(function() {
         }, 100);
 
 
-        var allSliders = [
-            {
-                sliderClass: '.catdes_catalog .catdes-slider',
-                options: {
-                    pager: false,
-                    maxSlides: 5,
-                    infiniteLoop: false,
-                    slideMargin: 2,
-                    slideWidth: 222,
-                    mode: 'horizontal',
-                    onSliderLoad: function() {
-
-                    }
-                }
-            },
-            {
-                sliderClass: '.catdes_pitem .catdes-slider',
-                options: {
-                    pager: false,
-                    maxSlides: 4,
-                    infiniteLoop: false,
-                    slideMargin: 0,
-                    slideWidth: 234,
-                    mode: 'horizontal',
-                    onSliderLoad: function() {
-
-                    }
-                }
-            },
-            {
-                sliderClass: '.pitem-slider_side',
-                options: {
-                    pager: false,
-                    minSlides: 4,
-                    infiniteLoop: false,
-                    slideMargin: 23,
-                    mode: 'vertical',
-                    onSliderLoad: function() {
-
-                    }
-                }
-            },
-            {
-                sliderClass: '.pitem-slider_full',
-                options: {
-                    pager: false,
-                    maxSlides: 4,
-                    infiniteLoop: false,
-                    slideMargin: 23,
-                    slideWidth: 108,
-                    mode: 'horizontal',
-                    onSliderLoad: function() {
-
-                    }
-                }
-            },
-            {
-                sliderClass: '.complect-slider',
-                options: {
-                    pager: false,
-                    maxSlides: 3,
-                    infiniteLoop: false,
-                    slideMargin: 9,
-                    slideWidth: 108,
-                    mode: 'horizontal',
-                    onSliderLoad: function() {
-
-                    }
-                }
-            },
-            {
-                sliderClass: '.itemlist-slider',
-                options: {
-                    pager: false,
-                    maxSlides: 4,
-                    infiniteLoop: false,
-                    slideMargin: 0,
-                    slideWidth: 255,
-                    mode: 'horizontal',
-                    onSliderLoad: function() {
-
-                    }
-                }
-            },
-            {
-                sliderClass: '.main-banner__slider',
-                options: {
-                    infiniteLoop: true,
-                    slideMargin: 0,
-                    slideWidth: 1020,
-                    controls: false,
-                    pager: true,
-                    auto: false,
-                    onSliderLoad: function(e) {
-                        this.$self.addClass('loaded');
-                    }
-                }
-            }
-        ];
-        sliderConstructor(allSliders);
         $('.select_size, .select_size-order ').CustomSelect({visRows:4});
         $('.pitem-specs__spoilers .folding').folding({openHeight: 163});
         $('.left .folding').folding({openHeight: 200});
@@ -398,7 +298,7 @@ $(document).ready(function() {
             hTop = $h.offset().top,
             $fade = $('.fade-fixed');
 
-        $(window).scroll(function(e){
+        $(window).bind('scroll.menu',function(e){
             var $this = $(this),
                 thisScroll = $this.scrollTop();
             if (!$h.is('.fixed') && thisScroll > hTop) {
@@ -416,46 +316,161 @@ $(document).ready(function() {
                $fade.stop().fadeOut(400);
            }
         });
+        $(window).trigger('scroll.menu');
 
 
         //banner prlx
-        var $banner = $('.main-banner'),
-            $img = $('.slider-item__prlx .bg', $banner),
-            bannerHeight = $banner.height(),
-            windowSelector = $(window),
-            documentSelector = $(document),
-            windowHeight = windowSelector.outerHeight(),
-            bufferRatio = $banner.data('ratio'),
-            bannerOffsetTop = $banner.offset().top;
+        var $banner = $('.main-banner');
+        if ($banner.length) {
+            var bannerHeight = $banner.height(),
+                windowSelector = $(window),
+                documentSelector = $(document),
+                windowHeight = windowSelector.outerHeight(),
+                bufferRatio = $banner.data('ratio'),
+                bannerOffsetTop = $banner.offset().top;
+        }
+
+        function initBannerPrlx(img) {
+            $(window).bind('scroll.banner', function(){
+                var documentScrollTop,
+                    startScrollTop,
+                    endScrollTop;
+
+                documentScrollTop = documentSelector.scrollTop();
+
+                startScrollTop = documentScrollTop + windowHeight;
+                endScrollTop = documentScrollTop - bannerHeight;
+
+                if((startScrollTop > bannerOffsetTop) && (endScrollTop < bannerOffsetTop)){
+
+                    var y = documentScrollTop - bannerOffsetTop;
+                    var newPositionTop =  parseInt(y / bufferRatio);
+                    /*if(!parallaxInvert) {
+                     newPositionTop =  parseInt(y / bufferRatio);
+                     } else {
+                     newPositionTop = -parseInt(y / bufferRatio) - parseInt(windowHeight / bufferRatio)
+                     }*/
+
+                    img.css({ top: newPositionTop});
+                }
+            });
+            $(window).trigger('scroll.banner');
+        }
 
 
-        $(window).bind('scroll.banner', function(){
-            var documentScrollTop,
-                startScrollTop,
-                endScrollTop;
+        //all sliders
+        var allSliders = [
+            {
+                sliderClass: '.catdes_catalog .catdes-slider',
+                options: {
+                    pager: false,
+                    maxSlides: 5,
+                    infiniteLoop: false,
+                    slideMargin: 2,
+                    slideWidth: 222,
+                    mode: 'horizontal',
+                    onSliderLoad: function() {
 
+                    }
+                }
+            },
+            {
+                sliderClass: '.catdes_pitem .catdes-slider',
+                options: {
+                    pager: false,
+                    maxSlides: 4,
+                    infiniteLoop: false,
+                    slideMargin: 0,
+                    slideWidth: 234,
+                    mode: 'horizontal',
+                    onSliderLoad: function() {
 
-            documentScrollTop = documentSelector.scrollTop();
+                    }
+                }
+            },
+            {
+                sliderClass: '.pitem-slider_side',
+                options: {
+                    pager: false,
+                    minSlides: 4,
+                    infiniteLoop: false,
+                    slideMargin: 23,
+                    mode: 'vertical',
+                    onSliderLoad: function() {
 
-            startScrollTop = documentScrollTop + windowHeight;
-            endScrollTop = documentScrollTop - bannerHeight;
+                    }
+                }
+            },
+            {
+                sliderClass: '.pitem-slider_full',
+                options: {
+                    pager: false,
+                    maxSlides: 4,
+                    infiniteLoop: false,
+                    slideMargin: 23,
+                    slideWidth: 108,
+                    mode: 'horizontal',
+                    onSliderLoad: function() {
 
-            if((startScrollTop > bannerOffsetTop) && (endScrollTop < bannerOffsetTop)){
+                    }
+                }
+            },
+            {
+                sliderClass: '.complect-slider',
+                options: {
+                    pager: false,
+                    maxSlides: 3,
+                    infiniteLoop: false,
+                    slideMargin: 9,
+                    slideWidth: 108,
+                    mode: 'horizontal',
+                    onSliderLoad: function() {
 
-                var y = documentScrollTop - bannerOffsetTop;
-                var newPositionTop =  parseInt(y / bufferRatio);
-                /*if(!parallaxInvert) {
-                    newPositionTop =  parseInt(y / bufferRatio);
-                } else {
-                    newPositionTop = -parseInt(y / bufferRatio) - parseInt(windowHeight / bufferRatio)
-                }*/
+                    }
+                }
+            },
+            {
+                sliderClass: '.itemlist-slider',
+                options: {
+                    pager: false,
+                    maxSlides: 4,
+                    infiniteLoop: false,
+                    slideMargin: 0,
+                    slideWidth: 255,
+                    mode: 'horizontal',
+                    onSliderLoad: function() {
 
-                console.log(bufferRatio);
-                $img.css({ top: newPositionTop});
+                    }
+                }
+            },
+            {
+                sliderClass: '.main-banner__slider',
+                options: {
+                    infiniteLoop: true,
+                    slideMargin: 0,
+                    slideWidth: 1020,
+                    controls: false,
+                    pager: true,
+                    auto: false,
+                    onSliderLoad: function(currentIndex) {
+                        var $item = $('.slider-item',this.$self).eq(currentIndex);
+                        if ($item.is('.slider-item__prlx')) {
+                            console.log($item.find('.bg'));
+                            initBannerPrlx($item.find('.bg'));
+                        }
+                        this.$self.addClass('loaded');
+                    },
+                    onSlideBefore: function($item) {
+                        $(window).off('scroll.banner');
+                        if ($item.is('.slider-item__prlx')) {
+                            initBannerPrlx($item.find('.bg'));
+                        }
+                    }
+                }
             }
-        });
+        ];
+        sliderConstructor(allSliders);
 
-        $(window).trigger('scroll.banner');
     });
 })(jQuery);
 

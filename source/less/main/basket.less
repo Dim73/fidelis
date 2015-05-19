@@ -6,17 +6,28 @@
     position: relative;
 
     a {
-      display: inline-block;
+      display: block;
       text-decoration: none;
+
+      &:hover {
+
+
+        .basket-top {
+
+          &__icon, &__info {
+            color: #e52e39;
+          }
+        }
+      }
     }
 
     &__icon {
       display: inline-block;
       position: relative;
-      vertical-align: bottom;
       margin-right: 6px;
       font-size: 17px;
       color: #ffffff;
+      .transition(color);
     }
 
     &__items {
@@ -27,7 +38,7 @@
     .count {
       position: absolute;
       top: -11px;
-      right: -12px;
+      right: -13px;
       width: 15px;
       height: 15px;
       ._radius(50%);
@@ -38,12 +49,13 @@
     }
 
     &__info {
-      line-height: @menuHeight + 2;
+      line-height: 52px;
       color: #FFFFFF;
       display: inline-block;
       letter-spacing: 0.05em;
       position: relative;
-      top: 1px;
+      top: -1px;
+      .transition(color);
     }
 
     .basket-items__body {
@@ -71,7 +83,7 @@
 
     &__holder {
       left: -347px;
-      top: 24px;
+      top: 38px;
       width: 427px;
       transform: translate3d(0,0,0);
     }
@@ -418,6 +430,13 @@
 }
 
 .ajxItemModal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(0,0,0,.3);
+  display: none;
+  width: 100%;
+  height: 100%;
   z-index: 999;
   overflow: auto;
   overflow-y: scroll;

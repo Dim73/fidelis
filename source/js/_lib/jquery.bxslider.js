@@ -128,6 +128,7 @@
 			slider.settings.slideWidth = parseInt(slider.settings.slideWidth);
 			// store the original children
 			slider.children = el.children(slider.settings.slideSelector);
+            if (slider.children.length === 1) return;
 			// check if actual number of slides is less than minSlides / maxSlides
 			if(slider.children.length < slider.settings.minSlides) slider.settings.minSlides = slider.children.length;
 			if(slider.children.length < slider.settings.maxSlides) slider.settings.maxSlides = slider.children.length;
@@ -1116,7 +1117,7 @@
 		 */
 		el.goToSlide = function(slideIndex, direction){
 			// if plugin is currently in motion, ignore request
-			if(slider.working || slider.active.index == slideIndex) return;
+			if(/*slider.working ||*/ slider.active.index == slideIndex) return;
 			// declare that plugin is in motion
 			slider.working = true;
 			// store the old index
