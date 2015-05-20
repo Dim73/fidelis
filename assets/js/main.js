@@ -117,9 +117,9 @@ var nAgt=navigator.userAgent; if(!jQuery.browser){jQuery.browser={};jQuery.brows
                 $dropContent = $self.children(),
                 isOpen = false,
                 fadeTop = 0,
-                $fade = $('.fade-fixed');// $('<div class="fade"></div>');
+                $fade =  $('<div class="fade fade-fixed"></div>');//            $('.fade-fixed');// $('<div class="fade fade-fixed"></div>');
 
-            //$('body').append($fade);
+            $('body').append($fade);
 
             $fade.css({
                 "z-index": 400
@@ -3669,7 +3669,7 @@ var g=this.options.containment.padding;if(g&&!b){var h=Math.max(e.dimensions.hei
 
             function itemAdd() {
                 var $btn = $curItem.find('.js-buy');
-                $btn.text('ТОВАР В КОРЗИНЕ').addClass('btn_red btn_cart-added');
+                $btn.text('ТОВАР В КОРЗИНЕ').addClass('btn_cart-added');
                 basket.addItem({id: self.id, size: self.size}, true);
             }
         })();
@@ -3715,7 +3715,7 @@ var g=this.options.containment.padding;if(g&&!b){var h=Math.max(e.dimensions.hei
 
             function itemAdd() {
                 var $btn = $curItem.find('.js-buy');
-                $btn.text('ТОВАР В КОРЗИНЕ').addClass('btn_red btn_cart-added');
+                $btn.text('ТОВАР В КОРЗИНЕ').addClass('btn_cart-added');
                 basket.addItem({id: self.id, size: self.size}, true);
             }
         })();
@@ -4020,7 +4020,10 @@ $(document).ready(function() {
         //main menu
         var $h= $('.header-menu'),
             hTop = $h.offset().top,
-            $fade = $('.fade-fixed');
+            $fade =  $('<div class="fade fade-fixed"></div>');
+
+        $fade.css('z-index',400);
+        $('body').append($fade);
 
         $(window).bind('scroll.menu',function(e){
             var $this = $(this),

@@ -37,7 +37,6 @@ $(document).ready(function() {
         range: true,
         values: [0, $('#maxcost').data('max')],
         change: function( event, ui ) {
-            console.log(ui);
         },
         slide: function( event, ui ) {
             $('#mincost').val(ui.values[0]);

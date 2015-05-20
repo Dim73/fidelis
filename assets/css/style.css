@@ -1097,6 +1097,19 @@ a.btn_white:hover,
 .btn_white:hover {
   background-color: transparent;
 }
+a.btn_cart-added,
+.btn_cart-added {
+  background-color: #DDDDDD;
+  border-color: #DDDDDD;
+  color: #444444;
+  cursor: default;
+}
+a.btn_cart-added:hover,
+.btn_cart-added:hover {
+  background-color: #DDDDDD;
+  border-color: #DDDDDD;
+  color: #444444;
+}
 .jq-checkbox {
   -webkit-box-sizing: border-box;
   /* Safari/Chrome, other WebKit */
@@ -4256,7 +4269,7 @@ h1 {
   -khtml-border-radius: 50%;
   background-color: #e30c19;
   color: #FFFFFF;
-  font: 11px/15px "LatoBold";
+  font: 12px/16px "LatoBold";
   text-align: center;
 }
 .basket-top__info {
@@ -4827,6 +4840,7 @@ h1 {
 }
 .catalogue .line-filter .itemsfilter .jq-selectbox__select {
   cursor: pointer;
+  z-index: 10;
   padding: 4px 4px 0 9px;
 }
 .catalogue .line-filter .itemsfilter .jq-selectbox__select:hover .jq-selectbox__select-text {
@@ -4838,6 +4852,8 @@ h1 {
   display: inline-block;
   -webkit-transition: color 0.3s 0s ease-in-out, border-color 0.3s 0s ease-in-out;
   transition: color 0.3s 0s ease-in-out, border-color 0.3s 0s ease-in-out;
+  margin-right: 8px;
+  width: auto !important;
 }
 .catalogue .line-filter .itemsfilter .jq-selectbox__trigger {
   display: inline-block;
@@ -4854,8 +4870,6 @@ h1 {
   background-color: #f8f7f8;
   padding: 5px 0px;
   border: 1px solid #dddddd;
-  border-top: none;
-  width: 100%;
   -webkit-box-sizing: border-box;
   /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box;
@@ -4867,7 +4881,7 @@ h1 {
 .catalogue .line-filter .itemsfilter .jq-selectbox__dropdown li {
   cursor: pointer;
   line-height: 24px;
-  padding: 0 0px 0 8px;
+  padding: 0 8px 0;
 }
 .catalogue .line-filter .itemsfilter .jq-selectbox__dropdown li:hover,
 .catalogue .line-filter .itemsfilter .jq-selectbox__dropdown li.sel {
@@ -4883,8 +4897,11 @@ h1 {
 .catalogue .line-filter .itemsfilter .jq-selectbox.opened .jq-selectbox__select-text {
   border: none;
 }
-.catalogue .line-filter .itemsfilter .setcatorder .jq-selectbox__select-text {
-  width: 126px !important;
+.catalogue .line-filter .itemsfilter .setcatcount .jq-selectbox__dropdown {
+  min-width: 46px;
+}
+.catalogue .line-filter .itemsfilter .setcatorder .jq-selectbox__dropdown {
+  min-width: 149px;
 }
 .catalogue .line-filter .pageswitch {
   float: right;
@@ -5021,8 +5038,7 @@ h1 {
 }
 .price-slider__holder {
   height: 10px;
-  padding-top: 30px;
-  padding-right: 15px;
+  padding: 30px 28px 0 10px;
 }
 .price-slider a {
   text-decoration: none;
@@ -5069,10 +5085,12 @@ h1 {
   color: #393939;
   border: none;
   top: -21px !important;
+  width: 56px;
   background-color: transparent;
   opacity: 1;
   visibility: visible;
-  margin-left: -14px;
+  margin-left: -28px;
+  text-align: center;
 }
 .price-slider .ui-slider-tip:before {
   display: none;
@@ -5177,7 +5195,7 @@ h1 {
 .itemlist .buttons .btn {
   width: 183px;
 }
-.itemlist .buttons .js-buy:hover {
+.itemlist .buttons .btn :not([class=btn_cart-added]):hover {
   background-color: #e30c19;
   border-color: #e30c19;
   color: #ffffff;

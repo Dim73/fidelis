@@ -296,7 +296,10 @@ $(document).ready(function() {
         //main menu
         var $h= $('.header-menu'),
             hTop = $h.offset().top,
-            $fade = $('.fade-fixed');
+            $fade =  $('<div class="fade fade-fixed"></div>');
+
+        $fade.css('z-index',400);
+        $('body').append($fade);
 
         $(window).bind('scroll.menu',function(e){
             var $this = $(this),

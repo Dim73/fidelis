@@ -667,7 +667,7 @@
 
             function itemAdd() {
                 var $btn = $curItem.find('.js-buy');
-                $btn.text('ТОВАР В КОРЗИНЕ').addClass('btn_red btn_cart-added');
+                $btn.text('ТОВАР В КОРЗИНЕ').addClass('btn_cart-added');
                 basket.addItem({id: self.id, size: self.size}, true);
             }
         })();
@@ -713,7 +713,7 @@
 
             function itemAdd() {
                 var $btn = $curItem.find('.js-buy');
-                $btn.text('ТОВАР В КОРЗИНЕ').addClass('btn_red btn_cart-added');
+                $btn.text('ТОВАР В КОРЗИНЕ').addClass('btn_cart-added');
                 basket.addItem({id: self.id, size: self.size}, true);
             }
         })();

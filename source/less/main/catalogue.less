@@ -233,6 +233,7 @@
 
         &__select {
           cursor: pointer;
+          z-index: 10;
           padding: 4px 4px 0 9px;
 
           &:hover {
@@ -249,6 +250,8 @@
           display: inline-block;
           ._transition(color);
           ._transition(border-color);
+          margin-right: 8px;
+          width: auto !important;
         }
 
         &__trigger {
@@ -267,15 +270,13 @@
           background-color: #f8f7f8;
           padding: 5px 0px;
           border: 1px solid #dddddd;
-          border-top: none;
-          width: 100%;
           ._bs();
           margin-top: -1px;
 
           li {
             cursor: pointer;
             line-height: 24px;
-            padding: 0 0px 0 8px;
+            padding: 0 8px 0;
 
             &:hover, &.sel {
               background-color: #dddddd;
@@ -303,10 +304,23 @@
         }
       }
 
+      .setcatcount {
+
+        .jq-selectbox {
+
+          &__dropdown {
+            min-width: 46px;
+          }
+        }
+      }
+
       .setcatorder {
 
-        .jq-selectbox__select-text {
-          width: 126px !important;
+        .jq-selectbox {
+
+          &__dropdown {
+            min-width: 149px;
+          }
         }
       }
     }
@@ -469,11 +483,9 @@
 
 .price-slider {
 
-
   &__holder {
     height: 10px;
-    padding-top: 30px;
-    padding-right: 15px;
+    padding: 30px 28px 0 10px;
   }
 
   a {
@@ -517,10 +529,12 @@
     color: #393939;
     border: none;
     top: -21px !important;
+    width: 56px;
     background-color: transparent;
     opacity: 1;
     visibility: visible;
-    margin-left: -14px;
+    margin-left: -56px/2;
+    text-align: center;
 
     &:before {
       display: none;
@@ -651,13 +665,15 @@
 
     .btn {
       width: 183px;
+
+      :not([class=btn_cart-added]):hover {
+        background-color: @red;
+        border-color: @red;
+        color: #ffffff;
+      }
     }
 
-    .js-buy:hover {
-      background-color: @red;
-      border-color: @red;
-      color: #ffffff;
-    }
+
   }
 
   .info-lbl {

@@ -17,9 +17,9 @@
                 $dropContent = $self.children(),
                 isOpen = false,
                 fadeTop = 0,
-                $fade = $('.fade-fixed');// $('<div class="fade"></div>');
+                $fade =  $('<div class="fade fade-fixed"></div>');//            $('.fade-fixed');// $('<div class="fade fade-fixed"></div>');
 
-            //$('body').append($fade);
+            $('body').append($fade);
 
             $fade.css({
                 "z-index": 400
