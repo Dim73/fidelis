@@ -1,5 +1,5 @@
 <div class="content wrap">
-    <div class="pitem">
+    <div class="pitem" itemscope itemtype="http://schema.org/Product">
         <div class="container">
 
             <div class="pitem-preview">
@@ -7,7 +7,7 @@
                     <div class="slider-container">
                         <div class="slider-item">
                             <a class="pitem-slider__link" data-img="<!--#echo var="assets-path"-->/pitem.jpg" data-zoom="<!--#echo var="assets-path"-->/pitem-big.jpg" href="">
-                            <img src="<!--#echo var="assets-path"-->/pitem-slider.jpg" alt=""/>
+                                <img  itemprop="image" src="<!--#echo var="assets-path"-->/pitem-slider.jpg" alt=""/>
                             </a>
                         </div>
                         <div class="slider-item">
@@ -50,8 +50,8 @@
             </div>
             <!---item-gallery-->
 
-            <div class="pitem-specs  js-item-data" data-item="{id: 1231,sizes: [{26: 22000},{27: 33333}]}">
-                <h1>ЗОЛОТОЕ КОЛЬЦО С ГРАФИТОВОЙ ЭМАЛЬЮ ROSA ОТ КОМПАНИИ GRAZIELLA</h1>
+            <div class="pitem-specs  js-item-data"   data-item="{id: 1231,sizes: [{26: 22000},{27: 33333}]}">
+                <h1  itemprop="name">ЗОЛОТОЕ КОЛЬЦО С ГРАФИТОВОЙ ЭМАЛЬЮ ROSA ОТ КОМПАНИИ GRAZIELLA</h1>
                 <div class="pitem-specs__about">
                     <div class="about-item">
                         Тип зделия: <span class="tooltip" title="Колечко">Кольцо</span>
@@ -60,7 +60,7 @@
                         Артикул: M0000047748
                     </div>
                     <div class="about-item">
-                        Бренд:  <span class="tooltip" title="Колечко">Graziella</span>
+                        Бренд:  <span class="tooltip" title="Колечко" itemprop="brand">Graziella</span>
                     </div>
                 </div>
                 <div class="pitem-specs__spoilers">
@@ -75,9 +75,11 @@
                             <div class="folding__inner">
                                 <div class="nano-scroll">
                                     <div class="nano-content">
-                                        Мужской браслет, добавляющий обладателю брутального «варварства», состоящий из
-                                        тонких кожаных шнуров, соединенных между собой, украшенный разнообразными кольцами из искусственно
-                                        состаренного серебра, с жемчугом, и аметистом круглой огранки.
+                                        <div class="description" itemprop="description">
+                                            Мужской браслет, добавляющий обладателю брутального «варварства», состоящий из
+                                            тонких кожаных шнуров, соединенных между собой, украшенный разнообразными кольцами из искусственно
+                                            состаренного серебра, с жемчугом, и аметистом круглой огранки.
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -165,8 +167,19 @@
                 <div class="line-price">
                     <div class="pitem-cost">
                         <div class="old-cost"><span class="dec">старая цена: </span>52 220<span class="rub"><span>руб</span></span></div>
-                        <div class="cost">
+                        <div class="cost" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                            <meta itemprop="price" content="42200.00">
+                            <meta itemprop="priceCurrency" content="RUB">
                             <span class="dec">цена: </span><span class="count">42 200</span><span class="rub"><span>руб</span></span>
+                            <link itemprop="availability" href="http://schema.org/InStock">
+                            <!--Discontinued
+                            InStock
+                            InStoreOnly
+                            LimitedAvailability
+                            OnlineOnly
+                            OutOfStock
+                            PreOrder
+                            SoldOut - цена не указывается-->
                         </div>
                     </div>
                     <div class="pitem-shipment">
