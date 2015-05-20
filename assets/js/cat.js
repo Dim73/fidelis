@@ -391,8 +391,6 @@ $(window).scroll(function() {
             })
         }
     });
-
-
 });
 
 //preload

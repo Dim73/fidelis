@@ -4643,7 +4643,7 @@ h1 {
 .catalogue .container {
   width: 100%;
   border-top: 1px solid #6a6a6a;
-  margin: 14px 0 55px;
+  margin: 14px 0 0px;
   padding-top: 12px;
   position: relative;
   z-index: 5;
@@ -5195,7 +5195,7 @@ h1 {
 .itemlist .buttons .btn {
   width: 183px;
 }
-.itemlist .buttons .btn :not([class=btn_cart-added]):hover {
+.itemlist .buttons .btn:not(.btn_cart-added):hover {
   background-color: #e30c19;
   border-color: #e30c19;
   color: #ffffff;

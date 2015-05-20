@@ -1353,7 +1353,7 @@ var sliderConstructor = function(sliders) {
             responsive: false,
             infiniteLoop: true,
             autoHover: true,
-            autoDelay: 2000,
+            autoDelay: 0,
             auto: false,
             pause: 5000,
             hideControlOnEnd: true,
