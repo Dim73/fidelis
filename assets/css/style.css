@@ -4234,7 +4234,7 @@ h1 {
   position: relative;
 }
 .basket-top a {
-  display: block;
+  /*display: block;*/
   text-decoration: none;
 }
 .basket-top a:hover .basket-top__icon,
