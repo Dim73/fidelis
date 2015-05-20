@@ -4963,7 +4963,7 @@ h1 {
 }
 .size-popup {
   position: absolute;
-  z-index: 450;
+  z-index: 650;
   width: 255px;
   background-color: #e4e4e4;
   display: none;
