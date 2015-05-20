@@ -471,6 +471,17 @@ $(document).ready(function() {
         ];
         sliderConstructor(allSliders);
 
+        //smooth scroll
+        var platform = navigator.platform.toLowerCase();
+        if (platform.indexOf('win') == 0 || platform.indexOf('linux') == 0) {
+            if  (!$.browser.opera) {
+                $.srSmoothscroll({
+                    step: 100,
+                    speed: 600
+                });
+            }
+        }
+
     });
 })(jQuery);
 

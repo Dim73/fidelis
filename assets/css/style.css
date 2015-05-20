@@ -4256,7 +4256,7 @@ h1 {
   -khtml-border-radius: 50%;
   background-color: #e30c19;
   color: #FFFFFF;
-  font: 11px/14px "LatoBold";
+  font: 11px/15px "LatoBold";
   text-align: center;
 }
 .basket-top__info {
@@ -4862,6 +4862,7 @@ h1 {
   /* Firefox, other Gecko */
   box-sizing: border-box;
   /* Opera/IE 8+ */
+  margin-top: -1px;
 }
 .catalogue .line-filter .itemsfilter .jq-selectbox__dropdown li {
   cursor: pointer;
