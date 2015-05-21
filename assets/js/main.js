@@ -3910,6 +3910,10 @@ $(document).ready(function() {
 
 (function($){
     $(function(){
+        if ($.browser.msie) {
+            $("html").addClass("ie");
+        }
+
         setTimeout(function() {
             $('select, input[type=checkbox]').not('.no-styler').styler({selectSearch:false});
         }, 100);
