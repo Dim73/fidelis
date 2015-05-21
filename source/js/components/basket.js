@@ -607,6 +607,7 @@
                 $curItem = $(this).closest('.js-item-data');
                 var itemData = eval('('+$curItem.data('item')+')');
                 var imgSrc = $curItem.find('.slider-item:first-child img').attr('src');
+                console.log($curItem.find('.slider-item:first-child img'));
                 self.id = itemData.id;
                 if (itemData.sizes) {
                     var renderData = {

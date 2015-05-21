@@ -364,6 +364,67 @@ $(document).ready(function() {
             $(window).trigger('scroll.banner');
         }
 
+        //catalog slider + video
+        var $itemList = $('.itemlist');
+        $itemList.on('mouseenter','.item',function(){
+            var $self = $(this),
+                $slider = $('.slider-contaniner', $self);
+            if ($self.find('.stop').length) return;
+            if ($slider.data('plugin') == 'bxslider') {
+                $slider.data('bxslider').startAuto();
+            } else {
+                var thisSlider = $slider.bxSlider({
+                    mode: 'fade',
+                    slideWidth: 255,
+                    pause: 1300,
+                    auto: true,
+                    pager: false,
+                    controls: false
+                });
+
+                $slider.data('bxslider',thisSlider);
+            }
+            $self.addClass('hovered');
+        });
+
+        $itemList.on('mouseleave','.item',function(){
+            var $self = $(this),
+                $slider = $('.slider-contaniner', $self);
+            if ($slider.data('plugin') == 'bxslider') {
+                $slider.data('bxslider').goToSlide(0);
+                $slider.data('bxslider').stopAuto();
+            }
+            $self.removeClass('hovered');
+        });
+
+        var videoPlay = false;
+
+        $itemList.on('click','.play',function(){
+            var $self = $(this),
+                $parent =  $self.closest('.item'),
+                $containerVideo = $('.item-preview__video', $parent),
+                $video = $('video',$containerVideo),
+                $slider = $('.slider-contaniner',$parent);
+
+            if ($self.is('.stop')) {
+                $self.removeClass('stop');
+                $video[0].pause();
+                $containerVideo.fadeOut(500, function(){
+                    if ($slider.data('bxslider') && $parent.is('.hovered')) {
+                        $slider.data('bxslider').startAuto();
+                    }
+                })
+            } else {
+                $self.addClass('stop');
+                $containerVideo.fadeIn(500, function(){
+                    if ($slider.data('bxslider')) {
+                        $slider.data('bxslider').stopAuto();
+                        $slider.data('bxslider').goToSlide(0);
+                    }
+                    $video[0].play();
+                })
+            }
+        });
 
         //all sliders
         var allSliders = [
