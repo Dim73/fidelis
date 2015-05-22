@@ -406,9 +406,7 @@
                     if ($sel.data('plugin') != 'select')
                         $sel.CustomSelect({visRows:5, modifier: 'delivery'});
                     break;
-                case self.steps.length - 1:
-                    self.$self.addClass('order-done');
-                    self.basket.$self.addClass('order-done');
+
             }
         };
 
@@ -529,7 +527,8 @@
                     data: {data: self.$form.serialize()},
                     success: function(data,status,xhr){
                         if (data.order) {
-                            self.$orderNum.text(data.order);
+                            /*self.$orderNum.text(data.order);*/
+                            window.location = 'success.html';
                             self.nextStep();
                         }
                     }
@@ -699,13 +698,15 @@
                     }
                     $cost.html(cost);
                 }
-
+                $('.js-buy').removeClass('btn_red').text('купить');
             });
 
             $('.js-buy').click(function(){
-                if ($(this).is('.btn_cart-added')) return false;
+                var $this = $(this);
+                if ($this.is('.btn_cart-added') || $this.is('.btn_red')) return false;
                 if ($selectSize.val() == '' && itemData.sizes) {
                     $selectSize.closest('.pitem-size').addClass('size_empty');
+                    $this.addClass('btn_red').text('выберите размер');
                 } else {
                     itemAdd();
                 }

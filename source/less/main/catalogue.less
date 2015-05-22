@@ -799,7 +799,7 @@
     .item {
       width: 255px;
       height: 419px;
-      margin: 0;
+      margin: 0 0 15px 0;
       padding: 0;
     }
 
@@ -812,6 +812,10 @@
       letter-spacing: 0.05em;
       margin-bottom: 20px;
     }
+    
+    .itemlist-slider {
+      height: 868px;
+    }
   }
 
   &-slider {
@@ -819,7 +823,8 @@
 
     .bx-prev, .bx-next {
       position: absolute;
-      top: 175px;
+      top: 50%;
+      margin-top: -15px;
       font-size: 0px;
       color: #e4e4e4;
       font-family: 'icomoon';

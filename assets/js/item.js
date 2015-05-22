@@ -6,6 +6,7 @@ function QuickOrder()  {
         self.$form.bind('submit', self._submit);
         $('#qo-phone').mask("+7 (999) 999-99-99");
         self.$self.height(self.$self.height());
+        $('body').append(self.$fade);
     };
 
     this.show = function(){
@@ -52,7 +53,7 @@ function QuickOrder()  {
     };
 
     self.$self = $('.quick-order');
-    self.$fade = $('.fade-fixed');
+    self.$fade = $('<div class="fade fade-fixed"></div>');
     self.$form = $('.quick-order__form', self.$self);
     self.$desc = $('.desc',self.$self);
     self.$error = $('.send-error',self.$self);

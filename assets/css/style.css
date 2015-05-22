@@ -2552,7 +2552,6 @@ body {
   font: normal 12px/1.2em "LatoRegular", Arial, Verdana, sans;
   background: #ffffff;
   color: #2c2c2c;
-  position: relative;
 }
 body.popup-show {
   overflow: hidden;
@@ -2561,6 +2560,9 @@ body.popup-show {
   width: 100%;
   min-width: 1040px;
   overflow-x: hidden;
+  min-height: 100%;
+  position: relative;
+  padding-bottom: 312px;
 }
 .wrap {
   width: 1020px;
@@ -3470,12 +3472,14 @@ h1 {
 }
 .catdes_pitem .title {
   text-align: left;
-  z-index: 30;
   top: 39px;
   left: 0;
   font: bold 14px/10px Arial;
   text-transform: uppercase;
-  margin: 15px 0;
+  padding: 15px 0;
+  margin-bottom: -1px;
+  border-bottom: 1px solid #e4e4e4;
+  z-index: 50;
 }
 .catdes_pitem .slider-item {
   text-align: center;
@@ -3483,10 +3487,10 @@ h1 {
 .catdes_pitem .slider-item a {
   position: relative;
   padding: 39px 17px 40px;
-  border-top: 1px solid #f8f7f8;
+  border-top: 1px solid transparent;
   border-left: 1px solid #f8f7f8;
   border-right: 1px solid #f8f7f8;
-  background-color: #f8f7f8;
+  background-color: transparent;
   min-height: 331px;
   -webkit-transition: background-color 0.3s 0s ease-in-out, border-color 0.3s 0s ease-in-out;
   transition: background-color 0.3s 0s ease-in-out, border-color 0.3s 0s ease-in-out;
@@ -3550,7 +3554,7 @@ h1 {
 }
 .quick-order {
   position: absolute;
-  z-index: 500;
+  z-index: 900;
   width: 399px;
   border: 1px solid #444444;
   background-color: #ffffff;
@@ -3737,6 +3741,15 @@ h1 {
   position: absolute;
   top: 0;
   left: 0;
+  opacity: 0;
+  -webkit-transition: opacity 0.3s ease 0s;
+  -moz-transition: opacity 0.3s ease 0s;
+  -o-transition: opacity 0.3s ease 0s;
+  -ms-transition: opacity 0.3s ease 0s;
+  transition: opacity 0.3s ease 0s;
+}
+.main-banner .slider-item:first-child .bg {
+  opacity: 1;
 }
 .main-banner .banner-desc {
   position: relative;
@@ -3785,6 +3798,9 @@ h1 {
 .main-banner_catalog .banner-desc .logo {
   margin: 0 0 15px 0;
 }
+.main-banner_catalog .slider-item {
+  height: 315px;
+}
 .main-banner_catalog .bx-viewport {
   height: 315px !important;
 }
@@ -3815,9 +3831,15 @@ h1 {
 .main-banner_catalog .bx-pager-link.active {
   background-color: #e30c19;
 }
+.main-banner_catalog .bx-controls-direction {
+  display: none;
+}
 .main-banner_index {
   background-color: #211916;
   margin: 40px 0;
+}
+.main-banner_index .slider-item {
+  height: 472px;
 }
 .main-banner_index .banner-desc {
   margin: 0;
@@ -3897,6 +3919,47 @@ h1 {
 }
 .main-banner_index .bx-pager-link.active:after {
   opacity: 1;
+}
+.main-banner_index .bx-prev,
+.main-banner_index .bx-next {
+  position: absolute;
+  top: 50%;
+  margin-top: -15px;
+  font-size: 0px;
+  color: #999999;
+  font-family: 'icomoon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /*&:hover {
+        color: #6a6a6a;
+      }
+
+      &.disabled {
+        color: #e4e4e4;
+      }*/
+}
+.main-banner_index .bx-prev:before,
+.main-banner_index .bx-next:before {
+  font-size: 30px;
+}
+.main-banner_index .bx-prev {
+  left: -90px;
+}
+.main-banner_index .bx-prev:before {
+  content: "\e607";
+}
+.main-banner_index .bx-next {
+  right: -90px;
+}
+.main-banner_index .bx-next:before {
+  content: "\e608";
 }
 .header {
   position: relative;
@@ -4115,6 +4178,10 @@ h1 {
   border: 1px solid #d4d4d4;
 }
 .footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   background-color: #353535;
   border-top: 5px solid #e30c19;
 }
@@ -5338,7 +5405,7 @@ h1 {
 .itemlist_popular .item {
   width: 255px;
   height: 419px;
-  margin: 0;
+  margin: 0 0 15px 0;
   padding: 0;
 }
 .itemlist_popular .title {
@@ -5350,13 +5417,17 @@ h1 {
   letter-spacing: 0.05em;
   margin-bottom: 20px;
 }
+.itemlist_popular .itemlist-slider {
+  height: 868px;
+}
 .itemlist-slider {
   position: relative;
 }
 .itemlist-slider .bx-prev,
 .itemlist-slider .bx-next {
   position: absolute;
-  top: 175px;
+  top: 50%;
+  margin-top: -15px;
   font-size: 0px;
   color: #e4e4e4;
   font-family: 'icomoon';
@@ -5956,12 +6027,12 @@ h1 {
   text-align: center;
 }
 .order-complete .order__inner {
-  padding-top: 292px;
+  padding-top: 30px;
   padding-bottom: 50px;
   width: 650px;
 }
 .order-complete .order__inner:before {
-  top: 71px;
+  display: none;
 }
 .order-complete .title {
   font-size: 22px;
@@ -6140,6 +6211,9 @@ h1 {
   color: #888888;
   text-decoration: none;
 }
+.content-menu a:hover {
+  text-decoration: underline;
+}
 .content-menu .active a {
   color: #444444;
 }
@@ -6224,6 +6298,22 @@ h1 {
   border: 2px solid #ffffff;
   overflow: hidden;
 }
+.banners-squares .block:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  -webkit-transition: opacity 0.3s 0s ease-in-out;
+  transition: opacity 0.3s 0s ease-in-out;
+}
+.banners-squares .block:hover:after {
+  opacity: 1;
+}
+.banners-squares .block:hover .block__text {
+  color: #ffffff;
+}
 .banners-squares .block__bg {
   position: absolute;
   top: 0;
@@ -6231,16 +6321,21 @@ h1 {
 }
 .banners-squares .block__text {
   position: absolute;
+  z-index: 10;
+  color: #2e2e2e;
+  -webkit-transition: color 0.3s ease 0s;
+  -moz-transition: color 0.3s ease 0s;
+  -o-transition: color 0.3s ease 0s;
+  -ms-transition: color 0.3s ease 0s;
+  transition: color 0.3s ease 0s;
 }
 .banners-squares .block__text .title {
   display: block;
   font: 20px/1 "LatoBold";
-  color: #2e2e2e;
   text-transform: uppercase;
 }
 .banners-squares .block__text .text {
   width: 300px;
-  color: #2e2e2e;
   line-height: 18px;
 }
 .banners-squares .block__text.text_big {
@@ -6290,9 +6385,10 @@ h1 {
 }
 .seo-main {
   border-top: 1px solid #dddddd;
-  background: url('../images/seo-bg.jpg') no-repeat 0 0;
   height: 387px;
   padding-top: 30px;
+  position: relative;
+  overflow: hidden;
   -webkit-box-sizing: border-box;
   /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box;
@@ -6307,13 +6403,27 @@ h1 {
   font: 22px/20px "LatoBold";
   color: #303030;
   margin-bottom: 27px;
+  position: relative;
+  z-index: 10;
 }
 .seo-main .text {
+  position: relative;
+  z-index: 10;
   color: #393939;
   line-height: 18px;
 }
 .seo-main .text p {
   margin-bottom: 20px;
+}
+.seo-main .bg {
+  position: relative;
+}
+.seo-main .bg-wrap {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  text-align: center;
 }
 .subscribe .title {
   display: block;

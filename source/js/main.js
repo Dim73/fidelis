@@ -196,7 +196,7 @@ $(document).ready(function() {
 
 
         $('.select_size, .select_size-order ').CustomSelect({visRows:4});
-        $('.pitem-specs__spoilers .folding').folding({openHeight: 163});
+        $('.pitem-specs__spoilers .folding').folding({openHeight: 163, closeOther: '.pitem-specs__spoilers .spoiler-item'});
         $('.left .folding').folding({openHeight: 200});
         $('.content-text__side .folding').folding({openHeight: 500});
 
@@ -325,44 +325,6 @@ $(document).ready(function() {
         });
         $(window).trigger('scroll.menu');
 
-
-        //banner prlx
-        var $banner = $('.main-banner');
-        if ($banner.length) {
-            var bannerHeight = $banner.height(),
-                windowSelector = $(window),
-                documentSelector = $(document),
-                windowHeight = windowSelector.outerHeight(),
-                bufferRatio = $banner.data('ratio'),
-                bannerOffsetTop = $banner.offset().top;
-        }
-
-        function initBannerPrlx(img) {
-            $(window).bind('scroll.banner', function(){
-                var documentScrollTop,
-                    startScrollTop,
-                    endScrollTop;
-
-                documentScrollTop = documentSelector.scrollTop();
-
-                startScrollTop = documentScrollTop + windowHeight;
-                endScrollTop = documentScrollTop - bannerHeight;
-
-                if((startScrollTop > bannerOffsetTop) && (endScrollTop < bannerOffsetTop)){
-
-                    var y = documentScrollTop - bannerOffsetTop;
-                    var newPositionTop =  parseInt(y / bufferRatio);
-                    /*if(!parallaxInvert) {
-                     newPositionTop =  parseInt(y / bufferRatio);
-                     } else {
-                     newPositionTop = -parseInt(y / bufferRatio) - parseInt(windowHeight / bufferRatio)
-                     }*/
-
-                    img.css({ top: newPositionTop});
-                }
-            });
-            $(window).trigger('scroll.banner');
-        }
 
         //catalog slider + video
         var $itemList = $('.itemlist');
@@ -501,10 +463,10 @@ $(document).ready(function() {
                 sliderClass: '.itemlist-slider',
                 options: {
                     pager: false,
-                    maxSlides: 4,
+                    maxSlides: 1,
                     infiniteLoop: false,
                     slideMargin: 0,
-                    slideWidth: 255,
+                    slideWidth: 1020,
                     mode: 'horizontal',
                     onSliderLoad: function() {
 
@@ -517,21 +479,22 @@ $(document).ready(function() {
                     infiniteLoop: true,
                     slideMargin: 0,
                     slideWidth: 1020,
-                    controls: false,
+                    controls: true,
                     pager: true,
                     auto: false,
                     onSliderLoad: function(currentIndex) {
-                        var $item = $('.slider-item',this.$self).eq(currentIndex);
+                       /* var $item = $('.slider-item',this.$self).eq(currentIndex);
                         if ($item.is('.slider-item__prlx')) {
                             console.log($item.find('.bg'));
                             initBannerPrlx($item.find('.bg'));
-                        }
+                        }*/
                         this.$self.addClass('loaded');
+                        $('.main-banner .prlx-item').prlx();
                     },
-                    onSlideBefore: function($item) {
-                        $(window).off('scroll.banner');
-                        if ($item.is('.slider-item__prlx')) {
-                            initBannerPrlx($item.find('.bg'));
+                    onSlideAfter: function($item) {
+                        /*$(window).off('scroll.banner');*/
+                        if ($item.is('.prlx-item')) {
+                            $item.trigger('update');
                         }
                     }
                 }
@@ -551,6 +514,11 @@ $(document).ready(function() {
         }
 
     });
+
+    $(window).load(function(){
+        //banner prlx
+        $('.seo-main').prlx();
+    })
 })(jQuery);
 
 function closePopup ($popup) {

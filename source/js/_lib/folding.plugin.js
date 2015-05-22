@@ -4,7 +4,8 @@
     $.fn.folding = function(options){
         var def = {
                 openHeight: 100,
-                openClass: 'opened'
+                openClass: 'opened',
+                closeOther: ''
             };
 
         var opt = $.extend({}, def, options || {}),
@@ -38,6 +39,7 @@
 
             function toggleC (flag) {
                 isOpened = flag || !isOpened;
+                isOpened && opt.closeOther && $(opt.closeOther).filter('.'+opt.openClass).trigger('close');
                 $self.toggleClass(opt.openClass, isOpened);
                 $content.height(!isOpened?0:openHeight);
             }
@@ -51,7 +53,10 @@
                 if (isOpened) {
                     $content.height(openHeight);
                 }
-            });
+            })
+                .bind('close', function(){
+                    toggleC(false);
+                })
 
         })
     }

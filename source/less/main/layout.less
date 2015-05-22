@@ -9,17 +9,20 @@ body {
   font: normal 12px/1.2em @font-lr, Arial,Verdana,sans;
   background: #ffffff;
   color: #2c2c2c;
-  position: relative;
 
   &.popup-show {
     overflow: hidden;
   }
 }
 
+@footer-height: 312px;
 .main {
   width: 100%;
   min-width: 1040px;
   overflow-x: hidden;
+  min-height: 100%;
+  position: relative;
+  padding-bottom: @footer-height;
 }
 
 .wrap {
