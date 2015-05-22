@@ -23,7 +23,7 @@ module.exports = function(grunt) {
         },
         browserSync: {
             bsFiles: {
-                src: ['assets/css/*.css', 'assets/js/*.js']
+                src: ['assets/css/*.css', 'assets/js/*.js', 'html/**/*.html']
             },
             options: {
                 watchTask: true, // < VERY important
@@ -71,6 +71,6 @@ module.exports = function(grunt) {
 
     // Default task(s).
     //grunt.registerTask('default', ['uglify:main','less']);
-    grunt.registerTask('default', ["browserSync", "watch"]);
+    grunt.registerTask('default', ["browserSync", "watch", "uglify"]);
 
 };

@@ -9,7 +9,8 @@ Object.defineProperty(Array.prototype,"unique", {
         for(i in o) r.push(o[i]);
         return r;
     }
-})
+});
+
 
 function validateEmail(email) {
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -327,11 +328,12 @@ $(document).ready(function() {
 
 
         //catalog slider + video
-        var $itemList = $('.itemlist');
+        var $itemList = $('.itemlist'),
+            isSlide = false;
         $itemList.on('mouseenter','.item',function(){
             var $self = $(this),
-                $slider = $('.slider-contaniner', $self),
-                isSlide = false;
+                $slider = $('.slider-contaniner', $self);
+
             if ($self.find('.stop').length) return;
             if ($slider.data('plugin') == 'bxslider') {
                 $slider.data('bxslider').startAuto();
@@ -340,14 +342,17 @@ $(document).ready(function() {
                     mode: 'fade',
                     slideWidth: 255,
                     pause: 300,
-                    speed: 400,
+                    speed: 200,
                     auto: true,
                     pager: false,
                     controls: false,
                     onSlideBefore: function() {
-                        thisSlider.stopAuto();
-                        thisSlider.updatePause(1300);
-                        thisSlider.startAuto();
+                        if (!isSlide) {
+                            thisSlider.stopAuto();
+                            thisSlider.updatePause(1300);
+                            thisSlider.startAuto();
+                            isSlide = true;
+                        }
                     }
                 });
 
@@ -362,7 +367,8 @@ $(document).ready(function() {
             if ($slider.data('plugin') == 'bxslider') {
                 $slider.data('bxslider').goToSlide(0);
                 $slider.data('bxslider').stopAuto();
-                $slider.data('bxslider').updatePause(400);
+                $slider.data('bxslider').updatePause(200);
+                isSlide = false;
             }
             $self.removeClass('hovered');
         });
