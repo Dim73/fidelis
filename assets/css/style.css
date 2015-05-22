@@ -2552,6 +2552,8 @@ body {
   font: normal 12px/1.2em "LatoRegular", Arial, Verdana, sans;
   background: #ffffff;
   color: #2c2c2c;
+  min-height: 100%;
+  position: relative;
 }
 body.popup-show {
   overflow: hidden;
@@ -2560,8 +2562,6 @@ body.popup-show {
   width: 100%;
   min-width: 1040px;
   overflow-x: hidden;
-  min-height: 100%;
-  position: relative;
   padding-bottom: 312px;
 }
 .wrap {

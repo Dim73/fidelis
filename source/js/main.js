@@ -519,7 +519,8 @@ function smoothScrollInit () {
         if  (!$.browser.opera) {
             $.srSmoothscroll({
                 step: 100,
-                speed: 600
+                speed: 600,
+                preventOn: '.nano-scroll'
             });
         }
     }
