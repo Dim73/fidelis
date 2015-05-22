@@ -330,7 +330,8 @@ $(document).ready(function() {
         var $itemList = $('.itemlist');
         $itemList.on('mouseenter','.item',function(){
             var $self = $(this),
-                $slider = $('.slider-contaniner', $self);
+                $slider = $('.slider-contaniner', $self),
+                isSlide = false;
             if ($self.find('.stop').length) return;
             if ($slider.data('plugin') == 'bxslider') {
                 $slider.data('bxslider').startAuto();
@@ -338,10 +339,16 @@ $(document).ready(function() {
                 var thisSlider = $slider.bxSlider({
                     mode: 'fade',
                     slideWidth: 255,
-                    pause: 1300,
+                    pause: 300,
+                    speed: 400,
                     auto: true,
                     pager: false,
-                    controls: false
+                    controls: false,
+                    onSlideBefore: function() {
+                        thisSlider.stopAuto();
+                        thisSlider.updatePause(1300);
+                        thisSlider.startAuto();
+                    }
                 });
 
                 $slider.data('bxslider',thisSlider);
@@ -355,6 +362,7 @@ $(document).ready(function() {
             if ($slider.data('plugin') == 'bxslider') {
                 $slider.data('bxslider').goToSlide(0);
                 $slider.data('bxslider').stopAuto();
+                $slider.data('bxslider').updatePause(400);
             }
             $self.removeClass('hovered');
         });

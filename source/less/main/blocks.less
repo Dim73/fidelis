@@ -1320,6 +1320,56 @@
     &.loaded {
       opacity: 1;
     }
+
+    .bx-prev, .bx-next {
+      position: absolute;
+      top: 50%;
+      margin-top: -30px/2;
+      font-size: 0px;
+      color: #999999;
+      font-family: 'icomoon';
+      speak: none;
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1;
+
+      /* Better Font Rendering =========== */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+
+      opacity: 0;
+      ._transition(opacity);
+
+      &:before {
+        font-size: 30px;
+      }
+    }
+
+
+    .bx-prev {
+      left: -90px;
+
+      &:before {
+        content: "\e607";
+      }
+    }
+
+    .bx-next {
+      right: -90px;
+
+      &:before {
+        content: "\e608";
+      }
+    }
+  }
+
+  &:hover {
+
+    .bx-prev, .bx-next {
+      opacity: 1;
+    }
   }
 
   .bg {
@@ -1434,9 +1484,6 @@
       }
     }
 
-    .bx-controls-direction {
-      display: none;
-    }
   }
 
   &_index {
@@ -1536,52 +1583,5 @@
       }
     }
 
-    .bx-prev, .bx-next {
-      position: absolute;
-      top: 50%;
-      margin-top: -30px/2;
-      font-size: 0px;
-      color: #999999;
-      font-family: 'icomoon';
-      speak: none;
-      font-style: normal;
-      font-weight: normal;
-      font-variant: normal;
-      text-transform: none;
-      line-height: 1;
-
-      /* Better Font Rendering =========== */
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-
-      &:before {
-        font-size: 30px;
-      }
-
-      /*&:hover {
-        color: #6a6a6a;
-      }
-
-      &.disabled {
-        color: #e4e4e4;
-      }*/
-    }
-
-
-    .bx-prev {
-      left: -90px;
-
-      &:before {
-        content: "\e607";
-      }
-    }
-
-    .bx-next {
-      right: -90px;
-
-      &:before {
-        content: "\e608";
-      }
-    }
   }
 }

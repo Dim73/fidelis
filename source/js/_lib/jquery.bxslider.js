@@ -1244,6 +1244,15 @@
 			// if auto controls are displayed and preventControlUpdate is not true
 			if (slider.settings.autoControls && preventControlUpdate != true) updateAutoControls('stop');
 		}
+        /**
+         * Update auto pause
+         *  @param pause (boolean)
+         *  - new value of pause
+         */
+
+        el.updatePause = function(pause){
+            slider.settings.pause = pause;
+        };
 
 		/**
 		 * Stops the auto show

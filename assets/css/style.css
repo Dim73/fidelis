@@ -3737,6 +3737,47 @@ h1 {
 .main-banner__slider.loaded {
   opacity: 1;
 }
+.main-banner__slider .bx-prev,
+.main-banner__slider .bx-next {
+  position: absolute;
+  top: 50%;
+  margin-top: -15px;
+  font-size: 0px;
+  color: #999999;
+  font-family: 'icomoon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  opacity: 0;
+  -webkit-transition: opacity 0.3s 0s ease-in-out;
+  transition: opacity 0.3s 0s ease-in-out;
+}
+.main-banner__slider .bx-prev:before,
+.main-banner__slider .bx-next:before {
+  font-size: 30px;
+}
+.main-banner__slider .bx-prev {
+  left: -90px;
+}
+.main-banner__slider .bx-prev:before {
+  content: "\e607";
+}
+.main-banner__slider .bx-next {
+  right: -90px;
+}
+.main-banner__slider .bx-next:before {
+  content: "\e608";
+}
+.main-banner:hover .bx-prev,
+.main-banner:hover .bx-next {
+  opacity: 1;
+}
 .main-banner .bg {
   position: absolute;
   top: 0;
@@ -3831,9 +3872,6 @@ h1 {
 .main-banner_catalog .bx-pager-link.active {
   background-color: #e30c19;
 }
-.main-banner_catalog .bx-controls-direction {
-  display: none;
-}
 .main-banner_index {
   background-color: #211916;
   margin: 40px 0;
@@ -3919,47 +3957,6 @@ h1 {
 }
 .main-banner_index .bx-pager-link.active:after {
   opacity: 1;
-}
-.main-banner_index .bx-prev,
-.main-banner_index .bx-next {
-  position: absolute;
-  top: 50%;
-  margin-top: -15px;
-  font-size: 0px;
-  color: #999999;
-  font-family: 'icomoon';
-  speak: none;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /*&:hover {
-        color: #6a6a6a;
-      }
-
-      &.disabled {
-        color: #e4e4e4;
-      }*/
-}
-.main-banner_index .bx-prev:before,
-.main-banner_index .bx-next:before {
-  font-size: 30px;
-}
-.main-banner_index .bx-prev {
-  left: -90px;
-}
-.main-banner_index .bx-prev:before {
-  content: "\e607";
-}
-.main-banner_index .bx-next {
-  right: -90px;
-}
-.main-banner_index .bx-next:before {
-  content: "\e608";
 }
 .header {
   position: relative;
