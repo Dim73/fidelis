@@ -3353,10 +3353,14 @@ var g=this.options.containment.padding;if(g&&!b){var h=Math.max(e.dimensions.hei
         };
 
         this.modalItemToggle =  function(flag) {
-            $('body').toggleClass('popup-show',flag);
-            self.itemModal.fadeToggle(flag);
+            self.itemModal.fadeToggle(500, function(){
+                $('body').toggleClass('popup-show',flag);
+            });
             if (!flag) {
                 self.itemModalCont.css({opacity:0});
+                smoothScrollInit();
+            } else {
+                $('body').addClass('popup-show');
             }
         };
 
@@ -3384,7 +3388,7 @@ var g=this.options.containment.padding;if(g&&!b){var h=Math.max(e.dimensions.hei
             ];
             sliderConstructor(modalSlider);
             //spoilers
-            $('.pitem-specs__spoilers .folding').folding({openHeight: 163});
+            $('.pitem-specs__spoilers .folding').folding({openHeight: 163, closeOther: '.pitem-specs__spoilers .spoiler-item'});
             //tooltip
             Tipped.create('.tooltip', '', {
                 maxWidth: 290
@@ -3417,6 +3421,7 @@ var g=this.options.containment.padding;if(g&&!b){var h=Math.max(e.dimensions.hei
                 }
 
             });
+            $('body').off('mousewheel');
         };
 
         var items = [];
@@ -4296,15 +4301,7 @@ $(document).ready(function() {
         sliderConstructor(allSliders);
 
         //smooth scroll
-        var platform = navigator.platform.toLowerCase();
-        if (platform.indexOf('win') == 0 || platform.indexOf('linux') == 0) {
-            if  (!$.browser.opera) {
-                $.srSmoothscroll({
-                    step: 100,
-                    speed: 600
-                });
-            }
-        }
+        smoothScrollInit();
 
     });
 
@@ -4313,6 +4310,18 @@ $(document).ready(function() {
         $('.seo-main').prlx();
     })
 })(jQuery);
+
+function smoothScrollInit () {
+    var platform = navigator.platform.toLowerCase();
+    if (platform.indexOf('win') == 0 || platform.indexOf('linux') == 0) {
+        if  (!$.browser.opera) {
+            $.srSmoothscroll({
+                step: 100,
+                speed: 600
+            });
+        }
+    }
+}
 
 function closePopup ($popup) {
     $popup.fadeOut();
