@@ -49,7 +49,7 @@
     }
 
     &__info {
-      line-height: 52px;
+      line-height: 53px;
       color: #FFFFFF;
       display: inline-block;
       letter-spacing: 0.05em;
@@ -270,6 +270,7 @@
           width: 108px;
           height: 108px;
           border: none;
+          display: block;
         }
       }
 
@@ -426,6 +427,33 @@
       line-height: 16px;
     }
 
+  }
+
+  &_account {
+    padding: 1px 0;
+
+
+    .basket {
+
+      &-item {
+        border: none;
+        background-color: #f8f7f8 !important;
+        padding: 1px 0;
+
+        &__img {
+          padding-left: 6px;
+        }
+
+        &__name {
+          padding-left: 8px;
+        }
+
+        &__size, &__counter, &__price {
+          color: #444444;
+          font-size: 14px;
+        }
+      }
+    }
   }
 }
 

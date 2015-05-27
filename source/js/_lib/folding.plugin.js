@@ -3,7 +3,7 @@
 
     $.fn.folding = function(options){
         var def = {
-                openHeight: 100,
+                openHeight: 99999,
                 openClass: 'opened',
                 closeOther: ''
             };

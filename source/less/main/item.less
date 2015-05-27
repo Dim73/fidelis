@@ -93,6 +93,28 @@
             opacity: .7;
           }
         }
+
+        .favorite-link {
+          padding-left: 2px;
+          margin-left: 60px;
+
+          &:after {
+            left: 2px;
+            top: 3px;
+          }
+
+          &:before {
+            position: relative;
+            top: 3px;
+          }
+
+          span {
+            font-size: 12px;
+            color: #2e2e2e;
+            font-family: @font-lr;
+            margin-left: -3px;
+          }
+        }
       }
 
       &__video {
@@ -449,6 +471,14 @@
       &:after {
 
       }
+    }
+  }
+
+  .pitem-size {
+
+    .b-custom-select {
+      background-color: #ffffff;
+      .boxShadow(inset 0 0 0 1px #d4d4d4);
     }
   }
 

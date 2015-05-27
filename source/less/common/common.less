@@ -23,89 +23,82 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-fav:before {
+  content: "\e611";
+}
+.icon-x:before {
+  content: "\e610";
+}
+.icon-customer:before {
+  content: "\e60e";
+}
+.icon-clock:before {
+  content: "\e60f";
+}
 .icon-rouble:before {
   content: "\e800";
 }
-
 .icon-heart:before {
   content: "\e609";
 }
-
 .icon-basket:before {
   content: "\e60a";
 }
-
 .icon-car2:before {
   content: "\e60b";
 }
-
 .icon-phone:before {
   content: "\e60c";
 }
-
 .icon-pin:before {
   content: "\e60d";
 }
-
 .icon-zoom:before {
   content: "\e606";
 }
-
 .icon-slider-left:before {
   content: "\e607";
 }
-
 .icon-slider-right:before {
   content: "\e608";
 }
-
 .icon-card:before {
   content: "\e600";
 }
-
 .icon-boxes:before {
   content: "\e601";
 }
-
 .icon-wallet:before {
   content: "\e602";
 }
-
 .icon-pay:before {
   content: "\e603";
 }
-
 .icon-ring:before {
   content: "\e604";
 }
-
 .icon-car:before {
   content: "\e605";
 }
-
 .icon-ok:before {
   content: "\e618";
 }
-
 .icon-tw:before {
   content: "\e61d";
 }
-
 .icon-fb:before {
   content: "\e620";
 }
-
 .icon-gplus:before {
   content: "\e624";
 }
-
 .icon-ins:before {
   content: "\e62a";
 }
-
 .icon-vk:before {
   content: "\e804";
 }
+
 
 .rub {
   font-family: 'icomoon';
@@ -131,6 +124,52 @@
   &:before {
     content: "\e800";
 
+  }
+}
+
+.favorite-link {
+  ._transition(all, .5s);
+  width: 20px;
+  color: #6b6b6b;
+  font-size: 17px;
+  font-family: 'icomoon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  position: relative;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  &:before {
+    content: "\e611";
+    ._transition(opacity);
+  }
+
+  &:after {
+    content: "\e609";
+    opacity: 0;
+    position: absolute;
+    z-index: 100;
+    top: 0px;
+    left: 0px;
+    color: #ff9999;
+    ._transition(opacity);
+  }
+
+  &.added {
+
+    &:before {
+      opacity: 0;
+    }
+
+    &:after {
+      opacity: 1;
+    }
   }
 }
 
@@ -210,7 +249,7 @@ li {
   }
 }
 
-a.btn, .btn {
+.btn {
   ._bs();
   height: 30px;
   width: 193px;
@@ -564,6 +603,14 @@ a.btn, .btn {
       border-style: solid;
       border-width: 0 12px 13px 12px;
       border-color: transparent transparent #ffffff transparent;
+      ._transition(border-color);
+    }
+
+    &:hover {
+
+      &:after {
+        border-color: transparent transparent @red transparent;
+      }
     }
   }
 }

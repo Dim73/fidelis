@@ -1,5 +1,5 @@
 (function($) {
-	$.fn.call = function(opt) {
+	$.fn.callForm = function(opt) {
 		var opt = $.extend({
 			submitClass : '.submit',
 			inputClass : '.inputtext',

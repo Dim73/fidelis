@@ -8,11 +8,13 @@
         /
         <span>GRAZIELLA</span>
     </div>
-    <h1>GRAZIELLA</h1>
+    <!--#if expr="${QUERY_STRING}" -->
+    <h1><!--#echo encoding="none"  var="QUERY_STRING" --></h1>
+    <!--#endif -->
     <div class="search">
         <form method="post">
             <input type="text" placeholder="Поиск по названию или артикулу..." name="search">
-            <span class="btn-submit">
+            <span class="btn-submit icon">
                 <input type="submit">
             </span>
         </form>

@@ -85,7 +85,7 @@
                 </div>
             </div>
             <div class="col magazine-info__selfshipment">
-                <span class="magazine-info__title">Самовывоз <i class="icon"></i></span>
+                <span class="magazine-info__title">Самовывоз <i class="icon icon-clock"></i></span>
                 <div class="desc">в будние дни с 9:00 до 19:00</div>
             </div>
             <div class="col magazine-info__call">
@@ -242,6 +242,8 @@
                     </a>
                 </li>
             </ul>
+
+
             <div class="basket basket-top">
                     <div class="basket-top__items">
                         <a class="js-basket-open" href="#">
@@ -279,8 +281,8 @@
                                     </div>
                                     <div class="basket-items__bottom">
                                         <div class="btn-holder">
-                                            <a class="btn" href="#">В КОРЗИНУ</a>
-                                            <a class="btn btn__checkout" href="#">оформить</a>
+                                            <a class="btn" href="basket.html">В КОРЗИНУ</a>
+                                            <a class="btn btn__checkout" href="basket.html">оформить</a>
                                         </div>
                                         <div class="basket__total">
                                             <div class="total__summ">
@@ -293,7 +295,65 @@
                             </div>
                         </div>
                     </div>
+            </div>
 
+
+            <div class="service-link__holder service-link_favorites">
+                <a href="customer-favorites.html" class="service-link">
+                    <span class="icon icon-heart">
+
+                    </span>
+                    <span class="service-count">
+                        26
+                    </span>
+                    <span class="service-lbl">
+                        Избранное
+                    </span>
+                </a>
+            </div>
+
+            <div class="service-link__holder service-link_account not-logged">
+                <a href="" class="service-link js-login-open">
+                    <span class="icon icon-customer">
+
+                    </span>
+                    <span class="service-lbl">
+                        Василий
+                    </span>
+                </a>
+                <a class="account-exit icon icon-x" href="#exit"></a>
+
+                <!--login-->
+                <div class="login-dropdown__holder dropdown_top">
+                    <div class="login-dropdown">
+                        <div class="login__body dropdown__body">
+                            <form class="login-form" action="customer.html">
+                                <!--#include virtual="$includespath/layouts/row_input.html?id=login-email&type=email&label=E-mail"-->
+                                <!--#include virtual="$includespath/layouts/row_input.html?id=login-pass&label=Пароль"-->
+                                <div class="login-form__bottom">
+                                    <div class="add-links">
+                                        <a href="customer-registration.html">Регистрация</a>
+                                        <a href="#">Забыли пароль?</a>
+                                    </div>
+                                    <a class="btn btn-submit btn_black" href="#">
+                                        Вход
+                                        <input type="submit" value=""/>
+                                    </a>
+                                </div>
+                            </form>
+                            <div class="login-social">
+                                <span class="login-social__lbl">Или войти через:</span>
+                                <div class="social-dark">
+                                    <a class="icon icon-fb" href="#"></a>
+                                    <a class="icon icon-vk" href="#"></a>
+                                    <a class="icon icon-tw" href="#"></a>
+                                    <a class="icon icon-ok" href="#"></a>
+                                    <a class="icon icon-gplus" href="#"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>
