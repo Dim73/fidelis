@@ -265,14 +265,7 @@ $(document).ready(function() {
         //subscribe
         $('.subscribe').subscribe();
 
-        //menu img preview
-        var $menu = $('.main-menu'),
-            $collectionLink = $('.collection__link', $menu);
-            $collectionLink.menuImg({
-                collImg: function(self){
-                    return self.closest('.main-menu__collection').find('.collection__preview');
-                }
-            });
+
 
         //tooltips
         Tipped.create('.tooltip', '', {

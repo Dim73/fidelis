@@ -210,9 +210,12 @@
         color: #6a6a6a;
         text-decoration: none;
         line-height: 16px;
+        ._transition(all);
+        border-bottom: 1px solid transparent;
 
         &:hover {
-          border-bottom: 1px solid #000000;
+          color: @red;
+          border-bottom: 1px solid @red;
         }
       }
 
@@ -226,6 +229,195 @@
         img {
           width: 255px;
           border: 1px solid @grey;
+        }
+      }
+    }
+
+    /***submenu goods***/
+    &__collection_goods {
+
+      .collection__preview {
+        position: absolute;
+        right: 10px;
+        top: 25px;
+        float: none;
+        margin: 0;
+        width: 260px;
+        height: 260px;
+
+        img {
+          width: 100%;
+          ._bs();
+        }
+      }
+    }
+    
+    .goods {
+
+      &__list {
+        float: left;
+        width: 192px;
+        padding-right: 27px;
+        margin-top: 25px;
+        border-right: 1px solid #dddddd;
+      }
+
+      &__item {
+        text-transform: uppercase;
+        display: block;
+        position: relative;
+        margin-bottom: 17px;
+        color: #444444;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        &:after {
+          content: "";
+          position: absolute;
+          top: 5px;
+          right: 0;
+          width: 0;
+          height: 0;
+          border-style: solid;
+          border-width: 6px 0 6px 6px;
+          border-color: transparent transparent transparent transparent;
+          ._transition(border-color);
+        }
+
+        &.hover {
+
+          span {
+            color: @red;
+            border-color: @red;
+          }
+
+          &:after {
+            border-color: transparent transparent transparent @red;
+          }
+        }
+
+        span {
+          ._transition(all);
+
+          border-bottom: 1px solid transparent;
+          padding-bottom: 3px;
+        }
+      }
+
+      &-category {
+        float: left;
+        margin-left: 27px;
+        width: 480px;
+        margin-top: 25px;
+
+        &__title {
+          display: block;
+          font: italic 14px/1 Georgia;
+          color: #444444;
+          margin-bottom: 15px;
+        }
+
+
+        &__items {
+          position: relative;
+
+          &-list {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            ._clearfix();
+            display: none;
+
+            /*&:first-child {
+              display: block;
+            }*/
+          }
+        }
+
+        &__col {
+          float: left;
+          width: 195px;
+          margin-right: 25px;
+
+          &:last-child {
+            margin: 0;
+          }
+        }
+
+        &__item {
+          color: #878787;
+          border-bottom: 1px solid transparent;
+          ._transition(all);
+
+          &:hover {
+            color: #444444;
+            border-color: #444444;
+          }
+
+          &:after {
+            content: "";
+            display: block;
+            margin-bottom: 17px;
+          }
+
+          &:last-child:after {
+            display: none;
+          }
+        }
+      }
+    }
+    
+    /**submenu style**/
+    &__collection_style {
+      
+      .goods-category {
+        width: 770px;
+        margin-left: -1px;
+        padding-left: 27px;
+        border-left: 1px solid #dddddd;
+
+        &__title {
+          margin-bottom: 20px;
+        }
+      }
+      
+      .styles-list {
+        position: relative;
+        ._transition(height,.5s);
+        
+        &__item {
+          ._clearfix();
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+      }
+
+      .styles {
+
+        &__text {
+          color: #6a6a6a;
+          line-height: 21.6px;
+          overflow: hidden;
+
+          p {
+            margin-bottom: 20px;
+          }
+        }
+
+        &__img {
+          float: right;
+          margin-left: 20px;
+          border: 1px solid #d4d4d4;
+          width: 263px;
+
+          img {
+            display: block;
+            width: 100%;
+          }
         }
       }
     }
