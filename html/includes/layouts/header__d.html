@@ -12,28 +12,186 @@
                 <div class="address-info__holder dropdown_top">
                     <div class="address-info">
                         <div class="address-info__title dropdown-fade-to dropdown__header">
-                            АДРЕС
+                            ВАШ ГОРОД
                         </div>
                         <div class="dropdown__body">
-                            <div class="address-map__container">
-                                <div id="address-map" class="address-map"></div>
-                            </div>
-                            <div class="address-info__body">
-                                <div class="address-time">
-                                    <div class="address_moscow">
-                                        <span>Режим работы шоурума:</span>
-                                        В буднии дни с 9:00 до 19:00 <br/>
-                                        Сб. Вс. - Выходной
+                            <script>
+                                ymaps.ready(function () {
+                                    var $map = $('#address-map');
+                                    var map = new ymaps.Map("address-map", {
+                                        center: [55.74011678, 37.60888550],
+                                        zoom: 15,
+                                        controls: ['zoomControl']
+                                    });
+                                    console.log(map);
+                                    var moscowPin = new ymaps.Placemark(map.getCenter(), {
+                                        hintContent: 'Fidelis style'
+                                    }, {
+                                        // Опции.
+                                        // Необходимо указать данный тип макета.
+                                        iconLayout: 'default#image'
+                                    });
+                                    map.geoObjects.add(moscowPin);
+                                });
+                            </script>
+                            <div class="address-info__inner">
+                                <div class="address-info__town">
+                                    <span class="magazine-info__title">Москва <i class="icon icon-pin"></i></span>
+                                    <div class="address-info__town-change">
+                                        <a class=" js-change-town" href="#">Изменить город</a>
                                     </div>
                                 </div>
-                                <!--<div class="address-select">
-                                    <select name="" id="address-select">
-                                        <option value="moscow">Москва</option>
-                                        <option value="moscow">Воронеж</option>
-                                    </select>
-                                </div>-->
-                                <div class="btn-holder">
-                                    <a class="btn" href="#">ПОДРОБНЕЕ</a>
+                                <div class="address-map__container">
+                                    <div id="address-map" class="address-map"></div>
+                                </div>
+                                <div class="address-info__body">
+                                    <div class="address-time">
+                                        <div class="address_moscow">
+                                            <span>Режим работы шоурума:</span>
+                                            В буднии дни с 9:00 до 19:00 <br/>
+                                            <i>Сб. Вс. - Выходной</i>
+                                        </div>
+                                    </div>
+                                    <!--<div class="address-select">
+                                        <select name="" id="address-select">
+                                            <option value="moscow">Москва</option>
+                                            <option value="moscow">Воронеж</option>
+                                        </select>
+                                    </div>-->
+                                    <div class="btn-holder">
+                                        <a class="btn" href="#">ПОДРОБНЕЕ</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="town-changer">
+                                <div class="hint">Выберите город, в котором собираетесь получить товар. От выбора зависит <br/> стоимость доставки.</div>
+                                <form class="town-changer__form" action="">
+                                    <div class="row">
+                                        <label for="changeTown">Ваш Город</label>
+                                        <input class="inputtext" id="changeTown" type="text"/>
+                                        <a class="btn btn-submit" href="#">СОХРАНИТЬ <input type="submit" value=""/></a>
+                                    </div>
+                                    <div class="town-changer__related-list">
+                                        <a href="#" class="js-town">Москва</a>
+                                        <a href="#" class="js-town">Нижний Новгород</a>
+                                        <a href="#" class="js-town">Якутск</a>
+                                    </div>
+                                </form>
+                                <div class="town-changer__slider">
+                                    <div class="item">
+                                        <div class="town-col">
+                                            <span class="letter">А</span>
+                                            <a class="js-town" href="#">Абакан</a>
+                                            <a class="js-town" href="#">Абрамцево</a>
+                                            <a class="js-town" href="#">Авдотьино</a>
+                                            <a class="js-town" href="#">Азов</a>
+                                            <a class="js-town" href="#">Аксиньино</a>
+                                            <a class="js-town" href="#">Алабино</a>
+                                        </div>
+                                        <div class="town-col">
+                                            <a class="js-town" href="#">Аэропорт Шереметьево 1</a>
+                                            <span class="letter">Б</span>
+                                            <a class="js-town" href="#">Бабенки</a>
+                                            <a class="js-town" href="#">Балабаново</a>
+                                            <a class="js-town" href="#">Балаково</a>
+                                            <a class="js-town" href="#">Балахна</a>
+                                            <a class="js-town" href="#">Балашиха</a>
+                                        </div>
+                                        <div class="town-col">
+                                            <span class="letter">А</span>
+                                            <a class="js-town" href="#">Абакан</a>
+                                            <a class="js-town" href="#">Абрамцево</a>
+                                            <a class="js-town" href="#">Авдотьино</a>
+                                            <a class="js-town" href="#">Азов</a>
+                                            <a class="js-town" href="#">Аксиньино</a>
+                                            <a class="js-town" href="#">Алабино</a>
+                                        </div>
+                                        <div class="town-col">
+                                            <a class="js-town" href="#">Аэропорт Шереметьево 1</a>
+                                            <span class="letter">Б</span>
+                                            <a class="js-town" href="#">Бабенки</a>
+                                            <a class="js-town" href="#">Балабаново</a>
+                                            <a class="js-town" href="#">Балаково</a>
+                                            <a class="js-town" href="#">Балахна</a>
+                                            <a class="js-town" href="#">Балашиха</a>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="town-col">
+                                            <span class="letter">А</span>
+                                            <a class="js-town" href="#">Абакан</a>
+                                            <a class="js-town" href="#">Абрамцево</a>
+                                            <a class="js-town" href="#">Авдотьино</a>
+                                            <a class="js-town" href="#">Азов</a>
+                                            <a class="js-town" href="#">Аксиньино</a>
+                                            <a class="js-town" href="#">Алабино</a>
+                                        </div>
+                                        <div class="town-col">
+                                            <a class="js-town" href="#">Аэропорт Шереметьево 1</a>
+                                            <span class="letter">Б</span>
+                                            <a class="js-town" href="#">Бабенки</a>
+                                            <a class="js-town" href="#">Балабаново</a>
+                                            <a class="js-town" href="#">Балаково</a>
+                                            <a class="js-town" href="#">Балахна</a>
+                                            <a class="js-town" href="#">Балашиха</a>
+                                        </div>
+                                        <div class="town-col">
+                                            <span class="letter">А</span>
+                                            <a class="js-town" href="#">Абакан</a>
+                                            <a class="js-town" href="#">Абрамцево</a>
+                                            <a class="js-town" href="#">Авдотьино</a>
+                                            <a class="js-town" href="#">Азов</a>
+                                            <a class="js-town" href="#">Аксиньино</a>
+                                            <a class="js-town" href="#">Алабино</a>
+                                        </div>
+                                        <div class="town-col">
+                                            <a class="js-town" href="#">Аэропорт Шереметьево 1</a>
+                                            <span class="letter">Б</span>
+                                            <a class="js-town" href="#">Бабенки</a>
+                                            <a class="js-town" href="#">Балабаново</a>
+                                            <a class="js-town" href="#">Балаково</a>
+                                            <a class="js-town" href="#">Балахна</a>
+                                            <a class="js-town" href="#">Балашиха</a>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="town-col">
+                                            <span class="letter">А</span>
+                                            <a class="js-town" href="#">Абакан</a>
+                                            <a class="js-town" href="#">Абрамцево</a>
+                                            <a class="js-town" href="#">Авдотьино</a>
+                                            <a class="js-town" href="#">Азов</a>
+                                            <a class="js-town" href="#">Аксиньино</a>
+                                            <a class="js-town" href="#">Алабино</a>
+                                        </div>
+                                        <div class="town-col">
+                                            <a class="js-town" href="#">Аэропорт Шереметьево 1</a>
+                                            <span class="letter">Б</span>
+                                            <a class="js-town" href="#">Бабенки</a>
+                                            <a class="js-town" href="#">Балабаново</a>
+                                            <a class="js-town" href="#">Балаково</a>
+                                            <a class="js-town" href="#">Балахна</a>
+                                            <a class="js-town" href="#">Балашиха</a>
+                                        </div>
+                                        <div class="town-col">
+                                            <span class="letter">А</span>
+                                            <a class="js-town" href="#">Абакан</a>
+                                            <a class="js-town" href="#">Абрамцево</a>
+                                            <a class="js-town" href="#">Авдотьино</a>
+                                            <a class="js-town" href="#">Азов</a>
+                                            <a class="js-town" href="#">Аксиньино</a>
+                                            <a class="js-town" href="#">Алабино</a>
+                                        </div>
+                                        <div class="town-col">
+                                            <a class="js-town" href="#">Аэропорт Шереметьево 1</a>
+                                            <span class="letter">Б</span>
+                                            <a class="js-town" href="#">Бабенки</a>
+                                            <a class="js-town" href="#">Балабаново</a>
+                                            <a class="js-town" href="#">Балаково</a>
+                                            <a class="js-town" href="#">Балахна</a>
+                                            <a class="js-town" href="#">Балашиха</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -239,28 +239,7 @@ $(document).ready(function() {
             msgCont: '.call-info__body'
         });
 
-        $('.address-info__holder').dropdown({
-            link: '.js-address-popup',
-            onOpen: function() {
-                var $map = $('#address-map');
-                var map, moscowPin;
-                ymaps.ready(function () {
-                     map = new ymaps.Map("address-map", {
-                        center: [55.74011678, 37.60888550],
-                        zoom: 15,
-                        controls: ['zoomControl']
-                    });
-                    moscowPin = new ymaps.Placemark(map.getCenter(), {
-                        hintContent: 'Fidelis style'
-                    }, {
-                        // Опции.
-                        // Необходимо указать данный тип макета.
-                        iconLayout: 'default#image'
-                    });
-                    map.geoObjects.add(moscowPin);
-                });
-            }
-        });
+
 
         //subscribe
         $('.subscribe').subscribe();

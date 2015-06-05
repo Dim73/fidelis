@@ -24,7 +24,11 @@ $(function(){
         $listActive;
 
 
-    $goodsItem.hover(function(){
+    $goodsItem.on('mouseenter', function(){
+       $(this).trigger('onHover');
+    });
+
+    $goodsItem.bind('onHover', function() {
         var $this = $(this);
         $goodsItem.removeClass('hover');
         $this.addClass('hover');
@@ -36,6 +40,12 @@ $(function(){
     $collectionSubmenu.mouseleave(function(){
         $goodsItem.removeClass('hover');
         $goodsCatList.stop().fadeOut(300);
+    });
+
+    $('.hasSubmenu',$mainMenu).on('mouseenter', function(){
+        if ($(this).find('.goods__list').length) {
+            $(this).find('.goods__item').eq(0).trigger('onHover');
+        }
     });
 
     //style submenu
@@ -53,13 +63,14 @@ $(function(){
                     type: 'post',
                     data: {id: id},
                     success: function(data,status,xhr){
-                        callback(data);
+                        callback(id, data);
                     }
                 });
             }
         };
 
         var controller = {
+            locker: -1,
             init: function() {
                 viewLink.init();
                 viewText.init();
@@ -67,20 +78,24 @@ $(function(){
             addLink: function(link, id) {
               model.items.push({$link: link, id: id});
             },
-            setHover: function(id) {
+            setActive: function(id) {
                 model.curLink = this.getLinkByid(id);
+                this.locker = id;
                 if (model.curLink) {
                     viewLink.render();
-                    if (!model.curLink.$submenu) {
+                    if (!model.curLink.$submenu || !model.curLink.subIsAppend) {
                         model.getText(id, this.addSubMenu);
                     } else {
                         viewText.render();
                     }
                 }
             },
-            addSubMenu: function(data) {
-                model.curLink.$submenu = $(data);
-                viewText.render();
+            addSubMenu: function(id, data) {
+                var $link = controller.getLinkByid(id);
+                console.log(controller.locker, '~', id,controller.locker);
+                $link.$submenu = $(data);
+                if (controller.locker === id)
+                    viewText.render();
             },
             getLinkByid: function(id) {
                 for (var i in model.items) {
@@ -93,11 +108,11 @@ $(function(){
             getActiveLink: function() {
                 return model.curLink;
             },
-            setActiveAppend: function() {
+            setActiveAppend: function(id) {
                 model.curLink.subIsAppend = true;
             },
             closeAll: function() {
-                controller.setHover(-1);
+                controller.setActive(-1);
                 viewText.render();
                 viewLink.render();
             }
@@ -111,8 +126,12 @@ $(function(){
                     controller.addLink($(this), $(this).data('id'));
                 });
 
-                this.$styleCatLink.hover(function(){
-                    controller.setHover($(this).data('id'));
+                this.$styleCatLink.bind('onHover', function(){
+                    controller.setActive($(this).data('id'));
+                });
+
+                this.$styleCatLink.on('mouseenter', function(){
+                    $(this).trigger('onHover');
                 });
             },
             render: function() {
@@ -130,13 +149,13 @@ $(function(){
                 this.$holder.height(0);
             },
             render: function() {
-
                 var cur = controller.getActiveLink();
                 $(this.item, _submenu).stop().fadeOut(450,function(){
                     if (!cur) {
                         viewText.$holder.height(0);
                     }
                 });
+
                 if (cur) {
                     if (!cur.subIsAppend) {
                         this.$holder.append(cur.$submenu);
@@ -144,10 +163,7 @@ $(function(){
                     }
                     this.$holder.height(cur.$submenu.height());
                     cur.$submenu.stop().fadeIn();
-                } else {
-
                 }
-
             }
         };
 

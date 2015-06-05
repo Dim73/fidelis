@@ -214,8 +214,8 @@
         border-bottom: 1px solid transparent;
 
         &:hover {
-          color: @red;
-          border-bottom: 1px solid @red;
+          color: #444444;
+          border-color: #444444;
         }
       }
 
@@ -256,8 +256,7 @@
 
       &__list {
         float: left;
-        width: 192px;
-        padding-right: 27px;
+        width: 217px;
         margin-top: 25px;
         border-right: 1px solid #dddddd;
       }
@@ -266,8 +265,11 @@
         text-transform: uppercase;
         display: block;
         position: relative;
-        margin-bottom: 17px;
+        margin-bottom: 5px;
         color: #444444;
+        height: 30px;
+
+        ._transition(background-color);
 
         &:last-child {
           margin-bottom: 0;
@@ -276,33 +278,32 @@
         &:after {
           content: "";
           position: absolute;
-          top: 5px;
-          right: 0;
+          top: 12px;
+          right: 14px;
           width: 0;
           height: 0;
           border-style: solid;
-          border-width: 6px 0 6px 6px;
+          border-width: 3px 0 3px 5px;
           border-color: transparent transparent transparent transparent;
           ._transition(border-color);
         }
 
         &.hover {
+          background-color: #6a6a6a;
 
           span {
-            color: @red;
-            border-color: @red;
+            color: #FFFFFF;
           }
 
           &:after {
-            border-color: transparent transparent transparent @red;
+            border-color: transparent transparent transparent #FFFFFF;
           }
         }
 
         span {
           ._transition(all);
-
-          border-bottom: 1px solid transparent;
-          padding-bottom: 3px;
+          padding-left: 9px;
+          line-height: 30px;
         }
       }
 
@@ -413,6 +414,7 @@
           margin-left: 20px;
           border: 1px solid #d4d4d4;
           width: 263px;
+          height: 263px;
 
           img {
             display: block;

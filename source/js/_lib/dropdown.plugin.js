@@ -5,6 +5,8 @@
         var def = {
                 link: '',
                 onOpen: function(){},
+                onClose: function(){},
+                afterClose: function(){},
                 fadeTo: '.dropdown-fade-to'
             };
 
@@ -43,6 +45,10 @@
                 } else {
                     $self.height(0);
                     $fade.stop().fadeOut(400);
+                    opt.onClose();
+                    $self.bind('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(){
+                      opt.afterClose();
+                    });
                 }
                 $link.toggleClass('active',flag);
                 window.dropDownIsOpen = flag;
