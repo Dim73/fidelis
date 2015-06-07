@@ -64,11 +64,11 @@
                                 </div>
                             </div>
                             <div class="town-changer">
-                                <div class="hint">Выберите город, в котором собираетесь получить товар. От выбора зависит <br/> стоимость доставки.</div>
-                                <form class="town-changer__form" action="">
+                                <div class="hint">Укажите  город, в котором собираетесь получить товар</div>
+                                <form class="town-changer__form" action="#townChange" data-autocompleteurl="../../source/back/townComplete.html">
                                     <div class="row">
                                         <label for="changeTown">Ваш Город</label>
-                                        <input class="inputtext" id="changeTown" type="text"/>
+                                        <input class="inputtext" id="changeTown" name="town" type="text"/>
                                         <a class="btn btn-submit" href="#">СОХРАНИТЬ <input type="submit" value=""/></a>
                                     </div>
                                     <div class="town-changer__related-list">
@@ -77,7 +77,7 @@
                                         <a href="#" class="js-town">Якутск</a>
                                     </div>
                                 </form>
-                                <div class="town-changer__slider">
+<!--                                <div class="town-changer__slider">
                                     <div class="item">
                                         <div class="town-col">
                                             <span class="letter">А</span>
@@ -192,7 +192,7 @@
                                             <a class="js-town" href="#">Балашиха</a>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -206,34 +206,34 @@
                 <div class="shipment-info__holder dropdown_top">
                     <div class="shipment-info">
                         <div class="shipment-info__title dropdown-fade-to dropdown__header">
-                            СТОИМОСТЬ ДОСТАВКИ
+                            ДОСТАВКА
                         </div>
                         <div class="shipment-info__body dropdown__body">
                             <div class="type-list">
                                 <div class="type-list__item">
-                                    <span class="type-title">Курьером по Москве:</span>
+                                    <span class="type-title"><span class="place">ПО МОСКВЕ</span> (ежедневно с 10:00 до 22:00):</span>
                                     <div class="line">
-                                        <span class="name">СПСР Экспресс</span>
-                                        <span class="price">650<span class="rub"><span>руб</span></span></span>
+                                        <span class="name">Курьером</span>
+                                        <span class="price">300 <span class="rub"><span>руб</span></span></span>
                                     </div>
-                                    <div class="line">
-                                        <span class="name">СПСР Экспресс</span>
-                                        <span class="price price-free">БЕСПЛАТНО</span>
+                                    <div class="line line-bonus">
+                                        <span class="name">При заказе свыше 2 500<span class="rub"><span>руб</span></span></span>
+                                        <span class="price">БЕСПЛАТНО</span>
                                     </div>
                                 </div>
                                 <div class="type-list__item">
-                                    <span class="type-title">по России:</span>
+                                    <span class="type-title"><span class="place">по России:</span></span>
                                     <div class="line">
-                                        <span class="name">СПСР Экспресс</span>
+                                        <span class="name">Почта России</span>
                                         <span class="price">650<span class="rub"><span>руб</span></span></span>
                                     </div>
                                     <div class="line">
                                         <span class="name">СПСР Экспресс</span>
                                         <span class="price">650<span class="rub"><span>руб</span></span></span>
                                     </div>
-                                    <div class="line">
-                                        <span class="name">СПСР Экспресс</span>
-                                        <span class="price price-free">БЕСПЛАТНО</span>
+                                    <div class="line line-bonus">
+                                        <span class="name">При заказе свыше 10 000<span class="rub"><span>руб</span></span></span>
+                                        <span class="price">БЕСПЛАТНО</span>
                                     </div>
                                 </div>
                             </div>

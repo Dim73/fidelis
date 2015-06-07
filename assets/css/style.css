@@ -2877,25 +2877,36 @@ h1 {
   border-color: transparent transparent #27938c transparent;
 }
 .shipment-info__body {
-  padding: 15px 26px 13px;
+  padding: 20px 20px 30px;
   text-align: center;
 }
 .shipment-info .type-list {
   text-align: left;
   color: #444444;
-  margin-bottom: 18px;
+  margin-bottom: 30px;
 }
 .shipment-info .type-list__item {
-  margin-bottom: 12px;
+  padding-bottom: 10px;
+  margin-bottom: 19px;
   border-bottom: 1px solid #999999;
 }
+.shipment-info .type-list__item:last-child {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
 .shipment-info .type-list .type-title {
-  font-family: "LatoBold";
+  font-family: "LatoRegular";
   display: block;
   margin-bottom: 18px;
+  color: #27938b;
+}
+.shipment-info .type-list .type-title .place {
+  font-family: "LatoBold";
+  text-transform: uppercase;
 }
 .shipment-info .type-list .line {
-  margin-bottom: 20px;
+  margin-bottom: 13px;
 }
 .shipment-info .type-list .line:after {
   clear: both;
@@ -2907,17 +2918,19 @@ h1 {
   width: 0;
   height: 0;
 }
+.shipment-info .type-list .line-bonus .name {
+  font-family: "LatoBold";
+}
 .shipment-info .type-list .name {
   display: block;
   float: left;
-  width: 50%;
+  width: 65%;
 }
 .shipment-info .type-list .price {
   display: block;
   float: left;
-  width: 50%;
+  width: 35%;
   text-align: right;
-  font-family: "LatoBold";
 }
 .shipment-info .type-list .price-free {
   color: #27938b;
@@ -3097,6 +3110,9 @@ h1 {
   letter-spacing: 0.05em;
   margin-bottom: 13px;
 }
+.town-changer__form .row {
+  position: relative;
+}
 .town-changer__form label {
   display: block;
   font-size: 12px;
@@ -3204,6 +3220,28 @@ h1 {
 }
 .town-changer__slider .slick-next:before {
   content: "\e608";
+}
+.town-autocomplete {
+  position: absolute;
+  z-index: 550;
+  top: 50px;
+  left: 0;
+  width: 361px;
+}
+.town-autocomplete__inner {
+  background: #f8f7f8;
+}
+.town-autocomplete__inner a {
+  position: relative;
+  display: block;
+  color: #303030;
+  font-size: 14px;
+  line-height: 16px;
+  padding: 9px 20px 8px 10px;
+  cursor: pointer;
+}
+.town-autocomplete__inner a:hover {
+  background-color: #dddddd;
 }
 .call-info {
   padding-top: 18px;
