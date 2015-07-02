@@ -217,7 +217,6 @@ $(document).ready(function() {
 
 
         $('.pitem-specs__spoilers .folding').folding({openHeight: 163, closeOther: '.pitem-specs__spoilers .spoiler-item'});
-        $('.left .folding').folding({});
         $('.content-text__side .folding').folding({openHeight: 500});
         $('.order-spoiler').folding({closeOther: '.order-spoiler'});
         $(".phone-mask").mask("+7 (999) 999-99-99");
@@ -235,10 +234,10 @@ $(document).ready(function() {
             $(this).removeClass('size_empty');
         });
 
-        $('.basket-items__holder').dropdown({
+        /*$('.basket-items__holder').dropdown({
             link: '.js-basket-open',
             fade: false
-        });
+        });*/
 
         $('.login-dropdown__holder').dropdown({
             link: '.js-login-open',

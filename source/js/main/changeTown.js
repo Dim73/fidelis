@@ -26,8 +26,7 @@ $(function(){
             $adrs_body.css('height',$adrs_inner.outerHeight());
             $adrs_autoComplete.hide();
             //map init in html
-        },
-        fade: false
+        }
     });
 
     $('body').append($('#town-change').html());

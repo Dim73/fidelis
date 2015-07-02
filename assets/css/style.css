@@ -5205,8 +5205,33 @@ h1 {
 .basket_order .basket__buttons .btn_order {
   float: right;
 }
+.basket-promocode {
+  margin-bottom: 10px;
+}
+.basket-promocode__link {
+  border-bottom: 1px solid #444444;
+  color: #444444;
+  font-family: "LatoRegular";
+  text-transform: uppercase;
+}
+.basket-promocode.opened .basket-promocode__link {
+  border-color: transparent;
+}
+.basket-promocode__inner {
+  padding-top: 10px;
+}
+.basket-promocode__val {
+  display: none;
+  text-align: right;
+  font-size: 14px;
+  line-height: 16px;
+  font-family: "LatoBold";
+  color: #303030;
+  letter-spacing: 0.05em;
+  margin-top: 20px;
+}
 .basket-promocode__form {
-  margin-bottom: 3px;
+  width: 350px;
 }
 .basket-promocode__form .inputtext {
   width: 288px;
@@ -5230,7 +5255,7 @@ h1 {
 }
 .basket-promocode__hint {
   color: #444444;
-  line-height: 16px;
+  line-height: 18px;
 }
 .basket_account {
   padding: 1px 0;
@@ -6696,6 +6721,10 @@ h1 {
   margin-bottom: 13px;
   width: 100%;
 }
+.delivery-form .row .inputtext,
+.delivery-form .row textarea {
+  width: 100%;
+}
 .delivery-form .div-2:after {
   clear: both;
   content: ' ';
@@ -6728,10 +6757,6 @@ h1 {
 }
 .delivery-form .req {
   font-size: 14px;
-}
-.delivery-form .inputtext,
-.delivery-form textarea {
-  width: 100%;
 }
 .delivery-form textarea {
   border: 1px solid #dddddd;

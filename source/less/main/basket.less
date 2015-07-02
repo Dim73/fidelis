@@ -415,10 +415,41 @@
   }
 
   &-promocode {
+    margin-bottom: 10px;
+
+    &__link {
+      border-bottom: 1px solid #444444;
+      color: #444444;
+      font-family: @font-lr;
+      text-transform: uppercase;
+    }
+
+    &.opened {
+
+      .basket-promocode__link {
+        border-color: transparent;
+      }
+    }
+
+    &__inner {
+      padding-top: 10px;
+    }
+
+    &__val {
+      display: none;
+      text-align: right;
+      font-size: 14px;
+      line-height: 16px;
+      font-family: @font-lb;
+      color: #303030;
+      letter-spacing: 0.05em;
+      margin-top: 20px;
+
+    }
 
     &__form {
-      margin-bottom: 3px;
-      
+      width: 350px;
+
       .inputtext {
         width: 288px;
       }
@@ -437,8 +468,9 @@
     }
 
     &__hint {
+
       color: #444444;
-      line-height: 16px;
+      line-height: 18px;
     }
 
   }

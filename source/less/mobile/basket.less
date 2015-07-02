@@ -234,6 +234,8 @@
         margin-left: 28px;
         font-family: Arial;
         font-weight: bold;
+        text-align: right;
+        float: right;
 
         .rub {
           top: 1px;
@@ -254,16 +256,8 @@
     .basket {
 
       &__bottom {
-        margin-top: 37px;
-
       }
 
-      &-promocode {
-        background-color: #f9f8f8;
-        ._clearfix();
-        height: 98px;
-        border: 1px solid #dddddd;
-      }
 
       &__total {
         text-align: center;
@@ -321,27 +315,54 @@
   }
 
   &-promocode {
+    margin-bottom: 25px;
+
+    &__link {
+      border-bottom: 1px solid #444444;
+      color: #444444;
+      font-family: @font-lr;
+      text-transform: uppercase;
+    }
+
+    &.opened {
+
+      .basket-promocode__link {
+        border-color: transparent;
+      }
+    }
+
+    &__inner {
+      padding-top: 10px;
+    }
+
+    &__val {
+      display: none;
+      text-align: center;
+      font-size: 20px;
+      line-height: 20px;
+      font-family: @font-lb;
+      color: #303030;
+      letter-spacing: 0.05em;
+      margin-top: 10px;
+      height: 30px;
+    }
 
     &__form {
-      width: 414*@delta + 0%;
-      height: 58px;
-      border: 1px solid #dddddd;
       margin:  0 auto;
-      margin-top: 19px;
       background-color: #ffffff;
       
       .inputtext {
         width: 330*100/415 + 0%;
-        height: 58px;
+        height: 60px;
+        border: 1px solid #444444;
         line-height: 58px;
-        border: 0 !important;
         ._transition(none)
       }
 
       .btn-submit {
         display: inline-block;
         height: 58px;
-        width: 81*100/415 + 0%;
+        margin-left: 10px;
         text-align: center;
         vertical-align: top;
         .transition(opacity);

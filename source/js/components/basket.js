@@ -49,7 +49,7 @@
 
             this.$items = this.basket.renderItem(this);
 
-            this.$price = this.$items.find('.basket-item__price');
+            this.$price = this.$items.find('.basket-item__price .summ');
 
             if (this.sizes.length === 1) { //нет размеров
                 for (var size in this.sizes[0]) {
@@ -58,7 +58,7 @@
                     }
                 }
             }
-            this.$sizes.CustomSelect({visRows:4});
+            !IS_MOBILE && this.$sizes.CustomSelect({visRows:4});
             this.updatePrice(true);
         },
         _sizeChange: function(e) {
@@ -108,7 +108,8 @@
         _linkItem: function(e) {
             var self = e.data;
 
-            if ($(this).closest('.basket_order').length) {
+            console.log(IS_MOBILE);
+            if ($(this).closest('.basket_order').length && !IS_MOBILE) {
                 e.preventDefault();
                 self.basket.modalItem(self);
             }
@@ -142,7 +143,7 @@
 
         this.init = function() {
             self.loadItems();
-            self.$couponForm.on('submit', self.setCoupon);
+            self.$couponFormSubmit.on('click', self.setCoupon);
             self.itemModal.on('click', self._modalClick);
         };
 
@@ -238,6 +239,9 @@
                             self.$sale && self.$sale.remove();
                             self.$sale = $(Mustache.render(self.tplSale, {sale: self.sale}));
                             self.$coupon = $('.summ',self.$sale);
+                            self.$couponFormVal.find('span').text(self.sale);
+                            self.$couponFormVal.show();
+                            self.$couponForm.trigger('update');
                             self.$totalCont.append(self.$sale);
                             $inpt.val('');
                             self.updateTotal();
@@ -341,7 +345,7 @@
                 containerVideo: '.pitem-preview-main_side .pitem-preview-main__video'
             });
             //select
-            $('.select_size', self.itemModal).CustomSelect({visRows:4});
+            !IS_MOBILE && $('.select_size', self.itemModal).CustomSelect({visRows:4});
             var $curItem = $('.js-item-data', self.itemModal),
                 itemData = eval('('+$curItem.data('item')+')'),
                 $selectSize = $('.select_size',$curItem),
@@ -373,9 +377,11 @@
         self.$total = $('.total__summ .summ', self.$self);
         self.$scroller = $('.nano-scroll', self.$self);
         self.$topCount = $('.basket-top__icon .count',self.$self);
-        self.tplItem = $('#basket-item').html();
+        self.tplItem = IS_MOBILE?$('#basket-item__mobile').html():$('#basket-item').html();
         self.tplSale = $('#basket-sale').html();
         self.$couponForm = $('.basket-promocode__form');
+        self.$couponFormVal = $('.basket-promocode__val');
+        self.$couponFormSubmit = $('.btn-submit', self.$couponForm);
         self.itemModal = $('.ajxItemModal');
         self.itemModalCont = $('.ajxItemModal__inner');
 
@@ -384,6 +390,7 @@
 
         self.init();
     };
+
 
     window.Checkout = function  (basket) {
         var self = this;
@@ -414,12 +421,13 @@
             },10);
         };
 
-        this.stepDetect = function() {
 
+        this.stepDetect = function() {
             switch (self.curStep) {
                 case 1:
                     var $sel = $('.select_delivery-start');
-                    if ($sel.data('plugin') != 'select')
+                    $('.basket-promocode').folding({});
+                    if ($sel.data('plugin') != 'select' && !IS_MOBILE)
                         $sel.CustomSelect({visRows:5, modifier: 'delivery'});
                     break;
 
@@ -450,7 +458,7 @@
                     self.$deliveryInfo.hide();
                     self.$addresss.show();
                     self.$destSel.show();
-                    if (!selInit) {
+                    if (!selInit && !IS_MOBILE) {
                         $('.post-select', self.$self).CustomSelect({visRows:5, modifier: 'delivery'});
                     }
                     selInit = true;

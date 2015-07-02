@@ -2744,6 +2744,15 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
             this.$items = this.basket.renderItem(this);
 
             this.$price = this.$items.find('.basket-item__price .summ');
+
+            if (this.sizes.length === 1) { //нет размеров
+                for (var size in this.sizes[0]) {
+                    if (!size) {
+                        $('.basket-item__size').css('visibility','hidden');
+                    }
+                }
+            }
+            !IS_MOBILE && this.$sizes.CustomSelect({visRows:4});
             this.updatePrice(true);
         },
         _sizeChange: function(e) {
@@ -2793,7 +2802,8 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
         _linkItem: function(e) {
             var self = e.data;
 
-            if ($(this).closest('.basket_order').length) {
+            console.log(IS_MOBILE);
+            if ($(this).closest('.basket_order').length && !IS_MOBILE) {
                 e.preventDefault();
                 self.basket.modalItem(self);
             }
@@ -2827,7 +2837,7 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
 
         this.init = function() {
             self.loadItems();
-            self.$couponForm.on('submit', self.setCoupon);
+            self.$couponFormSubmit.on('click', self.setCoupon);
             self.itemModal.on('click', self._modalClick);
         };
 
@@ -2923,6 +2933,9 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
                             self.$sale && self.$sale.remove();
                             self.$sale = $(Mustache.render(self.tplSale, {sale: self.sale}));
                             self.$coupon = $('.summ',self.$sale);
+                            self.$couponFormVal.find('span').text(self.sale);
+                            self.$couponFormVal.show();
+                            self.$couponForm.trigger('update');
                             self.$totalCont.append(self.$sale);
                             $inpt.val('');
                             self.updateTotal();
@@ -3026,7 +3039,7 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
                 containerVideo: '.pitem-preview-main_side .pitem-preview-main__video'
             });
             //select
-            //$('.select_size', self.itemModal).CustomSelect({visRows:4});
+            !IS_MOBILE && $('.select_size', self.itemModal).CustomSelect({visRows:4});
             var $curItem = $('.js-item-data', self.itemModal),
                 itemData = eval('('+$curItem.data('item')+')'),
                 $selectSize = $('.select_size',$curItem),
@@ -3058,9 +3071,11 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
         self.$total = $('.total__summ .summ', self.$self);
         self.$scroller = $('.nano-scroll', self.$self);
         self.$topCount = $('.basket-top__icon .count',self.$self);
-        self.tplItem = $('#basket-item__mobile').html();
+        self.tplItem = IS_MOBILE?$('#basket-item__mobile').html():$('#basket-item').html();
         self.tplSale = $('#basket-sale').html();
         self.$couponForm = $('.basket-promocode__form');
+        self.$couponFormVal = $('.basket-promocode__val');
+        self.$couponFormSubmit = $('.btn-submit', self.$couponForm);
         self.itemModal = $('.ajxItemModal');
         self.itemModalCont = $('.ajxItemModal__inner');
 
@@ -3069,6 +3084,7 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
 
         self.init();
     };
+
 
     window.Checkout = function  (basket) {
         var self = this;
@@ -3099,13 +3115,14 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
             },10);
         };
 
-        this.stepDetect = function() {
 
+        this.stepDetect = function() {
             switch (self.curStep) {
                 case 1:
-                    /*var $sel = $('.select_delivery-start');
-                    if ($sel.data('plugin') != 'select')
-                        $sel.CustomSelect({visRows:5, modifier: 'delivery'});*/
+                    var $sel = $('.select_delivery-start');
+                    $('.basket-promocode').folding({});
+                    if ($sel.data('plugin') != 'select' && !IS_MOBILE)
+                        $sel.CustomSelect({visRows:5, modifier: 'delivery'});
                     break;
 
             }
@@ -3135,8 +3152,8 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
                     self.$deliveryInfo.hide();
                     self.$addresss.show();
                     self.$destSel.show();
-                    if (!selInit) {
-                       // $('.post-select', self.$self).CustomSelect({visRows:5, modifier: 'delivery'});
+                    if (!selInit && !IS_MOBILE) {
+                        $('.post-select', self.$self).CustomSelect({visRows:5, modifier: 'delivery'});
                     }
                     selInit = true;
                     self.validateAdd = ['s-address', 's-region', 's-city'];
@@ -3653,7 +3670,6 @@ $(document).ready(function() {
 
 
         $('.pitem-specs__spoilers .folding').folding({openHeight: 163, closeOther: '.pitem-specs__spoilers .spoiler-item'});
-        $('.left .folding').folding({});
         $('.content-text__side .folding').folding({openHeight: 500});
         $('.order-spoiler').folding({closeOther: '.order-spoiler'});
         $(".phone-mask").mask("+7 (999) 999-99-99");
@@ -3671,10 +3687,10 @@ $(document).ready(function() {
             $(this).removeClass('size_empty');
         });
 
-        $('.basket-items__holder').dropdown({
+        /*$('.basket-items__holder').dropdown({
             link: '.js-basket-open',
             fade: false
-        });
+        });*/
 
         $('.login-dropdown__holder').dropdown({
             link: '.js-login-open',
