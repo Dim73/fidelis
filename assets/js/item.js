@@ -42,8 +42,10 @@ function QuickOrder()  {
                 data: {data: self.$form.serialize()},
                 success: function(data,status,xhr){
                     if (data.status) {
-                        self.$self.height(134);
-                        self.$desc.html('Спасибо, наши менеджеры свяжутся с вами <br> в ближайщее время');
+                        self.$form.fadeOut(300,function(){
+                            self.$self.height(self.$selfInner.outerHeight());
+                            self.$desc.html('Спасибо, наши менеджеры свяжутся с вами в ближайщее время');
+                        });
                     } else {
                         self.$error.text(data.error);
                     }
@@ -55,6 +57,8 @@ function QuickOrder()  {
     self.$self = $('.quick-order');
     self.$fade = $('<div class="fade fade-fixed"></div>');
     self.$form = $('.quick-order__form', self.$self);
+    self.$selfInner = $('.quick-order__inner',  self.$self);
+
     self.$desc = $('.desc',self.$self);
     self.$error = $('.send-error',self.$self);
     self.init();

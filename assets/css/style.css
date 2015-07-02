@@ -852,6 +852,15 @@ The `.sprites` mixin generates identical output to the CSS template
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.icon-promo:before {
+  content: "\e614";
+}
+.icon-arrow-bold:before {
+  content: "\e612";
+}
+.icon-filter:before {
+  content: "\e613";
+}
 .icon-fav:before {
   content: "\e611";
 }
@@ -3406,11 +3415,8 @@ h1 {
 }
 .b-custom-select_expanded {
   z-index: 19;
-  color: #ffffff;
+  /*color: #ffffff;*/
   background-color: #888888;
-}
-.b-custom-select_expanded .b-custom-select__title__icon:after {
-  border-color: #ffffff transparent transparent transparent;
 }
 .b-custom-select__title {
   cursor: pointer;
@@ -3814,7 +3820,7 @@ h1 {
   display: inline-block;
   vertical-align: bottom;
   background-image: url(../images/icon/spritesheet.png);
-  background-position: -51px -20px;
+  background-position: -51px 0px;
   width: 36px;
   height: 20px;
   margin-left: 8px;
@@ -4991,6 +4997,10 @@ h1 {
   height: 50px;
   border: 1px solid #e5e5e5;
 }
+.basket-item__size {
+  font-size: 14px;
+  line-height: 26px;
+}
 .basket-item__name {
   width: 240px;
   color: #303030;
@@ -5118,6 +5128,10 @@ h1 {
 .basket_order .b-custom-select_expanded {
   background-color: #888888;
   border-color: #888888;
+  color: #FFFFFF;
+}
+.basket_order .b-custom-select_expanded .b-custom-select__title__icon:after {
+  border-color: #ffffff transparent transparent transparent;
 }
 .basket_order .select_size-order {
   width: 70px;
@@ -6138,7 +6152,7 @@ h1 {
   top: 0;
   left: 0;
   background-image: url(../images/icon/spritesheet.png);
-  background-position: -84px -40px;
+  background-position: -30px -90px;
   width: 19px;
   height: 14px;
 }
@@ -6272,14 +6286,14 @@ h1 {
 .pitem-slider_side .bx-prev {
   top: 0;
   background-image: url(../images/icon/spritesheet.png);
-  background-position: -16px -72px;
+  background-position: -47px -56px;
   width: 31px;
   height: 16px;
 }
 .pitem-slider_side .bx-next {
   bottom: 0;
   background-image: url(../images/icon/spritesheet.png);
-  background-position: -53px -56px;
+  background-position: -16px -74px;
   width: 31px;
   height: 16px;
 }
@@ -6534,7 +6548,7 @@ h1 {
   content: "";
   position: absolute;
   background-image: url(../images/icon/spritesheet.png);
-  background-position: -51px 0px;
+  background-position: -51px -20px;
   width: 94px;
   height: 20px;
   left: 50%;

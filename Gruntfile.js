@@ -4,21 +4,26 @@ module.exports = function(grunt) {
     grunt.initConfig({
         uglify: {
             main : {
-                src: [ 'source/js/**/*.js'],
+                src: [ 'source/js/main.js','source/js/_lib/*.js','source/js/components/*.js'],
                 dest: 'assets/js/main.js'
             }
         },
         less: {
             dist: {
                 files: {
-                    "assets/css/style.css": "source/less/main.less"
+                    "assets/css/style.css": "source/less/main.less",
+                    "assets/css/mobile.css": "source/less/mobile.less"
                 }
             }
         },
         concat: {
             main : {
-                src: [ 'source/js/**/*.js'],
+                src: [ 'source/js/_lib/*.js','source/js/components/*.js','source/js/main/*.js','source/js/main.js'],
                 dest: 'assets/js/main.js'
+            },
+            mobile : {
+                src: [ 'source/js/_lib/*.js','source/js/components/*.js','source/js/mobile/*.js','source/js/mobile.js'],
+                dest: 'assets/js/mobile.js'
             }
         },
         browserSync: {

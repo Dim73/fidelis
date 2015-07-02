@@ -23,7 +23,11 @@
                 isOpened = false;
 
             $scroller.css('max-height',openHeight);
-            $scroller.nanoScroller();
+
+            try{
+                $scroller.nanoScroller()
+            }
+            catch(e) {}
 
             if ($inner.outerHeight() < openHeight) {
                 openHeight = $inner.outerHeight();

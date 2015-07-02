@@ -1,9 +1,14 @@
+<!--#if expr="${device} = /d/" -->
+<!--#set var="img" value="banner2.jpg" -->
+<!--#else -->
+<!--#set var="img" value="banner-mobile.png" -->
+<!--#endif -->
 <div class="main-banner <!--#echo var="QUERY_STRING" -->" data-ratio="3">
     <div class="wrap">
         <div class="main-banner__slider">
             <div class="slider-container">
                 <div class="slider-item prlx-item">
-                    <img class="bg" src="<!--#echo var="assets-path"-->/banner2.jpg" alt=""/>
+                    <img class="bg" src="<!--#echo var="assets-path"-->/<!--#echo var="img" -->" alt=""/>
                     <div class="banner-desc__holder">
                         <div class="banner-desc">
                             <img  class="logo" src="<!--#echo var="assets-path"-->/banner-logo.png" alt=""/>
@@ -19,11 +24,11 @@
                     </div>
                 </div>
                 <div class="slider-item prlx-item">
-                    <img class="bg" src="<!--#echo var="assets-path"-->/banner2.jpg" alt=""/>
+                    <img class="bg" src="<!--#echo var="assets-path"-->/<!--#echo var="img" -->" alt=""/>
                 </div>
 
                 <div class="slider-item prlx-item">
-                    <img class="bg" src="<!--#echo var="assets-path"-->/banner2.jpg" alt=""/>
+                    <img class="bg" src="<!--#echo var="assets-path"-->/<!--#echo var="img" -->" alt=""/>
                 </div>
             </div>
         </div>

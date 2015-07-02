@@ -497,12 +497,162 @@ $(document).ready(function() {
         //smooth scroll
         smoothScrollInit();
 
+        ///basket
+        var basket = new Basket();
+        var order = new Checkout(basket);
+        //checkout
+        $('.btn_checkout').click(function(e){
+            e.preventDefault();
+            order.nextStep(1);
+        });
+
+        //catalog item add
+        $('.itemlist').length && (function(){
+            //size option
+            var self = {};
+
+            var $sizePopup = $('.size-popup'),
+                $sizePopupInner = $('.size__inner',$sizePopup),
+                htmlInner = $('#template-popup-size').html(),
+                htmlCost = $('#template-popup-cost').html(),
+                $selectSize, $cost, $curItem,
+                $fade = $('.fade-fixed');
+
+            Mustache.parse(htmlInner);
+            Mustache.parse(htmlCost);
+
+            $fade.click(function(){
+                $sizePopup.find('.close').trigger('click');
+            });
+
+            $('.itemlist').on('click','.js-buy',function(e) {
+                e.preventDefault();
+                if ($(this).is('.btn_cart-added')) return;
+                $curItem = $(this).closest('.js-item-data');
+                var itemData = eval('('+$curItem.data('item')+')');
+                var imgSrc = $curItem.find('.slider-item:first-child img').attr('src');
+                console.log($curItem.find('.slider-item:first-child img'));
+                self.id = itemData.id;
+                if (itemData.sizes  && itemData.sizes.length) {
+                    var renderData = {
+                        sizes: itemData.sizes,
+                        size: function() {
+                            for ( property in this ) {
+                                return property;
+                            }
+                        },
+                        img: imgSrc
+                    };
+                    var rendered = Mustache.render(htmlInner, renderData);
+                    $sizePopupInner.html(rendered);
+                    var thisOffset = $('.description', $curItem).offset();
+                    $sizePopup.css({top: thisOffset.top, left: thisOffset.left}).show();
+                    $selectSize = $('.select_size',$sizePopup);
+                    $selectSize.CustomSelect({visRows:4});
+                    $sizePopup.hide().css({opacity:1}).fadeIn();
+                    $fade.fadeIn();
+
+                    $cost = $('.cost',$sizePopup);
+                    $selectSize.change(function(){
+                        var valSize = self.size = $(this).val(),
+                            costRender,
+                            cost;
+                        if (valSize) {
+                            for (var i in itemData.sizes) {
+                                for (var property in itemData.sizes[i] ) {
+                                    if (property == valSize) {
+                                        cost = itemData.sizes[i][property];
+                                        break;
+                                    }
+                                }
+                            }
+                            costRender = Mustache.render(htmlCost, {price: cost});
+                        } else {
+                            costRender = '';
+                        }
+                        $cost.html(costRender);
+                    })
+                } else {
+                    self.size = 0;
+                    itemAdd();
+                }
+            });
+
+
+            $sizePopup
+                .on('click','.btn',function() {
+                    if ($selectSize.val() == '') {
+                        $selectSize.closest('.pitem-size').addClass('size_empty');
+                    } else {
+                        closePopup($sizePopup);
+                        itemAdd();
+                    }
+                    return false;
+                });
+
+            function itemAdd() {
+                var $btn = $curItem.find('.js-buy');
+                $btn.text('ТОВАР В КОРЗИНЕ').addClass('btn_cart-added');
+                basket.addItem({id: self.id, size: self.size}, true);
+            }
+        })();
+
+
+        //item add
+        $('.pitem').length && (function(){
+            var $curItem = $('.js-item-data'),
+                itemData = eval('('+$curItem.data('item')+')'),
+                $selectSize = $('.select_size',$curItem),
+                $cost = $('.count',$curItem);
+
+            var self = {};
+            self.id = itemData.id;
+
+            $selectSize.change(function(){
+                var valSize = self.size = $(this).val(),
+                    costRender,
+                    cost;
+                if (valSize) {
+                    for (var i in itemData.sizes) {
+                        for (var property in itemData.sizes[i] ) {
+                            if (property == valSize) {
+                                cost = itemData.sizes[i][property];
+                                break;
+                            }
+                        }
+                    }
+                    $cost.html(cost);
+                }
+                $('.js-buy').removeClass('btn_red').text('купить');
+            });
+
+            $('.js-buy').click(function(){
+                var $this = $(this);
+                if ($this.is('.btn_cart-added') || $this.is('.btn_red')) return false;
+                if ($selectSize.val() == '' && itemData.sizes) {
+                    $selectSize.closest('.pitem-size').addClass('size_empty');
+                    $this.addClass('btn_red').text('выберите размер');
+                } else {
+                    itemAdd();
+                }
+                return false;
+            });
+
+            function itemAdd() {
+                var $btn = $curItem.find('.js-buy');
+                $btn.text('ТОВАР В КОРЗИНЕ').addClass('btn_cart-added');
+                basket.addItem({id: self.id, size: self.size}, true);
+            }
+        })();
     });
 
     $(window).load(function(){
         //banner prlx
         $('.seo-main').prlx();
     })
+
+
+
 })(jQuery);
 
 function smoothScrollInit () {

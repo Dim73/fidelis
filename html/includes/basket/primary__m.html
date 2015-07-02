@@ -1,0 +1,238 @@
+<div class="order">
+    <div class="basket basket_order order-step">
+        <div class="basket-items scroll-to">
+            <div class="basket-items__body">
+                <div class="basket-items__list">
+
+                </div>
+            </div>
+        </div>
+        <div class="basket__bottom">
+            <div class="wrap">
+                <div class="basket-promocode">
+                    <form class="basket-promocode__form" action="/">
+                        <input type="text" class="inputtext" placeholder="ВВЕДИТЕ  ПРОМОКОД"/>
+                        <a class="btn-submit" href="#">
+                            <input type="submit"/>
+                        </a>
+                    </form>
+                </div>
+                <div class="basket__total">
+                    <div class="cell total">
+                        <div class="total__summ">
+                            <span class="lbl">Итого:</span>
+                            <span class="summ"></span><span class="rub"><span>руб</span></span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="basket__buttons">
+            <a class="btn btn_order btn_checkout" href="#">ОФОРМИТЬ ЗАКАЗ</a>
+            <a class="btn btn_back" href="#">ВЕРНУТСЯ В КАТАЛОГ</a>
+        </div>
+    </div>
+
+    <div class="order-delivery order-step" id="order-delivery">
+
+        <div class="order__inner order-expand">
+            <div class="order-delivery__top">
+                <span class="delivery__title scroll-to">АДРЕС ДОСТАВКИ</span>
+                <span class="delivery__tip">* поля обязательны для заполнения</span>
+            </div>
+            <div class="order-delivery__body">
+                <form class="delivery-form" action="">
+                    <div class="delivery-form__fieldset">
+                        <div class="div-2">
+                            <div class="row">
+                                <input class="inputtext require" id="s-name" name="name" type="text" placeholder="ваше имя*"/>
+                            </div>
+                            <div class="row">
+                                <input class="inputtext" id="s-lastname" name="family" type="text" placeholder="ФАМИЛИЯ "/>
+                            </div>
+                        </div>
+                        <div class="div-2">
+                            <div class="row">
+                                <input class="inputtext require phone-mask" id="s-phone" name="phone" type="text" placeholder="+7 (___) ___-__-__"/>
+                            </div>
+                            <div class="row">
+                                <input class="inputtext require" id="s-email" name="email" type="email" placeholder="E-MAIL* "/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="select_delivery">
+                                <select name="paytype" class="no-styler select_delivery-start" id="s-paytype">
+                                    <option value="">ВАРИАНТЫ ОПЛАТЫ</option>
+                                    <option value="">Наличными либо картой при получении</option>
+                                    <option value="">Картой Visa/Mastercard на сайте</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="select_delivery">
+                                <select  class="no-styler  select_delivery-start" id="s-delivery" name="delivery">
+                                    <option value="">СПОСОБ ДОСТАВКИ</option>
+                                    <option value="courier">Курьером по Москве и области</option>
+                                    <option value="self">Самовывоз</option>
+                                    <option value="spsr_regions">Курьером СПСР-ЭКСПРЕСС в регионы РФ</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="selected_delivery">
+                            <div class="row">
+                                <div class="select_delivery">
+                                    <select name="region" class="no-styler require post-select" id="s-region">
+                                        <option value="">Регион</option>
+                                    <option value="">Выберите регион</option>
+                                    <option value="53">Адыгея респ.</option>
+                                    <option value="54">Алтай респ.</option>
+                                    <option value="3">Алтайский край</option>
+                                    <option value="4">Амурская обл.</option>
+                                    <option value="6">Архангельская обл.</option>
+                                    <option value="7">Астраханская обл.</option>
+                                    <option value="55">Башкортостан респ.</option>
+                                    <option value="8">Белгородская обл.</option>
+                                    <option value="10">Брянская обл.</option>
+                                    <option value="56">Бурятия респ.</option>
+                                    <option value="11">Владимирская обл.</option>
+                                    <option value="12">Волгоградская обл.</option>
+                                    <option value="13">Вологодская обл.</option>
+                                    <option value="14">Воронежская обл.</option>
+                                    <option value="57">Дагестан респ.</option>
+                                    <option value="16">Еврейская авт. обл.</option>
+                                    <option value="229758847">Забайкальский край</option>
+                                    <option value="17">Ивановская обл.</option>
+                                    <option value="101">Ингушская респ.</option>
+                                    <option value="18">Иркутская обл.</option>
+                                    <option value="19">Кабардино-Балкарская респ.</option>
+                                    <option value="21">Калининградская обл.</option>
+                                    <option value="58">Калмыкия респ.</option>
+                                    <option value="22">Калужская обл.</option>
+                                    <option value="23">Камчатский край</option>
+                                    <option value="24">Карачаево-Черкесская респ.</option>
+                                    <option value="59">Карелия респ.</option>
+                                    <option value="25">Кемеровская обл.</option>
+                                    <option value="27">Кировская обл.</option>
+                                    <option value="60">Коми респ.</option>
+                                    <option value="29">Костромская обл.</option>
+                                    <option value="30">Краснодарский край</option>
+                                    <option value="31">Красноярский край</option>
+                                    <option value="694008984">Крым респ.</option>
+                                    <option value="32">Курганская обл.</option>
+                                    <option value="33">Курская обл.</option>
+                                    <option value="35">Ленинградская обл.</option>
+                                    <option value="36">Липецкая обл.</option>
+                                    <option value="38">Магаданская обл.</option>
+                                    <option value="61">Марий Эл респ.</option>
+                                    <option value="62">Мордовия респ.</option>
+                                    <option value="40">Московская обл.</option>
+                                    <option value="41">Мурманская обл.</option>
+                                    <option value="42">Ненецкий авт. округ</option>
+                                    <option value="43">Нижегородская обл.</option>
+                                    <option value="44">Новгородская обл.</option>
+                                    <option value="45">Новосибирская обл.</option>
+                                    <option value="46">Омская обл.</option>
+                                    <option value="47">Оренбургская обл.</option>
+                                    <option value="48">Орловская обл.</option>
+                                    <option value="49">Пензенская обл.</option>
+                                    <option value="50">Пермский край</option>
+                                    <option value="51">Приморский край</option>
+                                    <option value="52">Псковская обл.</option>
+                                    <option value="68">Ростовская обл.</option>
+                                    <option value="69">Рязанская обл.</option>
+                                    <option value="70">Самарская обл.</option>
+                                    <option value="71">Саратовская обл.</option>
+                                    <option value="63">Саха (Якутия) респ.</option>
+                                    <option value="72">Сахалинская обл.</option>
+                                    <option value="73">Свердловская обл.</option>
+                                    <option value="64">Северная Осетия-Алания респ.</option>
+                                    <option value="74">Смоленская обл.</option>
+                                    <option value="75">Ставропольский край</option>
+                                    <option value="78">Тамбовская обл.</option>
+                                    <option value="65">Татарстан респ.</option>
+                                    <option value="79">Тверская обл.</option>
+                                    <option value="80">Томская обл.</option>
+                                    <option value="81">Тульская обл.</option>
+                                    <option value="66">Тыва респ.</option>
+                                    <option value="83">Тюменская обл.</option>
+                                    <option value="84">Удмуртская респ.</option>
+                                    <option value="87">Ульяновская обл.</option>
+                                    <option value="427838930">Фиктивный регион</option>
+                                    <option value="89">Хабаровский край</option>
+                                    <option value="67">Хакасия респ.</option>
+                                    <option value="90">Ханты-Мансийский авт. округ-Югра</option>
+                                    <option value="91">Челябинская обл.</option>
+                                    <option value="92">Чечня респ.</option>
+                                    <option value="94">Чувашия респ.</option>
+                                    <option value="95">Чукотский авт. округ</option>
+                                    <option value="99">Ямало-Ненецкий авт. округ</option>
+                                    <option value="100">Ярославская обл.</option>
+                                </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="select_delivery">
+                                    <select name="city" id="s-city" class="no-styler require post-select">
+                                        <option value="">ГОРОД </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row delivery__address">
+                            <textarea name="address require" id="s-address" placeholder="Адрес" ></textarea>
+                        </div>
+                    </div>
+
+                    <div class="order-delivery__total">
+                        <div class="delivery-total">
+                            <div class="delivery__info">
+                                <span class="icon icon-car2"></span>
+                                Срок доставки <span class="delivery-day">3-5 дней</span>, стоимость <span class="delivery-summ">764</span><span class="rub"><span>руб</span></span>
+                            </div>
+                            <div class="order__total">
+                                <span class="lbl">Итого c учетом скидки и доставки:</span>
+                                <span class="summ">194 900</span><span class="rub"><span>руб</span></span>
+                            </div>
+                        </div>
+                        <div class="order__controls">
+                           <!-- <div class="subscribe__info">
+                                <input type="checkbox" name="wannaaction" id="wannaaction"/>
+                                <label for="wannaaction">Я хочу получать информацию об акциях и скидках</label>
+                            </div>-->
+                            <a href="#" class="btn btn_order btn-submit">
+                                <span class="status">ЗАВЕРШИТЬ ОФОРМЛЕНИЕ</span>
+                                <input type="submit" value=""/>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="order__agree">
+                Нажимая на кнопку «Подтвердить заказ», вы принимаете условия <a href="#">Публичной оферты</a>
+            </div>
+        </div>
+    </div>
+
+    <!--<div class="order-complete  order-step" id="order-complete">
+        <div class="wrap  order-expand order__inner">
+            <div class="title  scroll-to">СПАСИБО ЗА ПОКУПКУ!</div>
+            <div class="info">
+                Ваш заказ №<span class="order-num">1419</span> успешно оформлен. <br/>
+
+                Детальная информация по заказу была отправлена на указанный Вами адрес электронной почты. <br/>
+
+                В самое ближайшее время с Вами свяжеться наш менеджер для подтверждения заказа.
+            </div>
+            <img class="logo" src="&lt;!&ndash;#echo var="img-path"&ndash;&gt;/svg/logo.svg" alt=""/>
+        </div>
+    </div>-->
+</div>
+<div class="ajxItemModal">
+    <div class="ajxItemModal__holder">
+        <div class="ajxItemModal__inner">
+
+        </div>
+    </div>
+</div>

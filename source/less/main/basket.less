@@ -166,6 +166,11 @@
       }
     }
 
+    &__size {
+      font-size: 14px;
+      line-height: 26px;
+    }
+
     &__name {
       width: 240px;
       color: #303030;
@@ -325,7 +330,16 @@
       &_expanded {
         background-color: #888888;
         border-color: #888888;
+        color: #FFFFFF;
+
+        .b-custom-select {
+          &__title__icon:after {
+            border-color: #ffffff transparent transparent transparent;
+          }
+        }
       }
+
+
     }
     
     .select_size-order {

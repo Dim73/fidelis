@@ -1,22 +1,9 @@
 <div class="customer-registration">
     <div class="wrap">
+        <!--#if expr="${device} = /d/" -->
         <div class="reg-hint">* поля обязательны для заполнения</div>
+        <!--#endif -->
         <div class="customer-registration__content">
-            <div class="reg-form">
-                <form action="">
-                    <!--#include virtual="$includespath/layouts/row_input.html?id=reg-name&label=ваше имя&req=*"-->
-                    <!--#include virtual="$includespath/layouts/row_input.html?id=reg-surname&label=фамилия"-->
-                    <!--#include virtual="$includespath/layouts/row_input.html?id=reg-phone&addClass=phone-mask&label=Телефон&req=*"-->
-                    <!--#include virtual="$includespath/layouts/row_input.html?id=reg-email&label=E-mail&type=email&req=*"-->
-                    <!--#include virtual="$includespath/layouts/row_input.html?id=reg-pass&addClass=similar&label=Пароль&req=*"-->
-                    <!--#include virtual="$includespath/layouts/row_input.html?id=reg-repass&addClass=similar&label=Повторите пароль&req=*"-->
-                    <div class="reg-subscribe">
-                        <input type="checkbox" name="subscribe" id="reg-subscribe"/>
-                        <label for="reg-subscribe">Я хочу получать информацию об акциях и скидках</label>
-                    </div>
-                    <a class="btn btn_black btn-submit" href="#">СОЗДАТЬ АККАУНТ</a>
-                </form>
-            </div>
             <div class="reg-info">
                 <span class="title">Зарегистрировавшись у нас вы получите:</span>
                 <ul>
@@ -28,9 +15,37 @@
                     <li>Получать скидочные промокады</li>
                 </ul>
             </div>
+            <!--#if expr="${device} = /m/" -->
+            <div class="reg-hint">* поля обязательны для заполнения</div>
+            <!--#endif -->
+            <div class="reg-form">
+                <form action="">
+                    <!--#include virtual="$includespath/layouts/row_input.html?id=reg-name&label=ваше имя&req=*"-->
+                    <!--#include virtual="$includespath/layouts/row_input.html?id=reg-surname&label=фамилия"-->
+                    <!--#include virtual="$includespath/layouts/row_input.html?id=reg-phone&addClass=phone-mask&label=Телефон&req=*"-->
+                    <!--#include virtual="$includespath/layouts/row_input.html?id=reg-email&label=E-mail&type=email&req=*"-->
+                    <!--#include virtual="$includespath/layouts/row_input.html?id=reg-pass&addClass=similar&label=Пароль&req=*"-->
+                    <!--#include virtual="$includespath/layouts/row_input.html?id=reg-repass&addClass=similar&label=Повторите пароль&req=*"-->
+
+                    <!--#if expr="${device} = /d/" -->
+                    <div class="reg-subscribe">
+                        <input type="checkbox" name="subscribe" id="reg-subscribe"/>
+                        <label for="reg-subscribe">Я хочу получать информацию об акциях и скидках</label>
+                    </div>
+                    <!--#endif -->
+                    <!--#if expr="${device} = /m/" -->
+                    <div class="reg-agree">
+                        Нажимая на кнопку «Создать аккаунт», Вы соглашаетесь на обработку персональных данных в соответствии с ФЗ РФ от 27.07.2006 г. № 152-ФЗ (в ред. 25.07.2011 г.) «О персональных данных», а также с Политикой конфиденциальности и условиями договора публичной оферты
+                    </div>
+                    <!--#endif -->
+                    <a class="btn btn_black btn-submit" href="#">СОЗДАТЬ АККАУНТ</a>
+                </form>
+            </div>
         </div>
+        <!--#if expr="${device} = /d/" -->
         <div class="reg-agree">
             Нажимая на кнопку «Создать аккаунт», Вы соглашаетесь на обработку персональных данных в соответствии с ФЗ РФ от 27.07.2006 г. № 152-ФЗ (в ред. 25.07.2011 г.) «О персональных данных», а также с Политикой конфиденциальности и условиями договора публичной оферты
         </div>
+        <!--#endif -->
     </div>
 </div>

@@ -32,11 +32,13 @@
 
 
 <div class="row">
-    <label for="<!--#echo encoding="none"  var="id" -->"><!--#echo encoding="none" var="label" --><!--#echo encoding="none" var="req" --></label>
+    <!--#if expr="${device} = /d/" -->
+        <label for="<!--#echo encoding="none"  var="id" -->"><!--#echo encoding="none" var="label" --><!--#echo encoding="none" var="req" --></label>
+    <!--#endif -->
     <!--#if expr="$type=textarea" -->
-    <textarea name="<!--#echo encoding="none" var="name" -->" id="<!--#echo encoding="none"  var="id" -->" class="inputtext <!--#if expr="$req" -->require<!--#endif --> <!--#echo encoding="none"  var="addClass" -->" ></textarea>
+    <textarea <!--#if expr="${device} = /m/" -->placeholder="<!--#echo encoding="none" var="label" --><!--#echo encoding="none" var="req" -->"<!--#endif --> name="<!--#echo encoding="none" var="name" -->" id="<!--#echo encoding="none"  var="id" -->" class="inputtext <!--#if expr="$req" -->require<!--#endif --> <!--#echo encoding="none"  var="addClass" -->" ></textarea>
     <!--#else -->
-    <input name="<!--#echo encoding="none" var="name" -->" class="inputtext <!--#if expr="$req" -->require<!--#endif --> <!--#echo encoding="none"  var="addClass" -->" type="<!--#echo encoding="none"  var="type" -->" id="<!--#echo encoding="none"  var="id" -->"/>
+    <input <!--#if expr="${device} = /m/" -->placeholder="<!--#echo encoding="none" var="label" --><!--#echo encoding="none" var="req" -->"<!--#endif --> name="<!--#echo encoding="none" var="name" -->" class="inputtext <!--#if expr="$req" -->require<!--#endif --> <!--#echo encoding="none"  var="addClass" -->" type="<!--#echo encoding="none"  var="type" -->" id="<!--#echo encoding="none"  var="id" -->"/>
     <!--#endif -->
 </div>
 

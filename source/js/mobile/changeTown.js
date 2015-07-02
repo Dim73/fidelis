@@ -12,33 +12,23 @@ $(function(){
         keyTimer;
 
 
+    if (!$adrs_holder.length) return;
 
     $adrs_holder.dropdown({
         link: '.js-address-popup',
-        onClose: function() {
+        onOpen: function() {
             $adrs_body.off('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd');
             $adrs_inner.show();
-            $adrs_town.removeClass('active');
-            $adrs_holder.css({
-                width: $adrs_inner.width() + 4
-            });
-            $adrs_body.css('height',$adrs_inner.outerHeight());
+
             $adrs_autoComplete.hide();
-            //map init in html
-        }
+            $adrs_body.height('auto');
+        },
+        onClose: function() {
+            $adrs_town.removeClass('active');
+        },
+        fade: false
     });
 
-   /* $adrs_townSlider.on('init', function() {
-        //$adrs_body.css('height',$adrs_body.outerHeight());
-    });
-    $adrs_townSlider.slick({
-        dots: false,
-        infinite: true,
-        slidesToShow: 1,
-        autoplay: false,
-        arrows: true
-    });
-    */
     $('body').append($('#town-change').html());
     $adrs_autoComplete = $('.town-autocomplete');
     (function(){
@@ -57,13 +47,7 @@ $(function(){
         $adrs_body.css('height',$adrs_town.outerHeight());
         $adrs_inner.hide();
         $adrs_autoComplete.hide();
-        $adrs_holder.css({
-            width: $adrs_town.outerWidth() + 4
-        });
-
-        $adrs_body.bind('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(){
-            $adrs_holder.height($adrs_info.outerHeight());
-        });
+        $adrs_holder.height($adrs_info.outerHeight());
         $adrs_town.addClass('active');
     });
 

@@ -1,0 +1,113 @@
+.icon-drop {
+  border-width: 8px 7px 0 7px;
+  border-color: #2e2e2e transparent transparent transparent;
+}
+
+._ipm {
+  font-size: 14px;
+  font-family: @font-lr;
+  line-height: 60px;
+}
+
+.inputtext {
+  height: 60px;
+  font-size: 18px;
+  line-height: 60px;
+  border: none;
+
+  &::-webkit-input-placeholder {._ipm ()}
+  &::-moz-placeholder          {._ipm ()}/* Firefox 19+ */
+  &:-moz-placeholder           {._ipm ()}/* Firefox 18- */
+  &:-ms-input-placeholder      {._ipm ()}
+}
+
+.btn {
+  height: 60px;
+  line-height: 60px;
+  font-size: 18px;
+  width: 100%;
+
+  &-select {
+    position: relative;
+
+    select {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+  }
+}
+
+.social {
+
+  .b-share {
+    display: block;
+    text-align: center;
+
+    & > .b-share__handle:first-child {
+      display: block;
+      margin: 0 0 15px;
+    }
+
+    &__handle {
+      float: none;
+      padding: 0 !important;
+      display: inline-block;
+      vertical-align: middle;
+      text-align: center;
+      height: auto;
+      margin: 0 17px 0 26px;
+    }
+
+    &__text {
+      font-size: 16px;
+      color: #444444;
+      display: block;
+      margin-right: 0;
+    }
+
+    &-icon {
+
+      &_vkontakte {
+        margin-top: -3px;
+
+        &:after {
+          content: "\e804";
+          font-size: 44px;
+        }
+      }
+
+      &_facebook {
+
+        &:after {
+          font-size: 41px;
+        }
+      }
+
+      &_twitter {
+        margin-top: -1px;
+        &:after {
+        font-size: 46px;
+        }
+      }
+
+      &_odnoklassniki {
+        margin-top: -1px;
+        &:after {
+        font-size: 40px;
+        }
+      }
+
+      &_gplus {
+        margin-top: -2px;
+        &:after {
+        font-size: 38px;
+        }
+      }
+    }
+  }
+}

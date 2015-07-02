@@ -7,7 +7,8 @@
                 onOpen: function(){},
                 onClose: function(){},
                 afterClose: function(){},
-                fadeTo: '.dropdown-fade-to'
+                fadeTo: '.dropdown-fade-to',
+                fade: true
             };
 
         var opt = $.extend({}, def, options || {});
@@ -21,11 +22,12 @@
                 fadeTop = 0,
                 $fade =  $('<div class="fade fade-fixed"></div>');//            $('.fade-fixed');// $('<div class="fade fade-fixed"></div>');
 
-            $('body').append($fade);
-
-            $fade.css({
-                "z-index": 400
-            });
+            if (opt.fade) {
+                $('body').append($fade);
+                $fade.css({
+                    "z-index": 400
+                });
+            }
 
             $link.click(function(e){
                 e.preventDefault();
@@ -41,10 +43,10 @@
                         fadeTop = $(opt.fadeTo, $self).offset().top;
                         $fade.css({top: fadeTop, height: $fade.height() - fadeTop});
                     }*/
-                    $fade.stop().fadeIn(400);
+                    opt.fade && $fade.stop().fadeIn(400);
                 } else {
                     $self.height(0);
-                    $fade.stop().fadeOut(400);
+                    opt.fade && $fade.stop().fadeOut(400);
                     opt.onClose();
                     $self.bind('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(){
                       opt.afterClose();
