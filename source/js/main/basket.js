@@ -51,7 +51,7 @@
 
             this.$price = this.$items.find('.basket-item__price');
 
-            if (this.sizes.length === 1) {
+            if (this.sizes.length === 1) { //нет размеров
                 for (var size in this.sizes[0]) {
                     if (!size) {
                         $('.basket-item__size').css('visibility','hidden');

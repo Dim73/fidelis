@@ -48,9 +48,21 @@
               display: inline-block;
               margin-left: 14px;
 
+
+
               &:hover {
                 color: #888888;
                 text-decoration: underline;
+              }
+
+              &.selected {
+                color: @red;
+                cursor: default;
+
+                &:hover {
+                  color: @red;
+                  text-decoration: none;
+                }
               }
             }
           }

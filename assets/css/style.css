@@ -5330,6 +5330,14 @@ h1 {
   color: #888888;
   text-decoration: underline;
 }
+.catalogue .container .left .block .list li a.selected {
+  color: #e30c19;
+  cursor: default;
+}
+.catalogue .container .left .block .list li a.selected:hover {
+  color: #e30c19;
+  text-decoration: none;
+}
 .catalogue .container .left .block .list label {
   color: #303030;
   cursor: pointer;
