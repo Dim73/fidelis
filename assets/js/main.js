@@ -87,7 +87,7 @@ var nAgt=navigator.userAgent; if(!jQuery.browser){jQuery.browser={};jQuery.brows
                     opt.fade && $fade.stop().fadeOut(400);
                     opt.onClose();
                     $self.bind('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(){
-                      opt.afterClose();
+                       !isOpen && opt.afterClose();
                     });
                 }
                 $link.toggleClass('active',flag);
@@ -106,6 +106,12 @@ var nAgt=navigator.userAgent; if(!jQuery.browser){jQuery.browser={};jQuery.brows
                 toggleSelf(false);
                 isOpen = false;
             })
+                .bind('open',function(){
+                    toggleSelf(true);
+                    isOpen = true;
+                })
+
+
         })
     }
 })(jQuery);
@@ -2711,6 +2717,7 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
         this.id = data.id;
         this.count = data.count;
         this.sizes = data.sizes;
+        this.isBuy = data.isBuy;
 
         $.each(data.sizes, function(i,v){
             var c = 0;
@@ -2867,7 +2874,7 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
                 dataType: 'json',
                 data: {data: data}, // data.id, data.count, data.size
                 success: function(data,status,xhr){
-                    newItem && self.addToBasket(data);
+                    newItem && self.addToBasket(data, true);
                 }
             });
 
@@ -2893,13 +2900,20 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
             });
         };
 
-        this.addToBasket = function(data) {
+        this.addToBasket = function(data, isBuy) {
+            if (isBuy && !IS_MOBILE) {
+                data.isBuy = true
+            }
             items.push(new BasketItem(self, data));
             self.updateBasket();
+            if (isBuy && !IS_MOBILE) {
+                self.$topList.trigger('open');
+            }
         };
 
         this.renderItem = function (item) {
-            return item.$self.appendTo(self.$list);
+            item.isBuy && item.$self.addClass('active');
+            return item.$self.prependTo(self.$list);
         };
 
         this.findItem = function(id) {
@@ -3076,6 +3090,7 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
         var items = [];
         self.$self = $('.basket');
         self.$list = $('.basket-items__list', self.$self);
+        self.$topList = $('.basket-items__holder');
         self.$totalCont = $('.total', self.$self);
         self.$total = $('.total__summ .summ', self.$self);
         self.$scroller = $('.nano-scroll', self.$self);
@@ -4300,7 +4315,10 @@ $(document).ready(function() {
         });
 
         $('.basket-items__holder').dropdown({
-            link: '.js-basket-open'
+            link: '.js-basket-open',
+            afterClose: function() {
+              $('.basket-item.active').removeClass('active');
+            }
         });
 
         $('.shipment-info__holder').dropdown({

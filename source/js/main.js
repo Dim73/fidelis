@@ -220,7 +220,10 @@ $(document).ready(function() {
         });
 
         $('.basket-items__holder').dropdown({
-            link: '.js-basket-open'
+            link: '.js-basket-open',
+            afterClose: function() {
+              $('.basket-item.active').removeClass('active');
+            }
         });
 
         $('.shipment-info__holder').dropdown({

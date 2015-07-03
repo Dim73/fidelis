@@ -59,7 +59,7 @@
     }
 
     .basket-items__body {
-      padding: 17px 0px 12px 11px;
+      padding: 0px 0px 12px 0px;
       border: 1px solid #e5e5e5;
       background-color: #ffffff;
     }
@@ -69,11 +69,23 @@
     }
 
     .basket-item {
-      width: 395px;
+      padding: 17px 0 0px 11px;
+      margin-bottom: 0;
+      border: none;
+
+      &.active {
+        background-color: #f8f7f8;
+      }
+
+      &__holder {
+        width: 395px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e5e5e5;
+      }
     }
 
     .nano-scroll {
-      max-height: 250px;
+      max-height: 270px;
       overflow: hidden;
       position: relative;
     }
@@ -111,14 +123,12 @@
     
     &__bottom {
       ._clearfix();
-      margin: 15px 11px 0 2px;
+      margin: 15px 11px 0 11px;
 
       .btn {
-        width: 114px;
-        height: 34px;
-        line-height: 32px;
-        color: #303030;
-        border-color: #303030;
+        width: auto;
+        padding: 0 15px;
+
 
         &__checkout {
           border-width: 2px;
@@ -136,7 +146,17 @@
 
       .basket__total {
         float: right;
-        width: 100px;
+        line-height: 28px;
+
+        .lbl, .summ, .rub {
+          font-size: 14px;
+          color: #444444;
+        }
+
+        .lbl, .summ {
+          font-family: @font-lb;
+          display: inline-block;
+        }
       }
     }
   }

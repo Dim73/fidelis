@@ -8,6 +8,7 @@
         this.id = data.id;
         this.count = data.count;
         this.sizes = data.sizes;
+        this.isBuy = data.isBuy;
 
         $.each(data.sizes, function(i,v){
             var c = 0;
@@ -164,7 +165,7 @@
                 dataType: 'json',
                 data: {data: data}, // data.id, data.count, data.size
                 success: function(data,status,xhr){
-                    newItem && self.addToBasket(data);
+                    newItem && self.addToBasket(data, true);
                 }
             });
 
@@ -190,13 +191,20 @@
             });
         };
 
-        this.addToBasket = function(data) {
+        this.addToBasket = function(data, isBuy) {
+            if (isBuy && !IS_MOBILE) {
+                data.isBuy = true
+            }
             items.push(new BasketItem(self, data));
             self.updateBasket();
+            if (isBuy && !IS_MOBILE) {
+                self.$topList.trigger('open');
+            }
         };
 
         this.renderItem = function (item) {
-            return item.$self.appendTo(self.$list);
+            item.isBuy && item.$self.addClass('active');
+            return item.$self.prependTo(self.$list);
         };
 
         this.findItem = function(id) {
@@ -373,6 +381,7 @@
         var items = [];
         self.$self = $('.basket');
         self.$list = $('.basket-items__list', self.$self);
+        self.$topList = $('.basket-items__holder');
         self.$totalCont = $('.total', self.$self);
         self.$total = $('.total__summ .summ', self.$self);
         self.$scroller = $('.nano-scroll', self.$self);

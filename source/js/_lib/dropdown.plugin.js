@@ -56,7 +56,7 @@
                     opt.fade && $fade.stop().fadeOut(400);
                     opt.onClose();
                     $self.bind('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(){
-                      opt.afterClose();
+                       !isOpen && opt.afterClose();
                     });
                 }
                 $link.toggleClass('active',flag);
@@ -75,6 +75,12 @@
                 toggleSelf(false);
                 isOpen = false;
             })
+                .bind('open',function(){
+                    toggleSelf(true);
+                    isOpen = true;
+                })
+
+
         })
     }
 })(jQuery);
