@@ -241,7 +241,23 @@
   &__body {
     background-color: #e4e4e4;
     position: relative;
-    padding: 0 21px 21px;
+    padding: 0 21px 41px;
+  }
+
+  &__close {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    text-align: right;
+    width: 100%;
+    height: 30px;
+    ._bs();
+    padding-right: 12px;
+
+    .icon-x {
+      font-size: 17px;
+      color: #303030;
+    }
   }
 }
 
@@ -765,7 +781,7 @@
     border-bottom: 1px solid #e4e4e4;
 
     a {
-      font:  16px/43px @font-lb;
+      font:  18px/43px @font-lb;
       color: #6a6a6a;
       display: block;
       padding-left: 42px;
@@ -837,7 +853,7 @@
   display: inline-block;
   line-height: 12px;
   padding: 0 3px;
-  color: @red;
+  color: #888888;
   text-decoration: line-through;
 
   & + .cost {
@@ -849,6 +865,7 @@
   display: block;
   font: bold 14px/1 Arial;
   margin-top: 20px;
+  color: @red;
 
   .rub {
 

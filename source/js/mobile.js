@@ -216,7 +216,7 @@ $(document).ready(function() {
         }, 100);
 
 
-        $('.pitem-specs__spoilers .folding').folding({openHeight: 163, closeOther: '.pitem-specs__spoilers .spoiler-item'});
+        $('.pitem-specs__spoilers .folding').folding({});
         $('.content-text__side .folding').folding({openHeight: 500});
         $('.order-spoiler').folding({closeOther: '.order-spoiler'});
         $(".phone-mask").mask("+7 (999) 999-99-99");
@@ -240,8 +240,7 @@ $(document).ready(function() {
         });*/
 
         $('.login-dropdown__holder').dropdown({
-            link: '.js-login-open',
-            fade: false
+            link: '.js-login-open'
         });
 
 

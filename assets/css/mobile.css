@@ -880,7 +880,7 @@ The `.sprites` mixin generates identical output to the CSS template
   content: "\e609";
 }
 .icon-basket:before {
-  content: "\e604";
+  content: "\e60a";
 }
 .icon-car2:before {
   content: "\e60b";
@@ -911,9 +911,6 @@ The `.sprites` mixin generates identical output to the CSS template
 }
 .icon-pay:before {
   content: "\e603";
-}
-.icon-ring:before {
-  content: "\e60a";
 }
 .icon-car:before {
   content: "\e605";
@@ -1754,7 +1751,26 @@ h1 {
 .dropdown__body {
   background-color: #e4e4e4;
   position: relative;
-  padding: 0 21px 21px;
+  padding: 0 21px 41px;
+}
+.dropdown__close {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  text-align: right;
+  width: 100%;
+  height: 30px;
+  -webkit-box-sizing: border-box;
+  /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;
+  /* Firefox, other Gecko */
+  box-sizing: border-box;
+  /* Opera/IE 8+ */
+  padding-right: 12px;
+}
+.dropdown__close .icon-x {
+  font-size: 17px;
+  color: #303030;
 }
 .breadcrumbs {
   color: #999999;
@@ -2198,7 +2214,7 @@ h1 {
   border-bottom: 1px solid #e4e4e4;
 }
 .folding__title a {
-  font: 16px/43px "LatoBold";
+  font: 18px/43px "LatoBold";
   color: #6a6a6a;
   display: block;
   padding-left: 42px;
@@ -2244,7 +2260,7 @@ h1 {
   display: inline-block;
   line-height: 12px;
   padding: 0 3px;
-  color: #e30c19;
+  color: #888888;
   text-decoration: line-through;
 }
 .old-cost + .cost {
@@ -2254,6 +2270,7 @@ h1 {
   display: block;
   font: bold 14px/1 Arial;
   margin-top: 20px;
+  color: #e30c19;
 }
 .tooltip {
   cursor: pointer;
@@ -4329,12 +4346,17 @@ h1 {
 }
 .pitem-preview .favorite-link:after {
   font-size: 26px;
+  top: -4px;
+  left: 8px;
 }
 .pitem-preview .favorite-link:before {
-  opacity: 0;
+  font-size: 26px;
+  position: relative;
+  top: 4px;
+  left: -4px;
 }
 .pitem-preview .favorite-link span {
-  font-size: 16px;
+  font-size: 18px;
   color: #2c2c2c;
   font-family: "LatoBold";
 }
@@ -4410,8 +4432,7 @@ h1 {
   padding-top: 4px;
   padding-bottom: 5px;
   background-color: #f8f7f8;
-  border-top: 1px solid #dddddd;
-  border-bottom: 1px solid #dddddd;
+  border: 1px solid #dddddd;
 }
 .pitem-specs__about .about-item {
   display: inline-block;
@@ -4424,7 +4445,7 @@ h1 {
   box-sizing: border-box;
   /* Opera/IE 8+ */
   padding-right: 10px;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 18px;
   color: #2d2d2d;
 }
@@ -4446,6 +4467,9 @@ h1 {
 }
 .pitem-specs__spoilers .folding__wrap {
   overflow: scroll;
+}
+.pitem-specs__spoilers .description {
+  font-size: 16px;
 }
 .pitem-specs__spoilers .spoiler-item:last-child .folding__wrap {
   margin-top: -1px;
@@ -4480,9 +4504,10 @@ h1 {
 }
 .pitem-cost {
   font-family: Arial;
+  text-align: center;
 }
 .pitem-cost .cost {
-  font-size: 35px;
+  font-size: 30px;
   margin-top: 16px;
   font-weight: bold;
 }
@@ -4491,7 +4516,6 @@ h1 {
 }
 .pitem-cost .old-cost {
   color: #888888;
-  text-decoration: none;
   font-size: 16px;
 }
 .pitem-cost .old-cost + .cost {
@@ -4501,6 +4525,7 @@ h1 {
 .pitem-shipment {
   color: #26928b;
   margin: 1px 0 0 0;
+  text-align: center;
 }
 .pitem-shipment .shipment-title {
   font-size: 16px;
@@ -4583,6 +4608,7 @@ h1 {
   line-height: 16px;
   border-bottom-style: solid;
   padding-bottom: 4px;
+  font-size: 16px;
 }
 .pitem-size__help:hover {
   color: #6a6a6a;
@@ -4595,7 +4621,6 @@ h1 {
 .pitem-order .btn {
   display: block;
   width: 100%;
-  font-size: 25px;
 }
 .pitem-order .btn + .btn {
   margin-top: 10px;
@@ -5749,7 +5774,7 @@ h1 {
   background-color: #ff8000;
 }
 .login__body {
-  padding: 17px 21px 20px;
+  padding: 17px 21px 50px;
   position: relative;
 }
 .login__body:before {

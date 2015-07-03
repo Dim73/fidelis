@@ -8,6 +8,7 @@
                 onClose: function(){},
                 afterClose: function(){},
                 fadeTo: '.dropdown-fade-to',
+                closeClass: '.icon-x',
                 fade: true
             };
 
@@ -17,6 +18,7 @@
             //Initialize
             var $self = $(this),
                 $link = $(opt.link),
+                $close = $(opt.closeClass, $self),
                 $dropContent = $self.children(),
                 isOpen = false,
                 fadeTop = 0,
@@ -33,6 +35,11 @@
                 e.preventDefault();
                 isOpen = !isOpen;
                 toggleSelf(isOpen);
+            });
+
+            $close.click(function(e){
+                e.preventDefault();
+                $self.trigger('close');
             });
 
             function toggleSelf (flag) {

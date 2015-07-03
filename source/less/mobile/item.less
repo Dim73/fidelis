@@ -25,14 +25,19 @@
 
       &:after {
         font-size: 26px;
+        top: -4px;
+        left: 8px;
       }
 
       &:before {
-        opacity: 0;
+        font-size: 26px;
+        position: relative;
+        top: 4px;
+        left: -4px;
       }
 
       span {
-        font-size: 16px;
+        font-size: 18px;
         color: #2c2c2c;
         font-family: @font-lb;
       }
@@ -123,8 +128,7 @@
       padding-top: 4px;
       padding-bottom: 5px;
       background-color: #f8f7f8;
-      border-top: 1px solid #dddddd;
-      border-bottom: 1px solid #dddddd;
+      border: 1px solid #dddddd;
 
       .about-item {
         display: inline-block;
@@ -132,7 +136,7 @@
         width: 50%;
         ._bs();
         padding-right: 10px;
-        font-size: 14px;
+        font-size: 16px;
         line-height: 18px;
         color: #2d2d2d;
 
@@ -165,7 +169,9 @@
         }
       }
 
-
+      .description {
+        font-size: 16px;
+      }
 
       .spoiler-item {
 
@@ -202,9 +208,10 @@
 
   &-cost {
     font-family: Arial;
+    text-align: center;
 
     .cost {
-      font-size: 35px;
+      font-size: 30px;
       margin-top: 16px;
       font-weight: bold;
 
@@ -215,7 +222,6 @@
 
     .old-cost {
       color: #888888;
-      text-decoration: none;
       font-size: 16px;
 
     }
@@ -229,6 +235,7 @@
   &-shipment {
     color: #26928b;
     margin: 1px 0 0 0;
+    text-align: center;
 
     .shipment-title {
       font-size: 16px;
@@ -312,6 +319,7 @@
       line-height: 16px;
       border-bottom-style: solid;
       padding-bottom: 4px;
+      font-size: 16px;
 
       &:hover {
         color: #6a6a6a;
@@ -327,7 +335,6 @@
     .btn {
       display: block;
       width: 100%;
-      font-size: 25px;
 
       & + .btn {
         margin-top: 10px;

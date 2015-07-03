@@ -25,8 +25,7 @@ $(function(){
         },
         onClose: function() {
             $adrs_town.removeClass('active');
-        },
-        fade: false
+        }
     });
 
     $('body').append($('#town-change').html());

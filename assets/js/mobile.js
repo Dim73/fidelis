@@ -39,6 +39,7 @@ var nAgt=navigator.userAgent; if(!jQuery.browser){jQuery.browser={};jQuery.brows
                 onClose: function(){},
                 afterClose: function(){},
                 fadeTo: '.dropdown-fade-to',
+                closeClass: '.icon-x',
                 fade: true
             };
 
@@ -48,6 +49,7 @@ var nAgt=navigator.userAgent; if(!jQuery.browser){jQuery.browser={};jQuery.brows
             //Initialize
             var $self = $(this),
                 $link = $(opt.link),
+                $close = $(opt.closeClass, $self),
                 $dropContent = $self.children(),
                 isOpen = false,
                 fadeTop = 0,
@@ -64,6 +66,11 @@ var nAgt=navigator.userAgent; if(!jQuery.browser){jQuery.browser={};jQuery.brows
                 e.preventDefault();
                 isOpen = !isOpen;
                 toggleSelf(isOpen);
+            });
+
+            $close.click(function(e){
+                e.preventDefault();
+                $self.trigger('close');
             });
 
             function toggleSelf (flag) {
@@ -133,9 +140,7 @@ var nAgt=navigator.userAgent; if(!jQuery.browser){jQuery.browser={};jQuery.brows
             }
             catch(e) {}
 
-            if ($inner.outerHeight() < openHeight) {
-                openHeight = $inner.outerHeight();
-            }
+
 
             $self.is('.'+opt.openClass) && toggleC(true);
 
@@ -145,9 +150,13 @@ var nAgt=navigator.userAgent; if(!jQuery.browser){jQuery.browser={};jQuery.brows
                 toggleC();
             });
 
+
             function toggleC (flag) {
                 isOpened = flag || !isOpened;
                 isOpened && opt.closeOther && $(opt.closeOther).filter('.'+opt.openClass).trigger('close');
+                if ($inner.outerHeight() < openHeight) {
+                    openHeight = $inner.outerHeight();
+                }
                 $self.toggleClass(opt.openClass, isOpened);
                 $content.height(!isOpened?0:openHeight);
             }
@@ -3322,8 +3331,7 @@ $(function(){
         },
         onClose: function() {
             $adrs_town.removeClass('active');
-        },
-        fade: false
+        }
     });
 
     $('body').append($('#town-change').html());
@@ -3669,7 +3677,7 @@ $(document).ready(function() {
         }, 100);
 
 
-        $('.pitem-specs__spoilers .folding').folding({openHeight: 163, closeOther: '.pitem-specs__spoilers .spoiler-item'});
+        $('.pitem-specs__spoilers .folding').folding({});
         $('.content-text__side .folding').folding({openHeight: 500});
         $('.order-spoiler').folding({closeOther: '.order-spoiler'});
         $(".phone-mask").mask("+7 (999) 999-99-99");
@@ -3693,8 +3701,7 @@ $(document).ready(function() {
         });*/
 
         $('.login-dropdown__holder').dropdown({
-            link: '.js-login-open',
-            fade: false
+            link: '.js-login-open'
         });
 
 

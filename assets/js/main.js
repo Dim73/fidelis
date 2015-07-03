@@ -39,6 +39,7 @@ var nAgt=navigator.userAgent; if(!jQuery.browser){jQuery.browser={};jQuery.brows
                 onClose: function(){},
                 afterClose: function(){},
                 fadeTo: '.dropdown-fade-to',
+                closeClass: '.icon-x',
                 fade: true
             };
 
@@ -48,6 +49,7 @@ var nAgt=navigator.userAgent; if(!jQuery.browser){jQuery.browser={};jQuery.brows
             //Initialize
             var $self = $(this),
                 $link = $(opt.link),
+                $close = $(opt.closeClass, $self),
                 $dropContent = $self.children(),
                 isOpen = false,
                 fadeTop = 0,
@@ -64,6 +66,11 @@ var nAgt=navigator.userAgent; if(!jQuery.browser){jQuery.browser={};jQuery.brows
                 e.preventDefault();
                 isOpen = !isOpen;
                 toggleSelf(isOpen);
+            });
+
+            $close.click(function(e){
+                e.preventDefault();
+                $self.trigger('close');
             });
 
             function toggleSelf (flag) {
@@ -133,9 +140,7 @@ var nAgt=navigator.userAgent; if(!jQuery.browser){jQuery.browser={};jQuery.brows
             }
             catch(e) {}
 
-            if ($inner.outerHeight() < openHeight) {
-                openHeight = $inner.outerHeight();
-            }
+
 
             $self.is('.'+opt.openClass) && toggleC(true);
 
@@ -145,9 +150,13 @@ var nAgt=navigator.userAgent; if(!jQuery.browser){jQuery.browser={};jQuery.brows
                 toggleC();
             });
 
+
             function toggleC (flag) {
                 isOpened = flag || !isOpened;
                 isOpened && opt.closeOther && $(opt.closeOther).filter('.'+opt.openClass).trigger('close');
+                if ($inner.outerHeight() < openHeight) {
+                    openHeight = $inner.outerHeight();
+                }
                 $self.toggleClass(opt.openClass, isOpened);
                 $content.height(!isOpened?0:openHeight);
             }

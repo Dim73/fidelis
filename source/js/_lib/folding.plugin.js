@@ -29,9 +29,7 @@
             }
             catch(e) {}
 
-            if ($inner.outerHeight() < openHeight) {
-                openHeight = $inner.outerHeight();
-            }
+
 
             $self.is('.'+opt.openClass) && toggleC(true);
 
@@ -41,9 +39,13 @@
                 toggleC();
             });
 
+
             function toggleC (flag) {
                 isOpened = flag || !isOpened;
                 isOpened && opt.closeOther && $(opt.closeOther).filter('.'+opt.openClass).trigger('close');
+                if ($inner.outerHeight() < openHeight) {
+                    openHeight = $inner.outerHeight();
+                }
                 $self.toggleClass(opt.openClass, isOpened);
                 $content.height(!isOpened?0:openHeight);
             }
