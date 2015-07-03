@@ -880,7 +880,7 @@ The `.sprites` mixin generates identical output to the CSS template
   content: "\e609";
 }
 .icon-basket:before {
-  content: "\e60a";
+  content: "\e604";
 }
 .icon-car2:before {
   content: "\e60b";
@@ -913,7 +913,7 @@ The `.sprites` mixin generates identical output to the CSS template
   content: "\e603";
 }
 .icon-ring:before {
-  content: "\e604";
+  content: "\e60a";
 }
 .icon-car:before {
   content: "\e605";
