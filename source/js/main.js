@@ -212,7 +212,7 @@ $(document).ready(function() {
         });
 
         $('.btn_cart-added').hover(function(){
-            $(this).removeClass('btn_red').text('купить');
+            //$(this).removeClass('btn_red').text('купить');
         });
 
         $('body').on('click','.size_empty',function() {
@@ -473,10 +473,10 @@ $(document).ready(function() {
                 options: {
                     infiniteLoop: true,
                     slideMargin: 0,
-                    slideWidth: 1020,
                     controls: true,
                     pager: true,
                     auto: false,
+                    responsive: true,
                     onSliderLoad: function(currentIndex) {
                        /* var $item = $('.slider-item',this.$self).eq(currentIndex);
                         if ($item.is('.slider-item__prlx')) {

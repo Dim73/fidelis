@@ -8,7 +8,7 @@ $(document).ready(function() {
   //filter.html('');
  //right toggle
   /*$('.left .block .rheader a').click(function(e){
-    e.preventDefault();
+    e.preventDefault();ч
     var par = $(this);
     $(this).parent('.rheader').parent('.block').children('.list').slideToggle(300,function(){
       if($(this).css('display')=='none')

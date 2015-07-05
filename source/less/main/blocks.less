@@ -1666,6 +1666,12 @@
     }
   }
 
+  .slider-item__inner {
+    width: 1020px;
+    margin: 0 auto;
+    position: relative;
+  }
+
   .banner-desc {
     position: relative;
     display: inline-block;
@@ -1728,7 +1734,8 @@
 
     @banner-height: 315px;
     .slider-item {
-      height: @banner-height;
+      //height: @banner-height;
+      width: 100% !important;
     }
 
     .bx-viewport {
@@ -1778,6 +1785,7 @@
     @banner-height: 472px;
     .slider-item {
       height: @banner-height;
+      width: 100% !important;
     }
 
     .banner-desc {
