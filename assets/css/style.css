@@ -4382,20 +4382,6 @@ h1 {
 .header .main-menu__item-sale a {
   color: #e30c19;
 }
-.header .main-menu__item.hasSubmenu .main-menu__link {
-  position: relative;
-}
-.header .main-menu__item.hasSubmenu .main-menu__link:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 0;
-  -webkit-transition: height 0.3s 0s ease-in-out;
-  transition: height 0.3s 0s ease-in-out;
-  background-color: #e30c19;
-}
 .header .main-menu__item.hasSubmenu .main-menu__link:after {
   content: "";
   position: absolute;
@@ -4410,9 +4396,6 @@ h1 {
   -webkit-transition: opacity 0.4s 0s ease-in-out;
   transition: opacity 0.4s 0s ease-in-out;
   opacity: 0;
-}
-.header .main-menu__item.hasSubmenu:hover .main-menu__link:before {
-  height: 5px;
 }
 .header .main-menu__item.hasSubmenu:hover .main-menu__link:after {
   opacity: 1;
@@ -4431,6 +4414,21 @@ h1 {
   color: #FFFFFF;
   text-decoration: none;
   padding: 0 10px;
+  position: relative;
+}
+.header .main-menu__link:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  -webkit-transition: height 0.3s 0s ease-in-out;
+  transition: height 0.3s 0s ease-in-out;
+  background-color: #e30c19;
+}
+.header .main-menu__link:hover:before {
+  height: 5px;
 }
 .header .main-menu__collection {
   position: absolute;
