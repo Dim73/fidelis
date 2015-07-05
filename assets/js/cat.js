@@ -133,6 +133,7 @@ $(document).ready(function() {
        dataType:'json',
        beforeSend: function(xhr,setting) {
           requeststatus = true;
+           ajxLoader.attachTo($('.right'));
        },
        success: function(data,status,xhr) {
          if(filters['items_per_page']!='all'){
@@ -154,6 +155,7 @@ $(document).ready(function() {
        },
        complete:function(xhr,status) {
          requeststatus = false;
+           ajxLoader._detach();
        }
       });
      }
