@@ -3366,12 +3366,12 @@ h1 {
 }
 .old-cost + .cost {
   margin-top: 6px;
+  color: #e30c19;
 }
 .cost {
   display: block;
   font: bold 14px/1 Arial;
   margin-top: 20px;
-  color: #e30c19;
 }
 .tooltip {
   cursor: pointer;
