@@ -3569,11 +3569,15 @@ $(function(){
 
             function switchImg (img, link) {
                 $containerImg.append(img);
+                ajxLoader.attachTo($('.pitem-preview-main_side'));
                 img.stop().fadeIn(500, function(){
                     $oldImg = img;
                     if (link.data('zoom')) {
                         $containerImg.zoom({
-                            url: link.data('zoom')
+                            url: link.data('zoom'),
+                            callback: function() {
+                                ajxLoader._detach();
+                            }
                         })
                     }
                 });

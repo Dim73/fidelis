@@ -4313,7 +4313,7 @@ h1 {
 .ajx-loader:before {
   content: "";
   position: absolute;
-  z-index: 9999;
+  z-index: 444;
   top: 0;
   left: 0;
   width: 100%;
@@ -6198,6 +6198,7 @@ h1 {
 .pitem-preview-main_side .pitem-preview-main__loader img:last-child {
   width: 750px;
   height: 750px;
+  opacity: 0;
 }
 .pitem-preview-main_full {
   width: 80%;
