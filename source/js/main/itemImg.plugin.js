@@ -17,8 +17,10 @@
             //Initialize
             var $self = $(this),
                 $link = $(opt.link, $self),
+
                 $containerImg = $(opt.containerImg),
                 $containerVideo = $(opt.containerVideo),
+                $containerParent = $containerImg.closest('.pitem-preview-main'),
                 $video = $('video',$containerVideo),
                 $linkVideo = $link.filter('.link_video'),
                 $item = $(opt.item,$self),
@@ -49,8 +51,9 @@
 
                 if (videoPlay) {
                     toggleVideo();
-                    $containerVideo.fadeOut();
                 }
+
+                $containerVideo.fadeOut();
 
                 if (!!loadImages[thisIndex]) {
                     switchImg(loadImages[thisIndex], $thisLink);
@@ -67,7 +70,7 @@
 
             function switchImg (img, link) {
                 $containerImg.append(img);
-                ajxLoader.attachTo($('.pitem-preview-main_side'));
+                ajxLoader.attachTo($containerParent);
                 img.stop().fadeIn(500, function(){
                     $oldImg = img;
                     if (link.data('zoom')) {
@@ -77,6 +80,8 @@
                                 ajxLoader._detach();
                             }
                         })
+                    } else {
+                        ajxLoader._detach();
                     }
                 });
             }
@@ -96,6 +101,7 @@
                     });
                 }
                 videoPlay = !videoPlay;
+                $oldImg = null;
             }
 
             $item.eq(0).trigger('click');

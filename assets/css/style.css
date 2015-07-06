@@ -6228,7 +6228,6 @@ h1 {
   position: relative;
 }
 .pitem-preview-main__loader img {
-  position: absolute;
   top: 0;
   left: 0;
 }
@@ -6307,7 +6306,7 @@ h1 {
   content: "";
   position: absolute;
   top: 50%;
-  right: 0;
+  right: -9px;
   margin-top: -9px;
   width: 0;
   height: 0;
