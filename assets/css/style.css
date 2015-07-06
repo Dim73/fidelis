@@ -6401,6 +6401,9 @@ h1 {
   width: 31px;
   height: 16px;
 }
+.pitem-slider_full {
+  text-align: center;
+}
 .pitem-slider_full .bx-wrapper {
   position: relative;
 }
@@ -6435,6 +6438,7 @@ h1 {
 }
 .pitem-slider_full .slider-item {
   padding-bottom: 18px;
+  display: inline-block;
 }
 .pitem-slider_full .pitem-slider__link:not(.link_video):after {
   top: auto;
