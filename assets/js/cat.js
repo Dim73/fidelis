@@ -84,32 +84,34 @@ $(document).ready(function() {
   function filterappend(html) {
     var t = $(html);
     //update top panel filter events
-    if(t.hasClass('filter_item'))
-      t.click(function(e){
-        e.preventDefault();
+    if(t.hasClass('filter_item')) {
+        t.on('click',function (e) {
+            e.preventDefault();
 //        var filt = $(this).parent('.filter_item');
-        var type = t.data('filter');
-        var value =  t.data('value');
-        switch (type) {
-          case 'type':
-          case 'style':
-          case 'collection':
-          case 'brand':
-          case 'insert':
-          case 'cover':
-          case 'metals':
-          case 'size':         //////????
-              $('.left input[type=checkbox][data-filter='+type+'][data-value="'+value+'"]').prop( "checked", false ).trigger('refresh');
-              t.remove();
-             break;
-          case 'cost':
-              $costSlider.slider("option", "min", null);
-              $costSlider.slider("option", "values", [null,null]);
-            $('#mincost').val('');$('#maxcost').val('');
-            t.remove();
-            break;
-        }
-      });
+            var type = t.data('filter');
+            var value = t.data('value');
+            switch (type) {
+                case 'type':
+                case 'style':
+                case 'collection':
+                case 'brand':
+                case 'insert':
+                case 'cover':
+                case 'metals':
+                case 'size':         //////????
+                    $('.left input[type=checkbox][data-filter=' + type + '][data-value="' + value + '"]').prop('checked',false).trigger('change');
+                    t.remove();
+                    break;
+                case 'cost':
+                    $costSlider.slider("option", "min", null);
+                    $costSlider.slider("option", "values", [null, null]);
+                    $('#mincost').val('');
+                    $('#maxcost').val('');
+                    t.remove();
+                    break;
+            }
+        });
+    }
 
     filter.append(t);
   }
@@ -243,9 +245,9 @@ $(window).scroll(function() {
   }
 });
 
-  $('.filter_item').click(function(e){
+  /*$('.filter_item').click(function(e){
     $(this).remove();
-  });
+  });*/
 
 
   //$('.setcatcount option').click(function(e){filters['items_per_page']=$(this).val();makefilter();});
@@ -264,11 +266,12 @@ $(window).scroll(function() {
   });
 
   //sidefilters with single check
+
   $('.list ul[data-seltype=check] input[type=checkbox]').change(function(e){
     var chk = $(this);
     var si = $.inArray(chk.attr('data-value'),filters[chk.attr('data-filter')]);
+      console.log(filters);
 
-    console.log(si);
     if(si==-1) {
        filters[chk.attr('data-filter')].push(chk.attr('data-value'));
        filterappend('<div class="filter_item" data-filter="'+chk.attr('data-filter')+'" data-value="'+chk.attr('data-value')+'">'+chk.closest('label').text()+'</div>');
@@ -280,6 +283,7 @@ $(window).scroll(function() {
          filters[chk.attr('data-filter')].splice(si,1);
       }
 
+      console.log(filters);
     //var ul = chk.parent('label').parent('li').parent('ul[data-seltype=check]');
     //if(ul.find('input[type=checkbox]:checked').length>0) {//hide unchecked
     //  ul.find('input[type=checkbox]:not(:checked)').parent('label').parent('li').css('display','none');

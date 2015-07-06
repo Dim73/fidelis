@@ -4510,6 +4510,7 @@ $(document).ready(function() {
             },
             {
                 sliderClass: '.pitem-slider_side',
+                checkLength: 4,
                 options: {
                     pager: false,
                     minSlides: 4,

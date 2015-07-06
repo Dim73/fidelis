@@ -6367,6 +6367,9 @@ h1 {
   padding: 30px 0;
   z-index: 10;
 }
+.pitem-slider_side .slider-item {
+  margin-bottom: 23px;
+}
 .pitem-slider_side .bx-prev,
 .pitem-slider_side .bx-next {
   position: absolute;
