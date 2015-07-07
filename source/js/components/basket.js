@@ -572,7 +572,15 @@
         };
 
         this.updateTotal = function() {
+            var lbl = '';
             var total = self.shipCost + self.basket.getTotal();
+            if (self.shipCost || self.basket.sale ) {
+                lbl = 'с учетом';
+                self.basket.sale && (lbl+=' скидки');
+                lbl+=(self.basket.sale && self.shipCost)?' и':'';
+                self.shipCost && (lbl+=' доставки');
+            }
+            self.$totalLbl.text(lbl);
             self.$total.text(total);
         };
 
@@ -587,6 +595,7 @@
         self.$deliveryDays = $('.delivery-day', self.$deliveryInfo);
         self.$addresss = $('.delivery__address',self.$self);
         self.$total = $('.order__total .summ', self.$self);
+        self.$totalLbl = $('.order__total .lbl__add', self.$self);
         self.$form = $('.delivery-form', self.$self);
         self.$orderNum = $('.order-num',self.$self);
         self.$step = $('.order-step');
