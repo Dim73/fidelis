@@ -3983,9 +3983,18 @@ h1 {
 .main-banner__slider.loaded {
   opacity: 1;
 }
+.main-banner__slider .bx-controls-direction {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1020px;
+  height: 100%;
+  margin: 0 0 0 -510px;
+}
 .main-banner__slider .bx-prev,
 .main-banner__slider .bx-next {
   position: absolute;
+  z-index: 100;
   top: 50%;
   margin-top: -15px;
   font-size: 0px;
