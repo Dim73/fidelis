@@ -1,0 +1,22 @@
+{
+  "name": "fidelis",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Dim73/fidelis",
+  "authors": [
+    "mac <divanilov@hsmedia.ru>"
+  ],
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "knockout": "~3.3.0"
+  }
+}
