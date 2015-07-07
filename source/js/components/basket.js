@@ -561,9 +561,9 @@
                     dataType: 'json',
                     data: {data: self.$form.serialize()},
                     success: function(data,status,xhr){
-                        if (data.order) {
+                        if (data.url) {
                             /*self.$orderNum.text(data.order);*/
-                            window.location = 'success.html';
+                            window.location = data.url;
                             self.nextStep();
                         }
                     }

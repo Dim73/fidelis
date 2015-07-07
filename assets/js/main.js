@@ -3270,9 +3270,9 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
                     dataType: 'json',
                     data: {data: self.$form.serialize()},
                     success: function(data,status,xhr){
-                        if (data.order) {
+                        if (data.url) {
                             /*self.$orderNum.text(data.order);*/
-                            window.location = 'success.html';
+                            window.location = data.url;
                             self.nextStep();
                         }
                     }
