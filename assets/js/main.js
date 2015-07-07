@@ -3044,12 +3044,13 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
                         slideMargin: 23,
                         mode: 'vertical',
                         onSliderLoad: function() {
-                            self.itemModalCont.css({opacity:1});
+
                         }
                     }
                 }
             ];
             sliderConstructor(modalSlider);
+            self.itemModalCont.css({opacity:1});
             //spoilers
             $('.pitem-specs__spoilers .folding').folding({openHeight: 163, closeOther: '.pitem-specs__spoilers .spoiler-item'});
             //tooltip
@@ -4724,7 +4725,8 @@ $(document).ready(function() {
                 if (valSize) {
                     for (var i in itemData.sizes) {
                         for (var property in itemData.sizes[i] ) {
-                            if (property == valSize) {
+
+                            if (property === valSize) {
                                 cost = itemData.sizes[i][property];
                                 break;
                             }

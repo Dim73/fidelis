@@ -619,7 +619,8 @@ $(document).ready(function() {
                 if (valSize) {
                     for (var i in itemData.sizes) {
                         for (var property in itemData.sizes[i] ) {
-                            if (property == valSize) {
+
+                            if (property === valSize) {
                                 cost = itemData.sizes[i][property];
                                 break;
                             }

@@ -335,12 +335,13 @@
                         slideMargin: 23,
                         mode: 'vertical',
                         onSliderLoad: function() {
-                            self.itemModalCont.css({opacity:1});
+
                         }
                     }
                 }
             ];
             sliderConstructor(modalSlider);
+            self.itemModalCont.css({opacity:1});
             //spoilers
             $('.pitem-specs__spoilers .folding').folding({openHeight: 163, closeOther: '.pitem-specs__spoilers .spoiler-item'});
             //tooltip
