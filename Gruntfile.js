@@ -62,6 +62,24 @@ module.exports = function(grunt) {
                files : [ 'source/less/**/*.less' ],
                tasks: ['less']
            }
+        },
+        wiredep: {
+
+            task: {
+
+                // Point to the files that should be updated when
+                // you run `grunt wiredep`
+                src: [
+                    'html/**/*.html'
+                ],
+
+                options: {
+                    // See wiredep's configuration documentation for the options
+                    // you may pass:
+
+                    // https://github.com/taptapship/wiredep#configuration
+                }
+            }
         }
     });
 
@@ -73,6 +91,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-browser-sync');
     grunt.loadNpmTasks('grunt-spritesmith');
     grunt.loadNpmTasks('grunt-text-replace');
+    grunt.loadNpmTasks('grunt-wiredep');
 
     // Default task(s).
     //grunt.registerTask('default', ['uglify:main','less']);

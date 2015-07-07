@@ -1,0 +1,25 @@
+<div class="filters__checked" data-bind="foreach: filtersCheckbox">
+    <div class="block folding">
+        <div class="rheader folding__title">
+            <a href="#" data-bind="text: name"></a>
+        </div>
+        <div class="folding__wrap">
+            <div class="folding__inner">
+                <div class="list">
+                    <div class="nano-scroll">
+                        <div class="nano-content">
+                            <ul data-bind="foreach: filterOption">
+                                <li style="">
+                                    <label>
+                                        <input type="checkbox"  data-bind="value: data">
+                                        <span class="filter__name" data-bind="text: name"></span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

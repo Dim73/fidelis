@@ -6,6 +6,7 @@
 .idea/*
 psd/*
 node_modules/*
+bower_components/*
 
 # OS generated files #
 ######################
