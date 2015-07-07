@@ -1,25 +1,26 @@
 <div class="filters__checked" data-bind="foreach: checkboxFilters">
-    <div class="block folding">
+    <div class="block folding" data-bind="folding: checkChecked() > 0">
         <div class="rheader folding__title">
-            <a href="#" data-bind="text: name"></a>
+           <a href="#" data-bind="text: name"></a>
         </div>
         <div class="folding__wrap">
             <div class="folding__inner">
                 <div class="list">
                     <div class="nano-scroll">
                         <div class="nano-content">
-                          <!--  <ul data-bind="foreach: filterOption">
+                          <ul data-bind="foreach: filterOption">
                                 <li style="">
                                     <label>
-                                        <input type="checkbox"  data-bind="value: data, checked: isChecked">
+                                        <input type="checkbox"  data-bind="value: data.id, checked: isChecked">
                                         <span class="filter__name" data-bind="text: name"></span>
                                     </label>
                                 </li>
-                            </ul>-->
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div data-bind="text: checkChecked()"></div>
     </div>
 </div>

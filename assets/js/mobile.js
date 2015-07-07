@@ -148,6 +148,8 @@ var nAgt=navigator.userAgent; if(!jQuery.browser){jQuery.browser={};jQuery.brows
 
 
 
+
+
             $self.is('.'+opt.openClass) && toggleC(true);
 
 
@@ -173,6 +175,7 @@ var nAgt=navigator.userAgent; if(!jQuery.browser){jQuery.browser={};jQuery.brows
                 } else {
                     openHeight = optHeight
                 }
+                console.log(openHeight);
                 if (isOpened) {
                     $content.height(openHeight);
                 }

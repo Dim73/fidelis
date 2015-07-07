@@ -1,24 +1,33 @@
 function checkboxOption(data) {
     var self = this;
     self.data = data;
-    self.isChecked = data.isActive || false;
+    self.isChecked = ko.observable(data.isActive || false);
+    self.name = data.name;
+    self.id = data.id;
 }
 
 function CheckboxFilter(data) {
     var self = this;
     self.name = data.name;
     self.id = data.id;
-    self._options = ko.observableArray([]);
+    self.filterOption = ko.observableArray([]);
 
-    self._options($.map(data.options, function(item){
+    self.checkChecked = ko.computed(function() {
+        var total = 0;
+        for (var i = 0; i < this.filterOption().length; i++) {
+            total = this.filterOption()[i].isChecked()? total + 1 : total;
+        }
+        return total;
+    }, this);
+
+    self.filterOption($.map(data.options, function(item){
         return new checkboxOption(item);
     }));
-
 }
 
 function CatalogViewModel() {
-    var self = this,
-        self.checkboxFilters = ko.observableArray([]);
+    var self = this;
+    self.checkboxFilters = ko.observableArray([]);
 
     $.ajax({
         type: 'GET',
@@ -29,7 +38,8 @@ function CatalogViewModel() {
             request.setRequestHeader('JsonStub-Project-Key', 'f0a88501-213b-4baf-b72d-53c2c9dcb40c');
         }
     }).done(function (data) {
-        var fCheckboxes = $.map(data.checkboxes, function(item){
+        console.log(data);
+        var fCheckboxes = $.map(data.checkbox, function(item){
             return new CheckboxFilter(item);
         });
         self.checkboxFilters(fCheckboxes);
@@ -37,3 +47,13 @@ function CatalogViewModel() {
 }
 
 ko.applyBindings(new CatalogViewModel());
+
+ko.bindingHandlers.folding = {
+    init: function(element, valueAccessor) {
+        $(element).folding({openHeight: 200});
+    },
+    update: function(element, valueAccessor) {
+        $(element).find('.nano-scroll').nanoScroller();
+        $(element).trigger('update');
+    }
+};

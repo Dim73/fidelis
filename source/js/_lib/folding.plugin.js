@@ -31,6 +31,8 @@
 
 
 
+
+
             $self.is('.'+opt.openClass) && toggleC(true);
 
 
@@ -56,6 +58,7 @@
                 } else {
                     openHeight = optHeight
                 }
+                console.log(openHeight);
                 if (isOpened) {
                     $content.height(openHeight);
                 }
