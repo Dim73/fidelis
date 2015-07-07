@@ -6772,7 +6772,8 @@ h1 {
   width: 319px;
   height: 70px;
 }
-.selected_delivery {
+.selected_delivery,
+.selected_town {
   display: none;
 }
 .delivery__title {

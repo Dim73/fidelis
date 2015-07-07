@@ -453,6 +453,8 @@
         this.setDelivery = function(dType) {
             self.dType = dType || self.$typeSel.val();
             self.validateAdd = [];
+            self.$destSel.hide();
+            self.$postSel.hide();
             switch (self.dType) {
                 case 'courier':
                     self.$addresss.show();
@@ -473,6 +475,12 @@
                     }
                     selInit = true;
                     self.validateAdd = ['s-address', 's-region', 's-city'];
+                    break;
+                case 'post':
+                    self.$addresss.show();
+                    self.$postSel.show();
+                    self.getDeliveryInfo();
+                    self.validateAdd = ['s-address', 's-postTown'];
                     break;
             }
         };
@@ -604,6 +612,7 @@
         self.$regionSel = $('#s-region');
         self.$citySel = $('#s-city');
         self.$destSel = $('.selected_delivery',self.$self);
+        self.$postSel = $('.selected_post',self.$self);
         self.$deliveryInfo = $('.delivery__info',self.$self);
         self.$deliverySumm = $('.delivery-summ', self.$deliveryInfo);
         self.$deliveryDays = $('.delivery-day', self.$deliveryInfo);
