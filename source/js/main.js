@@ -192,7 +192,7 @@ $(document).ready(function() {
         }
 
         setTimeout(function() {
-            $('select, input[type=checkbox]').not('.no-styler').styler({selectSearch:false});
+            $('select').not('.no-styler').styler({selectSearch:false});
         }, 100);
 
 

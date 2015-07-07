@@ -175,7 +175,6 @@ var nAgt=navigator.userAgent; if(!jQuery.browser){jQuery.browser={};jQuery.brows
                 } else {
                     openHeight = optHeight
                 }
-                console.log(openHeight);
                 if (isOpened) {
                     $content.height(openHeight);
                 }

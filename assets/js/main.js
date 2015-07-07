@@ -175,7 +175,6 @@ var nAgt=navigator.userAgent; if(!jQuery.browser){jQuery.browser={};jQuery.brows
                 } else {
                     openHeight = optHeight
                 }
-                console.log(openHeight);
                 if (isOpened) {
                     $content.height(openHeight);
                 }
@@ -4301,7 +4300,7 @@ $(document).ready(function() {
         }
 
         setTimeout(function() {
-            $('select, input[type=checkbox]').not('.no-styler').styler({selectSearch:false});
+            $('select').not('.no-styler').styler({selectSearch:false});
         }, 100);
 
 

@@ -1,26 +1,34 @@
 function checkboxOption(data) {
     var self = this;
     self.data = data;
-    self.isChecked = ko.observable(data.isActive || false);
     self.name = data.name;
     self.id = data.id;
+    self.isChecked = ko.observable(data.isActive || false);
 }
 
 function CheckboxFilter(data) {
     var self = this;
     self.name = data.name;
     self.id = data.id;
-    self.filterOption = ko.observableArray([]);
+    self.filterOption = ko.observableArray();
+    self.activeFilters = ko.observableArray([]);
+    self.isChanged = ko.observable(false);
 
-    self.checkChecked = ko.computed(function() {
-        var total = 0;
+    self.activeOptions = ko.computed(function() {
+        self.activeFilters([]);
         for (var i = 0; i < this.filterOption().length; i++) {
-            total = this.filterOption()[i].isChecked()? total + 1 : total;
+            if (this.filterOption()[i].isChecked()) {
+                self.activeFilters.push(this.filterOption()[i].id);
+            }
         }
-        return total;
+        return self.activeFilters().toString();
     }, this);
 
-    self.filterOption($.map(data.options, function(item){
+    self.updatePlugins = ko.computed(function() {
+
+    })
+
+    self.filterOption($.map(data.options, function(item, k){
         return new checkboxOption(item);
     }));
 }
@@ -28,25 +36,138 @@ function CheckboxFilter(data) {
 function CatalogViewModel() {
     var self = this;
     self.checkboxFilters = ko.observableArray([]);
+    self.filtersData = [];
+    self.isChange = ko.observable(false);
 
-    $.ajax({
-        type: 'GET',
-        url: 'http://jsonstub.com/filters/',
-        contentType: 'application/json',
-        beforeSend: function (request) {
-            request.setRequestHeader('JsonStub-User-Key', '9e0566f5-b235-4525-b0a9-e10957792544');
-            request.setRequestHeader('JsonStub-Project-Key', 'f0a88501-213b-4baf-b72d-53c2c9dcb40c');
-        }
-    }).done(function (data) {
-        console.log(data);
-        var fCheckboxes = $.map(data.checkbox, function(item){
+    function getFilters() {
+        $.ajax({
+            type: 'GET',
+            url: 'http://jsonstub.com/filters/',
+            contentType: 'application/json',
+            beforeSend: function (request) {
+                request.setRequestHeader('JsonStub-User-Key', '9e0566f5-b235-4525-b0a9-e10957792544');
+                request.setRequestHeader('JsonStub-Project-Key', 'f0a88501-213b-4baf-b72d-53c2c9dcb40c');
+            }
+        }).done(function (data) {
+            var fCheckboxes = $.map(data.checkbox, function(item){
+                return new CheckboxFilter(item);
+            });
+            self.checkboxFilters(fCheckboxes);
+        });
+
+      /*  var fakeData = {
+            "checkbox": [
+                {
+                    "name": "Бренды",
+                    "id": "brands",
+                    "options": [
+                        {
+                            "name": "Eugenio Campos",
+                            "id": 20,
+                            "isActive": true
+                        },
+                        {
+                            "name": "1One (Италия)",
+                            "id": 21,
+                            "isActive": true
+                        },
+                        {
+                            "name": "Dea",
+                            "id": 22
+                        },
+                        {
+                            "name": "Glee",
+                            "id": 23
+                        },
+                        {
+                            "name": "Random",
+                            "id": 24
+                        }
+                    ]
+                },
+                {
+                    "name": "Коллекции",
+                    "id": "collection",
+                    "options": [
+                        {
+                            "name": "Вечерний",
+                            "id": 20
+                        },
+                        {
+                            "name": "Деловой",
+                            "id": 21
+                        },
+                        {
+                            "name": "Классический",
+                            "id": 22
+                        },
+                        {
+                            "name": "Ультрамодный",
+                            "id": 23
+                        }
+                    ]
+                },
+                {
+                    "name": "Тип изделия",
+                    "id": "type",
+                    "options": [
+                        {
+                            "name": "Браслеты",
+                            "id": 20
+                        },
+                        {
+                            "name": "Броши",
+                            "id": 21
+                        },
+                        {
+                            "name": "Бусы",
+                            "id": 22
+                        },
+                        {
+                            "name": "Колье",
+                            "id": 23
+                        }
+                    ]
+                }
+            ]
+        };
+
+        var fCheckboxes = $.map(fakeData.checkbox, function(item){
             return new CheckboxFilter(item);
         });
-        self.checkboxFilters(fCheckboxes);
-    });
-}
+        self.checkboxFilters(fCheckboxes);*/
+    }
 
-ko.applyBindings(new CatalogViewModel());
+    function setFilters() {
+        $.ajax({
+            type: 'POST',
+            url: 'http://jsonstub.com/filters/',
+            contentType: 'application/json',
+            beforeSend: function (request) {
+                request.setRequestHeader('JsonStub-User-Key', '9e0566f5-b235-4525-b0a9-e10957792544');
+                request.setRequestHeader('JsonStub-Project-Key', 'f0a88501-213b-4baf-b72d-53c2c9dcb40c');
+            }
+        }).done(function (data) {
+            if (data.added) {
+                getFilters();
+            }
+        });
+    }
+
+    self.filtersData = ko.computed(function() {
+        self.filtersData = []
+        for (var i = 0; i < this.checkboxFilters().length; i++) {
+            var _filter = this.checkboxFilters()[i],
+                obj = {};
+            obj[_filter.id] = _filter.activeFilters();
+            self.filtersData.push(obj);
+        }
+        console.log('change');
+        //getFilters();
+    }, this);
+
+    getFilters();
+}
 
 ko.bindingHandlers.folding = {
     init: function(element, valueAccessor) {
@@ -57,3 +178,5 @@ ko.bindingHandlers.folding = {
         $(element).trigger('update');
     }
 };
+
+ko.applyBindings(new CatalogViewModel());
