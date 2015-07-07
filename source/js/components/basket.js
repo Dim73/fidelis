@@ -561,10 +561,24 @@
                     dataType: 'json',
                     data: {data: self.$form.serialize()},
                     success: function(data,status,xhr){
-                        if (data.url) {
-                            /*self.$orderNum.text(data.order);*/
+                        /*if (data.url) {
+                            /!*self.$orderNum.text(data.order);*!/
                             window.location = data.url;
                             self.nextStep();
+                        }*/
+                        if (typeof data.type != 'undefined') {
+                            if (data.type=='form') {
+                                var form = $(data.form);
+                                $(document.body).append(form);
+                                form.submit();
+                            }
+                            else
+                            if (data.type=='url') {
+                                window.location.href=data.url;
+                            }
+                        } else {
+                            alert('Заказ успешно отправлен. В ближайшее время наш менеджер свяжется с вами.');
+                            window.location.href='/';
                         }
                     }
                 });
