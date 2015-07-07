@@ -1,45 +1,39 @@
-// Class to represent a row in the seat reservations grid
-function SeatReservation(name, initialMeal) {
+function checkboxOption(data) {
     var self = this;
-    self.name = name;
-    self.meal = ko.observable(initialMeal);
-
-    self.formattedPrice = ko.computed(function() {
-        var price = self.meal().price;
-        return price ? "$" + price.toFixed(2) : "None";
-    });
+    self.data = data;
+    self.isChecked = data.isActive || false;
 }
 
-// Overall viewmodel for this screen, along with initial state
-function ReservationsViewModel() {
+function CheckboxFilter(data) {
     var self = this;
+    self.name = data.name;
+    self.id = data.id;
+    self._options = ko.observableArray([]);
 
-    // Non-editable catalog data - would come from the server
-    self.availableMeals = [
-        { mealName: "Standard (sandwich)", price: 0 },
-        { mealName: "Premium (lobster)", price: 34.95 },
-        { mealName: "Ultimate (whole zebra)", price: 290 }
-    ];
+    self._options($.map(data.options, function(item){
+        return new checkboxOption(item);
+    }));
 
-    // Editable data
-    self.seats = ko.observableArray([
-        new SeatReservation("Steve", self.availableMeals[0]),
-        new SeatReservation("Bert", self.availableMeals[0])
-    ]);
+}
 
-    self.addSeat = function() {
-        self.seats.push(new SeatReservation("", self.availableMeals[0]));
-    }
+function CatalogViewModel() {
+    var self = this,
+        self.checkboxFilters = ko.observableArray([]);
 
-    self.removeSeat = function(seat) { self.seats.remove(seat) }
-
-    self.totalSurcharge = ko.computed(function() {
-        var total = 0;
-        for (var i = 0; i < self.seats().length; i++) {
-            total += self.seats()[i].meal().price;
+    $.ajax({
+        type: 'GET',
+        url: 'http://jsonstub.com/filters/',
+        contentType: 'application/json',
+        beforeSend: function (request) {
+            request.setRequestHeader('JsonStub-User-Key', '9e0566f5-b235-4525-b0a9-e10957792544');
+            request.setRequestHeader('JsonStub-Project-Key', 'f0a88501-213b-4baf-b72d-53c2c9dcb40c');
         }
-        return total;
+    }).done(function (data) {
+        var fCheckboxes = $.map(data.checkboxes, function(item){
+            return new CheckboxFilter(item);
+        });
+        self.checkboxFilters(fCheckboxes);
     });
 }
 
-ko.applyBindings(new ReservationsViewModel());
+ko.applyBindings(new CatalogViewModel());
