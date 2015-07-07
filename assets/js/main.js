@@ -2501,8 +2501,10 @@ if (typeof JSON !== 'object') {
                     var drag = false;
                     var scrollerY0 = 0;
                     $selectList.after($scrollBarWrapper);
+                    console.log('opt');
 
                     $scrollContainer.on('scroll', function(){
+                        console.log('scroll');
                         $scrollBar.css({top: getBarTop() + 'px'});
                     });
 
@@ -3220,6 +3222,7 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
                 url: '../../source/back/town.html',
                 cache: false,
                 type: 'post',
+                dataType: 'html',
                 data: {region: region},
                 success: function(data,status,xhr){
                     if (data) {
@@ -4773,7 +4776,7 @@ function smoothScrollInit () {
             $.srSmoothscroll({
                 step: 100,
                 speed: 600,
-                preventOn: '.nano-scroll'
+                preventOn: '.nano-scroll, .b-custom-select__dropdown__inner'
             });
         }
     }

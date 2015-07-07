@@ -667,7 +667,7 @@ function smoothScrollInit () {
             $.srSmoothscroll({
                 step: 100,
                 speed: 600,
-                preventOn: '.nano-scroll'
+                preventOn: '.nano-scroll, .b-custom-select__dropdown__inner'
             });
         }
     }

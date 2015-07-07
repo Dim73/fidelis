@@ -361,8 +361,10 @@
                     var drag = false;
                     var scrollerY0 = 0;
                     $selectList.after($scrollBarWrapper);
+                    console.log('opt');
 
                     $scrollContainer.on('scroll', function(){
+                        console.log('scroll');
                         $scrollBar.css({top: getBarTop() + 'px'});
                     });
 

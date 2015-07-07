@@ -511,6 +511,7 @@
                 url: '../../source/back/town.html',
                 cache: false,
                 type: 'post',
+                dataType: 'html',
                 data: {region: region},
                 success: function(data,status,xhr){
                     if (data) {
