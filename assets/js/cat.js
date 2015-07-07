@@ -1,4 +1,4 @@
-function checkboxOption(data) {
+function CheckboxOption(data) {
     var self = this;
     self.data = data;
     self.name = data.name;
@@ -29,14 +29,14 @@ function CheckboxFilter(data) {
     })
 
     self.filterOption($.map(data.options, function(item, k){
-        return new checkboxOption(item);
+        return new CheckboxOption(item);
     }));
 }
 
 function CatalogViewModel() {
     var self = this;
     self.checkboxFilters = ko.observableArray([]);
-    self.filtersData = [];
+    self.filterData = [];
     self.isChange = ko.observable(false);
 
     function getFilters() {
@@ -55,82 +55,7 @@ function CatalogViewModel() {
             self.checkboxFilters(fCheckboxes);
         });
 
-      /*  var fakeData = {
-            "checkbox": [
-                {
-                    "name": "Бренды",
-                    "id": "brands",
-                    "options": [
-                        {
-                            "name": "Eugenio Campos",
-                            "id": 20,
-                            "isActive": true
-                        },
-                        {
-                            "name": "1One (Италия)",
-                            "id": 21,
-                            "isActive": true
-                        },
-                        {
-                            "name": "Dea",
-                            "id": 22
-                        },
-                        {
-                            "name": "Glee",
-                            "id": 23
-                        },
-                        {
-                            "name": "Random",
-                            "id": 24
-                        }
-                    ]
-                },
-                {
-                    "name": "Коллекции",
-                    "id": "collection",
-                    "options": [
-                        {
-                            "name": "Вечерний",
-                            "id": 20
-                        },
-                        {
-                            "name": "Деловой",
-                            "id": 21
-                        },
-                        {
-                            "name": "Классический",
-                            "id": 22
-                        },
-                        {
-                            "name": "Ультрамодный",
-                            "id": 23
-                        }
-                    ]
-                },
-                {
-                    "name": "Тип изделия",
-                    "id": "type",
-                    "options": [
-                        {
-                            "name": "Браслеты",
-                            "id": 20
-                        },
-                        {
-                            "name": "Броши",
-                            "id": 21
-                        },
-                        {
-                            "name": "Бусы",
-                            "id": 22
-                        },
-                        {
-                            "name": "Колье",
-                            "id": 23
-                        }
-                    ]
-                }
-            ]
-        };
+      /*
 
         var fCheckboxes = $.map(fakeData.checkbox, function(item){
             return new CheckboxFilter(item);
@@ -154,13 +79,12 @@ function CatalogViewModel() {
         });
     }
 
-    self.filtersData = ko.computed(function() {
-        self.filtersData = []
+    ko.computed(function(val) {
         for (var i = 0; i < this.checkboxFilters().length; i++) {
             var _filter = this.checkboxFilters()[i],
                 obj = {};
             obj[_filter.id] = _filter.activeFilters();
-            self.filtersData.push(obj);
+            self.filterData.push(obj);
         }
         console.log('change');
         //getFilters();
@@ -180,3 +104,80 @@ ko.bindingHandlers.folding = {
 };
 
 ko.applyBindings(new CatalogViewModel());
+
+var fakeData = {
+    "checkbox": [
+        {
+            "name": "Бренды",
+            "id": "brands",
+            "options": [
+                {
+                    "name": "Eugenio Campos",
+                    "id": 20,
+                    "isActive": true
+                },
+                {
+                    "name": "1One (Италия)",
+                    "id": 21,
+                    "isActive": true
+                },
+                {
+                    "name": "Dea",
+                    "id": 22
+                },
+                {
+                    "name": "Glee",
+                    "id": 23
+                },
+                {
+                    "name": "Random",
+                    "id": 24
+                }
+            ]
+        },
+        {
+            "name": "Коллекции",
+            "id": "collection",
+            "options": [
+                {
+                    "name": "Вечерний",
+                    "id": 20
+                },
+                {
+                    "name": "Деловой",
+                    "id": 21
+                },
+                {
+                    "name": "Классический",
+                    "id": 22
+                },
+                {
+                    "name": "Ультрамодный",
+                    "id": 23
+                }
+            ]
+        },
+        {
+            "name": "Тип изделия",
+            "id": "type",
+            "options": [
+                {
+                    "name": "Браслеты",
+                    "id": 20
+                },
+                {
+                    "name": "Броши",
+                    "id": 21
+                },
+                {
+                    "name": "Бусы",
+                    "id": 22
+                },
+                {
+                    "name": "Колье",
+                    "id": 23
+                }
+            ]
+        }
+    ]
+};
