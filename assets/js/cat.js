@@ -322,7 +322,7 @@ $(window).scroll(function() {
 
   //sidefilters with single check
 
-  $('.list ul[data-seltype=check] input[type=checkbox]').change(function(e){
+  /*$('.list ul[data-seltype=check] input[type=checkbox]').change(function(e){
     var chk = $(this);
     var si = $.inArray(chk.attr('data-value'),filters[chk.attr('data-filter')]);
       ///console.log(filters);
@@ -339,19 +339,13 @@ $(window).scroll(function() {
       }
 
       console.log(filters);
-    //var ul = chk.parent('label').parent('li').parent('ul[data-seltype=check]');
-    //if(ul.find('input[type=checkbox]:checked').length>0) {//hide unchecked
-    //  ul.find('input[type=checkbox]:not(:checked)').parent('label').parent('li').css('display','none');
-    //} else {//show unchecked
-    //  ul.find('input[type=checkbox]').parent('label').parent('li').css('display','block');
-    //}
 
    // $('.itemlist').html('');
    // makefilter();
       changeState();
-  });
+  });*/
   //sidefilters with multiple checks
-  $('.list ul[data-seltype=multi] input[type=checkbox], .square_sizes .squaresize').change(function(e){
+  $('.list ul input[type=checkbox], .square_sizes .squaresize').change(function(e){
     var chk = $(this);
     var si = $.inArray(chk.attr('data-value'),filters[chk.attr('data-filter')]);
     if(si==-1) {
