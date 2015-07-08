@@ -122,10 +122,27 @@ $(document).ready(function() {
         var curState = History.getState(); // Note: We are using History.getState() instead of event.state
         makefilter(curState.data.filters);
     });*/
+
+    var $itemList = $('.itemlist');
+    var listOffsetTop = $itemList.offset().top - $('.header-menu.fixed').height() - 100;
+
+    var scrollY;
+
+    $(window).on('scroll',function(){
+        scrollY = $(this).scrollTop();
+    });
+
+    function noScrollOnce(event) {
+        event.preventDefault();
+        document.removeEventListener('scroll', noScrollOnce);
+    }
+
+
     window.onpopstate = function( e ) {
         var fil =  history.state == null?'':history.state.filters;
         makefilter(fil);
     };
+
 
 
     function makeUri() {
@@ -143,16 +160,17 @@ $(document).ready(function() {
     function changeState() {
         var f = makeUri();
         var uri  = f.join('&');
+        console.log(uri);
         //History.pushState({filters:uri }, documentTitle, '?'+uri);
         history.pushState( {filters:uri }, documentTitle, '?'+uri);
-        makefilter(f);
+        makefilter(uri);
     }
 
     function makefilter(f, notScrollToList){
-      //begin request
+        //begin request
         var uri  = f || '';
-     //update static links ^_^
-     $('.left .list ul a').attr('href',window.location.pathname+(uri?'?'+uri:''));
+        //update static links ^_^
+        $('.left .list ul a').attr('href',window.location.pathname+(uri?'?'+uri:''));
         if (!notScrollToList) {
             $('html, body').animate({
                 scrollTop: $('.itemlist').offset().top - $('.header-menu.fixed').height() - 100
