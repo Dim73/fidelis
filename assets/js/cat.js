@@ -123,7 +123,6 @@ $(document).ready(function() {
         makefilter(curState.data.filters);
     });*/
     window.onpopstate = function( e ) {
-        console.log(history.state);
         var fil =  history.state == null?'':history.state.filters;
         makefilter(fil);
     };
@@ -149,11 +148,16 @@ $(document).ready(function() {
         makefilter(f);
     }
 
-    function makefilter(f){
+    function makefilter(f, notScrollToList){
       //begin request
         var uri  = f || '';
      //update static links ^_^
      $('.left .list ul a').attr('href',window.location.pathname+(uri?'?'+uri:''));
+        if (!notScrollToList) {
+            $('html, body').animate({
+                scrollTop: $('.itemlist').offset().top - $('.header-menu.fixed').height() - 100
+            })
+        }
      if (!requeststatus) {
 
      $.ajax('../../source/back/catalogue.html?'+uri,{///ajax/catalogue.html?
@@ -265,7 +269,9 @@ $(window).scroll(function() {
                   $('.itemlist').offset().top+
                   $('.itemlist').height()
                 )) {
-              makefilter();
+                var f = makeUri();
+                var uri  = f.join('&');
+              makefilter(uri, true);
               //console.log( (wtop+wheight) +' '+(ilisttop+ilisth));
             }
       }
