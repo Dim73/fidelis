@@ -116,20 +116,40 @@ $(document).ready(function() {
     filter.append(t);
   }
 
-  function makefilter(){
+    var documentTitle = document.title;
+
+    History.Adapter.bind(window,'statechange',function(){ // Note: We are using statechange instead of popstate
+        var curState = History.getState(); // Note: We are using History.getState() instead of event.state
+        makefilter(curState.data.filters);
+    });
+
+
+    function makeUri() {
+        var f =[];
+        $.each(filters,function(ind,val){if(val!='') f.push(ind+'='+val);});
+        if(filters['items_per_page']=='all'){
+            viewed = $('.itemlist .item').length;
+            f.push('actpage='+((viewed/12)+1));
+        } else {
+            if($('.pageswitch .active').length>0) f.push('actpage='+$($('.pageswitch .active').get(0)).text());
+        }
+        return f;
+    }
+
+    function changeState() {
+        var f = makeUri();
+        var uri  = f.join('&');
+        History.pushState({filters:uri }, documentTitle, '?'+uri);
+    }
+
+    function makefilter(f){
       //begin request
-     var f =[];
-     $.each(filters,function(ind,val){if(val!='') f.push(ind+'='+val);});
-     if(filters['items_per_page']=='all'){
-          viewed = $('.itemlist .item').length;
-          f.push('actpage='+((viewed/12)+1));
-     } else {
-          if($('.pageswitch .active').length>0) f.push('actpage='+$($('.pageswitch .active').get(0)).text());
-     }
+        var uri  = f || '';
      //update static links ^_^
-     $('.left .list ul a').attr('href',window.location.pathname+'?'+f.join('&'));
+     $('.left .list ul a').attr('href',window.location.pathname+(uri?'?'+uri:''));
      if (!requeststatus) {
-     $.ajax('../../source/back/catalogue.html?'+f.join('&'),{///ajax/catalogue.html?
+
+     $.ajax('../../source/back/catalogue.html?'+uri,{///ajax/catalogue.html?
        cache:false,
        type:'get',
        dataType:'json',
@@ -142,7 +162,8 @@ $(document).ready(function() {
           $('.itemlist').html('');
          }
 
-         //if (data['debug']!==null) alert(data['debug']);
+
+           //if (data['debug']!==null) alert(data['debug']);
          $.each(data['filters'],filtersidebars);
          $('.itemlist').append(data['items']);
          $('.pageswitch').html(data['pageswitch']);
@@ -255,14 +276,17 @@ $(window).scroll(function() {
     $('.itemlist').html('');
     filters['items_per_page']=$(this).val();
     $('.setcatcount').val($(this).val());
-    makefilter();
+      changeState();
+    //makefilter();
+
   });
   //$('.setcatorder option').click(function(e){filters['items_sort_order']=$(this).val();makefilter();});
   $('.setcatorder').change(function(e){
     $('.itemlist').html('');
     filters['items_sort_order']=$(this).val();
     $('.setcatorder').val($(this).val());
-    makefilter();
+      changeState();
+    //makefilter();
   });
 
   //sidefilters with single check
@@ -291,8 +315,9 @@ $(window).scroll(function() {
     //  ul.find('input[type=checkbox]').parent('label').parent('li').css('display','block');
     //}
 
-    $('.itemlist').html('');
-    makefilter();
+   // $('.itemlist').html('');
+   // makefilter();
+      changeState();
   });
   //sidefilters with multiple checks
   $('.list ul[data-seltype=multi] input[type=checkbox], .square_sizes .squaresize').change(function(e){
@@ -308,8 +333,9 @@ $(window).scroll(function() {
          filters[chk.attr('data-filter')].splice(si,1);
     }
     //var ul = chk.parent('label').parent('li').parent('ul[data-seltype=multi]'); //18_08_2014...
-    $('.itemlist').html('');
-    makefilter();
+    //$('.itemlist').html('');
+    //makefilter();
+      changeState();
   });
 
 
@@ -321,8 +347,9 @@ $(window).scroll(function() {
     //filterappend('<div class="filter_item" data-filter="cost" data-value="true">Цена: от '+ui.values[0]+' до '+ui.values[1]+'</div>');
     //filter.find('.clear').appendTo(filter);
     }
-    $('.itemlist').html('');
-    makefilter();
+    /*$('.itemlist').html('');
+    makefilter();*/
+      changeState();
   });
   $('.block .list .cost #mincost').blur(function(){
     var v1 = parseInt($(this).val());
