@@ -26,11 +26,14 @@ function CheckboxFilter(data) {
 
     self.updatePlugins = ko.computed(function() {
 
-    })
+    });
+
+
 
     self.filterOption($.map(data.options, function(item, k){
         return new CheckboxOption(item);
     }));
+    console.log(self.filterOption());
 }
 
 function CatalogViewModel() {
