@@ -90,7 +90,7 @@ function CatalogViewModel() {
             self.filterData.push(obj);
         }
         console.log('change');
-        //getFilters();
+        getFilters();
     }, this);
 
     getFilters();
