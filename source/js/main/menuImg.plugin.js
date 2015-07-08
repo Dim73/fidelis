@@ -31,7 +31,7 @@
                     }
                 },
                 function() {
-                    $image.fadeOut(300,function(){
+                    $image && $image.fadeOut(300,function(){
                         $image.detach();
                     })
                 }
