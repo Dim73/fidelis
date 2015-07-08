@@ -118,10 +118,15 @@ $(document).ready(function() {
 
     var documentTitle = document.title;
 
-    History.Adapter.bind(window,'statechange',function(){ // Note: We are using statechange instead of popstate
+   /* History.Adapter.bind(window,'statechange',function(){ // Note: We are using statechange instead of popstate
         var curState = History.getState(); // Note: We are using History.getState() instead of event.state
         makefilter(curState.data.filters);
-    });
+    });*/
+    window.onpopstate = function( e ) {
+        console.log(history.state);
+        var fil =  history.state == null?'':history.state.filters;
+        makefilter(fil);
+    };
 
 
     function makeUri() {
@@ -139,7 +144,9 @@ $(document).ready(function() {
     function changeState() {
         var f = makeUri();
         var uri  = f.join('&');
-        History.pushState({filters:uri }, documentTitle, '?'+uri);
+        //History.pushState({filters:uri }, documentTitle, '?'+uri);
+        history.pushState( {filters:uri }, documentTitle, '?'+uri);
+        makefilter(f);
     }
 
     function makefilter(f){
@@ -294,7 +301,7 @@ $(window).scroll(function() {
   $('.list ul[data-seltype=check] input[type=checkbox]').change(function(e){
     var chk = $(this);
     var si = $.inArray(chk.attr('data-value'),filters[chk.attr('data-filter')]);
-      console.log(filters);
+      ///console.log(filters);
 
     if(si==-1) {
        filters[chk.attr('data-filter')].push(chk.attr('data-value'));
