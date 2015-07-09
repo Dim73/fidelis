@@ -2743,6 +2743,12 @@ h1 {
 .magazine-info__shipment .active > * {
   color: #27938b;
 }
+.magazine-info__return {
+  margin-right: 30px;
+}
+.magazine-info__return .icon {
+  font-size: 16px;
+}
 .magazine-info__selfshipment .magazine-info__title {
   margin-top: -1px;
 }
