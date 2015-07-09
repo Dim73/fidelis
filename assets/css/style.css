@@ -6586,9 +6586,12 @@ h1 {
   display: inline-block;
   color: #444444;
   line-height: 16px;
+  border-bottom: 1px dotted;
 }
 .pitem-size__help:hover {
   color: #6a6a6a;
+  border-bottom: 0;
+  padding-bottom: 1px;
 }
 .pitem-size.size_empty .b-custom-select {
   color: #e30c19;

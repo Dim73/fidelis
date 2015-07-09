@@ -459,7 +459,7 @@
                 case 'courier':
                     self.$addresss.show();
                     self.getDeliveryInfo();
-                    self.validateAdd = ['s-address'];
+                   // self.validateAdd = ['s-address'];
                     break;
                 case 'self':
                     self.toggleDestination(false);
@@ -474,13 +474,13 @@
                         $('.post-select', self.$self).CustomSelect({visRows:5, modifier: 'delivery'});
                     }
                     selInit = true;
-                    self.validateAdd = ['s-address', 's-region', 's-city'];
+                    self.validateAdd = [/*'s-address',*/ 's-region', 's-city'];
                     break;
                 case 'post':
                     self.$addresss.show();
                     self.$postSel.show();
                     self.getDeliveryInfo();
-                    self.validateAdd = ['s-address', 's-postTown'];
+                    self.validateAdd = [/*'s-address',*/ 's-postTown'];
                     break;
             }
         };
