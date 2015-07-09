@@ -222,7 +222,8 @@ $(document).ready(function() {
         $('.basket-items__holder').dropdown({
             link: '.js-basket-open',
             afterClose: function() {
-              $('.basket-item.active').removeClass('active');
+              $('.basket-item.a' +
+                  'ctive').removeClass('active');
             }
         });
 
@@ -535,8 +536,7 @@ $(document).ready(function() {
                 $curItem = $(this).closest('.js-item-data');
                 var itemData = eval('('+$curItem.data('item')+')');
                 var imgSrc = $curItem.find('.slider-item:first-child img').attr('src');
-                console.log($curItem.find('.slider-item:first-child img'));
-                self.id = itemData.id;
+                self = itemData;
                 if (itemData.sizes  && itemData.sizes.length) {
                     var renderData = {
                         sizes: itemData.sizes,
@@ -597,7 +597,8 @@ $(document).ready(function() {
             function itemAdd() {
                 var $btn = $curItem.find('.js-buy');
                 $btn.text('ТОВАР В КОРЗИНЕ').addClass('btn_cart-added');
-                basket.addItem({id: self.id, size: self.size}, true);
+                console.log(self);
+                basket.addItem(self, true);
             }
         })();
 

@@ -2709,6 +2709,10 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
 })(jQuery);
 (function($){
 
+    function digitDiv (str) {
+        return str.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+    }
+
     var BasketItem = function(basket, data) {
         var self = this;
 
@@ -2843,7 +2847,8 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
         },
         updatePrice: function(onlyItem) {
             this.total = this.price * this.count;
-            this.$price.text(this.total);
+
+            this.$price.text(digitDiv(this.total));
             !onlyItem && this.basket.updateTotal();
         }
     };
@@ -2873,8 +2878,10 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
                 type: 'post',
                 dataType: 'json',
                 data: {data: data}, // data.id, data.count, data.size
-                success: function(data,status,xhr){
-                    newItem && self.addToBasket(data, true);
+                success: function(resp,status,xhr){
+                    if (newItem) {
+                        self.addToBasket(data.name?data:resp, true);
+                    }
                 }
             });
 
@@ -2983,10 +2990,10 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
             for (var i in items) {
                 self.total += items[i].total;
             }
-            self.$total.text(self.total);
+            self.$total.text(digitDiv(self.total));
             if (self.sale) {
                 self.saleTotal = Math.round((100-self.sale)/100 * self.total);
-                self.$coupon.text(self.saleTotal);
+                self.$coupon.text(digitDiv(self.saleTotal));
             }
             self.$self.trigger('updateTotal');
         };
@@ -3205,7 +3212,7 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
                 success: function(data,status,xhr){
                     if (data) {
                         self.shipCost = data.summ;
-                        self.$deliverySumm.text(data.summ);
+                        self.$deliverySumm.text(digitDiv(data.summ));
                         self.$deliveryDays.text(data.days);
                         self.updateTotal();
                         self.$deliveryInfo.show();
@@ -3312,7 +3319,7 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
                 self.shipCost && (lbl+=' доставки');
             }
             self.$totalLbl.text(lbl);
-            self.$total.text(total);
+            self.$total.text(digitDiv(total));
         };
 
         self.$self = $('.order');
