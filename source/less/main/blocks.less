@@ -8,7 +8,9 @@
     text-align: justify;
 
     &:after {
-
+      content: '';
+      display: inline-block;
+      width: 100%;
     }
   }
 
@@ -20,9 +22,9 @@
   }
 
   .col {
-    float: left;
+    display: inline-block;
+    vertical-align: top;
     position: relative;
-    margin-right: 32px;
 
     &:last-child {
       margin-right: 0;
@@ -163,7 +165,6 @@
   }
 
   &__return {
-    margin-right: 30px;
 
     .icon {
       font-size: 16px;
@@ -185,7 +186,6 @@
   }
 
   &__call {
-    float: right !important;
 
     & > a {
       display: block;
