@@ -4703,7 +4703,7 @@ h1 {
   z-index: 100;
   left: -3px;
   top: 5px;
-  padding-right: 10px;
+  padding-right: 1px;
   background-color: #65abcf;
   text-align: center;
   font: 16px/20px "LatoBold";
@@ -4716,6 +4716,32 @@ h1 {
   height: 21px;
   width: 69px;
   background-color: inherit;
+}
+.itemlist .info-lbl span:before,
+.itemlist .info-lbl span:after {
+  color: #65abcf;
+}
+.itemlist .info-lbl span:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -12px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 11px 11px 0 11px;
+  border-color: currentColor transparent transparent transparent;
+}
+.itemlist .info-lbl span:before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: -12px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 11px 11px 11px;
+  border-color: transparent transparent currentColor transparent;
 }
 .itemlist .info-lbl:before {
   content: "";
@@ -4733,20 +4759,13 @@ h1 {
   -ms-transition: opacity 0.5s ease 0s;
   transition: opacity 0.5s ease 0s;
 }
-.itemlist .info-lbl:after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 10.5px 10px 10.5px 0;
-  border-color: transparent #ffffff transparent transparent;
-}
 .itemlist .info-lbl__orange {
   font-size: 14px;
   background-color: #ff8000;
+}
+.itemlist .info-lbl__orange span:before,
+.itemlist .info-lbl__orange span:after {
+  color: #ff8000;
 }
 .itemlist .info-lbl__orange:before {
   border-color: transparent #ca6500 transparent transparent;
