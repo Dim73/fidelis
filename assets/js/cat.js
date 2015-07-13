@@ -142,12 +142,20 @@ $(document).ready(function() {
         $('.left .folding').trigger('update');
     }
 
+    setTimeout( function(){
+        window.addEventListener('popstate', onpopstate, false);
+    },0);
 
-    window.onpopstate = function( e ) {
-        var fil =  history.state == null?'':history.state.filters;
+    var firstPopState = true;
+   function onpopstate ( e ) {
+        if (!e.state && firstPopState) { //safari & old chrome fix
+            firstPopState = false;
+            return;
+        }
+       firstPopState = false;
+        var fil =  history.state == null?makeUri():history.state.filters;
         makefilter(fil);
-    };
-
+    }
 
     function makeUri() {
         var f =[];
@@ -164,7 +172,6 @@ $(document).ready(function() {
     function changeState() {
         var f = makeUri();
         var uri  = f.join('&');
-        console.log(uri);
         //History.pushState({filters:uri }, documentTitle, '?'+uri);
         history.pushState( {filters:uri }, documentTitle, '?'+uri);
         makefilter(uri);
