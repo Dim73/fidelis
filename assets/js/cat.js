@@ -153,7 +153,7 @@ $(document).ready(function() {
             return;
         }
        firstPopState = false;
-        var fil =  history.state == null?makeUri():history.state.filters;
+        var fil =  history.state == null?makeUri().join('&'):history.state.filters;
         makefilter(fil);
     }
 
