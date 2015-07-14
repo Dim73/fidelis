@@ -152,7 +152,6 @@ $(document).ready(function() {
             firstPopState = false;
             return;
         }
-       firstPopState = false;
         var fil =  history.state == null?makeUri().join('&'):history.state.filters;
         makefilter(fil);
     }
@@ -188,6 +187,7 @@ $(document).ready(function() {
             })
         }
         if (!requeststatus) {
+            firstPopState = false;
             $.ajax('../../source/back/catalogue.html?'+uri,{///ajax/catalogue.html?  '../../source/back/catalogue.html?'
                 cache:false,
                 type:'get',
