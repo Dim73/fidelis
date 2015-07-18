@@ -3206,6 +3206,21 @@ h1 {
   background: url('../images/loader.gif') no-repeat 0 0;
   margin: -32px 0 0 -32px;
 }
+.shipment-calculator .selected_delivery {
+  display: block;
+}
+.shipment-calculator .row {
+  margin-bottom: 13px;
+  width: 100%;
+}
+.shipment-calculator label {
+  display: block;
+  color: #2e2e2e;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  letter-spacing: 0.05em;
+}
 .header {
   position: relative;
   z-index: 500;
