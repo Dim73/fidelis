@@ -14,6 +14,7 @@ function shipmentCalc() {
         curRegion: -1,
         curTown: -1,
         shipmentData: {},
+        inProccess: false,
         getHtmlTownList : function(callback) {
             $.ajax({
                 url: pathToAjax + 'town.html',
@@ -24,6 +25,12 @@ function shipmentCalc() {
                 success: function (data, status, xhr) {
                     model.optionsHtml = data;
                     callback();
+                },
+                beforeSend: function(xhr,setting) {
+                    controller.ajaxProccess(true);
+                },
+                complete:function(xhr,status) {
+                    controller.ajaxProccess(false);
                 }
             });
         },
@@ -37,6 +44,12 @@ function shipmentCalc() {
                 success: function(data,status,xhr){
                     model.shipmentData = data;
                     callback();
+                },
+                beforeSend: function(xhr,setting) {
+                    controller.ajaxProccess(true);
+                },
+                complete:function(xhr,status) {
+                    controller.ajaxProccess(false);
                 }
             });
         }
@@ -45,6 +58,7 @@ function shipmentCalc() {
     var controller = {
         init: function() {
             model.type = 'spsr_regions';
+            view.init();
             viewRegion.init();
             viewTown.init();
             viewInfo.init();
@@ -60,7 +74,6 @@ function shipmentCalc() {
         },
         changeRegion: function(val) {
             model.curRegion = val;
-            console.log(val);
             if (val === '') {
                 model.optionsHtml = '';
                 model.shipmentData = {};
@@ -75,6 +88,28 @@ function shipmentCalc() {
         },
         getShipmentData: function() {
             return model.shipmentData;
+        },
+        ajaxProccess: function(status) {
+            model.inProccess = status;
+            view.render();
+        },
+        getLoadingStatus: function() {
+            return  model.inProccess;
+        }
+    };
+
+    var view = {
+        init: function() {
+            var _self = this;
+            _self.target = document.querySelector('.shipment-calculator');
+        },
+        render: function() {
+            var inProcess = controller.getLoadingStatus();
+            if (inProcess) {
+                ajxLoader.attachTo($(this.target));
+            } else {
+                ajxLoader._detach();
+            }
         }
     };
 
