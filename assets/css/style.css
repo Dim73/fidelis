@@ -5795,16 +5795,6 @@ h1 {
 .content-text {
   margin: 2px 0 20px;
 }
-.content-text .container:after {
-  clear: both;
-  content: ' ';
-  display: block;
-  font-size: 0;
-  line-height: 0;
-  visibility: hidden;
-  width: 0;
-  height: 0;
-}
 .content-text__body {
   float: right;
   width: 774px;
