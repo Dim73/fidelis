@@ -795,11 +795,21 @@
 
 //items-filter
 .itemsfilter {
-  float: left;
+  /*float: left;*/
 
-  label {
+  .itemsfilter__item {
     color: #2e2e2e;
     margin-right: 22px;
+
+    &-order {
+      float: left;
+    }
+
+    &-count {
+      float: right;
+      margin-left: 22px;
+      margin-right: 0;
+    }
   }
 
   .setcatcount {

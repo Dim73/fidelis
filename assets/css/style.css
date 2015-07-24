@@ -4929,11 +4929,19 @@ h1 {
   content: "\e608";
 }
 .itemsfilter {
-  float: left;
+  /*float: left;*/
 }
-.itemsfilter label {
+.itemsfilter .itemsfilter__item {
   color: #2e2e2e;
   margin-right: 22px;
+}
+.itemsfilter .itemsfilter__item-order {
+  float: left;
+}
+.itemsfilter .itemsfilter__item-count {
+  float: right;
+  margin-left: 22px;
+  margin-right: 0;
 }
 .itemsfilter .setcatcount {
   display: inline-block;
