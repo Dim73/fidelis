@@ -4623,8 +4623,9 @@ $(document).ready(function() {
                     slideMargin: 0,
                     controls: true,
                     pager: true,
-                    auto: false,
+                    auto: true,
                     responsive: true,
+                    pause: 5000,
                     onSliderLoad: function(currentIndex) {
                        /* var $item = $('.slider-item',this.$self).eq(currentIndex);
                         if ($item.is('.slider-item__prlx')) {
