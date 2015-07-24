@@ -45,6 +45,9 @@
             rawObj[this.filterName] = [{'0':this.state[this.filterName][0]+'-'+this.state[this.filterName][1]}];
             return rawObj;
         },
+        returnState: function() {
+
+        },
         isName: function(name) {
           return  this.filterName === name;
         },
@@ -118,6 +121,7 @@
             this.controller = controller;
             this.filterName = [];
             this.activeCheckboxes = {};
+            this.backState = [];
             this.viewInit();
         },
         addFilterName: function(name) {
@@ -137,6 +141,9 @@
         },
         getStateRaw: function() {
             return this.activeCheckboxes;
+        },
+        returnState: function(state) {
+
         },
         isName: function(name) {
             return (this.filterName.join(',').indexOf(name) > -1);
@@ -265,13 +272,20 @@
             });
             return AppUtils.concatObj(stateArr);
         },
+        returnState: function(state) {
+            this.responseData = state.filters;
+            this.components.forEach(function(component){
+                //возврат состояния каждого компонента ([активное состояние, состояние пришедшее с сервера])
+                component.returnState([state.activeComponentsState, state.filters]);
+            })
+        },
         updateFilters: function() {
             this.sendMessage('filtersChange');
         },
         getFilterRenderData: function(filter) {
             var obj = {};
             if (filter) {
-                if (filter instanceof  Array) {
+                if (filter instanceof  Array) {//проверка на массив имен, например группы чекбоксов
                     filter.forEach(function (item) {
                         this.responseData[item] && (obj[item] = this.responseData[item]);
                     }.bind(this));
@@ -284,7 +298,7 @@
         view: function() {
             this.viewFilters.init(this);
         },
-        render: function() {
+        render: function() {//рендер FiltersView
             this.viewFilters.render();
         },
         getViewData: function() {
@@ -360,6 +374,9 @@
         getState: function() {
             return this.state;
         },
+        returnState: function(state) {
+
+        },
         sendMessage: function(type) {
             this.manager.getMessage(type);
         },
@@ -416,6 +433,7 @@
         view: function() {
             this.view = {};
             this.view.container = $('.itemlist');
+            this.view.item = $('.item', this.view.container);
         },
         getPage: function() {
           return this.manager.getPage();
@@ -443,11 +461,58 @@
             pageToView = 1,
             $GoodsBlock,
             lastData = {},
+            isEndOfGoods = false,
+            isBlankState = false,
+            documentTitle = document.title,
             currentXhr = null;
+
+        var historyState = {
+            firstPopState: true,
+            init: function() {
+                setTimeout( function(){
+                    window.addEventListener('popstate', historyState.onpopstate, false);
+                },0);
+            },
+            push: function() {
+                lastData.activeComponentsState = getActiveComponentsState();
+                history.pushState( {stateData:lastData }, documentTitle, '?' + getParam());
+            },
+            onpopstate: function(e) {
+                if (!e.state && this.firstPopState) { //safari & old chrome fix
+                    this.firstPopState = false;
+                    return false;
+                }
+                if (history.state) {
+                    (timeCapsule && timeCapsule instanceof Function) && timeCapsule(history.state.stateData);
+                } else {
+                    getBlankState();
+                }
+                //var fil =  history.state == null?makeUri().join('&'):history.state.filters;
+            }
+        };
+
+        function timeCapsule(state) {
+            catalogComponents.forEach(function(component){
+                component.returnState(state);
+            });
+        }
+
+        function getActiveComponentsState() {
+            var stateArr = [];
+            catalogComponents.forEach(function(component){
+                stateArr.push(component.getState()); //{filterName: [val,val,...], filterName: ...}
+            });
+            return AppUtils.concatObj(stateArr);
+        }
+
+        function getBlankState() {
+            isBlankState = true;
+        }
 
         function init(oGoods, components) {
             viewGoods = oGoods;
             catalogComponents = components;
+            historyState.init();
             viewScroll();
         }
 
@@ -460,7 +525,11 @@
         }
 
         function getGoods() {
-            return lastData.items;
+            if (!lastData.items) {
+                isEndOfGoods = true;
+            } else {
+                return lastData.items;
+            }
         }
 
         function addToParam() {
@@ -477,9 +546,11 @@
 
         function getParam() {
             paramToPost = '';
-            catalogComponents.forEach(function(component){
-                addToParam(component.getState());
-            });
+            if (isBlankState) {
+                isBlankState = false;
+                return paramToPost;
+            }
+            addToParam(getActiveComponentsState());
             addToParam({actpage: pageToView});
             return paramToPost.substring(0, paramToPost.length - 1);
         }
@@ -488,8 +559,7 @@
             if (currentXhr && currentXhr.readyState != 4) {
                 currentXhr.abort();
             }
-            //if (!getAjaxStatus()) {
-                this.currentXhr = $.ajax('../../source/back/catalogue.html?' + getParam(), {///ajax/catalogue.html?  '../../source/back/catalogue.html?'
+            currentXhr = $.ajax('../../source/back/catalogue.html?' + getParam(), {///ajax/catalogue.html?  '../../source/back/catalogue.html?'
                     cache: false,
                     type: 'get',
                     dataType: 'json',
@@ -497,22 +567,21 @@
                         ajxLoader.attachTo($GoodsBlock);
                     },
                     success: function (data, status, xhr) {
+                        lastData = data;
                         callback(data);
                     },
                     complete: function (xhr, status) {
                         currentXhr = null;
                         ajxLoader._detach();
                     }
-                });
-            //}
+            });
         }
 
         function getAjaxStatus() {
         }
 
         function newDataIsRecived (data) {
-            pageToView = 1;
-            lastData = data;
+            historyState.push();
             sendMessage('newData', data);
             viewGoods.render();
         }
@@ -520,6 +589,8 @@
         function getMessage(type, data) {
             switch (type) {
                 case 'filtersChange':
+                    pageToView = 1;
+                    isEndOfGoods = false;
                     sendFilters(newDataIsRecived);
                     break;
             }
@@ -542,16 +613,16 @@
             });
 
             $(window).scroll(function(){
-                if (viewMode === 'all' && !currentXhr) {
+                if (viewMode === 'all' && !currentXhr && !isEndOfGoods) {
                     var blockTop = $GoodsBlock.offset().top,
                         blockHeight = $GoodsBlock.height(),
                         winScroll = $(window).scrollTop();
 
-                    if (winScroll + winHeight > (blockTop + blockHeight)*.9) {
+                    if (winScroll + winHeight > (blockTop + blockHeight)*1) {
                         pageToView++;
                         sendFilters(viewGoods.render.bind(viewGoods));
                     }
-                } else  if (viewMode !== 'all') {
+                } else  if (viewMode !== 'all' && !isEndOfGoods) {
                     pageToView = 1;
                 }
             });
