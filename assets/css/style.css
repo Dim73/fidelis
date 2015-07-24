@@ -4329,7 +4329,7 @@ h1 {
   padding-top: 14px;
   font-size: 0;
 }
-.catalogue .container .left .block .square_sizes label {
+.catalogue .container .left .block .square_sizes li {
   display: inline-block;
   vertical-align: top;
   width: 30px;
@@ -4341,6 +4341,10 @@ h1 {
   cursor: pointer;
   font-size: 12px;
   margin: 0 8px 8px 0;
+}
+.catalogue .container .left .block .square_sizes li label {
+  display: block;
+  cursor: pointer;
 }
 .catalogue .container .left .block .square_sizes span {
   -webkit-transition: color 0.3s 0s ease-in-out;
@@ -4931,9 +4935,10 @@ h1 {
 .itemsfilter {
   float: left;
 }
-.itemsfilter label {
+.itemsfilter__item {
   color: #2e2e2e;
   margin-right: 22px;
+  display: inline-block;
 }
 .itemsfilter .setcatcount {
   display: inline-block;

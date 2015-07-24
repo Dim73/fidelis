@@ -1,417 +1,578 @@
-$(document).ready(function() {
-    var filter = $('#itemsfilterresult');
-    var filters = {};
-    var viewed = 0;
-    var total = 0;
-    var requeststatus=false;
-    var $costSlider = $("#price-slider");
-    //filter.html('');
-    //right toggle
-    /*$('.left .block .rheader a').click(function(e){
-     e.preventDefault();
-     var par = $(this);
-     $(this).parent('.rheader').parent('.block').children('.list').slideToggle(300,function(){
-     if($(this).css('display')=='none')
-     par.html('<img src="/images/toggle_btnr.png">'); else
-     par.html('<img src="/images/toggle_btn.png">');
-     });
-     });
-     //right checkboxes
-     $('.left .block .scrollbox label, .left .block .square_sizes label').click(function(e){
-     var th = $(this);
-     var chbox = th.children('input[type=checkbox]:checked').length;
-     if(chbox==1) th.addClass('checked'); else th.removeClass('checked');
-     });
-     $.each($('.left .block .scrollbox label, .left .block .square_sizes label'),function(ind,val){
-     var th = $(val);
-     var chbox = th.children('input[type=checkbox]:checked').length;
-     if(chbox==1) th.addClass('checked'); else th.removeClass('checked');
-     });*/
+(function($){
 
-    //right cost slider
-    $costSlider
-
-        .slider({
-            min: 0,
-            max: $('#maxcost').data('max'),
-            range: true,
-            values: [0, $('#maxcost').data('max')],
-            change: function( event, ui ) {
-            },
-            slide: function( event, ui ) {
-                $('#mincost').val(ui.values[0]);
-                $('#maxcost').val(ui.values[1]);
-            }
-        })
-        .slider("float");
-
-    /*$('.left .cost .slider').slider({
-     orientation: "horizontal",
-     range: true,
-     min: 0,//parseInt($('#mincost').attr('data-min')),
-     max: parseInt($('#maxcost').attr('data-max')),
-     step: 1,
-     values: [ *//*parseInt($('#mincost').attr('data-min'))*//*0, parseInt($('#maxcost').attr('data-max')) ],
-     slide: function( event, ui ) {
-     $('#mincost').val(ui.values[0]);
-     $('#maxcost').val(ui.values[1]);
-     }});*/
-    if($('#mincost').val()!='' && $('#maxcost').val()!='')
-        $costSlider.slider( "option", "values", [ parseInt($('#mincost').val()), parseInt($('#maxcost').val())]);
-
-    function filtersidebars(ind,val) {
-        if (val.length == 0) {
-            $('input[data-filter='+ind+']:not(:checked)').closest('li').hide();
-
-        } else {
-
-            $.each($('input[data-filter='+ind+']'),function(ind2,val2) {
-
-                if($.inArray($(val2).data('value'),val) > -1)
-                    $(val2).closest('li').show(); else
-                    $(val2).closest('li').hide()
-            });
-            $('.left .nano-scroll').nanoScroller();
-        }
-        //alert(ind+' '+val);
-        //Hide clear lists
-        /*Example
-         *$('tr').filter(function() {
-         return $(this).css('display') !== 'none';
-         }).length;*/
-    }
-
-    function filterappend(html) {
-        var t = $(html);
-        //update top panel filter events
-        if(t.hasClass('filter_item')) {
-            t.on('click',function (e) {
-                e.preventDefault();
-//        var filt = $(this).parent('.filter_item');
-                var type = t.data('filter');
-                var value =  t.data('value');
-                switch (type) {
-                    case 'type':
-                    case 'style':
-                    case 'collection':
-                    case 'brand':
-                    case 'insert':
-                    case 'cover':
-                    case 'metals':
-                    case 'size':         //////????
-                        $('.left input[type=checkbox][data-filter=' + type + '][data-value="' + value + '"]').prop('checked',false).trigger('change');
-                        t.remove();
-                        break;
-                    case 'cost':
-                        $costSlider.slider("option", "min", null);
-                        $costSlider.slider("option", "values", [null,null]);
-                        $('#mincost').val('');
-                        $('#maxcost').val('');
-                        t.remove();
-                        break;
+    var AppUtils = { //вспомогашки
+        hasClass: function(el, cls) {
+            return el.className && new RegExp("(\\s|^)" + cls + "(\\s|$)").test(el.className);
+        },
+        uniqueArr: function(arr) {
+            var prevItem;
+            return arr.filter(function(item, index){
+                if (prevItem && prevItem === item) {
+                    return;
                 }
-            });
-        }
-
-        filter.append(t);
-    }
-
-    var documentTitle = document.title;
-
-    /* History.Adapter.bind(window,'statechange',function(){ // Note: We are using statechange instead of popstate
-     var curState = History.getState(); // Note: We are using History.getState() instead of event.state
-     makefilter(curState.data.filters);
-     });*/
-
-    var $itemList = $('.itemlist');
-    var listOffsetTop = $itemList.offset().top - $('.header-menu.fixed').height() - 100;
-
-    var scrollY;
-
-    $(window).on('scroll',function(){
-        scrollY = $(this).scrollTop();
-    });
-
-    function noScrollOnce(event) {
-        event.preventDefault();
-        document.removeEventListener('scroll', noScrollOnce);
-    }
-
-    function updatePlugins() {
-        $('.left .nano-scroll').nanoScroller();
-        $('.left .folding').trigger('update');
-    }
-
-    setTimeout( function(){
-        window.addEventListener('popstate', onpopstate, false);
-    },0);
-
-    var firstPopState = true;
-   function onpopstate ( e ) {
-        if (!e.state && firstPopState) { //safari & old chrome fix
-            firstPopState = false;
-            return;
-        }
-        var fil =  history.state == null?makeUri().join('&'):history.state.filters;
-        makefilter(fil);
-    }
-
-    function makeUri() {
-        var f =[];
-        $.each(filters,function(ind,val){if(val!='') f.push(ind+'='+val);});
-        if(filters['items_per_page']=='all'){
-            viewed = $('.itemlist .item').length;
-            f.push('actpage='+((viewed/12)+1));
-        } else {
-            if($('.pageswitch .active').length>0) f.push('actpage='+$($('.pageswitch .active').get(0)).text());
-        }
-        return f;
-    }
-
-    function changeState() {
-        var f = makeUri();
-        var uri  = f.join('&');
-        //History.pushState({filters:uri }, documentTitle, '?'+uri);
-        history.pushState( {filters:uri }, documentTitle, '?'+uri);
-        makefilter(uri);
-    }
-
-    function makefilter(f, notScrollToList){
-        //begin request
-        var uri  = f || '';
-        //update static links ^_^
-        $('.left .list ul a').attr('href',window.location.pathname+(uri?'?'+uri:''));
-        if (!notScrollToList) {
-            $('html, body').animate({
-                scrollTop: $('.itemlist').offset().top - $('.header-menu.fixed').height() - 100
+                prevItem = item;
+                return item;
             })
-        }
-        if (!requeststatus) {
-            firstPopState = false;
-            $.ajax('../../source/back/catalogue.html?'+uri,{///ajax/catalogue.html?  '../../source/back/catalogue.html?'
-                cache:false,
-                type:'get',
-                dataType:'json',
-                beforeSend: function(xhr,setting) {
-                    requeststatus = true;
-                    ajxLoader.attachTo($('.right'));
-                },
-                success: function(data,status,xhr) {
-                    if(filters['items_per_page']!='all'){
-                        $('.itemlist').html('');
-                    }
-
-                    //if (data['debug']!==null) alert(data['debug']);
-                    $.each(data['filters'],filtersidebars);
-                    $('.itemlist').append(data['items']);
-                    $('.pageswitch').html(data['pageswitch']);
-                    $costSlider.slider( "option", "min",  /*parseInt(data['cost']['min'])*/0 );
-                    $costSlider.slider( "option", "max", /*parseInt(data['cost']['max'])*/ parseInt($('#maxcost').attr('data-max')) );
-                    updatePlugins();
-                    viewed = $('.itemlist .item').length;
-                    total = data['count'];
-//         InitAddBasket();
-
-                },
-                complete:function(xhr,status) {
-                    requeststatus = false;
-                    ajxLoader._detach();
+        },
+        concatObj: function(arr) {
+            var obj = {};
+            arr.forEach(function(item){
+                for (var i in item) {
+                    obj[i] = item[i];
                 }
             });
+            return obj;
         }
-        //no ajax version
-        //window.location.href = window.location.protocol+'//'+window.location.hostname+window.location.pathname+'?'+f.join('&');
-    }
-    //hard
-    var urlPop = location.pathname.split("/");
-    if ( urlPop.length > 1 && urlPop[1] == "popular_categ" )
-    {
-        var tmpStr = urlPop[2];
-        filters['popular_categ'] = tmpStr.replace('.html', '');
-    }
-
-    filters['items_sort_order']=$('.setcatorder').val();
-    filters['items_per_page']=$('.setcatcount').val();
-    filters['collection']=[];filters['brand']=[];filters['style']=[];filters['type']=[]; //single checks
-    filters['cover']=[];filters['insert']=[]; //multi checks
-    filters['size']=[]; //alternate multi checks
-    filters['metals']=[];
+    };
 
 
+    /**** Filter components ****/
+    var PriceFilter = { //фильтр цены
+        init: function(controller) {
+            this.controller = controller;
+            this.filterName = 'cost';
+            this.state = {};
+            this.defaultRange = [];
+            this.viewInit();
+            this.lockChange = false;
+        },
+        getState: function() {
+          return  this.state;
+        },
+        getStateRaw: function() {
+            if (!this.state[this.filterName]) return;
+            var rawObj = {};
+            rawObj[this.filterName] = [{'0':this.state[this.filterName][0]+'-'+this.state[this.filterName][1]}];
+            return rawObj;
+        },
+        isName: function(name) {
+          return  this.filterName === name;
+        },
+        updateState: function(data) {
+            this.state[this.filterName] = data;
+            this.controller.updateFilters();
+        },
+        removeFilter: function(data) {
+            this.state = {};
+            this.render();
+        },
+        resolveConflict: function(priceRange) { //проверка и исправление на - текущая выборка цены выходит за границы новых доступных цен
+            var currentRange = this.state[this.filterName];
+            if (currentRange && priceRange) {
+                this.state[this.filterName][0] = (currentRange[0] < priceRange[0] || currentRange[0] > priceRange[1]) ? priceRange[0]:currentRange[0];
+                this.state[this.filterName][1] = (currentRange[1] > priceRange[1]) ? priceRange[1]:currentRange[1];
+                if (this.state[this.filterName][0] === priceRange[0] &&  this.state[this.filterName][1] === priceRange[1]) {
+                    this.state = {};
+                    return priceRange;
+                }
+                return this.state[this.filterName];
+            } else {
+                return priceRange;
+            }
 
-    if (typeof avfilters == 'object' ) $.each(avfilters,filtersidebars);
-    updatePlugins();
+        },
+        setLock: function(flag) {
+            this.lockChange = flag;
+        },
+        isLock: function() {
+          return this.lockChange;
+        },
+        getRangeData: function() {
+            return this.controller.getFilterRenderData(this.filterName);
+        },
+        viewInit: function() {
+            this.view = {};
+            this.view.priceFilter = $("#price-slider");
+            this.view.priceFilter
+                .slider({
+                    min: 0,
+                    max: $('#maxcost').data('max'),
+                    range: true,
+                    values: [0, $('#maxcost').data('max')],
+                    change: function( event, ui ) {
+                    },
+                    slide: function( event, ui ) {
+                        $('#mincost').val(ui.values[0]);
+                        $('#maxcost').val(ui.values[1]);
+                    }
+                }).slider("float");
 
-    if(window.location.pathname.indexOf('/collection/sale/')>-1) filters['isSale']=true;
-    if(window.location.search.indexOf('isSale=')>-1) filters['isSale']=true;
+            this.view.priceFilter.on( "slidechange", function( event, ui ) {
+                if (!this.isLock()) {
+                    this.updateState([ui.values[0],ui.values[1]]);
+                }
+            }.bind(this));
+        },
+        render: function() {
+            var priceData = this.getRangeData();
+            var currentValue = this.resolveConflict(priceData);
+            this.setLock(true);
+            (priceData && priceData instanceof Array)
+                && this.view.priceFilter.slider("option","values",[currentValue[0],currentValue[1]]).slider("option", "min", priceData[0]).slider("option", "max", priceData[1]).slider("pips").slider("float");
+            this.setLock(false);
+        }
+    };
 
-    var extra = $('input[name=extra]').val();
-    if (extra != '') filters['extra']=extra;
+    var CheckboxFilter = { //фильтры типа чекбокс (коллекции,...,размеры)
+        init: function(controller) {
+            this.controller = controller;
+            this.filterName = [];
+            this.activeCheckboxes = {};
+            this.viewInit();
+        },
+        addFilterName: function(name) {
+            this.filterName.push(name);
+        },
+        getState: function() {
+            var stateObj = {};
+            for (var group in this.activeCheckboxes) {
+                stateObj[group] = [];
+                this.activeCheckboxes[group].forEach(function(item){
+                    for (var val in item) {
+                        stateObj[group].push(val);
+                    }
+                })
+            }
+            return stateObj;
+        },
+        getStateRaw: function() {
+            return this.activeCheckboxes;
+        },
+        isName: function(name) {
+            return (this.filterName.join(',').indexOf(name) > -1);
+        },
+        removeFilter: function(data){
+            this.renderCheckboxes(data);
+            this.removeActiveCheckbox(data);
+        },
+        updateActiveCheckbox: function(data) {
+            if (data.checked) {
+                this.addActiveCheckbox(data);
+            } else {
+                this.removeActiveCheckbox(data);
+            }
+            this.controller.updateFilters();
+        },
+        addActiveCheckbox: function(data) {
+            if (!this.activeCheckboxes[data.type]) {
+                this.activeCheckboxes[data.type] = [];
+            }
+            var objValue = {};
+            objValue[data.value] = data.label;
+            this.activeCheckboxes[data.type].push(objValue);
+        },
+        removeActiveCheckbox: function(data) {
+            var indexToDelete;
+            var typeFilter = this.activeCheckboxes[data.type];
+            for (var i = typeFilter.length - 1 ; i >= 0; i--) {
+                if (data.value in typeFilter[i]) {
+                    indexToDelete = i;
+                    break;
+                }
+            }
+            typeFilter.splice(indexToDelete, 1);
+            !typeFilter.length && delete this.activeCheckboxes[data.type];
+        },
+        getAvailableCheckboxes: function() {
+            return this.controller.getFilterRenderData(this.filterName)
+        },
+        viewInit: function() {
+            var self = this;
+            this.view = {};
+            this.view.checkoxFilters = $('.block .list input[type=checkbox], .square_sizes .squaresize');
 
+            this.view.checkoxFilters.each(function(){
+                var filterName = $(this).data('filter');
+                filterName && self.addFilterName(filterName);
+            });
+            this.filterName = AppUtils.uniqueArr(this.filterName);
 
-    viewed = $('.itemlist .item').length;
-    total = parseInt($('.itemlist').attr('data-count'));
+            this.view.checkoxFilters.on('change', function(event){
+                var $item = $(this);
+                self.updateActiveCheckbox({type: $item.data('filter'),value: parseInt($item.data('value')), checked: $item.is(':checked'), label: $item.closest('label').text()});
+            });
+        },
+        render: function() { //рендер доступных чекбоксов
+            var $li;
+            var filtersData = this.getAvailableCheckboxes();
 
-    //add data-attrs to adding divs
-    $.each($('#fcollections input[type=checkbox]:checked'),function(ind,val){filters['collection'].push($(val).attr('data-value'));
-        filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'</div>');});
+            for (var filter in filtersData) {
+                this.view.checkoxFilters.filter('[data-filter=' + filter + ']').each(function () {
+                    var $item = $(this);
+                    $li = $item.closest('li');
+                    if (filtersData[filter].indexOf($item.data('value')) > -1) {
+                        $li.show();
+                    } else {
+                        $li.hide();
+                    }
+                });
+            }
+            $('.block .nano-scroll').nanoScroller();
+            $('.block.folding').trigger('update');
+        },
+        renderCheckboxes: function(data) { //рендер состояния чекбоксов
+            if (data && data instanceof Object) {
+                this.view.checkoxFilters.filter('[data-filter='+data.type+'][data-value='+data.value+']').prop('checked',false).trigger('refresh');
+            }/* else {
+                for (var i in this.activeFilters) {
+                    this.checkoxFilters.filter('[data-filter=' + i + ']').each(function () {
+                        $(this).prop('checked', false).trigger('refresh');
+                    });
+                }
+            }*/
+        }
+    };
 
-    $.each($('#fbrands input[type=checkbox]:checked'),function(ind,val){filters['brand'].push($(val).attr('data-value'));
-        filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'</div>');});
+    /**** Filters controller ****/
+    var Filters = { //контроллер фильтров
+        init: function(manager, viewFilters) {
+            this.manager = manager;
+            this.components = [];
+            this.viewFilters = viewFilters;
+            this.activeFilters = {};
+            this.responseData = {};
+            this.view();
+        },
+        addComponent: function(component) {
+            this.components.push(component);
+            component.init(this);
+        },
+        getComponentByName: function(name) {
+            var findedComponent;
+            this.components.forEach(function(component){
+                if (component.isName(name)) {
+                    findedComponent = component;
+                }
+            });
+            return findedComponent;
+        },
+        sendMessage: function(type) {
+            this.manager.getMessage(type);
+        },
+        getMessage: function(type, data) {
+          switch (type) {
+              case 'newData' :
+                  this.responseData = data.filters;
+                  this.renderComponents();
+                  this.render();
+                  break;
+          }
+        },
+        getState: function() {
+            var stateArr = [];
+            this.components.forEach(function(component){
+                stateArr.push(component.getState());
+            });
+            return AppUtils.concatObj(stateArr);
+        },
+        updateFilters: function() {
+            this.sendMessage('filtersChange');
+        },
+        getFilterRenderData: function(filter) {
+            var obj = {};
+            if (filter) {
+                if (filter instanceof  Array) {
+                    filter.forEach(function (item) {
+                        this.responseData[item] && (obj[item] = this.responseData[item]);
+                    }.bind(this));
+                    return obj;
+                } else {
+                    return this.responseData[filter] ? this.responseData[filter] : undefined;
+                }
+            }
+        },
+        view: function() {
+            this.viewFilters.init(this);
+        },
+        render: function() {
+            this.viewFilters.render();
+        },
+        getViewData: function() {
+            var viewData = [];
+            this.components.forEach(function(component){
+                viewData.push(component.getStateRaw());
+            });
+            return AppUtils.concatObj(viewData);
+        },
+        renderComponents: function() {
+            this.components.forEach(function(component){
+                component.render();
+            });
+        },
+        removeActiveFilter: function(data){ //filterName, value
+            this.getComponentByName(data.type).removeFilter(data);
+            this.updateFilters();
+        }
+    };
 
-    //filterappend('<div class="filter_item">'+$(val).parent('label').text()+'</div>');});
+    var FiltersView = { //линки активных фильтров
+        init: function(controller) {
+            this.controller = controller;
+            this.view();
+        },
+        deleteLink: function(data) {
+            if (data instanceof Object) {
+                this.controller.removeActiveFilter(data);
+            }
+        },
+        view: function() {
+            this.self = document.getElementById('itemsfilterresult');
+            this.$self = $(this.self);
+            this.linkClass = 'filter_item';
+            this.tpl  = '<div class="'+this.linkClass+'" data-filter="{type}" data-value="{value}">{lbl}</div>';
 
-    $.each($('#fstyles input[type=checkbox]:checked'),function(ind,val){filters['style'].push($(val).attr('data-value'));
-        //filterappend('<div class="filter_item">'+$(val).parent('label').text()+'</div>');});
-        filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'</div>');});
-    $.each($('#ftypes input[type=checkbox]:checked'),function(ind,val){filters['type'].push($(val).attr('data-value'));
-        //filterappend('<div class="filter_item">'+$(val).parent('label').text()+'</div>');});
-        filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'</div>');});
-    $.each($('#finserts input[type=checkbox]:checked'),function(ind,val){filters['insert'].push($(val).attr('data-value'));
-        //filterappend('<div class="filter_item">'+$(val).parent('label').text()+'</div>');});
-        filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'</div>');});
-    $.each($('#fcovers input[type=checkbox]:checked'),function(ind,val){filters['cover'].push($(val).attr('data-value'));
-        //filterappend('<div class="filter_item">'+$(val).parent('label').text()+'</div>');});
-        filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'</div>');});
-    $.each($('#fmetals input[type=checkbox]:checked'),function(ind,val){filters['metals'].push($(val).attr('data-value'));
-        filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'</div>');});
-    $.each($('#fsizes input[type=checkbox]:checked'),function(ind,val){filters['size'].push($(val).attr('data-value'));
-        filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'</div>');});
+            this.self.addEventListener('click',function(event){
+                var elData = event.target.dataset;
+                AppUtils.hasClass(event.target, this.linkClass) && this.deleteLink({type: elData.filter, value: elData.value});
+            }.bind(this), false);
+        },
+        renderTpl: function(data) {
+            var replaceTpl = this.tpl;
+            for (var i in data) {
+                replaceTpl = replaceTpl.replace('{'+i+'}',data[i]);
+            }
+            return replaceTpl;
+        },
+        render: function() {
+            var filters = this.controller.getViewData(),//{filterName: [{value:label},...],filterName: [...]}
+                filtersHtml = '';
 
-    if($('#ftypes .selected').length==1) filters['type'].push($('#ftypes .selected').attr('data-value'));
-    if($('#fcollections .selected').length==1) filters['collection'].push($('#fcollections .selected').attr('data-value'));
-    if($('#fbrands .selected').length==1) filters['brand'].push($('#fbrands .selected').attr('data-value'));
-    if($('#fstyles .selected').length==1) filters['style'].push($('#fstyles .selected').attr('data-value'));
-    if($('#finserts .selected').length==1) filters['insert'].push($('#finserts .selected').attr('data-value'));
-    if($('#fcovers .selected').length==1) filters['cover'].push($('#fcovers .selected').attr('data-value'));
-    if($('#fsizes .selected').length==1) filters['size'].push($('#fsizes .selected').attr('data-value'));
-    if($('#fmetals .selected').length==1) filters['metals'].push($('#fmetals .selected').attr('data-value'));
+            for (var filter in filters) {
+                filters[filter].forEach(function(values){
+                    for (var value in values) {
+                        filtersHtml += this.renderTpl({type: filter, value: value, lbl: values[value]});
+                    }
+                }.bind(this));
 
-    /*filterappend('<div class="clear"></div>');*/
+            }
+            this.$self.html(filtersHtml);
+        }
+    };
 
-    $(window).scroll(function() {
-        if(filters['items_per_page']=='all'){
-            //here will be additional load
-            if (!requeststatus) {
-                if (viewed<total) {
+    /*** sort options ***/
+    var ShowOptions = { //показать по, сортировать по и пагинация
+        init: function(manager) {
+            this.manager = manager;
+            this.state = {};
+            this.responseData = {};
+            this.view();
+        },
+        getState: function() {
+            return this.state;
+        },
+        sendMessage: function(type) {
+            this.manager.getMessage(type);
+        },
+        getMessage: function(type, data) {
+            switch (type) {
+                case 'newData' :
+                    this.responseData = data.pageswitch;
+                    this.render();
+                    break;
+            }
+        },
+        setState: function(data, isUpdate) {
+            this.state[data.type] = data.value;
+            this.setViewMode(data);
+            isUpdate && this.sendMessage('filtersChange');
+        },
+        setViewMode: function(data) {
+            if (data.type === 'items_per_page')
+                this.manager.setViewMode(data.value);
+        },
+        getPager: function() {
+            return this.responseData;
+        },
+        view: function() {
+            var self = this;
+            this.view = {};
+            this.view.pager = $('.pageswitch');
+            this.view.select = $('.itemsfilter__item select');
+            this.view.select.each(function(){
+                var $select = $(this);
+                self.setState({type: $select.data('type'), value: $select.val()});
+            });
+            this.view.select.on('change', function(){
+                var $select = $(this);
+                self.setState({type: $select.data('type'), value: $select.val()}, true);
+            });
+        },
+        render: function() {
+            if (this.getState()["items_per_page"] === 'all') {
+                this.view.pager.hide();
+            } else {
+                this.view.pager.show();
+                var pager = this.getPager();
+                this.view.pager.html(pager);
+            }
+        }
+    };
 
-                    if (        (
-                            $(window).scrollTop()+
-                            $(window).height()+
-                            $('.itemlist .item').height()
-                        )>(
-                            $('.itemlist').offset().top+
-                            $('.itemlist').height()
-                        )) {
-                        var f = makeUri();
-                        var uri  = f.join('&');
-                        makefilter(uri, true);
-                        //console.log( (wtop+wheight) +' '+(ilisttop+ilisth));
+    var Goods = {
+        init: function(manager) {
+            this.manager = manager;
+            this.view();
+        },
+        view: function() {
+            this.view = {};
+            this.view.container = $('.itemlist');
+        },
+        getPage: function() {
+          return this.manager.getPage();
+        },
+        getGoods: function() {
+            return this.manager.getGoods();
+        },
+        render: function() {
+            var page = this.getPage(),
+                html = this.getGoods();
+            if (page > 1) {
+                this.view.container.append(html);
+            } else {
+                this.view.container.html(html);
+            }
+        }
+    };
+
+    /*** Catalog manager ***/
+    var CatalogManager = (function() {//контроллер всего каталога
+        var catalogComponents = [],
+            paramToPost = '',
+            viewMode = '',
+            viewGoods = {},
+            pageToView = 1,
+            $GoodsBlock,
+            lastData = {},
+            currentXhr = null;
+
+        function init(oGoods, components) {
+            viewGoods = oGoods;
+            catalogComponents = components;
+            viewScroll();
+        }
+
+        function setViewMode(type) {
+            viewMode = type;
+        }
+
+        function getPage() {
+            return pageToView;
+        }
+
+        function getGoods() {
+            return lastData.items;
+        }
+
+        function addToParam() {
+            var params;
+            for (var i = 0, argLngt = arguments.length; i < argLngt; i++) {
+                params = arguments[i];
+                if (params instanceof Object) {
+                    for (var key in params) {
+                        paramToPost += key + '=' + (params[key] instanceof Array ? params[key].join(',') : params[key]) + '&';
                     }
                 }
             }
         }
-    });
 
-    /*$('.filter_item').click(function(e){
-     $(this).remove();
-     });*/
-
-
-    //$('.setcatcount option').click(function(e){filters['items_per_page']=$(this).val();makefilter();});
-    $('.setcatcount').change(function(e){
-        $('.itemlist').html('');
-        filters['items_per_page']=$(this).val();
-        $('.setcatcount').val($(this).val());
-        changeState();
-        //makefilter();
-
-    });
-    //$('.setcatorder option').click(function(e){filters['items_sort_order']=$(this).val();makefilter();});
-    $('.setcatorder').change(function(e){
-        $('.itemlist').html('');
-        filters['items_sort_order']=$(this).val();
-        $('.setcatorder').val($(this).val());
-        changeState();
-        //makefilter();
-    });
-
-    //sidefilters with single check
-
-    /*$('.list ul[data-seltype=check] input[type=checkbox]').change(function(e){
-     var chk = $(this);
-     var si = $.inArray(chk.attr('data-value'),filters[chk.attr('data-filter')]);
-     ///console.log(filters);
-
-     if(si==-1) {
-     filters[chk.attr('data-filter')].push(chk.attr('data-value'));
-     filterappend('<div class="filter_item" data-filter="'+chk.attr('data-filter')+'" data-value="'+chk.attr('data-value')+'">'+chk.closest('label').text()+'</div>');
-     filter.find('.clear').appendTo(filter);
-     //add deltag by click on it
-     }
-     else {
-     filter.find('div[data-filter="'+chk.attr('data-filter')+'"][data-value="'+chk.attr('data-value')+'"]').remove();
-     filters[chk.attr('data-filter')].splice(si,1);
-     }
-
-     console.log(filters);
-
-     // $('.itemlist').html('');
-     // makefilter();
-     changeState();
-     });*/
-    //sidefilters with multiple checks
-    $('.list ul input[type=checkbox], .square_sizes .squaresize').change(function(e){
-        var chk = $(this);
-        var si = $.inArray(chk.attr('data-value'),filters[chk.attr('data-filter')]);
-        if(si==-1) {
-            filters[chk.attr('data-filter')].push(chk.attr('data-value'));
-            filterappend('<div class="filter_item" data-filter="'+chk.attr('data-filter')+'" data-value="'+chk.attr('data-value')+'">'+chk.closest('label').text()+'</div>');
-            filter.find('.clear').appendTo(filter);
-            //add deltag by click on it
-        } else {
-            filter.find('div[data-filter='+chk.attr('data-filter')+'][data-value="'+chk.attr('data-value')+'"]').remove();
-            filters[chk.attr('data-filter')].splice(si,1);
+        function getParam() {
+            paramToPost = '';
+            catalogComponents.forEach(function(component){
+                addToParam(component.getState());
+            });
+            addToParam({actpage: pageToView});
+            return paramToPost.substring(0, paramToPost.length - 1);
         }
-        //var ul = chk.parent('label').parent('li').parent('ul[data-seltype=multi]'); //18_08_2014...
-        //$('.itemlist').html('');
-        //makefilter();
-        changeState();
-    });
 
-
-    $costSlider.on( "slidechange", function( event, ui ) {
-        if (ui.values[0]!=null && ui.values[1]!=null) {
-
-            filters['cost']=JSON.stringify({'min':ui.values[0],'max':ui.values[1]});
-            //filter.find('div[data-filter=cost]').remove();
-            //filterappend('<div class="filter_item" data-filter="cost" data-value="true">Цена: от '+ui.values[0]+' до '+ui.values[1]+'</div>');
-            //filter.find('.clear').appendTo(filter);
+        function sendFilters(callback) {
+            if (currentXhr && currentXhr.readyState != 4) {
+                currentXhr.abort();
+            }
+            //if (!getAjaxStatus()) {
+                this.currentXhr = $.ajax('../../source/back/catalogue.html?' + getParam(), {///ajax/catalogue.html?  '../../source/back/catalogue.html?'
+                    cache: false,
+                    type: 'get',
+                    dataType: 'json',
+                    beforeSend: function (xhr, setting) {
+                        ajxLoader.attachTo($GoodsBlock);
+                    },
+                    success: function (data, status, xhr) {
+                        callback(data);
+                    },
+                    complete: function (xhr, status) {
+                        currentXhr = null;
+                        ajxLoader._detach();
+                    }
+                });
+            //}
         }
-        /*$('.itemlist').html('');
-         makefilter();*/
-        changeState();
-    });
-    $('.block .list .cost #mincost').blur(function(){
-        var v1 = parseInt($(this).val());
-        if (v1>0) {$(this).val(v1);} else {v1=0;$(this).val('0');}
-        $(".left .cost .slider").slider( "values", 0, v1);
 
-    });
-    $('.block .list .cost #maxcost').blur(function(){
-        var v1 = parseInt($(this).val());
-        if (v1>0) {$(this).val(v1);} else {v1=0;$(this).val('0');}
-        $(".left .cost .slider").slider( "values", 1, v1);
-    });
+        function getAjaxStatus() {
+        }
 
+        function newDataIsRecived (data) {
+            pageToView = 1;
+            lastData = data;
+            sendMessage('newData', data);
+            viewGoods.render();
+        }
 
+        function getMessage(type, data) {
+            switch (type) {
+                case 'filtersChange':
+                    sendFilters(newDataIsRecived);
+                    break;
+            }
+        }
 
+        function sendMessage(message, data) {
+            for (var i in catalogComponents) {
+                if (catalogComponents[i] && catalogComponents[i].getMessage instanceof Function) {
+                    catalogComponents[i].getMessage(message, data);
+                }
+            }
+        }
 
-});
+        function viewScroll() {
+            $GoodsBlock = $('.catalogue .right');
+            var winHeight = window.innerHeight;
 
-//preload
-/*
- preloadImg=new Image();
- preloadImg.src= "/images/toggle_btnr.png";
- */
+            $(window).resize(function(){
+                winHeight = window.innerHeight;
+            });
 
+            $(window).scroll(function(){
+                if (viewMode === 'all' && !currentXhr) {
+                    var blockTop = $GoodsBlock.offset().top,
+                        blockHeight = $GoodsBlock.height(),
+                        winScroll = $(window).scrollTop();
+
+                    if (winScroll + winHeight > (blockTop + blockHeight)*.9) {
+                        pageToView++;
+                        sendFilters(viewGoods.render.bind(viewGoods));
+                    }
+                } else  if (viewMode !== 'all') {
+                    pageToView = 1;
+                }
+            });
+        }
+
+        return { //public
+            init:  init,
+            getMessage: getMessage,
+            setViewMode: setViewMode,
+            getPage: getPage,
+            getGoods: getGoods
+        }
+    })();
+
+    $(function(){
+        Filters.init(CatalogManager, FiltersView);
+        Filters.addComponent(PriceFilter);
+        Filters.addComponent(CheckboxFilter);
+        ShowOptions.init(CatalogManager);
+        Goods.init(CatalogManager);
+        CatalogManager.init(Goods, [Filters, ShowOptions]);
+    })
+
+})(jQuery);
