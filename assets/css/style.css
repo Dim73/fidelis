@@ -4308,6 +4308,15 @@ h1 {
   color: #e30c19;
   text-decoration: none;
 }
+.catalogue .container .left .block .list li.disabled {
+  opacity: .6;
+}
+.catalogue .container .left .block .list li.disabled label {
+  color: #888888;
+}
+.catalogue .container .left .block .list li.disabled label:hover {
+  text-decoration: none;
+}
 .catalogue .container .left .block .list label {
   color: #303030;
   cursor: pointer;
