@@ -27,6 +27,33 @@
 
 
     /**** Filter components ****/
+    var popularFilter = {
+        init: function(controller) {
+            this.controller = controller;
+            this.state = {};
+            this.filterName = 'popular_categ';
+
+            var urlPop = location.pathname.split("/");
+            if ( urlPop.length > 1 && urlPop[1] == "popular_categ" )
+            {
+                var tmpStr = urlPop[2];
+                this.state[this.filterName] = tmpStr.replace('.html', '');
+            }
+        },
+        getState: function() {
+            return  this.state;
+        },
+        getStateRaw: function() {
+
+        },
+        returnState: function(state) {
+
+        },
+        render: function() {
+
+        }
+    };
+
     var PriceFilter = { //фильтр цены
         init: function(controller) {
             this.controller = controller;
@@ -40,13 +67,23 @@
           return  this.state;
         },
         getStateRaw: function() {
+            console.log(this.state[this.filterName]);
             if (!this.state[this.filterName]) return;
             var rawObj = {};
             rawObj[this.filterName] = [{'0':this.state[this.filterName][0]+'-'+this.state[this.filterName][1]}];
             return rawObj;
         },
-        returnState: function() {
-
+        returnState: function(state) {
+            var isFinded = false;
+            for (var fName in state) {
+                if (this.filterName === fName) {
+                    this.state[this.filterName] = state[fName];
+                    isFinded = true;
+                }
+            }
+            if (!isFinded) {
+                this.state[this.filterName] = this.defaultRange;
+            }
         },
         isName: function(name) {
           return  this.filterName === name;
@@ -86,12 +123,14 @@
         viewInit: function() {
             this.view = {};
             this.view.priceFilter = $("#price-slider");
+            this.defaultRange = [$('#mincost').data('min'), $('#maxcost').data('max')];
+            console.log(this.defaultRange);
             this.view.priceFilter
                 .slider({
-                    min: 0,
-                    max: $('#maxcost').data('max'),
+                    min: this.defaultRange[0],
+                    max: this.defaultRange[1],
                     range: true,
-                    values: [0, $('#maxcost').data('max')],
+                    values: [this.defaultRange[0], this.defaultRange[1]],
                     change: function( event, ui ) {
                     },
                     slide: function( event, ui ) {
@@ -121,6 +160,7 @@
             this.controller = controller;
             this.filterName = [];
             this.activeCheckboxes = {};
+            this.namesCheckboxes = {};
             this.backState = [];
             this.viewInit();
         },
@@ -137,20 +177,52 @@
                     }
                 })
             }
-            return stateObj;
+            return stateObj; //{filter: [1,2,3],....}
         },
         getStateRaw: function() {
             return this.activeCheckboxes;
         },
         returnState: function(state) {
-
+            this.activeCheckboxes = {};
+            for (var fName in state) {
+                if (this.filterName.indexOf(fName) > -1) {
+                    state[fName].forEach(function(item){
+                       this.addActiveCheckbox({type: fName, value: item, label : this.getNameCheckbox({fName: fName, value : item})});
+                    }.bind(this));
+                }
+            }
+            this.renderCheckboxes();
         },
         isName: function(name) {
             return (this.filterName.join(',').indexOf(name) > -1);
         },
         removeFilter: function(data){
-            this.renderCheckboxes(data);
             this.removeActiveCheckbox(data);
+            this.renderCheckboxes();
+        },
+        addNameCheckbox: function(data) {
+            if (!this.namesCheckboxes[data.type]) {
+                this.namesCheckboxes[data.type] = [];
+            }
+            var objValue = {};
+            objValue[data.value] = data.label;
+            this.namesCheckboxes[data.type].push(objValue);
+        },
+        getNameCheckbox: function(data) {
+            var lbl = '';
+            for (var filter in this.namesCheckboxes) {
+                if (lbl) break; //finded
+                if (filter !== data.fName) continue; //next Filter name
+                this.namesCheckboxes[filter].forEach(function(values){
+                    if (lbl) return; //finded
+                    for (var value in values) {
+                        if (value === data.value) {
+                            lbl =  values[value];
+                        }
+                    }
+                });
+            }
+            return lbl;
         },
         updateActiveCheckbox: function(data) {
             if (data.checked) {
@@ -166,7 +238,7 @@
             }
             var objValue = {};
             objValue[data.value] = data.label;
-            this.activeCheckboxes[data.type].push(objValue);
+            this.activeCheckboxes[data.type].push(objValue); //{filterName: [val:lbl,val:lbl,....],....}
         },
         removeActiveCheckbox: function(data) {
             var indexToDelete;
@@ -183,14 +255,19 @@
         getAvailableCheckboxes: function() {
             return this.controller.getFilterRenderData(this.filterName)
         },
+        getActiveCheckboxes: function() {
+          return this.getState();
+        },
         viewInit: function() {
             var self = this;
             this.view = {};
             this.view.checkoxFilters = $('.block .list input[type=checkbox], .square_sizes .squaresize');
 
             this.view.checkoxFilters.each(function(){
-                var filterName = $(this).data('filter');
+                var $item = $(this);
+                var filterName = $item.data('filter');
                 filterName && self.addFilterName(filterName);
+                self.addNameCheckbox({type: filterName,value: parseInt($item.data('value')), label: $item.closest('label').text()});
             });
             this.filterName = AppUtils.uniqueArr(this.filterName);
 
@@ -217,16 +294,15 @@
             $('.block .nano-scroll').nanoScroller();
             $('.block.folding').trigger('update');
         },
-        renderCheckboxes: function(data) { //рендер состояния чекбоксов
-            if (data && data instanceof Object) {
-                this.view.checkoxFilters.filter('[data-filter='+data.type+'][data-value='+data.value+']').prop('checked',false).trigger('refresh');
-            }/* else {
-                for (var i in this.activeFilters) {
-                    this.checkoxFilters.filter('[data-filter=' + i + ']').each(function () {
-                        $(this).prop('checked', false).trigger('refresh');
-                    });
-                }
-            }*/
+        renderCheckboxes: function() { //рендер состояния чекбоксов
+            var activeCheckboxes = this.getActiveCheckboxes();
+            this.view.checkoxFilters.prop('checked',false);
+            for (var fName in activeCheckboxes) {
+                activeCheckboxes[fName].forEach(function(val){
+                    this.view.checkoxFilters.filter('[data-filter='+fName+'][data-value='+val+']').prop('checked',true);
+                }.bind(this));
+            }
+            this.view.checkoxFilters.trigger('refresh');
         }
     };
 
@@ -273,11 +349,10 @@
             return AppUtils.concatObj(stateArr);
         },
         returnState: function(state) {
-            this.responseData = state.filters;
             this.components.forEach(function(component){
-                //возврат состояния каждого компонента ([активное состояние, состояние пришедшее с сервера])
-                component.returnState([state.activeComponentsState, state.filters]);
-            })
+                //возврат состояния каждого компонента (активное состояние)
+                component.returnState(state);
+            });
         },
         updateFilters: function() {
             this.sendMessage('filtersChange');
@@ -369,13 +444,32 @@
             this.manager = manager;
             this.state = {};
             this.responseData = {};
+            this.filterName = ['items_per_page', 'items_sort_order'];
+            this.defaultValue = {};
             this.view();
         },
         getState: function() {
             return this.state;
         },
         returnState: function(state) {
-
+            var isFinded = false;
+            if (state.length) {
+                for (var fName in state) {
+                    isFinded = false;
+                    if (this.filterName.indexOf(fName) > -1) {
+                        this.setState({type: fName, value: state[fName]}, false);
+                        isFinded = true;
+                    }
+                    if (!isFinded) {
+                        this.setState({type: fName, value: this.defaultValue[fName]});
+                    }
+                }
+            } else {
+                for (fName in this.defaultValue) {
+                    this.setState({type: fName, value: this.defaultValue[fName]});
+                }
+            }
+            this.renderSelect();
         },
         sendMessage: function(type) {
             this.manager.getMessage(type);
@@ -390,6 +484,9 @@
         },
         setState: function(data, isUpdate) {
             this.state[data.type] = data.value;
+            if (!this.defaultValue[data.type]){
+                this.defaultValue[data.type] = data.value;
+            }
             this.setViewMode(data);
             isUpdate && this.sendMessage('filtersChange');
         },
@@ -422,6 +519,14 @@
                 var pager = this.getPager();
                 this.view.pager.html(pager);
             }
+        },
+        renderSelect: function() {
+            var data = this.getState();
+            for (var sName in data) {
+                console.log(sName, data[sName]);
+                this.view.select.filter('[data-type='+sName+']').val(data[sName]);
+            }
+            this.view.select.trigger('refresh');
         }
     };
 
@@ -474,19 +579,20 @@
                 },0);
             },
             push: function() {
-                lastData.activeComponentsState = getActiveComponentsState();
-                history.pushState( {stateData:lastData }, documentTitle, '?' + getParam());
+//                lastData.activeComponentsState = getActiveComponentsState();
+                console.log(getActiveComponentsState());
+                history.pushState( {stateData:getActiveComponentsState() }, documentTitle, '?' + getParam());
             },
             onpopstate: function(e) {
                 if (!e.state && this.firstPopState) { //safari & old chrome fix
                     this.firstPopState = false;
                     return false;
                 }
-                if (history.state) {
-                    (timeCapsule && timeCapsule instanceof Function) && timeCapsule(history.state.stateData);
-                } else {
-                    getBlankState();
+                if (!history.state) {
+                    isBlankState = true;
                 }
+                (timeCapsule && timeCapsule instanceof Function) && timeCapsule(history.state?history.state.stateData:{});
+
                 //var fil =  history.state == null?makeUri().join('&'):history.state.filters;
             }
         };
@@ -495,6 +601,7 @@
             catalogComponents.forEach(function(component){
                 component.returnState(state);
             });
+               getMessage('filtersChange', {back: true});
         }
 
         function getActiveComponentsState() {
@@ -506,7 +613,7 @@
         }
 
         function getBlankState() {
-            isBlankState = true;
+
         }
 
         function init(oGoods, components) {
@@ -514,6 +621,13 @@
             catalogComponents = components;
             historyState.init();
             viewScroll();
+            try  {
+                !!avfilters && newDataIsRecived({filters: avfilters});
+            } catch(e) {
+
+            }
+
+
         }
 
         function setViewMode(type) {
@@ -546,10 +660,10 @@
 
         function getParam() {
             paramToPost = '';
-            if (isBlankState) {
+           /* if (isBlankState) {
                 isBlankState = false;
                 return paramToPost;
-            }
+            }*/
             addToParam(getActiveComponentsState());
             addToParam({actpage: pageToView});
             return paramToPost.substring(0, paramToPost.length - 1);
@@ -559,7 +673,7 @@
             if (currentXhr && currentXhr.readyState != 4) {
                 currentXhr.abort();
             }
-            currentXhr = $.ajax('../../source/back/catalogue.html?' + getParam(), {///ajax/catalogue.html?  '../../source/back/catalogue.html?'
+            currentXhr = $.ajax('/ajax/catalogue.html?' + getParam(), {///ajax/catalogue.html?  '../../source/back/catalogue.html?'
                     cache: false,
                     type: 'get',
                     dataType: 'json',
@@ -580,8 +694,7 @@
         function getAjaxStatus() {
         }
 
-        function newDataIsRecived (data) {
-            historyState.push();
+        function newDataIsRecived (data, initData) {
             sendMessage('newData', data);
             viewGoods.render();
         }
@@ -592,6 +705,12 @@
                     pageToView = 1;
                     isEndOfGoods = false;
                     sendFilters(newDataIsRecived);
+                    if (data && !data.back) {
+                        historyState.push();
+                    } else {
+                        if (!data)
+                            historyState.push();
+                    }
                     break;
             }
         }
@@ -641,6 +760,7 @@
         Filters.init(CatalogManager, FiltersView);
         Filters.addComponent(PriceFilter);
         Filters.addComponent(CheckboxFilter);
+        Filters.addComponent(popularFilter);
         ShowOptions.init(CatalogManager);
         Goods.init(CatalogManager);
         CatalogManager.init(Goods, [Filters, ShowOptions]);
