@@ -25,6 +25,12 @@
         }
     };
 
+    var goodsUrl = '';
+    if(window.location.host && (/localhost/.test(window.location.host))) {
+        goodsUrl = '../../source/back/catalogue.html?';
+    } else {
+        goodsUrl = '/ajax/catalogue.html?';
+    }
 
     /**** Filter components ****/
     var popularFilter = {
@@ -39,6 +45,9 @@
                 var tmpStr = urlPop[2];
                 this.state[this.filterName] = tmpStr.replace('.html', '');
             }
+        },
+        isName: function(name) {
+            return  this.filterName === name;
         },
         getState: function() {
             return  this.state;
@@ -68,9 +77,9 @@
         },
         getStateRaw: function() {
             console.log(this.state[this.filterName]);
-            if (!this.state[this.filterName]) return;
+            if (!this.state[this.filterName] || this.state[this.filterName].join() === this.defaultRange.join()) return;
             var rawObj = {};
-            rawObj[this.filterName] = [{'0':this.state[this.filterName][0]+'-'+this.state[this.filterName][1]}];
+            rawObj[this.filterName] = [{'0':'от '+this.state[this.filterName][0]+' до '+this.state[this.filterName][1]}];
             return rawObj;
         },
         returnState: function(state) {
@@ -124,7 +133,6 @@
             this.view = {};
             this.view.priceFilter = $("#price-slider");
             this.defaultRange = [$('#mincost').data('min'), $('#maxcost').data('max')];
-            console.log(this.defaultRange);
             this.view.priceFilter
                 .slider({
                     min: this.defaultRange[0],
@@ -224,13 +232,13 @@
             }
             return lbl;
         },
-        updateActiveCheckbox: function(data) {
+        updateActiveCheckbox: function(data, isInit) {
             if (data.checked) {
                 this.addActiveCheckbox(data);
             } else {
                 this.removeActiveCheckbox(data);
             }
-            this.controller.updateFilters();
+            !isInit && this.controller.updateFilters();
         },
         addActiveCheckbox: function(data) {
             if (!this.activeCheckboxes[data.type]) {
@@ -268,6 +276,9 @@
                 var filterName = $item.data('filter');
                 filterName && self.addFilterName(filterName);
                 self.addNameCheckbox({type: filterName,value: parseInt($item.data('value')), label: $item.closest('label').text()});
+                if ($item.is(':checked') && !$item.is(':disabled')) {
+                    self.updateActiveCheckbox({type: $item.data('filter'),value: parseInt($item.data('value')), checked: $item.is(':checked'), label: $item.closest('label').text()}, true);
+                }
             });
             this.filterName = AppUtils.uniqueArr(this.filterName);
 
@@ -296,7 +307,7 @@
         },
         renderCheckboxes: function() { //рендер состояния чекбоксов
             var activeCheckboxes = this.getActiveCheckboxes();
-            this.view.checkoxFilters.prop('checked',false);
+            this.view.checkoxFilters.not(':disabled').prop('checked',false);
             for (var fName in activeCheckboxes) {
                 activeCheckboxes[fName].forEach(function(val){
                     this.view.checkoxFilters.filter('[data-filter='+fName+'][data-value='+val+']').prop('checked',true);
@@ -389,6 +400,7 @@
             });
         },
         removeActiveFilter: function(data){ //filterName, value
+            console.log(data);
             this.getComponentByName(data.type).removeFilter(data);
             this.updateFilters();
         }
@@ -426,6 +438,7 @@
             var filters = this.controller.getViewData(),//{filterName: [{value:label},...],filterName: [...]}
                 filtersHtml = '';
 
+            console.log(filters);
             for (var filter in filters) {
                 filters[filter].forEach(function(values){
                     for (var value in values) {
@@ -588,12 +601,14 @@
                     this.firstPopState = false;
                     return false;
                 }
+                historyState.isReturn();
+                //var fil =  history.state == null?makeUri().join('&'):history.state.filters;
+            },
+            isReturn: function() {
                 if (!history.state) {
                     isBlankState = true;
                 }
                 (timeCapsule && timeCapsule instanceof Function) && timeCapsule(history.state?history.state.stateData:{});
-
-                //var fil =  history.state == null?makeUri().join('&'):history.state.filters;
             }
         };
 
@@ -626,8 +641,7 @@
             } catch(e) {
 
             }
-
-
+           // historyState.isReturn();
         }
 
         function setViewMode(type) {
@@ -639,7 +653,6 @@
         }
 
         function getGoods() {
-            console.log('get goods');
             if (!lastData.items) {
                 isEndOfGoods = true;
             } else {
@@ -674,7 +687,7 @@
             if (currentXhr && currentXhr.readyState != 4) {
                 currentXhr.abort();
             }
-            currentXhr = $.ajax('/ajax/catalogue.html?' + getParam(), {///ajax/catalogue.html?  '../../source/back/catalogue.html?'
+            currentXhr = $.ajax(goodsUrl + getParam(), {///ajax/catalogue.html?  '../../source/back/catalogue.html?'
                     cache: false,
                     type: 'get',
                     dataType: 'json',
@@ -762,6 +775,7 @@
         Filters.addComponent(PriceFilter);
         Filters.addComponent(CheckboxFilter);
         Filters.addComponent(popularFilter);
+        Filters.render();
         ShowOptions.init(CatalogManager);
         Goods.init(CatalogManager);
         CatalogManager.init(Goods, [Filters, ShowOptions]);
