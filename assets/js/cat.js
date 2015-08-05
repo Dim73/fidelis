@@ -526,7 +526,7 @@
         getMessage: function(type, data) {
             switch (type) {
                 case 'newData' :
-                    this.responseData = data.pageswitch;
+                    this.responseData = data;
                     this.render();
                     break;
             }
@@ -544,7 +544,7 @@
                 this.manager.setViewMode(data.value);
         },
         getPager: function() {
-            return this.responseData;
+            return this.responseData.pageswitch;
         },
         view: function() {
             var self = this;
@@ -561,11 +561,11 @@
             });
         },
         render: function() {
-            if (this.getState()["items_per_page"] === 'all') {
+            var pager = this.getPager();
+            if (this.getState()["items_per_page"] === 'all' || pager === '') {
                 this.view.pager.hide();
             } else {
                 this.view.pager.show();
-                var pager = this.getPager();
                 this.view.pager.html(pager);
             }
         },
