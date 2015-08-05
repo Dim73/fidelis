@@ -33,6 +33,42 @@
     }
 
     /**** Filter components ****/
+    var IdentifySection = {
+        init: function(controller) {
+            this.controller = controller;
+            this.state = {};
+            this.filterName = '';
+            this.view();
+        },
+        isName: function(name) {
+            return  this.filterName === name;
+        },
+        getState: function() {
+            return  this.state;
+        },
+        getStateRaw: function() {
+
+        },
+        setName: function(name) {
+            this.filterName = name;
+        },
+        updateState: function(data) {
+            this.state[this.filterName] = data;
+        },
+        view: function() {
+            var $activeLink = $('.category-section-block .list .selected');
+            this.setName($activeLink.data('filter'));
+            this.updateState($activeLink.data('value'));
+
+        },
+        returnState: function(state) {
+
+        },
+        render: function() {
+
+        }
+    };
+
     var popularFilter = {
         init: function(controller) {
             this.controller = controller;
@@ -775,6 +811,7 @@
         Filters.addComponent(PriceFilter);
         Filters.addComponent(CheckboxFilter);
         Filters.addComponent(popularFilter);
+        Filters.addComponent(IdentifySection);
         Filters.render();
         ShowOptions.init(CatalogManager);
         Goods.init(CatalogManager);
