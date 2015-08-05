@@ -3012,12 +3012,17 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
                 url: '../../source/back/item.html',
                 cache: false,
                 type: 'post',
+                dataType: 'html',
                 data: {id: item.id},
                 success: function(data,status,xhr){
                     if (data) {
                         self.itemModalCont.html(data);
                         self.itemModalInit();
                     }
+                },
+                error: function(res,err) {
+                    console.log(res);
+                    console.log(err);
                 }
             });
         };
