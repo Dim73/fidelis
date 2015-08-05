@@ -622,7 +622,7 @@
             historyState.init();
             viewScroll();
             try  {
-                !!avfilters && newDataIsRecived({filters: avfilters});
+                !!avfilters && newDataIsRecived({filters: avfilters}, true);
             } catch(e) {
 
             }
@@ -639,6 +639,7 @@
         }
 
         function getGoods() {
+            console.log('get goods');
             if (!lastData.items) {
                 isEndOfGoods = true;
             } else {
@@ -696,7 +697,7 @@
 
         function newDataIsRecived (data, initData) {
             sendMessage('newData', data);
-            viewGoods.render();
+            !initData && viewGoods.render();
         }
 
         function getMessage(type, data) {

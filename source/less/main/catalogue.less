@@ -935,6 +935,20 @@
   float: right;
   color: #888888;
   font-size: 0;
+  line-height: 16px;
+  padding-left: 25px;
+  margin-left: 24px;
+  position: relative;
+
+  &:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0px;
+    width: 1px;
+    height: 20px;
+    background-color: #2d2d2d;
+  }
 
   a:not(.arrow) {
     display: inline-block;
