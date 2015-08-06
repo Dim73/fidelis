@@ -3016,7 +3016,9 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
                 data: {id: item.id},
                 success: function(data,status,xhr){
                     if (data) {
-                        self.itemModalCont.html(data);
+                        self.$itemCont && self.$itemCont.remove();
+                        self.$itemCont = $(data);
+                        self.itemModalCont.append(self.$itemCont);
                         self.itemModalInit();
                     }
                 },
@@ -3040,7 +3042,7 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
         };
 
         this._modalClick = function(e) {
-            if ($(e.target).closest(self.itemModalCont).length) return;
+            if ($(e.target).closest(self.itemModalCont).length && !$(e.target).is('.icon-close')) return false;
             self.modalItemToggle(false);
         };
 
