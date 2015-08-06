@@ -27,7 +27,7 @@
 
     var goodsUrl = '';
     if(window.location.host && (/localhost/.test(window.location.host))) {
-        goodsUrl = '../../source/back/catalogue.html?';
+        goodsUrl = '../../source/back/catalogue.json?';
     } else {
         goodsUrl = '/ajax/catalogue.html?';
     }
@@ -53,6 +53,7 @@
             this.filterName = name;
         },
         updateState: function(data) {
+            if (!this.filterName) return;
             this.state[this.filterName] = data;
         },
         view: function() {
@@ -496,6 +497,7 @@
             this.filterName = ['items_per_page', 'items_sort_order'];
             this.defaultValue = {};
             this.view();
+            this.render();
         },
         getState: function() {
             return this.state;
@@ -572,7 +574,6 @@
         renderSelect: function() {
             var data = this.getState();
             for (var sName in data) {
-                console.log(sName, data[sName]);
                 this.view.select.filter('[data-type='+sName+']').val(data[sName]);
             }
             this.view.select.trigger('refresh');
@@ -618,10 +619,10 @@
             isEndOfGoods = false,
             isBlankState = false,
             documentTitle = document.title,
+            firstPopState = true,
             currentXhr = null;
 
         var historyState = {
-            firstPopState: true,
             init: function() {
                 setTimeout( function(){
                     window.addEventListener('popstate', historyState.onpopstate, false);
@@ -629,12 +630,12 @@
             },
             push: function() {
 //                lastData.activeComponentsState = getActiveComponentsState();
-                console.log(getActiveComponentsState());
+//                console.log(getActiveComponentsState());
                 history.pushState( {stateData:getActiveComponentsState() }, documentTitle, '?' + getParam());
             },
             onpopstate: function(e) {
-                if (!e.state && this.firstPopState) { //safari & old chrome fix
-                    this.firstPopState = false;
+                if (!e.state && firstPopState) { //safari & old chrome fix
+                    firstPopState = false;
                     return false;
                 }
                 historyState.isReturn();
@@ -681,6 +682,7 @@
         }
 
         function setViewMode(type) {
+            console.log(type);
             viewMode = type;
         }
 
@@ -737,6 +739,10 @@
                     complete: function (xhr, status) {
                         currentXhr = null;
                         ajxLoader._detach();
+                    },
+                    error: function (xhr, status) {
+                        console.log(xhr);
+                        console.log(status);
                     }
             });
         }
