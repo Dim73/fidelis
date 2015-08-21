@@ -7,11 +7,9 @@
         uniqueArr: function(arr) {
             var prevItem;
             return arr.filter(function(item, index){
-                if (prevItem && prevItem === item) {
-                    return;
+                if (arr.indexOf(item) === index) {
+                    return item;
                 }
-                prevItem = item;
-                return item;
             })
         },
         concatObj: function(arr) {
@@ -22,6 +20,9 @@
                 }
             });
             return obj;
+        },
+        _pushEach: function(arr) {
+
         }
     };
 
@@ -100,6 +101,32 @@
         }
     };
 
+    var OtherFilter = {
+        init: function(controller) {
+            this.controller = controller;
+            this.state = {};
+            this.filterName = 'OtherFilter';
+
+            var otherVal = $('#other').val();
+            this.state[this.filterName] = otherVal?otherVal:null;
+        },
+        isName: function(name) {
+            return  this.filterName === name;
+        },
+        getState: function() {
+            return  this.state;
+        },
+        getStateRaw: function() {
+
+        },
+        returnState: function(state) {
+
+        },
+        render: function() {
+
+        }
+    };
+
     var PriceFilter = { //фильтр цены
         init: function(controller) {
             this.controller = controller;
@@ -113,7 +140,6 @@
           return  this.state;
         },
         getStateRaw: function() {
-            console.log(this.state[this.filterName]);
             if (!this.state[this.filterName] || this.state[this.filterName].join() === this.defaultRange.join()) return;
             var rawObj = {};
             rawObj[this.filterName] = [{'0':'от '+this.state[this.filterName][0]+' до '+this.state[this.filterName][1]}];
@@ -365,6 +391,9 @@
             this.view();
         },
         addComponent: function(component) {
+            /*if (component instanceof Object) {
+
+            }*/
             this.components.push(component);
             component.init(this);
         },
@@ -437,7 +466,6 @@
             });
         },
         removeActiveFilter: function(data){ //filterName, value
-            console.log(data);
             this.getComponentByName(data.type).removeFilter(data);
             this.updateFilters();
         }
@@ -475,7 +503,7 @@
             var filters = this.controller.getViewData(),//{filterName: [{value:label},...],filterName: [...]}
                 filtersHtml = '';
 
-            console.log(filters);
+            //console.log(filters);
             for (var filter in filters) {
                 filters[filter].forEach(function(values){
                     for (var value in values) {
@@ -682,7 +710,7 @@
         }
 
         function setViewMode(type) {
-            console.log(type);
+            //console.log(type);
             viewMode = type;
         }
 
@@ -700,11 +728,15 @@
 
         function addToParam() {
             var params;
+
             for (var i = 0, argLngt = arguments.length; i < argLngt; i++) {
                 params = arguments[i];
+
                 if (params instanceof Object) {
                     for (var key in params) {
-                        paramToPost += key + '=' + (params[key] instanceof Array ? params[key].join(',') : params[key]) + '&';
+                        if (params[key] !== null) {
+                            paramToPost += key + '=' + (params[key] instanceof Array ? params[key].join(',') : params[key]) + '&';
+                        }
                     }
                 }
             }
@@ -814,10 +846,12 @@
 
     $(function(){
         Filters.init(CatalogManager, FiltersView);
+
         Filters.addComponent(PriceFilter);
         Filters.addComponent(CheckboxFilter);
         Filters.addComponent(popularFilter);
         Filters.addComponent(IdentifySection);
+        Filters.addComponent(OtherFilter);
         Filters.render();
         ShowOptions.init(CatalogManager);
         Goods.init(CatalogManager);
