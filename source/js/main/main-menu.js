@@ -62,8 +62,12 @@ $(function(){
                     cache: false,
                     type: 'post',
                     data: {id: id},
+                    dataType: 'html',
                     success: function(data,status,xhr){
                         callback(id, data);
+                    },
+                    error: function(res,err) {
+                        console.log(err);
                     }
                 });
             }
