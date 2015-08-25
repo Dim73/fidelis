@@ -4859,6 +4859,9 @@ h1 {
   right: 10px;
   opacity: 0;
 }
+.itemlist_catalog {
+  width: 101%;
+}
 .itemlist_catalog .item {
   -webkit-transition: box-shadow 0.5s 0s ease-in-out, background-color 0.5s 0s ease-in-out;
   transition: box-shadow 0.5s 0s ease-in-out, background-color 0.5s 0s ease-in-out;
@@ -5891,6 +5894,7 @@ h1 {
   height: 84px;
   padding-top: 21px;
   font-size: 0;
+  white-space: nowrap;
 }
 .advantages__item {
   height: 68px;
