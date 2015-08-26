@@ -3345,7 +3345,8 @@ h1 {
 .header .main-menu__link:hover:before {
   height: 5px;
 }
-.header .main-menu__collection {
+.header .main-menu__collection,
+.header .main-menu__brand {
   position: absolute;
   z-index: 100;
   width: 100%;
@@ -3567,26 +3568,31 @@ h1 {
 .header .main-menu .goods-category__item:last-child:after {
   display: none;
 }
-.header .main-menu__collection_style .goods-category {
+.header .main-menu__collection_style .goods-category,
+.header .main-menu__collection_brand .goods-category {
   width: 770px;
   margin-left: -1px;
   padding-left: 27px;
   border-left: 1px solid #dddddd;
 }
-.header .main-menu__collection_style .goods-category__title {
+.header .main-menu__collection_style .goods-category__title,
+.header .main-menu__collection_brand .goods-category__title {
   margin-bottom: 20px;
 }
-.header .main-menu__collection_style .styles-list {
+.header .main-menu__collection_style .styles-list,
+.header .main-menu__collection_brand .styles-list {
   position: relative;
   -webkit-transition: height 0.5s 0s ease-in-out;
   transition: height 0.5s 0s ease-in-out;
 }
-.header .main-menu__collection_style .styles-list__item {
+.header .main-menu__collection_style .styles-list__item,
+.header .main-menu__collection_brand .styles-list__item {
   position: absolute;
   top: 0;
   left: 0;
 }
-.header .main-menu__collection_style .styles-list__item:after {
+.header .main-menu__collection_style .styles-list__item:after,
+.header .main-menu__collection_brand .styles-list__item:after {
   clear: both;
   content: ' ';
   display: block;
@@ -3596,22 +3602,26 @@ h1 {
   width: 0;
   height: 0;
 }
-.header .main-menu__collection_style .styles__text {
+.header .main-menu__collection_style .styles__text,
+.header .main-menu__collection_brand .styles__text {
   color: #6a6a6a;
   line-height: 21.6px;
   overflow: hidden;
 }
-.header .main-menu__collection_style .styles__text p {
+.header .main-menu__collection_style .styles__text p,
+.header .main-menu__collection_brand .styles__text p {
   margin-bottom: 20px;
 }
-.header .main-menu__collection_style .styles__img {
+.header .main-menu__collection_style .styles__img,
+.header .main-menu__collection_brand .styles__img {
   float: right;
   margin-left: 20px;
   border: 1px solid #d4d4d4;
   width: 263px;
   height: 263px;
 }
-.header .main-menu__collection_style .styles__img img {
+.header .main-menu__collection_style .styles__img img,
+.header .main-menu__collection_brand .styles__img img {
   display: block;
   width: 100%;
 }

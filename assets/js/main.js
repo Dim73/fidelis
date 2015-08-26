@@ -3910,7 +3910,7 @@ $(function(){
 
     //style submenu
 
-    (function($submenu){
+    function styleSubmenu($el) {
 
 
         var model = {
@@ -4031,13 +4031,16 @@ $(function(){
             }
         };
 
-        var _submenu = $submenu,
+        var _submenu = $el,
             _url = _submenu.data('url');
 
         _submenu.mouseleave(controller.closeAll);
 
         controller.init();
-    }($('.main-menu__collection_style')));
+    }
+
+    styleSubmenu.call(null, $('.main-menu__collection_style'));
+    styleSubmenu.call(null, $('.main-menu__collection_brand'));
 
 });
 (function($){
