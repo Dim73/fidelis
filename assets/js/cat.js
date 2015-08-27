@@ -242,7 +242,7 @@
             var stateObj = {};
             for (var group in this.activeCheckboxes) {
                 stateObj[group] = [];
-                this.activeCheckboxes[group].forEach(function(item){
+                this.activeCheckboxes[group].forEach(function (item) {
                     for (var val in item) {
                         stateObj[group].push(val);
                     }
@@ -347,7 +347,7 @@
 
             this.view.checkoxFilters.on('change', function(event){
                 var $item = $(this);
-                self.updateActiveCheckbox({type: $item.data('filter'),value: parseInt($item.data('value')), checked: $item.is(':checked'), label: $item.closest('label').text()});
+                self.updateActiveCheckbox({type: $item.data('filter'),value: $item.data('value'), checked: $item.is(':checked'), label: $item.closest('label').text()});
             });
         },
         render: function() { //рендер доступных чекбоксов
@@ -358,6 +358,7 @@
                 this.view.checkoxFilters.filter('[data-filter=' + filter + ']').each(function () {
                     var $item = $(this);
                     $li = $item.closest('li');
+                    //console.log(filtersData[filter], typeof $item.data('value'), filtersData[filter].indexOf($item.data('value')));
                     if (filtersData[filter].indexOf($item.data('value')) > -1) {
                         $li.show();
                     } else {
@@ -373,7 +374,7 @@
             this.view.checkoxFilters.not(':disabled').prop('checked',false);
             for (var fName in activeCheckboxes) {
                 activeCheckboxes[fName].forEach(function(val){
-                    this.view.checkoxFilters.filter('[data-filter='+fName+'][data-value='+val+']').prop('checked',true);
+                    this.view.checkoxFilters.filter('[data-filter='+fName+'][data-value="'+val+'"]').prop('checked',true);
                 }.bind(this));
             }
             this.view.checkoxFilters.trigger('refresh');
@@ -663,9 +664,9 @@
             },
             onpopstate: function(e) {
                 if (!e.state && firstPopState) { //safari & old chrome fix
-                    firstPopState = false;
                     return false;
                 }
+                firstPopState = false;
                 historyState.isReturn();
                 //var fil =  history.state == null?makeUri().join('&'):history.state.filters;
             },
