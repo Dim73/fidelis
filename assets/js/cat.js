@@ -358,6 +358,7 @@
                 this.view.checkoxFilters.filter('[data-filter=' + filter + ']').each(function () {
                     var $item = $(this);
                     $li = $item.closest('li');
+                    //console.log(filtersData[filter].indexOf("" + $item.data('value')));
                     //console.log(filtersData[filter], typeof $item.data('value'), filtersData[filter].indexOf($item.data('value')));
                     if (filtersData[filter].indexOf($item.data('value')) > -1) {
                         $li.show();
@@ -663,10 +664,11 @@
                 history.pushState( {stateData:getActiveComponentsState() }, documentTitle, '?' + getParam());
             },
             onpopstate: function(e) {
+                console.log(firstPopState);
                 if (!e.state && firstPopState) { //safari & old chrome fix
                     return false;
                 }
-                firstPopState = false;
+
                 historyState.isReturn();
                 //var fil =  history.state == null?makeUri().join('&'):history.state.filters;
             },
@@ -749,6 +751,7 @@
                 isBlankState = false;
                 return paramToPost;
             }*/
+            firstPopState = false;
             addToParam(getActiveComponentsState());
             addToParam({actpage: pageToView});
             return paramToPost.substring(0, paramToPost.length - 1);
