@@ -91,6 +91,7 @@
 
 		if(this.length == 0) return this;
 
+
 		// support mutltiple elements
 		if(this.length > 1){
 			this.each(function(){$(this).bxSlider(options)});
@@ -123,12 +124,15 @@
 		 */
 		var init = function(){
 			// merge user-supplied options with the defaults
+
 			slider.settings = $.extend({}, defaults, options);
 			// parse slideWidth setting
 			slider.settings.slideWidth = parseInt(slider.settings.slideWidth);
 			// store the original children
 			slider.children = el.children(slider.settings.slideSelector);
-            if (slider.children.length === 1) return;
+            if (slider.children.length === 1) {
+				slider.settings.auto = slider.settings.controls = slider.settings.pager = false;
+			}
 			// check if actual number of slides is less than minSlides / maxSlides
 			if(slider.children.length < slider.settings.minSlides) slider.settings.minSlides = slider.children.length;
 			if(slider.children.length < slider.settings.maxSlides) slider.settings.maxSlides = slider.children.length;
@@ -138,6 +142,7 @@
 			slider.active = { index: slider.settings.startSlide }
 			// store if the slider is in carousel mode (displaying / moving multiple slides)
 			slider.carousel = slider.settings.minSlides > 1 || slider.settings.maxSlides > 1;
+
 			// if carousel, force preloadImages = 'all'
 			if(slider.carousel) slider.settings.preloadImages = 'all';
 			// calculate the min / max width thresholds based on min / max number of slides
@@ -307,6 +312,7 @@
 			slider.viewport.height(getViewportHeight());
 			// make sure everything is positioned just right (same as a window resize)
 			el.redrawSlider();
+
 			// onSliderLoad callback
 			slider.settings.onSliderLoad(slider.active.index);
 			// slider has been fully initialized
@@ -1357,7 +1363,7 @@ var sliderConstructor = function(sliders) {
     var sliderConfig =
     {
         _options: {
-            minSlides: 1,
+            minSlides: 0,
             maxSlides: 1,
             responsive: false,
             infiniteLoop: true,
@@ -1390,9 +1396,9 @@ var sliderConstructor = function(sliders) {
             var self = slider;
             var restartAuto;
             var $selfSlider = (typeof self.sliderClass === 'object')?self.sliderClass:jQuery(self.sliderClass);
-            var checkLength = self.checkLength?self.checkLength:1;
+            var checkLength = self.checkLength?self.checkLength:0;
 
-            $selfSlider.each(function(){
+			$selfSlider.each(function(){
                 var $slider = jQuery(this);
                 if ($slider.find(configClass.item).length > checkLength) {
                     self.options.$self = $slider;
