@@ -20,7 +20,9 @@
         }
       }
     }
+    .basket-empty {
 
+    }
     &__icon {
       display: inline-block;
       position: relative;
@@ -257,8 +259,16 @@
     }
   }
 
+  &-empty {
+    display: none;
+    text-align: center;
+    height: 30px;
+    line-height: 40px;
+  }
+
   //order
   &_order {
+    display: none;
     margin-bottom: 60px;
 
     .basket-item {

@@ -4001,7 +4001,14 @@ h1 {
   color: #e30c19;
   font-size: 17px;
 }
+.basket-empty {
+  display: none;
+  text-align: center;
+  height: 30px;
+  line-height: 40px;
+}
 .basket_order {
+  display: none;
   margin-bottom: 60px;
 }
 .basket_order .basket-item {

@@ -155,6 +155,7 @@
 
         this.loadItems = function() {
           self.getItem(function(data){
+              self.toggleBasket();
               for (var i in data) {
                   self.addToBasket(data[i]);
               }
@@ -199,6 +200,7 @@
         };
 
         this.addToBasket = function(data, isBuy) {
+            self.toggleBasket();
             if (isBuy && !IS_MOBILE) {
                 data.isBuy = true
             }
@@ -206,6 +208,21 @@
             self.updateBasket();
             if (isBuy && !IS_MOBILE) {
                 self.$topList.trigger('open');
+            }
+        };
+
+        this.toggleBasket = function(flag,callback) {
+            if (flag) {
+                this.isEmpty = true;
+                self.$step.fadeOut(500,function(){
+                    self.$step.remove();
+                    self.$emptyBasket.fadeIn(300);
+                });
+                !self.$step.length && self.$emptyBasket.fadeIn(300);
+            } else {
+                this.isEmpty = false;
+                self.$emptyBasket.hide();
+                self.$self.show();
             }
         };
 
@@ -233,6 +250,9 @@
                 data: {id : id},
                 success: function(data,status,xhr){
                     typeof callback == 'function' && callback(data);
+                },
+                error: function(d,msg) {
+                    self.toggleBasket(true);
                 }
             });
         };
@@ -295,6 +315,7 @@
 
         this.updateCount = function() {
             self.$topCount.text(items.length);
+            !items.length && self.toggleBasket(true);
         };
 
         this.modalItem = function(item) {
@@ -408,7 +429,8 @@
         self.$couponFormSubmit = $('.btn-submit', self.$couponForm);
         self.itemModal = $('.ajxItemModal');
         self.itemModalCont = $('.ajxItemModal__inner');
-
+        self.$emptyBasket = $('.basket-empty');
+        self.$step = $('.order-step');
         Mustache.parse(self.tplItem);
         Mustache.parse(self.tplSale);
 

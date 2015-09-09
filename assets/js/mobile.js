@@ -2870,6 +2870,7 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
 
         this.loadItems = function() {
           self.getItem(function(data){
+              self.toggleBasket();
               for (var i in data) {
                   self.addToBasket(data[i]);
               }
@@ -2914,6 +2915,7 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
         };
 
         this.addToBasket = function(data, isBuy) {
+            self.toggleBasket();
             if (isBuy && !IS_MOBILE) {
                 data.isBuy = true
             }
@@ -2921,6 +2923,21 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
             self.updateBasket();
             if (isBuy && !IS_MOBILE) {
                 self.$topList.trigger('open');
+            }
+        };
+
+        this.toggleBasket = function(flag,callback) {
+            if (flag) {
+                this.isEmpty = true;
+                self.$step.fadeOut(500,function(){
+                    self.$step.remove();
+                    self.$emptyBasket.fadeIn(300);
+                });
+                !self.$step.length && self.$emptyBasket.fadeIn(300);
+            } else {
+                this.isEmpty = false;
+                self.$emptyBasket.hide();
+                self.$self.show();
             }
         };
 
@@ -2948,6 +2965,9 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
                 data: {id : id},
                 success: function(data,status,xhr){
                     typeof callback == 'function' && callback(data);
+                },
+                error: function(d,msg) {
+                    self.toggleBasket(true);
                 }
             });
         };
@@ -3010,6 +3030,7 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
 
         this.updateCount = function() {
             self.$topCount.text(items.length);
+            !items.length && self.toggleBasket(true);
         };
 
         this.modalItem = function(item) {
@@ -3123,7 +3144,8 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
         self.$couponFormSubmit = $('.btn-submit', self.$couponForm);
         self.itemModal = $('.ajxItemModal');
         self.itemModalCont = $('.ajxItemModal__inner');
-
+        self.$emptyBasket = $('.basket-empty');
+        self.$step = $('.order-step');
         Mustache.parse(self.tplItem);
         Mustache.parse(self.tplSale);
 
