@@ -428,6 +428,7 @@
             return AppUtils.concatObj(stateArr);
         },
         returnState: function(state) {
+            if (state === undefined) return;
             this.components.forEach(function(component){
                 //возврат состояния каждого компонента (активное состояние)
                 component.returnState(state);
@@ -534,22 +535,23 @@
         },
         returnState: function(state) {
             var isFinded = false;
-            if (state.length) {
+            if (state !== undefined) {
                 for (var fName in state) {
                     isFinded = false;
                     if (this.filterName.indexOf(fName) > -1) {
                         this.setState({type: fName, value: state[fName]}, false);
                         isFinded = true;
                     }
-                    if (!isFinded) {
+                   /* if (!isFinded) {
                         this.setState({type: fName, value: this.defaultValue[fName]});
-                    }
+                    }*/
                 }
             } else {
                 for (fName in this.defaultValue) {
                     this.setState({type: fName, value: this.defaultValue[fName]});
                 }
             }
+            console.log(this.state);
             this.renderSelect();
         },
         sendMessage: function(type) {
@@ -568,6 +570,7 @@
             if (!this.defaultValue[data.type]){
                 this.defaultValue[data.type] = data.value;
             }
+            console.log(this.defaultValue);
             this.setViewMode(data);
             isUpdate && this.sendMessage('filtersChange');
         },
@@ -604,6 +607,7 @@
         renderSelect: function() {
             var data = this.getState();
             for (var sName in data) {
+                //console.log(data[sName], sName);
                 this.view.select.filter('[data-type='+sName+']').val(data[sName]);
             }
             this.view.select.trigger('refresh');
@@ -665,7 +669,7 @@
             },
             onpopstate: function(e) {
                 console.log(firstPopState);
-                if (!e.state && firstPopState) { //safari & old chrome fix
+                if (/*!e.state && */firstPopState) { //safari & old chrome fix
                     return false;
                 }
 
@@ -676,7 +680,7 @@
                 if (!history.state) {
                     isBlankState = true;
                 }
-                (timeCapsule && timeCapsule instanceof Function) && timeCapsule(history.state?history.state.stateData:{});
+                (timeCapsule && timeCapsule instanceof Function) && timeCapsule(history.state?history.state.stateData:undefined);
             }
         };
 
