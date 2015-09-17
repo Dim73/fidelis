@@ -70,6 +70,10 @@ $(document).ready(function() {
 
     $('.js-quick-order').click(function(e){
         e.preventDefault();
+        if (!window.isSizeSelect) {
+            $(this).addClass('btn_red').text('выберите размер');
+            return false;
+        }
         quickOrder.show();
     });
     /*$('select#item_size').change(function(e){

@@ -4801,6 +4801,7 @@ $(document).ready(function() {
 
             var self = {};
             self.id = itemData.id;
+            window.isSizeSelect = itemData.sizes&&itemData.sizes.length?false:true;
 
             var optionsHtml = '<option value="">размер</option>';
             for (var i in itemData.sizes) {
@@ -4828,8 +4829,12 @@ $(document).ready(function() {
                         }
                     }
                     $cost.html(cost);
+                    window.isSizeSelect = true;
+                } else {
+                    window.isSizeSelect = false;
                 }
                 $('.js-buy').removeClass('btn_red').text('купить');
+                $('.js-quick-order').removeClass('btn_red').text('быстрый заказ');
             });
 
             $('.js-buy').click(function(){
