@@ -452,7 +452,7 @@ $(document).ready(function() {
                     slideWidth: 108,
                     mode: 'horizontal',
                     onSliderLoad: function() {
-
+                        $('.spoiler_complect').trigger('update');
                     }
                 }
             },
