@@ -2667,6 +2667,11 @@ h1 {
   -webkit-transition: height 0.3s 0s ease-in-out;
   transition: height 0.3s 0s ease-in-out;
 }
+.quick-order .icon-close {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
 .quick-order__inner {
   padding: 18px 18px 33px;
 }
