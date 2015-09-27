@@ -1583,7 +1583,6 @@ var sliderConstructor = function(sliders) {
             var restartAuto;
             var $selfSlider = (typeof self.sliderClass === 'object')?self.sliderClass:jQuery(self.sliderClass);
             var checkLength = self.checkLength?self.checkLength:0;
-
 			$selfSlider.each(function(){
                 var $slider = jQuery(this);
                 if ($slider.find(configClass.item).length > checkLength) {

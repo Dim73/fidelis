@@ -319,7 +319,7 @@ $(document).ready(function() {
             if ($self.find('.stop').length) return;
             if ($slider.data('plugin') == 'bxslider') {
                 $slider.data('bxslider').startAuto();
-            } else {
+            } else if ($slider.find('.slider-item').length > 1) {
                 var thisSlider = $slider.bxSlider({
                     mode: 'fade',
                     slideWidth: 255,

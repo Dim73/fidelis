@@ -1583,7 +1583,6 @@ var sliderConstructor = function(sliders) {
             var restartAuto;
             var $selfSlider = (typeof self.sliderClass === 'object')?self.sliderClass:jQuery(self.sliderClass);
             var checkLength = self.checkLength?self.checkLength:0;
-
 			$selfSlider.each(function(){
                 var $slider = jQuery(this);
                 if ($slider.find(configClass.item).length > checkLength) {
@@ -4507,7 +4506,7 @@ $(document).ready(function() {
             if ($self.find('.stop').length) return;
             if ($slider.data('plugin') == 'bxslider') {
                 $slider.data('bxslider').startAuto();
-            } else {
+            } else if ($slider.find('.slider-item').length > 1) {
                 var thisSlider = $slider.bxSlider({
                     mode: 'fade',
                     slideWidth: 255,
