@@ -1,347 +1,880 @@
-$(document).ready(function() {
-  var filter = $('#itemsfilterresult');
-  var filters = {};
-  var viewed = 0;
-  var total = 0;
-  var requeststatus=false;
-  var $costSlider = $("#price-slider");
-  //filter.html('');
- //right toggle
-  /*$('.left .block .rheader a').click(function(e){
-    e.preventDefault();
-    var par = $(this);
-    $(this).parent('.rheader').parent('.block').children('.list').slideToggle(300,function(){
-      if($(this).css('display')=='none')
-          par.html('<img src="/images/toggle_btnr.png">'); else
-          par.html('<img src="/images/toggle_btn.png">');
-    });
-  });
-  //right checkboxes
-  $('.left .block .scrollbox label, .left .block .square_sizes label').click(function(e){
-    var th = $(this);
-    var chbox = th.children('input[type=checkbox]:checked').length;
-    if(chbox==1) th.addClass('checked'); else th.removeClass('checked');
-  });
-  $.each($('.left .block .scrollbox label, .left .block .square_sizes label'),function(ind,val){
-    var th = $(val);
-    var chbox = th.children('input[type=checkbox]:checked').length;
-    if(chbox==1) th.addClass('checked'); else th.removeClass('checked');
-  });*/
+(function($){
 
-  //right cost slider
-    $costSlider
-
-    .slider({
-        min: 0,
-        max: $('#maxcost').data('max'),
-        range: true,
-        values: [0, $('#maxcost').data('max')],
-        change: function( event, ui ) {
+    var AppUtils = { //вспомогашки
+        hasClass: function(el, cls) {
+            return el.className && new RegExp("(\\s|^)" + cls + "(\\s|$)").test(el.className);
         },
-        slide: function( event, ui ) {
-            $('#mincost').val(ui.values[0]);
-            $('#maxcost').val(ui.values[1]);
+        uniqueArr: function(arr) {
+            var prevItem;
+            return arr.filter(function(item, index){
+                if (arr.indexOf(item) === index) {
+                    return item;
+                }
+            })
+        },
+        concatObj: function(arr) {
+            var obj = {};
+            arr.forEach(function(item){
+                for (var i in item) {
+                    obj[i] = item[i];
+                }
+            });
+            return obj;
+        },
+        _pushEach: function(arr) {
+
         }
-    })
-    .slider("float");
+    };
 
-  /*$('.left .cost .slider').slider({
-    orientation: "horizontal",
-      range: true,
-      min: 0,//parseInt($('#mincost').attr('data-min')),
-      max: parseInt($('#maxcost').attr('data-max')),
-      step: 1,
-      values: [ *//*parseInt($('#mincost').attr('data-min'))*//*0, parseInt($('#maxcost').attr('data-max')) ],
-      slide: function( event, ui ) {
-        $('#mincost').val(ui.values[0]);
-        $('#maxcost').val(ui.values[1]);
-    }});*/
-  if($('#mincost').val()!='' && $('#maxcost').val()!='')
-      $costSlider.slider( "option", "values", [ parseInt($('#mincost').val()), parseInt($('#maxcost').val())]);
-
-  function filtersidebars(ind,val) {
-    if (val.length == 0) {
-      $('input[data-filter='+ind+']:not(:checked)').closest('li').hide();
-
+    var goodsUrl = '';
+    if(window.location.host && (/\:3000/.test(window.location.host))) {
+        goodsUrl = '../../source/back/catalogue.json?';
     } else {
-
-      $.each($('input[data-filter='+ind+']'),function(ind2,val2) {
-
-        if($.inArray($(val2).data('value'),val) > -1)
-          $(val2).closest('li').show(); else
-          $(val2).closest('li').hide()
-      });
-//        $('.left .nano-scroll').nanoScroller();
+        goodsUrl = '/ajax/catalogue.html?';
     }
-    //alert(ind+' '+val);
-    //Hide clear lists
-    /*Example
-     *$('tr').filter(function() {
-      return $(this).css('display') !== 'none';
-    }).length;*/
-  }
 
-  function filterappend(html) {
-    var t = $(html);
-    //update top panel filter events
-    if(t.hasClass('filter_item'))
-      t.click(function(e){
-        e.preventDefault();
-//        var filt = $(this).parent('.filter_item');
-        var type = t.data('filter');
-        var value =  t.data('value');
-        switch (type) {
-          case 'type':
-          case 'style':
-          case 'collection':
-          case 'brand':
-          case 'insert':
-          case 'cover':
-          case 'metals':
-          case 'size':         //////????
-              $('.left input[type=checkbox][data-filter='+type+'][data-value="'+value+'"]').prop( "checked", false ).trigger('refresh');
-              t.remove();
-             break;
-          case 'cost':
-              $costSlider.slider("option", "min", null);
-              $costSlider.slider("option", "values", [null,null]);
-            $('#mincost').val('');$('#maxcost').val('');
-            t.remove();
-            break;
+    /**** Filter components ****/
+    var IdentifySection = {
+        init: function(controller) {
+            this.controller = controller;
+            this.state = {};
+            this.filterName = '';
+            this.view();
+        },
+        isName: function(name) {
+            return  this.filterName === name;
+        },
+        getState: function() {
+            return  this.state;
+        },
+        getStateRaw: function() {
+
+        },
+        setName: function(name) {
+            this.filterName = name;
+        },
+        updateState: function(data) {
+            if (!this.filterName) return;
+            this.state[this.filterName] = data;
+        },
+        view: function() {
+            var $activeLink = $('.category-section-block .list .selected');
+            this.setName($activeLink.data('filter'));
+            this.updateState($activeLink.data('value'));
+
+        },
+        returnState: function(state) {
+
+        },
+        render: function() {
+
         }
-      });
+    };
 
-    filter.append(t);
-  }
+    var popularFilter = {
+        init: function(controller) {
+            this.controller = controller;
+            this.state = {};
+            this.filterName = 'popular_categ';
 
-  function makefilter(){
-      //begin request
-     var f =[];
-     $.each(filters,function(ind,val){if(val!='') f.push(ind+'='+val);});
-     if(filters['items_per_page']=='all'){
-          viewed = $('.itemlist .item').length;
-          f.push('actpage='+((viewed/12)+1));
-     } else {
-          if($('.pageswitch .active').length>0) f.push('actpage='+$($('.pageswitch .active').get(0)).text());
-     }
-     //update static links ^_^
-     $('.left .list ul a').attr('href',window.location.pathname+'?'+f.join('&'));
-     if (!requeststatus) {
-     $.ajax('../../source/back/catalogue.html?'+f.join('&'),{///ajax/catalogue.html?
-       cache:false,
-       type:'get',
-       dataType:'json',
-       beforeSend: function(xhr,setting) {
-          requeststatus = true;
-       },
-       success: function(data,status,xhr) {
-         if(filters['items_per_page']!='all'){
-          $('.itemlist').html('');
-         }
-
-         //if (data['debug']!==null) alert(data['debug']);
-         $.each(data['filters'],filtersidebars);
-         $('.itemlist').append(data['items']);
-         $('.pageswitch').html(data['pageswitch']);
-         $costSlider.slider( "option", "min",  /*parseInt(data['cost']['min'])*/0 );
-         $costSlider.slider( "option", "max", /*parseInt(data['cost']['max'])*/ parseInt($('#maxcost').attr('data-max')) );
-
-         viewed = $('.itemlist .item').length;
-         total = data['count'];
-//         InitAddBasket();
-          $('.left .nano-scroll').nanoScroller();
-           $('.left .folding').trigger('update');
-       },
-       complete:function(xhr,status) {
-         requeststatus = false;
-       }
-      });
-     }
-     //no ajax version
-     //window.location.href = window.location.protocol+'//'+window.location.hostname+window.location.pathname+'?'+f.join('&');
-  }
-
-  filters['items_sort_order']=$('.setcatorder').val();
-  filters['items_per_page']=$('.setcatcount').val();
-  filters['collection']=[];filters['brand']=[];filters['style']=[];filters['type']=[]; //single checks
-  filters['cover']=[];filters['insert']=[]; //multi checks
-  filters['size']=[]; //alternate multi checks
-  filters['metals']=[];
-
-
-  if (typeof avfilters == 'object' ) $.each(avfilters,filtersidebars);
-
-
-  if(window.location.pathname.indexOf('/collection/sale/')>-1) filters['isSale']=true;
-  if(window.location.search.indexOf('isSale=')>-1) filters['isSale']=true;
-
-  var extra = $('input[name=extra]').val();
-  if (extra != '') filters['extra']=extra;
-
-
-  viewed = $('.itemlist .item').length;
-  total = parseInt($('.itemlist').attr('data-count'));
-
-  //add data-attrs to adding divs
-  $.each($('#fcollections input[type=checkbox]:checked'),function(ind,val){filters['collection'].push($(val).attr('data-value'));
-      filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'</div>');});
-
-  $.each($('#fbrands input[type=checkbox]:checked'),function(ind,val){filters['brand'].push($(val).attr('data-value'));
-      filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'</div>');});
-
-      //filterappend('<div class="filter_item">'+$(val).parent('label').text()+'</div>');});
-
-  $.each($('#fstyles input[type=checkbox]:checked'),function(ind,val){filters['style'].push($(val).attr('data-value'));
-      //filterappend('<div class="filter_item">'+$(val).parent('label').text()+'</div>');});
-      filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'</div>');});
-  $.each($('#ftypes input[type=checkbox]:checked'),function(ind,val){filters['type'].push($(val).attr('data-value'));
-      //filterappend('<div class="filter_item">'+$(val).parent('label').text()+'</div>');});
-      filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'</div>');});
-  $.each($('#finserts input[type=checkbox]:checked'),function(ind,val){filters['insert'].push($(val).attr('data-value'));
-      //filterappend('<div class="filter_item">'+$(val).parent('label').text()+'</div>');});
-      filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'</div>');});
-  $.each($('#fcovers input[type=checkbox]:checked'),function(ind,val){filters['cover'].push($(val).attr('data-value'));
-      //filterappend('<div class="filter_item">'+$(val).parent('label').text()+'</div>');});
-      filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'</div>');});
-    $.each($('#fmetals input[type=checkbox]:checked'),function(ind,val){filters['metals'].push($(val).attr('data-value'));
-        filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'</div>');});
-  $.each($('#fsizes input[type=checkbox]:checked'),function(ind,val){filters['size'].push($(val).attr('data-value'));
-      filterappend('<div class="filter_item" data-filter="'+$(val).attr('data-filter')+'" data-value="'+$(val).attr('data-value')+'">'+$(val).parent('label').text()+'</div>');});
-
-  if($('#ftypes .selected').length==1) filters['type'].push($('#ftypes .selected').attr('data-value'));
-  if($('#fcollections .selected').length==1) filters['collection'].push($('#fcollections .selected').attr('data-value'));
-  if($('#fbrands .selected').length==1) filters['brand'].push($('#fbrands .selected').attr('data-value'));
-  if($('#fstyles .selected').length==1) filters['style'].push($('#fstyles .selected').attr('data-value'));
-  if($('#finserts .selected').length==1) filters['insert'].push($('#finserts .selected').attr('data-value'));
-  if($('#fcovers .selected').length==1) filters['cover'].push($('#fcovers .selected').attr('data-value'));
-  if($('#fsizes .selected').length==1) filters['size'].push($('#fsizes .selected').attr('data-value'));
-  if($('#fmetals .selected').length==1) filters['metals'].push($('#fmetals .selected').attr('data-value'));
-
-  /*filterappend('<div class="clear"></div>');*/
-
-$(window).scroll(function() {
-  if(filters['items_per_page']=='all'){
-    //here will be additional load
-    if (!requeststatus) {
-      if (viewed<total) {
-
-            if (        (
-                 $(window).scrollTop()+
-                 $(window).height()+
-                 $('.itemlist .item').height()
-                )>(
-                  $('.itemlist').offset().top+
-                  $('.itemlist').height()
-                )) {
-              makefilter();
-              //console.log( (wtop+wheight) +' '+(ilisttop+ilisth));
+            var urlPop = location.pathname.split("/");
+            if ( urlPop.length > 1 && urlPop[1] == "popular_categ" )
+            {
+                var tmpStr = urlPop[2];
+                this.state[this.filterName] = tmpStr.replace('.html', '');
             }
-      }
-    }
-  }
-});
+        },
+        isName: function(name) {
+            return  this.filterName === name;
+        },
+        getState: function() {
+            return  this.state;
+        },
+        getStateRaw: function() {
 
-  $('.filter_item').click(function(e){
-    $(this).remove();
-  });
+        },
+        returnState: function(state) {
 
+        },
+        render: function() {
 
-  //$('.setcatcount option').click(function(e){filters['items_per_page']=$(this).val();makefilter();});
-  $('.setcatcount').change(function(e){
-    $('.itemlist').html('');
-    filters['items_per_page']=$(this).val();
-    $('.setcatcount').val($(this).val());
-    makefilter();
-  });
-  //$('.setcatorder option').click(function(e){filters['items_sort_order']=$(this).val();makefilter();});
-  $('.setcatorder').change(function(e){
-    $('.itemlist').html('');
-    filters['items_sort_order']=$(this).val();
-    $('.setcatorder').val($(this).val());
-    makefilter();
-  });
+        }
+    };
 
-  //sidefilters with single check
-  $('.list ul[data-seltype=check] input[type=checkbox]').change(function(e){
-    var chk = $(this);
-    var si = $.inArray(chk.attr('data-value'),filters[chk.attr('data-filter')]);
+    var OtherFilter = {
+        init: function(controller) {
+            this.controller = controller;
+            this.state = {};
+            this.filterName = 'OtherFilter';
 
-    console.log(si);
-    if(si==-1) {
-       filters[chk.attr('data-filter')].push(chk.attr('data-value'));
-       filterappend('<div class="filter_item" data-filter="'+chk.attr('data-filter')+'" data-value="'+chk.attr('data-value')+'">'+chk.closest('label').text()+'</div>');
-       filter.find('.clear').appendTo(filter);
-       //add deltag by click on it
-    }
-      else {
-         filter.find('div[data-filter="'+chk.attr('data-filter')+'"][data-value="'+chk.attr('data-value')+'"]').remove();
-         filters[chk.attr('data-filter')].splice(si,1);
-      }
+            var otherVal = $('#other').val();
+            this.state[this.filterName] = otherVal?otherVal:null;
+        },
+        isName: function(name) {
+            return  this.filterName === name;
+        },
+        getState: function() {
+            return  this.state;
+        },
+        getStateRaw: function() {
 
-    //var ul = chk.parent('label').parent('li').parent('ul[data-seltype=check]');
-    //if(ul.find('input[type=checkbox]:checked').length>0) {//hide unchecked
-    //  ul.find('input[type=checkbox]:not(:checked)').parent('label').parent('li').css('display','none');
-    //} else {//show unchecked
-    //  ul.find('input[type=checkbox]').parent('label').parent('li').css('display','block');
-    //}
+        },
+        returnState: function(state) {
 
-    $('.itemlist').html('');
-    makefilter();
-  });
-  //sidefilters with multiple checks
-  $('.list ul[data-seltype=multi] input[type=checkbox], .square_sizes .squaresize').change(function(e){
-    var chk = $(this);
-    var si = $.inArray(chk.attr('data-value'),filters[chk.attr('data-filter')]);
-    if(si==-1) {
-       filters[chk.attr('data-filter')].push(chk.attr('data-value'));
-       filterappend('<div class="filter_item" data-filter="'+chk.attr('data-filter')+'" data-value="'+chk.attr('data-value')+'">'+chk.closest('label').text()+'</div>');
-       filter.find('.clear').appendTo(filter);
-       //add deltag by click on it
-    } else {
-         filter.find('div[data-filter='+chk.attr('data-filter')+'][data-value="'+chk.attr('data-value')+'"]').remove();
-         filters[chk.attr('data-filter')].splice(si,1);
-    }
-    //var ul = chk.parent('label').parent('li').parent('ul[data-seltype=multi]'); //18_08_2014...
-    $('.itemlist').html('');
-    makefilter();
-  });
+        },
+        render: function() {
 
+        }
+    };
 
-  $costSlider.on( "slidechange", function( event, ui ) {
-    if (ui.values[0]!=null && ui.values[1]!=null) {
+    var PriceFilter = { //фильтр цены
+        init: function(controller) {
+            this.controller = controller;
+            this.filterName = 'cost';
+            this.state = {};
+            this.defaultRange = [];
+            this.viewInit();
+            this.lockChange = false;
+        },
+        getState: function() {
+            return  this.state;
+        },
+        getStateRaw: function() {
+            if (!this.state[this.filterName] || this.state[this.filterName].join() === this.defaultRange.join()) return;
+            var rawObj = {};
+            rawObj[this.filterName] = [{'0':'от '+this.state[this.filterName][0]+' до '+this.state[this.filterName][1]}];
+            return rawObj;
+        },
+        returnState: function(state) {
+            var isFinded = false;
+            for (var fName in state) {
+                if (this.filterName === fName) {
+                    this.state[this.filterName] = state[fName];
+                    isFinded = true;
+                }
+            }
+            if (!isFinded) {
+                this.state[this.filterName] = this.defaultRange;
+            }
+        },
+        isName: function(name) {
+            return  this.filterName === name;
+        },
+        updateState: function(data) {
+            var newData = data;
+            newData[0] = newData[0] === undefined?this.state[this.filterName][0]:newData[0];
+            newData[1] = newData[1] === undefined?this.state[this.filterName][1]:newData[1];
+            this.state[this.filterName] = data;
+            //this.controller.updateFilters();
+        },
+        removeFilter: function(data) {
+            this.state = {};
+            //this.render();
+        },
+        resolveConflict: function(priceRange) { //проверка и исправление на - текущая выборка цены выходит за границы новых доступных цен
+            var currentRange = this.state[this.filterName];
+            if (currentRange && priceRange) {
+                this.state[this.filterName][0] = (currentRange[0] < priceRange[0] || currentRange[0] > priceRange[1]) ? priceRange[0]:currentRange[0];
+                this.state[this.filterName][1] = (currentRange[1] > priceRange[1]) ? priceRange[1]:currentRange[1];
+                if (this.state[this.filterName][0] === priceRange[0] &&  this.state[this.filterName][1] === priceRange[1]) {
+                    this.state = {};
+                    return priceRange;
+                }
+                return this.state[this.filterName];
+            } else {
+                return priceRange;
+            }
 
-    filters['cost']=JSON.stringify({'min':ui.values[0],'max':ui.values[1]});
-    //filter.find('div[data-filter=cost]').remove();
-    //filterappend('<div class="filter_item" data-filter="cost" data-value="true">Цена: от '+ui.values[0]+' до '+ui.values[1]+'</div>');
-    //filter.find('.clear').appendTo(filter);
-    }
-    $('.itemlist').html('');
-    makefilter();
-  });
-  $('.block .list .cost #mincost').blur(function(){
-    var v1 = parseInt($(this).val());
-    if (v1>0) {$(this).val(v1);} else {v1=0;$(this).val('0');}
-    $(".left .cost .slider").slider( "values", 0, v1);
+        },
+        setLock: function(flag) {
+            this.lockChange = flag;
+        },
+        isLock: function() {
+            return this.lockChange;
+        },
+        getRangeData: function() {
+            return this.controller.getFilterRenderData(this.filterName);
+        },
+        viewInit: function() {
+            var self = this;
+            this.view = {};
+            this.view.priceFilter = $("#price-slider");
+            this.view.$min = $('#price-from');
+            this.view.$max = $('#price-to');
+            self.updateState([$('#mincost').data('min'), $('#maxcost').data('max')]);
+            this.view.$min.on('blur',function(){
+                self.updateState([self.view.$min.val(), self.view.$max.val()]);
+            });
 
-  });
-  $('.block .list .cost #maxcost').blur(function(){
-    var v1 = parseInt($(this).val());
-    if (v1>0) {$(this).val(v1);} else {v1=0;$(this).val('0');}
-    $(".left .cost .slider").slider( "values", 1, v1);
-  });
+            this.view.$max.on('blur',function(){
+                self.updateState([self.view.$min.val(), self.view.$max.val()]);
+            });
+        },
+        render: function() {
+            var priceData = this.getRangeData();
+            var currentValue = this.resolveConflict(priceData);
+            this.updateState(priceData);
+            this.setLock(true);
+            if (priceData && priceData instanceof Array)
+            {
+                this.view.$min.attr('placeholder', priceData[0]).val('');
+                this.view.$max.attr('placeholder', priceData[1]).val('');
+            }
+            this.setLock(false);
+        }
+    };
 
+    var CheckboxFilter = { //фильтры типа чекбокс (коллекции,...,размеры)
+        init: function(controller) {
+            this.controller = controller;
+            this.filterName = [];
+            this.activeCheckboxes = {};
+            this.namesCheckboxes = {};
+            this.backState = [];
+            this.viewInit();
+        },
+        addFilterName: function(name) {
+            if (this.filterName.indexOf(name) === -1)
+                this.filterName.push(name);
+        },
+        getState: function() {
+            var stateObj = {};
+            for (var group in this.activeCheckboxes) {
+                stateObj[group] = [];
+                this.activeCheckboxes[group].forEach(function (item) {
+                    for (var val in item) {
+                        stateObj[group].push(val);
+                    }
+                })
+            }
+            return stateObj; //{filter: [1,2,3],....}
+        },
+        getStateRaw: function() {
+            return this.activeCheckboxes;
+        },
+        returnState: function(state) {
+            this.activeCheckboxes = {};
+            for (var fName in state) {
+                if (this.filterName.indexOf(fName) > -1) {
+                    state[fName].forEach(function(item){
+                        this.addActiveCheckbox({type: fName, value: item, label : this.getNameCheckbox({fName: fName, value : item})});
+                    }.bind(this));
+                }
+            }
+            this.renderCheckboxes();
+        },
+        isName: function(name) {
+            return (this.filterName.join(',').indexOf(name) > -1);
+        },
+        removeFilter: function(data){
+            this.removeActiveCheckbox(data);
+            this.renderCheckboxes();
+        },
+        addNameCheckbox: function(data) {
+            if (!this.namesCheckboxes[data.type]) {
+                this.namesCheckboxes[data.type] = [];
+            }
+            var objValue = {};
+            objValue[data.value] = data.label;
+            this.namesCheckboxes[data.type].push(objValue);
+        },
+        getNameCheckbox: function(data) {
+            var lbl = '';
+            for (var filter in this.namesCheckboxes) {
+                if (lbl) break; //finded
+                if (filter !== data.fName) continue; //next Filter name
+                this.namesCheckboxes[filter].forEach(function(values){
+                    if (lbl) return; //finded
+                    for (var value in values) {
+                        if (value === data.value) {
+                            lbl =  values[value];
+                        }
+                    }
+                });
+            }
+            return lbl;
+        },
+        updateActiveCheckbox: function(data, isInit) {
+            if (data.checked) {
+                this.addActiveCheckbox(data);
+            } else {
+                this.removeActiveCheckbox(data);
+            }
+            //!isInit && this.controller.updateFilters();
+        },
+        addActiveCheckbox: function(data) {
+            if (!this.activeCheckboxes[data.type]) {
+                this.activeCheckboxes[data.type] = [];
+            }
+            var objValue = {};
+            objValue[data.value] = data.label;
+            this.activeCheckboxes[data.type].push(objValue); //{filterName: [val:lbl,val:lbl,....],....}
+        },
+        removeActiveCheckbox: function(data) {
+            var indexToDelete;
+            var typeFilter = this.activeCheckboxes[data.type];
+            for (var i = typeFilter.length - 1 ; i >= 0; i--) {
+                if (data.value in typeFilter[i]) {
+                    indexToDelete = i;
+                    break;
+                }
+            }
+            typeFilter.splice(indexToDelete, 1);
+            !typeFilter.length && delete this.activeCheckboxes[data.type];
+        },
+        getAvailableCheckboxes: function() {
+            return this.controller.getFilterRenderData(this.filterName)
+        },
+        getActiveCheckboxes: function() {
+            return this.getState();
+        },
+        viewInit: function() {
+            var self = this;
+            this.view = {};
+            this.view.checkoxFilters = $('.goods-filter__item option');
 
+            this.view.checkoxFilters.each(function(){
+                var $item = $(this);
+                var filterName = $item.data('filter');
+                filterName && self.addFilterName(filterName);
+                self.addNameCheckbox({type: filterName,value: parseInt($item.data('value')), label: $item.closest('label').text()});
+                if ($item[0].selected && !$item.is(':disabled')) {
+                    self.updateActiveCheckbox({type: $item.data('filter'),value: parseInt($item.data('value')), checked: $item[0].selected, label: $item.text()}, true);
+                }
+            });
 
-    $('.js-close-filter').click(function(e){
-        e.preventDefault();
-        $('.goods-filter').trigger('close');
+            this.view.checkoxFilters.on('click', function(event){
+                var $item = $(this);
+                self.updateActiveCheckbox({type: $item.data('filter'),value: $item.data('value'), checked: event.target.selected, label: $item.text()});
+            });
+        },
+        render: function() { //рендер доступных чекбоксов
+            var filtersData = this.getAvailableCheckboxes();
+
+            for (var filter in filtersData) {
+                this.view.checkoxFilters.filter('[data-filter=' + filter + ']').each(function () {
+                    var $item = $(this);
+                    //console.log(filtersData[filter].indexOf("" + $item.data('value')));
+                    //console.log(filtersData[filter], typeof $item.data('value'), filtersData[filter].indexOf($item.data('value')));
+                    if (filtersData[filter].indexOf($item.data('value')) > -1) {
+                        $item.show();
+                    } else {
+                        $item.hide();
+                    }
+                });
+            }
+        },
+        renderCheckboxes: function() { //рендер состояния чекбоксов
+            var activeCheckboxes = this.getActiveCheckboxes();
+            this.view.checkoxFilters.not(':disabled').prop('selected',false);
+            for (var fName in activeCheckboxes) {
+                activeCheckboxes[fName].forEach(function(val){
+                    this.view.checkoxFilters.filter('[data-filter='+fName+'][data-value="'+val+'"]').prop('selected',true);
+                }.bind(this));
+            }
+        }
+    };
+
+    /**** Filters controller ****/
+    var Filters = { //контроллер фильтров
+        init: function(manager, viewFilters) {
+            this.manager = manager;
+            this.components = [];
+            this.viewFilters = viewFilters;
+            this.activeFilters = {};
+            this.responseData = {};
+            this.view();
+        },
+        addComponent: function(component) {
+            /*if (component instanceof Object) {
+
+             }*/
+            this.components.push(component);
+            component.init(this);
+        },
+        getComponentByName: function(name) {
+            var findedComponent;
+            this.components.forEach(function(component){
+                if (component.isName(name)) {
+                    findedComponent = component;
+                }
+            });
+            return findedComponent;
+        },
+        sendMessage: function(type) {
+            this.manager.getMessage(type);
+        },
+        getMessage: function(type, data) {
+            switch (type) {
+                case 'newData' :
+                    this.responseData = data.filters;
+                    this.renderComponents();
+                    this.render();
+                    break;
+            }
+        },
+        getState: function() {
+            var stateArr = [];
+            this.components.forEach(function(component){
+                stateArr.push(component.getState());
+            });
+            return AppUtils.concatObj(stateArr);
+        },
+        returnState: function(state) {
+            if (state === undefined) return;
+            this.components.forEach(function(component){
+                //возврат состояния каждого компонента (активное состояние)
+                component.returnState(state);
+            });
+        },
+        updateFilters: function() {
+            //this.sendMessage('filtersChange');
+        },
+        getFilterRenderData: function(filter) {
+            var obj = {};
+            if (filter) {
+                if (filter instanceof  Array) {//проверка на массив имен, например группы чекбоксов
+                    filter.forEach(function (item) {
+                        this.responseData[item] && (obj[item] = this.responseData[item]);
+                    }.bind(this));
+                    return obj;
+                } else {
+                    return this.responseData[filter] ? this.responseData[filter] : undefined;
+                }
+            }
+        },
+        view: function() {
+            var self = this;
+            this.viewFilters.init(this);
+            this.$apply = $('.js-apply-filter');
+            this.$close = $('.js-close-filter');
+            this.$self = $('.goods-filter.folding');
+            this.$apply.on('click',function(e){
+                e.preventDefault();
+                self.sendMessage('filtersChange');
+            });
+            this.$close.on('click',function(e){
+                e.preventDefault();
+                self.$self.trigger('close');
+            })
+        },
+        render: function() {//рендер FiltersView
+            this.viewFilters.render();
+            this.$self.trigger('update');
+        },
+        getViewData: function() {
+            var viewData = [];
+            this.components.forEach(function(component){
+                viewData.push(component.getStateRaw());
+            });
+            return AppUtils.concatObj(viewData);
+        },
+        renderComponents: function() {
+            this.components.forEach(function(component){
+                component.render();
+            });
+        },
+        removeActiveFilter: function(data){ //filterName, value
+            this.getComponentByName(data.type).removeFilter(data);
+            this.render();
+        }
+    };
+
+    var FiltersView = { //линки активных фильтров
+        init: function(controller) {
+            this.controller = controller;
+            this.view();
+        },
+        deleteLink: function(data) {
+            if (data instanceof Object) {
+                this.controller.removeActiveFilter(data);
+            }
+        },
+        view: function() {
+            this.self = document.getElementById('itemsfilterresult');
+            this.$self = $(this.self);
+            this.linkClass = 'filter_item';
+            this.tpl  = '<div class="'+this.linkClass+'" data-filter="{type}" data-value="{value}">{lbl}</div>';
+
+            this.self.addEventListener('click',function(event){
+                var elData = event.target.dataset;
+                AppUtils.hasClass(event.target, this.linkClass) && this.deleteLink({type: elData.filter, value: elData.value});
+            }.bind(this), false);
+        },
+        renderTpl: function(data) {
+            var replaceTpl = this.tpl;
+            for (var i in data) {
+                replaceTpl = replaceTpl.replace('{'+i+'}',data[i]);
+            }
+            return replaceTpl;
+        },
+        render: function() {
+            var filters = this.controller.getViewData(),//{filterName: [{value:label},...],filterName: [...]}
+                filtersHtml = '';
+
+            //console.log(filters);
+            for (var filter in filters) {
+                filters[filter].forEach(function(values){
+                    for (var value in values) {
+                        filtersHtml += this.renderTpl({type: filter, value: value, lbl: values[value]});
+                    }
+                }.bind(this));
+
+            }
+            this.$self.html(filtersHtml);
+        }
+    };
+
+    /*** sort options ***/
+    var ShowOptions = { //показать по, сортировать по и пагинация
+        init: function(manager) {
+            this.manager = manager;
+            this.state = {};
+            this.responseData = {};
+            this.filterName = ['items_per_page', 'items_sort_order'];
+            this.defaultValue = {};
+            this.view();
+            this.render();
+        },
+        getState: function() {
+            return this.state;
+        },
+        returnState: function(state) {
+            var isFinded = false;
+            if (state !== undefined) {
+                for (var fName in state) {
+                    isFinded = false;
+                    if (this.filterName.indexOf(fName) > -1) {
+                        this.setState({type: fName, value: state[fName]}, false);
+                        isFinded = true;
+                    }
+                    /* if (!isFinded) {
+                     this.setState({type: fName, value: this.defaultValue[fName]});
+                     }*/
+                }
+            } else {
+                for (fName in this.defaultValue) {
+                    this.setState({type: fName, value: this.defaultValue[fName]});
+                }
+            }
+            console.log(this.state);
+            this.renderSelect();
+        },
+        sendMessage: function(type) {
+            this.manager.getMessage(type);
+        },
+        getMessage: function(type, data) {
+            switch (type) {
+                case 'newData' :
+                    this.responseData = data;
+                    this.render();
+                    break;
+            }
+        },
+        setState: function(data, isUpdate) {
+            this.state[data.type] = data.value;
+            if (!this.defaultValue[data.type]){
+                this.defaultValue[data.type] = data.value;
+            }
+            this.setViewMode(data);
+            this.lastSelect =
+            isUpdate && this.sendMessage('filtersChange');
+        },
+        setViewMode: function(data) {
+            if (data.type === 'items_per_page')
+                this.manager.setViewMode(data.value);
+        },
+        getPager: function() {
+            return this.responseData.pageswitch;
+        },
+        view: function() {
+            var self = this;
+            this.view = {};
+            this.view.pager = $('.pageswitch');
+            this.view.select = $('.itemsfilter .btn-select select');
+            this.view.select.each(function(){
+                var $select = $(this);
+                self.setState({type: $select.data('type'), value: $select.val()});
+            });
+            this.view.select.on('change', function(){
+                var $select = $(this);
+                self.setState({type: $select.data('type'), value: $select.val()}, true);
+                self.renderSelect();
+            });
+        },
+        render: function() {
+            var pager = this.getPager();
+            if (this.getState()["items_per_page"] === 'all' || pager === '') {
+                this.view.pager.hide();
+            } else {
+                this.view.pager.show();
+                this.view.pager.html(pager);
+            }
+        },
+        renderSelect: function() {
+            var data = this.getState();
+            for (var sName in data) {
+                //console.log(data[sName], sName);
+                var thisSelect = this.view.select.filter('[data-type='+sName+']');
+                thisSelect
+                    .val(data[sName])
+                    .prev().find('.select-value').text(thisSelect.find('option:selected').text());
+            }
+            //this.view.select.trigger('refresh');
+
+        }
+    };
+
+    var Goods = {
+        init: function(manager) {
+            this.manager = manager;
+            this.view();
+        },
+        view: function() {
+            this.view = {};
+            this.view.container = $('.itemlist');
+            this.view.item = $('.item', this.view.container);
+        },
+        getPage: function() {
+            return this.manager.getPage();
+        },
+        getGoods: function() {
+            return this.manager.getGoods();
+        },
+        render: function() {
+            var page = this.getPage(),
+                html = this.getGoods();
+            if (page > 1) {
+                this.view.container.append(html);
+            } else {
+                this.view.container.html(html);
+            }
+        }
+    };
+
+    /*** Catalog manager ***/
+    var CatalogManager = (function() {//контроллер всего каталога
+        var catalogComponents = [],
+            paramToPost = '',
+            viewMode = '',
+            viewGoods = {},
+            pageToView = 1,
+            $GoodsBlock,
+            lastData = {},
+            isEndOfGoods = false,
+            isBlankState = false,
+            documentTitle = document.title,
+            firstPopState = true,
+            currentXhr = null;
+
+        var historyState = {
+            init: function() {
+                setTimeout( function(){
+                    window.addEventListener('popstate', historyState.onpopstate, false);
+                },0);
+            },
+            push: function() {
+//                lastData.activeComponentsState = getActiveComponentsState();
+//                console.log(getActiveComponentsState());
+                history.pushState( {stateData:getActiveComponentsState() }, documentTitle, '?' + getParam());
+            },
+            onpopstate: function(e) {
+                console.log(firstPopState);
+                if (/*!e.state && */firstPopState) { //safari & old chrome fix
+                    return false;
+                }
+
+                historyState.isReturn();
+                //var fil =  history.state == null?makeUri().join('&'):history.state.filters;
+            },
+            isReturn: function() {
+                if (!history.state) {
+                    isBlankState = true;
+                }
+                (timeCapsule && timeCapsule instanceof Function) && timeCapsule(history.state?history.state.stateData:undefined);
+            }
+        };
+
+        function timeCapsule(state) {
+            catalogComponents.forEach(function(component){
+                component.returnState(state);
+            });
+            getMessage('filtersChange', {back: true});
+        }
+
+        function getActiveComponentsState() {
+            var stateArr = [];
+            catalogComponents.forEach(function(component){
+                stateArr.push(component.getState()); //{filterName: [val,val,...], filterName: ...}
+            });
+            return AppUtils.concatObj(stateArr);
+        }
+
+        function getBlankState() {
+
+        }
+
+        function init(oGoods, components) {
+            viewGoods = oGoods;
+            catalogComponents = components;
+            historyState.init();
+            viewScroll();
+            try  {
+                !!avfilters && newDataIsRecived({filters: avfilters}, true);
+            } catch(e) {
+
+            }
+            // historyState.isReturn();
+        }
+
+        function setViewMode(type) {
+            //console.log(type);
+            viewMode = type;
+        }
+
+        function getPage() {
+            return pageToView;
+        }
+
+        function getGoods() {
+            if (!lastData.items) {
+                isEndOfGoods = true;
+            } else {
+                return lastData.items;
+            }
+        }
+
+        function addToParam() {
+            var params;
+
+            for (var i = 0, argLngt = arguments.length; i < argLngt; i++) {
+                params = arguments[i];
+
+                if (params instanceof Object) {
+                    for (var key in params) {
+                        if (params[key] !== null) {
+                            paramToPost += key + '=' + (params[key] instanceof Array ? params[key].join(',') : params[key]) + '&';
+                        }
+                    }
+                }
+            }
+        }
+
+        function getParam() {
+            paramToPost = '';
+            /* if (isBlankState) {
+             isBlankState = false;
+             return paramToPost;
+             }*/
+            firstPopState = false;
+            addToParam(getActiveComponentsState());
+            addToParam({actpage: pageToView});
+            return paramToPost.substring(0, paramToPost.length - 1);
+        }
+
+        function sendFilters(callback) {
+            if (currentXhr && currentXhr.readyState != 4) {
+                currentXhr.abort();
+            }
+            currentXhr = $.ajax(goodsUrl + getParam(), {///ajax/catalogue.html?  '../../source/back/catalogue.html?'
+                cache: false,
+                type: 'get',
+                dataType: 'json',
+                beforeSend: function (xhr, setting) {
+                    ajxLoader.attachTo($GoodsBlock);
+                },
+                success: function (data, status, xhr) {
+                    lastData = data;
+                    callback(data);
+                },
+                complete: function (xhr, status) {
+                    currentXhr = null;
+                    ajxLoader._detach();
+                },
+                error: function (xhr, status) {
+                    console.log(xhr);
+                    console.log(status);
+                }
+            });
+        }
+
+        function getAjaxStatus() {
+        }
+
+        function newDataIsRecived (data, initData) {
+            sendMessage('newData', data);
+            !initData && viewGoods.render();
+        }
+
+        function getMessage(type, data) {
+            switch (type) {
+                case 'filtersChange':
+                    pageToView = 1;
+                    isEndOfGoods = false;
+                    sendFilters(newDataIsRecived);
+                    if (data && !data.back) {
+                        historyState.push();
+                    } else {
+                        if (!data)
+                            historyState.push();
+                    }
+                    break;
+            }
+        }
+
+        function sendMessage(message, data) {
+            for (var i in catalogComponents) {
+                if (catalogComponents[i] && catalogComponents[i].getMessage instanceof Function) {
+                    catalogComponents[i].getMessage(message, data);
+                }
+            }
+        }
+
+        function viewScroll() {
+            $GoodsBlock = $('.catalogue .right');
+            var winHeight = window.innerHeight;
+
+            $(window).resize(function(){
+                winHeight = window.innerHeight;
+            });
+
+            $(window).scroll(function(){
+                if (viewMode === 'all' && !currentXhr && !isEndOfGoods) {
+                    var blockTop = $GoodsBlock.offset().top,
+                        blockHeight = $GoodsBlock.height(),
+                        winScroll = $(window).scrollTop();
+
+                    if (winScroll + winHeight > (blockTop + blockHeight)*1) {
+                        pageToView++;
+                        sendFilters(viewGoods.render.bind(viewGoods));
+                    }
+                } else  if (viewMode !== 'all' && !isEndOfGoods) {
+                    pageToView = 1;
+                }
+            });
+        }
+
+        return { //public
+            init:  init,
+            getMessage: getMessage,
+            setViewMode: setViewMode,
+            getPage: getPage,
+            getGoods: getGoods
+        }
+    })();
+
+    $(function(){
+        Filters.init(CatalogManager, FiltersView);
+
+        Filters.addComponent(PriceFilter);
+        Filters.addComponent(CheckboxFilter);
+        Filters.addComponent(popularFilter);
+        Filters.addComponent(IdentifySection);
+        Filters.addComponent(OtherFilter);
+        Filters.render();
+        ShowOptions.init(CatalogManager);
+        Goods.init(CatalogManager);
+        CatalogManager.init(Goods, [Filters, ShowOptions]);
     })
 
-});
-
-//preload
-/*
-preloadImg=new Image();
-preloadImg.src= "/images/toggle_btnr.png";
-*/
-
+})(jQuery);

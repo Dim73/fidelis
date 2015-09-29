@@ -3838,7 +3838,7 @@ h1 {
 }
 .catalogue .line-filter {
   position: relative;
-  z-index: 10;
+  z-index: 4;
   margin-top: 10px;
 }
 .catalogue .line-filter:after {

@@ -3549,175 +3549,6 @@ $(function(){
         }
     });
 })(jQuery);
-//////////////////
-/****MAIN.JS****/
-////////////////
-Object.defineProperty(Array.prototype,"unique", {
-    enumerable: false,
-    value: function() {
-        var o = {}, i, l = this.length, r = [];
-        for(i=0; i<l;i+=1) o[this[i]] = this[i];
-        for(i in o) r.push(o[i]);
-        return r;
-    }
-});
-
-
-function validateEmail(email) {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-}
-//pressed buy button
-  function InitAddBasket() {
-	$('.disabled').click(function(e){
-	  var th = $(this);
-	  if (th.hasClass('disabled'))
-		return false;
-	});
-
-	$('.btnbuy').click(function(e){
-	var btn = $(this);
-	if (btn.attr('href')!='#') return true;
-	e.preventDefault();
-	var code = $(this).attr('data-item');
-	var indicator = $('#goodies_total');
-	var size = $('#item_size').val();
-	$.ajax('/ajax/basket.html',{
-		cache:false,
-		type:'post',
-		dataType:'json',
-		data:{item:code,count:1,size:size},
-		success: function(data,status,xhr){
-			//if (data>0) {
-				indicator.html(data);
-				indicator.parent('a').removeClass('hidden'); //remove it later
-				indicator.parent('a').removeClass('disabled');
-				btn.html('В корзине');
-				btn.attr('href','/basket/');
-			//}
-			//Добавлено в корзину..сообщение бы что ли
-		}
-	});
-
-     });
-  }
-$(document).ready(function() {
-    $('#requestcall').click(function(e){
-        e.preventDefault();
-        $('#callmeform').css('display','block');
-    });
-    $('#callmeform').find('input[name=cancel]').click(function(e){
-        $('#callmeform').css('display','none');
-    });
-    $('#callmeform').find('input[name=send]').click(function(e){
-        var form = $('#callmeform');
-        var fio = form.find('input[name=fio]').val();
-        var phone = form.find('input[name=phone]').val();
-        if (fio.length<2) alert('Введите свои ФИО'); else
-        if (phone.length<7) alert('Введите свой телефон'); else
-        {
-            $.ajax({
-                url:'/ajax/forms.html',cache:false,type:'post',dataType:'json',
-                data:{callme:{'fio':fio,'phone':phone,'who':'scr'}},
-                success: function(data,status,xhr) {
-                    alert(data['result']);
-                    $('#callmeform').css('display','none');
-                }
-            });
-
-        }
-    });
-
-
-    //rates
-    $.each($('.rate div'), function(ind, k) {
-        $(this).attr('data-bpos', $(this).attr('class'));
-    });
-    $('.rate').mousemove(function(e) {
-        $(this).children('div').attr('class', '');
-        $(this).children('div').addClass('stars' + Math.ceil(Math.floor(e.pageX - $(this).offset().left) / 14));
-    });
-    $('.rate').mouseleave(function(e) {
-        $(this).children('div').attr('class', $(this).children('div').attr('data-bpos'));
-    });
-    //sliders
-    /*$.each($('#sliders div'), function(ind, k) {
-     if ($(this).children('a').size() > 1) {
-     var nav_name = 'prb_nav' + ind;
-     var mThis = $(this);
-     $('body').append($('<div id="' + nav_name + '" class="prb_nav"></div>'));
-     nav_name = '#' + nav_name;
-     $(nav_name).css({
-     top : mThis.position().top + mThis.height() - 20,
-     left : mThis.position().left + 7,
-     });
-     //http://jquery.malsup.com/cycle/options.html
-     mThis.cycle({
-     fx : 'fade',
-     speed : '1000',
-     timeout : 1000,
-     pager : nav_name
-
-     });
-
-     }
-     });*/
-    //DropDown
-
-
-    //Viewport
-    var minWidth = 1024;
-    var scale = 1;
-    if (window.screen.availWidth < minWidth)
-        scale = window.screen.availWidth / minWidth;
-
-    function setViewPort() {
-        if (window.orientation == 0) {
-            $('meta[name=viewport]').attr('content', 'initial-scale=' + scale + ', width=device-width')
-        } else {
-            $('meta[name=viewport]').attr('content', 'initial-scale=' + scale * (window.screen.availHeight / window.screen.availWidth) + ', width=device-height')
-        }
-    }
-    if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i)) {
-        //$(window).bind('orientationchange', setViewPort);
-    }
-
-
-
-   // setViewPort();
-    //totop-a ^_^
-    $('#totop a').click(function(e){
-        e.preventDefault();
-        $('html, body').animate({scrollTop:0});
-    });
-
-
-
-    $('.images .mini a').click(function(e){
-        e.preventDefault();
-        var th=$(this);
-        var big = th.parent('.mini').parent('.images').children('.big');
-        big.children('a').attr('href',th.attr('data-zoom-image'));
-        big.children('img').attr('src',th.attr('data-image'));
-    });
-
-    $('#loginform .title a').click(function(e){$.fancybox.close()});
-    $('#loginform input[name=ps]').click(function(e){
-        $.ajax('/ajax/auth.html',{
-            cache:false,type:'post',dataType:'json',
-            data:{login:$('#loginform input[name=mail]').val(),password:$('#loginform input[name=password]').val()},
-            success: function(data,status,xhr){
-                if (data==true) {
-                    window.location.reload();
-                } else alert('Не верный e-mail или пароль.');
-            }
-        });
-    });
-    InitAddBasket();
-
-});
-
-
 
 $(document).ready(function() {
 	$.each($('img[data-alternative]'),function(ind,val){
@@ -3767,7 +3598,7 @@ $(document).ready(function() {
         }, 100);
 
 
-        $('.pitem-specs__spoilers .folding').folding({});
+        $('.pitem-specs__spoilers .folding, .goods-filter.folding').folding({});
         $('.content-text__side .folding').folding({openHeight: 500});
         $('.order-spoiler').folding({closeOther: '.order-spoiler'});
         $(".phone-mask").mask("+7 (999) 999-99-99");
@@ -4054,3 +3885,25 @@ function closePopup ($popup) {
     $(window).trigger('popupClosed', [$popup]);
 }
 
+var ajxLoader  = (function() {
+
+    return {
+        attachTo: function ($elm, posProc) {
+            if (!$elm) return false;
+            this.attechedTo = $elm;
+            var $self = $('.loader'),
+                $icon = $('.loader .loader__icon');
+            var pos = this.attechedTo.offset();
+            var posIcon = posProc;
+            this.attechedTo.prepend($self);
+            this.attechedTo.addClass('ajx-loader');
+        },
+        _detach: function () {
+            if (this.attechedTo) {
+                this.attechedTo.removeClass('ajx-loader');
+                //$self.detach();
+                this.attechedTo = null;
+            }
+        }
+    }
+})();

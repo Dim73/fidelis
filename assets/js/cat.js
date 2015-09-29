@@ -27,7 +27,7 @@
     };
 
     var goodsUrl = '';
-    if(window.location.host && (/localhost/.test(window.location.host))) {
+    if(window.location.host && (/\:3000/.test(window.location.host))) {
         goodsUrl = '../../source/back/catalogue.json?';
     } else {
         goodsUrl = '/ajax/catalogue.html?';
@@ -236,7 +236,8 @@
             this.viewInit();
         },
         addFilterName: function(name) {
-            this.filterName.push(name);
+            if (this.filterName.indexOf(name) === -1)
+                this.filterName.push(name);
         },
         getState: function() {
             var stateObj = {};
@@ -343,7 +344,6 @@
                     self.updateActiveCheckbox({type: $item.data('filter'),value: parseInt($item.data('value')), checked: $item.is(':checked'), label: $item.closest('label').text()}, true);
                 }
             });
-            this.filterName = AppUtils.uniqueArr(this.filterName);
 
             this.view.checkoxFilters.on('change', function(event){
                 var $item = $(this);

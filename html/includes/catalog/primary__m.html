@@ -65,16 +65,16 @@
                                 <label for="good-collection" class="goods-filter__item btn-select">
                                     КОЛЛЕКЦИЯ
                                     <select name="collection" id="good-collection" class="no-styler" multiple>
-                                        <option value="">Graziella</option>
-                                        <option value="">Dea</option>
-                                        <option value="">Graziella</option>
-                                        <option value="">Dea</option>
-                                        <option value="">Graziella</option>
-                                        <option value="">Dea</option>
-                                        <option value="">Graziella</option>
-                                        <option value="">Dea</option>
-                                        <option value="">Graziella</option>
-                                        <option value="">Dea</option>
+                                        <option value="30" data-filter="collection" data-value="30" disabled >Graziella</option>
+                                        <option value="27" data-filter="collection" data-value="27">Dea</option>
+                                        <option value="13" data-filter="collection" data-value="13">Graziella</option>
+                                        <option value="23" data-filter="collection" data-value="23">Dea</option>
+                                        <option value="15" data-filter="collection" data-value="15">Graziella</option>
+                                        <option value="21" data-filter="collection" data-value="21">Dea</option>
+                                        <option value="20" data-filter="collection" data-value="20">Graziella</option>
+                                        <option value="19" data-filter="collection" data-value="19">Dea</option>
+                                        <option value="18" data-filter="collection" data-value="18">Graziella</option>
+                                        <option value="17" data-filter="collection" data-value="17">Dea</option>
                                     </select>
                                 </label>
                                 <label for="good-metal" class="goods-filter__item btn-select">
@@ -110,8 +110,8 @@
                                 <label for="good-insert" class="goods-filter__item btn-select">
                                     ВСТАВКА
                                     <select name="insert" id="good-insert" class="no-styler" multiple>
-                                        <option value="">Graziella</option>
-                                        <option value="">Dea</option>
+                                        <option value="" data-filter="insert" data-value="30" >Graziella</option>
+                                        <option value="" data-filter="insert" data-value="27">Dea</option>
                                         <option value="">Graziella</option>
                                         <option value="">Dea</option>
                                         <option value="">Graziella</option>
@@ -132,6 +132,8 @@
                                     </select>
                                 </label>
                                 <div class="goods-filter__price">
+                                    <input data-max="5555" id="maxcost" type="hidden">
+                                    <input data-min="0" id="mincost" type="hidden">
                                     <label for="price-from">От</label>
                                     <input id="price-from" type="number" class="inputtext" placeholder="0"/>
                                     <label for="price-to">до</label>
@@ -144,7 +146,7 @@
                                 <div class="goods-filter__choosen-title">
                                     ВЫ ВЫБРАЛИ:
                                 </div>
-                                <div class="goods-filter__choosen-list">
+                                <div class="goods-filter__choosen-list" id="itemsfilterresult">
                                     <div class="filter_item" data-filter="collection" data-value="30">Graziella</div>
                                     <div class="filter_item" data-filter="collection" data-value="30">Graziella</div>
                                     <div class="filter_item" data-filter="collection" data-value="30">Graziella</div>
@@ -167,7 +169,7 @@
                     <div class="itemsfilter">
                         <label class="btn-select setcatcount">
                             <span class="btn-select__label">Показать по: <span class="select-value">12</span></span>
-                            <select class="">
+                            <select class="" data-type="items_per_page">
                                 <option selected="" value="12">12</option>
                                 <option value="24">24</option>
                                 <option value="36">36</option>
@@ -176,7 +178,7 @@
                         </label>
                         <label class="btn-select setcatorder">
                             <span class="btn-select__label">Сортировать  по: <span class="select-value">умолчанию</span></span>
-                            <select class="">
+                            <select class="" data-type="items_sort_order">
                                 <option value="casc">По возрастанию цены</option>
                                 <option value="cdesc">По убыванию цены</option>
                                 <option value="default">По умолчанию</option>
