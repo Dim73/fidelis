@@ -3507,7 +3507,7 @@ $(function(){
             $mainNavHolder = $('.main-nav-line__holder'),
             $mainNavLink = $('.js-menu-toggle'),
             $submenu = $('.main-nav__submenu'),
-            hasSubmenuClass = '.hasSubmenu .link';
+            hasSubmenuClass = '.hasSubmenu > .link';
 
         $mainNavLink.click(function(e){
             e.preventDefault();
