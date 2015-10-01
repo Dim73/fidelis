@@ -140,10 +140,10 @@
             return  this.state;
         },
         getStateRaw: function() {
-            if (!this.state[this.filterName] || this.state[this.filterName].join() === this.defaultRange.join()) return;
-            var rawObj = {};
-            rawObj[this.filterName] = [{'0':'от '+this.state[this.filterName][0]+' до '+this.state[this.filterName][1]}];
-            return rawObj;
+            //if (!this.state[this.filterName] || this.state[this.filterName].join() === this.defaultRange.join()) return;
+            //var rawObj = {};
+            //rawObj[this.filterName] = [{'0':'от '+this.state[this.filterName][0]+' до '+this.state[this.filterName][1]}];
+            //return rawObj;
         },
         returnState: function(state) {
             var isFinded = false;
@@ -156,6 +156,7 @@
             if (!isFinded) {
                 this.state[this.filterName] = this.defaultRange;
             }
+            console.log(this.state);
         },
         isName: function(name) {
             return  this.filterName === name;
@@ -164,7 +165,7 @@
             var newData = data;
             newData[0] = newData[0] === undefined?this.state[this.filterName][0]:newData[0];
             newData[1] = newData[1] === undefined?this.state[this.filterName][1]:newData[1];
-            this.state[this.filterName] = data;
+            this.state[this.filterName] = newData;
             //this.controller.updateFilters();
         },
         removeFilter: function(data) {
@@ -201,6 +202,7 @@
             this.view.priceFilter = $("#price-slider");
             this.view.$min = $('#price-from');
             this.view.$max = $('#price-to');
+            this.defaultRange = [$('#mincost').data('min'), $('#maxcost').data('max')];
             self.updateState([$('#mincost').data('min'), $('#maxcost').data('max')]);
             this.view.$min.on('blur',function(){
                 self.updateState([self.view.$min.val(), self.view.$max.val()]);
@@ -294,12 +296,11 @@
             }
             return lbl;
         },
-        updateActiveCheckbox: function(data, isInit) {
-            if (data.checked) {
-                this.addActiveCheckbox(data);
-            } else {
-                this.removeActiveCheckbox(data);
-            }
+        updateActiveCheckbox: function(data, name) {
+            this.activeCheckboxes[name] = [];
+            data.forEach(function(item){
+                this.addActiveCheckbox(item);
+            }.bind(this));
             //!isInit && this.controller.updateFilters();
         },
         addActiveCheckbox: function(data) {
@@ -337,15 +338,21 @@
                 var $item = $(this);
                 var filterName = $item.data('filter');
                 filterName && self.addFilterName(filterName);
-                self.addNameCheckbox({type: filterName,value: parseInt($item.data('value')), label: $item.closest('label').text()});
+                self.addNameCheckbox({type: filterName,value: parseInt($item.data('value')), label: $item.text()});
                 if ($item[0].selected && !$item.is(':disabled')) {
-                    self.updateActiveCheckbox({type: $item.data('filter'),value: parseInt($item.data('value')), checked: $item[0].selected, label: $item.text()}, true);
+                    self.addActiveCheckbox({type: $item.data('filter'),value: parseInt($item.data('value')), checked: $item[0].selected, label: $item.text()}, true);
                 }
             });
 
             this.view.checkoxFilters.on('click', function(event){
-                var $item = $(this);
-                self.updateActiveCheckbox({type: $item.data('filter'),value: $item.data('value'), checked: event.target.selected, label: $item.text()});
+                var $select = $(this).closest('select');
+                var data = [];
+                $select.find('option').each(function(){
+                    var $item = $(this);
+                    $item[0].selected && data.push({type: $item.data('filter'),value: $item.data('value'), label: $item.text()});
+                });
+                self.updateActiveCheckbox(data, $select.prop('name'));
+
             });
         },
         render: function() { //рендер доступных чекбоксов
@@ -691,11 +698,12 @@
                 if (!history.state) {
                     isBlankState = true;
                 }
-                (timeCapsule && timeCapsule instanceof Function) && timeCapsule(history.state?history.state.stateData:undefined);
+                (timeCapsule && timeCapsule instanceof Function) && timeCapsule(history.state?history.state.stateData:{});
             }
         };
 
         function timeCapsule(state) {
+            console.info(state);
             catalogComponents.forEach(function(component){
                 component.returnState(state);
             });
