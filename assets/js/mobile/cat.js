@@ -156,16 +156,24 @@
             if (!isFinded) {
                 this.state[this.filterName] = this.defaultRange;
             }
-            console.log(this.state);
+            //console.log(this.state);
         },
         isName: function(name) {
             return  this.filterName === name;
         },
         updateState: function(data) {
+            if (data == null) return;
             var newData = data;
-            newData[0] = newData[0] === undefined?this.state[this.filterName][0]:newData[0];
-            newData[1] = newData[1] === undefined?this.state[this.filterName][1]:newData[1];
+            console.log(newData, this.state[this.filterName]);
+            if (this.state[this.filterName])
+            try {
+                newData[0] = newData[0] == "" ? this.state[this.filterName][0] : newData[0];
+                newData[1] = newData[1] == "" ? this.state[this.filterName][1] : newData[1];
+            } catch (e) {
+                console.log(e);
+            }
             this.state[this.filterName] = newData;
+            console.log(this.state[this.filterName]);
             //this.controller.updateFilters();
         },
         removeFilter: function(data) {
@@ -199,17 +207,16 @@
         viewInit: function() {
             var self = this;
             this.view = {};
-            this.view.priceFilter = $("#price-slider");
             this.view.$min = $('#price-from');
             this.view.$max = $('#price-to');
             this.defaultRange = [$('#mincost').data('min'), $('#maxcost').data('max')];
             self.updateState([$('#mincost').data('min'), $('#maxcost').data('max')]);
             this.view.$min.on('blur',function(){
-                self.updateState([self.view.$min.val(), self.view.$max.val()]);
+                self.updateState([+self.view.$min.val(), +self.view.$max.val()]);
             });
 
             this.view.$max.on('blur',function(){
-                self.updateState([self.view.$min.val(), self.view.$max.val()]);
+                self.updateState([+self.view.$min.val(), +self.view.$max.val()]);
             });
         },
         render: function() {
@@ -219,8 +226,11 @@
             this.setLock(true);
             if (priceData && priceData instanceof Array)
             {
-                this.view.$min.attr('placeholder', priceData[0]).val('');
-                this.view.$max.attr('placeholder', priceData[1]).val('');
+                this.view.$min.attr('placeholder', priceData[0]);
+                this.view.$max.attr('placeholder', priceData[1]);
+
+                !!this.view.$min.val() && this.view.$min.val(priceData[0]);
+                !!this.view.$max.val() && this.view.$min.val(priceData[1]);
             }
             this.setLock(false);
         }
@@ -422,9 +432,11 @@
         },
         getState: function() {
             var stateArr = [];
-            this.components.forEach(function(component){
-                stateArr.push(component.getState());
+            stateArr = this.components.map(function(component){
+                //console.log(component, component.getState());
+                return component.getState() || null;
             });
+
             return AppUtils.concatObj(stateArr);
         },
         returnState: function(state) {
@@ -564,7 +576,7 @@
                     this.setState({type: fName, value: this.defaultValue[fName]});
                 }
             }
-            console.log(this.state);
+            //console.log(this.state);
             this.renderSelect();
         },
         sendMessage: function(type) {
@@ -686,7 +698,7 @@
                 history.pushState( {stateData:getActiveComponentsState() }, documentTitle, '?' + getParam());
             },
             onpopstate: function(e) {
-                console.log(firstPopState);
+                //console.log(firstPopState);
                 if (/*!e.state && */firstPopState) { //safari & old chrome fix
                     return false;
                 }
@@ -703,7 +715,7 @@
         };
 
         function timeCapsule(state) {
-            console.info(state);
+            //console.info(state);
             catalogComponents.forEach(function(component){
                 component.returnState(state);
             });
@@ -712,9 +724,10 @@
 
         function getActiveComponentsState() {
             var stateArr = [];
-            catalogComponents.forEach(function(component){
-                stateArr.push(component.getState()); //{filterName: [val,val,...], filterName: ...}
+            stateArr = catalogComponents.map(function(component){
+                return component.getState() || null;  //{filterName: [val,val,...], filterName: ...}
             });
+            //console.log(stateArr);
             return AppUtils.concatObj(stateArr);
         }
 
