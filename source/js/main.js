@@ -384,6 +384,8 @@ $(document).ready(function() {
             }
         });
 
+
+
         //all sliders
         var allSliders = [
             {
@@ -437,8 +439,8 @@ $(document).ready(function() {
                     slideMargin: 23,
                     slideWidth: 108,
                     mode: 'horizontal',
-                    onSliderLoad: function() {
-
+                    onSliderLoad: function(item) {
+                        console.log(item);
                     }
                 }
             },
@@ -685,7 +687,7 @@ function smoothScrollInit () {
             $.srSmoothscroll({
                 step: 100,
                 speed: 600,
-                preventOn: '.nano-scroll, .b-custom-select__dropdown__inner'
+                preventOn: '.nano-scroll, .b-custom-select__dropdown__inner .pitem-fullscreen'
             });
         }
     }

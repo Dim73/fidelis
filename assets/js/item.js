@@ -105,12 +105,15 @@ $(document).ready(function() {
         if ($slider.data('plugin') != 'itemImg') {
             $slider.itemImg({
                 containerImg: '.pitem-preview-main_full .pitem-preview-main__loader',
-                containerVideo: '.pitem-preview-main_full .pitem-preview-main__video'
+                containerVideo: '.pitem-preview-main_full .pitem-preview-main__video',
+                resizeImg: true
             });
         }
         $('body').addClass('popup-show');
         $fullScreen.fadeIn();
     });
+
+
 
     $('.close',$fullScreen).click(function(e){
         e.preventDefault();

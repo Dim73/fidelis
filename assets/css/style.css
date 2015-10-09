@@ -5184,8 +5184,16 @@ h1 {
   position: relative;
 }
 .pitem-preview-main_full .pitem-preview-main__loader img {
-  width: 100%;
-  max-width: 100%;
+  /* width: 100%;
+            max-width: 100%;*/
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  -webkit-transition: height 0.3s 0s ease-in-out;
+  transition: height 0.3s 0s ease-in-out;
 }
 .pitem-preview-main_full .pitem-preview-main__video {
   position: absolute;

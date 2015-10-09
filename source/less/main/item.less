@@ -49,8 +49,14 @@
         .pitem-preview-main__loader {
 
           img {
-            width: 100%;
-            max-width: 100%;
+           /* width: 100%;
+            max-width: 100%;*/
+            position: absolute;
+            height: 100%;
+            top: 0;
+            left: 50%;
+            ._transform(translateX(-50%));
+            ._transition(height);
           }
         }
 

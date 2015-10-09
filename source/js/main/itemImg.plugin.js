@@ -5,13 +5,31 @@
         var def = {
                 containerImg: '',
                 item : '.slider-item',
-                link : '.pitem-slider__link'
+                link : '.pitem-slider__link',
+                resizeImg: false
 
             };
 
         var opt = $.extend({}, def, options || {});
 
         $(this).data('plugin','itemImg');
+
+        var fullscrinImgHeight = {
+            img: '',
+            setHeight: function() {
+                var $img = this.img.parent();
+                var p = $img.parent();
+                var winHeight = window.innerHeight;
+                var offsetImg = $img.offset().top - $('.pitem-fullscreen').offset().top;
+                $img.height(winHeight - offsetImg);
+            }
+        };
+
+        $(window).bind('resize', function(){
+            if (opt.resizeImg && fullscrinImgHeight.img) {
+                fullscrinImgHeight.setHeight();
+            }
+        })
 
         this.each(function(){
             //Initialize
@@ -41,7 +59,7 @@
                 activeInd = thisIndex;
 
                 if ($oldImg) {
-                    $oldImg.stop().fadeOut(499, function(){
+                    $oldImg.stop().fadeOut(490, function(){
                         $oldImg.detach();
                         $containerImg.trigger('zoom.destroy');
                     });
@@ -71,8 +89,14 @@
             function switchImg (img, link) {
                 $containerImg.append(img);
                 ajxLoader.attachTo($containerParent);
+
                 img.stop().fadeIn(500, function(){
                     $oldImg = img;
+
+                    if (opt.resizeImg) {
+                        fullscrinImgHeight.img = img;
+                        fullscrinImgHeight.setHeight();
+                    }
                     if (link.data('zoom')) {
                         $containerImg.zoom({
                             url: link.data('zoom'),
