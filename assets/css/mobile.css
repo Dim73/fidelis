@@ -3192,6 +3192,15 @@ h1 {
   border-top: 5px solid #e30c19;
   margin-top: 0px;
 }
+.header .main-nav-line .submenu_lvl2 .main-nav-line__list {
+  background-color: #dddddd;
+  border-top: 0;
+  margin-top: 0;
+}
+.header .main-nav-line .submenu_lvl2 .main-nav-line__list .link {
+  color: #888888;
+  border-color: currentColor;
+}
 .header .main-nav__submenu {
   height: 0;
   overflow: hidden;
