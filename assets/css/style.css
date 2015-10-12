@@ -4013,8 +4013,8 @@ h1 {
 .basket-empty {
   display: none;
   text-align: center;
-  height: 30px;
   line-height: 40px;
+  font-size: 16px;
 }
 .basket_order {
   display: none;

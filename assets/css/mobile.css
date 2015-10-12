@@ -1970,6 +1970,10 @@ h1 {
 .address-info .dropdown__body {
   -webkit-transition: height 0.5s 0s ease-in-out;
   transition: height 0.5s 0s ease-in-out;
+  padding-bottom: 60px;
+}
+.address-info .dropdown__body .icon-x {
+  margin: 0 0 10px;
 }
 .address-info__body {
   position: relative;
@@ -3597,6 +3601,12 @@ h1 {
   color: #e30c19;
   top: 2px;
   font-size: 19px !important;
+}
+.basket-empty {
+  display: none;
+  text-align: center;
+  line-height: 40px;
+  font-size: 16px;
 }
 .basket_order .basket-item {
   padding: 17px 0 19px;

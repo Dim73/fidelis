@@ -2869,7 +2869,7 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
 
         this.loadItems = function() {
           self.getItem(function(data){
-              self.toggleBasket();
+              !data.length && self.updateCount();
               for (var i in data) {
                   self.addToBasket(data[i]);
               }
@@ -3028,7 +3028,8 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
         };
 
         this.updateCount = function() {
-            self.$topCount.text(items.length);
+            console.log('update');
+            self.$topCount.text(items.length || 0);
             !items.length && self.toggleBasket(true);
         };
 
