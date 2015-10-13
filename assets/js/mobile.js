@@ -3510,6 +3510,8 @@ $(function(){
             $submenu = $('.main-nav__submenu'),
             hasSubmenuClass = '.hasSubmenu > .link';
 
+        //var submenuFirstOpen = true;
+
         $mainNavLink.click(function(e){
             e.preventDefault();
             var isOpen = $mainNavLink.is('.open');
@@ -3527,13 +3529,17 @@ $(function(){
 
         function toggleMainMenu(open) {
             if (!open) {
+                //$mainNav.css({'min-height':0});
                 toggleHeight($mainNav,$mainNavHolder, true);
+                //submenuFirstOpen = true;
             }
             toggleHeight($mainNav,$mainNavHolder, open);
         }
 
         function toggleSubMenu($submenu, open) {
+            //submenuFirstOpen && $mainNav.css({'min-height':$mainNav.height(),'height':'auto'});
             $mainNav.css('height','auto');
+            //submenuFirstOpen = false;
             toggleHeight($submenu,$('.main-nav-line__list', $submenu), open);
         }
 

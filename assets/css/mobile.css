@@ -3118,8 +3118,6 @@ h1 {
   top: 80px;
   right: 0;
   width: 100%;
-  -webkit-transition: height 0.3s 0s ease-in-out;
-  transition: height 0.3s 0s ease-in-out;
   height: 0;
   overflow: hidden;
 }
@@ -3205,8 +3203,6 @@ h1 {
   height: 0;
   overflow: hidden;
   margin-top: -1px;
-  -webkit-transition: height 0.3s 0s ease-in-out;
-  transition: height 0.3s 0s ease-in-out;
 }
 .header .main-nav .btn-close {
   position: absolute;

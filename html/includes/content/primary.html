@@ -25,6 +25,32 @@
 
                 <p>Важными чертами нашей компании являются динамичность, открытость для новых идей и способов работы и, главное, ориентированность на интересы наших покупателей. Не стоять на месте компании помогает коллектив из молодых, веселых, амбициозных и полных идей сотрудников.</p>
 
+                <script type="text/javascript">
+                    ymaps.ready(init);
+                    var myMap,
+                            myPlacemark;
+
+                    function init(){
+                        myMap = new ymaps.Map("mappiter", {
+                            center: [59.964007, 30.306175],
+                            zoom: 15,
+                            controls: ['geolocationControl', 'zoomControl', 'fullscreenControl']
+                        });
+
+                        myPlacemark = new ymaps.Placemark([59.96371992, 30.30695193], {
+                            hintContent: '<strong>Шоурум точка-выдачи Fidelis-style.ru в Санкт-Петербурге</strong>',
+                            balloonContent: '<img src="/assets/images/svg/logo-sign.svg" width="19" height="18" alt=""><strong> FIDELIS-STYLE шоурум точка-выдачи</strong> <br/><strong>Адрес:</strong><br/>Санкт-Петербург, Большой проспект П.С., дом 74, <br/><strong>Режим работы:</strong> <br/>с 9:00 до 19:00, Сб. Вс. - Выходной'}, {
+                            iconLayout: 'default#image',
+                            iconImageHref: '/images/balloon.png',
+                            iconImageSize: [37, 42],
+                            iconImageOffset: [-10, -42]
+                        });
+
+                        myMap.geoObjects.add(myPlacemark);
+                    }
+                </script>
+                <div id="mappiter" style=" border: 1px solid #DFDFDF; width: 772px; height: 320px;"></div>
+
                 Предлагая нашу продукцию, мы гарантируем Вам: <br/>
                 <ul>
                     <li>Высокое качество изделий;</li>
