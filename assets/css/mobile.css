@@ -2302,7 +2302,7 @@ h1 {
   display: inline-block;
   line-height: 12px;
   padding: 0 3px;
-  color: #888888;
+  color: #e30c19;
   text-decoration: line-through;
 }
 .old-cost + .cost {
@@ -2310,9 +2310,9 @@ h1 {
 }
 .cost {
   display: block;
-  font: bold 14px/1 Arial;
+  font: bold 16px/1 Arial;
   margin-top: 20px;
-  color: #e30c19;
+  color: #444444;
 }
 .tooltip {
   cursor: pointer;
