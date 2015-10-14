@@ -4133,6 +4133,12 @@ h1 {
   letter-spacing: 0.05em;
   margin-bottom: 15px;
 }
+.itemlist_popular .old-cost {
+  color: #e30c19;
+}
+.itemlist_popular .cost {
+  color: #444444;
+}
 .itemlist_favorites .item {
   width: 255px;
   height: 395px;
