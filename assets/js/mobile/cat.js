@@ -27,7 +27,7 @@
     };
 
     var goodsUrl = '';
-    if(window.location.host && (/\:3000/.test(window.location.host))) {
+    if(window.location.host && (/\:300/.test(window.location.host))) {
         goodsUrl = '../../source/back/catalogue.json?';
     } else {
         goodsUrl = '/ajax/catalogue.html?';
@@ -512,6 +512,7 @@
         view: function() {
             this.self = document.getElementById('itemsfilterresult');
             this.$self = $(this.self);
+            this.$title = $('.goods-filter__choosen-title');
             this.linkClass = 'filter_item';
             this.tpl  = '<div class="'+this.linkClass+'" data-filter="{type}" data-value="{value}">{lbl}</div>';
 
@@ -531,7 +532,6 @@
             var filters = this.controller.getViewData(),//{filterName: [{value:label},...],filterName: [...]}
                 filtersHtml = '';
 
-            //console.log(filters);
             for (var filter in filters) {
                 filters[filter].forEach(function(values){
                     for (var value in values) {
@@ -540,6 +540,7 @@
                 }.bind(this));
 
             }
+            this.$title.toggle(!!filtersHtml);
             this.$self.html(filtersHtml);
         }
     };
@@ -887,7 +888,7 @@
     $(function(){
         Filters.init(CatalogManager, FiltersView);
 
-        Filters.addComponent(PriceFilter);
+       // Filters.addComponent(PriceFilter);
         Filters.addComponent(CheckboxFilter);
         Filters.addComponent(popularFilter);
         Filters.addComponent(IdentifySection);
