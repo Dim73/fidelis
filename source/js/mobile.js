@@ -168,6 +168,20 @@ $(document).ready(function() {
 
                     }
                 }
+            },
+            {
+                sliderClass: '.item-preview__slider',
+                checkLength: 1,
+                options: {
+                    slideWidth: 255,
+                    infiniteLoop: false,
+                    pager: false,
+                    auto: true,
+                    controls: false,
+                    mode: 'horizontal',
+                    onSliderLoad: function() {
+                    }
+                }
             }
         ];
         sliderConstructor(allSliders);
