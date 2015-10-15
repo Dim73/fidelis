@@ -348,9 +348,9 @@
                 var $item = $(this);
                 var filterName = $item.data('filter');
                 filterName && self.addFilterName(filterName);
-                self.addNameCheckbox({type: filterName,value: parseInt($item.data('value')), label: $item.text()});
+                self.addNameCheckbox({type: filterName,value: parseInt($item.val()), label: $item.text()});
                 if ($item[0].selected && !$item.is(':disabled')) {
-                    self.addActiveCheckbox({type: $item.data('filter'),value: parseInt($item.data('value')), checked: $item[0].selected, label: $item.text()}, true);
+                    self.addActiveCheckbox({type: $item.data('filter'),value: parseInt($item.val()), checked: $item[0].selected, label: $item.text()}, true);
                 }
             });
 
@@ -359,10 +359,10 @@
                 var data = [];
                 $select.find('option').each(function(){
                     var $item = $(this);
-                    $item[0].selected && data.push({type: $item.data('filter'),value: $item.data('value'), label: $item.text()});
+                    $item[0].selected && data.push({type: $item.data('filter'),value: $item.val(), label: $item.text()});
                 });
                 self.updateActiveCheckbox(data, $select.prop('name'));
-
+                self.controller.render();
             });
         },
         render: function() { //рендер доступных чекбоксов
@@ -373,7 +373,7 @@
                     var $item = $(this);
                     //console.log(filtersData[filter].indexOf("" + $item.data('value')));
                     //console.log(filtersData[filter], typeof $item.data('value'), filtersData[filter].indexOf($item.data('value')));
-                    if (filtersData[filter].indexOf($item.data('value')) > -1) {
+                    if (filtersData[filter].indexOf(+$item.val()) > -1) {
                         $item.show();
                     } else {
                         $item.hide();
@@ -386,7 +386,7 @@
             this.view.checkoxFilters.not(':disabled').prop('selected',false);
             for (var fName in activeCheckboxes) {
                 activeCheckboxes[fName].forEach(function(val){
-                    this.view.checkoxFilters.filter('[data-filter='+fName+'][data-value="'+val+'"]').prop('selected',true);
+                    this.view.checkoxFilters.filter('[data-filter='+fName+'][value="'+val+'"]').prop('selected',true);
                 }.bind(this));
             }
         }
