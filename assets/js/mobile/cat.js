@@ -470,6 +470,7 @@
             this.$self = $('.goods-filter.folding');
             this.$apply.on('click',function(e){
                 e.preventDefault();
+                console.log(self.getState());
                 self.sendMessage('filtersChange');
             });
             this.$close.on('click',function(e){
