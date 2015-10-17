@@ -343,6 +343,7 @@
             var self = this;
             this.view = {};
             this.view.checkoxFilters = $('.goods-filter__item option');
+            this.view.$select = $('.goods-filter__item select');
 
             this.view.checkoxFilters.each(function(){
                 var $item = $(this);
@@ -354,8 +355,8 @@
                 }
             });
 
-            this.view.checkoxFilters.on('click', function(event){
-                var $select = $(this).closest('select');
+            this.view.$select.on('change', function(event){
+                var $select = $(this);
                 var data = [];
                 $select.find('option').each(function(){
                     var $item = $(this);
