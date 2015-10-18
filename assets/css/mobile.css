@@ -1765,6 +1765,9 @@ h1 {
 .footer .magazine-info__phone {
   margin-bottom: 31px;
 }
+.footer .magazine-info__phone .link_phone {
+  color: #fff !important;
+}
 .dropdown_top {
   width: 100%;
   position: absolute;
@@ -2603,6 +2606,12 @@ h1 {
   -webkit-transition: height 0.3s 0s ease-in-out;
   transition: height 0.3s 0s ease-in-out;
 }
+.quick-order .icon-close {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  width: 30px;
+}
 .quick-order__inner {
   padding: 18px 18px 33px;
 }
@@ -3293,6 +3302,9 @@ h1 {
 .header .site-phone .magazine-info__title {
   font: 24px/1 "LatoRegular";
   color: #444444;
+}
+.header .site-phone .magazine-info__title .link_phone {
+  color: #444444 !important;
 }
 .service-menu {
   background-color: #444444;

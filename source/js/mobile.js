@@ -301,23 +301,40 @@ $(document).ready(function() {
 
             var self = {};
             self.id = itemData.id;
+            window.isSizeSelect = itemData.sizes&&itemData.sizes.length?false:true;
+
+            var optionsHtml = '<option value="">размер</option>';
+            for (var i in itemData.sizes) {
+                for (var property in itemData.sizes[i] ) {
+                    optionsHtml += '<option value="'+property+'">'+property+'</option>';
+                }
+            }
+
+            $selectSize.html(optionsHtml).trigger('update');
 
             $selectSize.change(function(){
                 var valSize = self.size = $(this).val(),
                     costRender,
                     cost;
                 if (valSize) {
+                    $selectSize.find('option[value=""]').remove();
+                    $selectSize.trigger('update');
                     for (var i in itemData.sizes) {
                         for (var property in itemData.sizes[i] ) {
-                            if (property == valSize) {
+
+                            if (property === valSize) {
                                 cost = itemData.sizes[i][property];
                                 break;
                             }
                         }
                     }
                     $cost.html(cost);
+                    window.isSizeSelect = true;
+                } else {
+                    window.isSizeSelect = false;
                 }
                 $('.js-buy').removeClass('btn_red').text('купить');
+                $('.js-quick-order').removeClass('btn_red').text('быстрый заказ');
             });
 
             $('.js-buy').click(function(){
