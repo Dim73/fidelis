@@ -374,7 +374,8 @@
                     var $item = $(this);
                     //console.log(filtersData[filter].indexOf("" + $item.data('value')));
                     //console.log(filtersData[filter], typeof $item.data('value'), filtersData[filter].indexOf($item.data('value')));
-                    if (filtersData[filter].indexOf(+$item.val()) > -1) {
+                    console.log();
+                    if (filtersData[filter].indexOf(filter == 'size'?$item.val():+$item.val()) > -1) {
                         $item.show();
                     } else {
                         $item.hide();
