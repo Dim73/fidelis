@@ -2877,9 +2877,14 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
         };
 
         this.addItem = function (data, newItem) {
-
+            var itemsUrl = '';
+            if(window.location.host && (/\:300/.test(window.location.host))) {
+                itemsUrl = '../../source/back/additem.json';
+            } else {
+                itemsUrl = '/ajax/additem.html?';
+            }
             $.ajax({
-                url: '../../source/back/additem.json',
+                url: itemsUrl,
                 cache: false,
                 type: 'post',
                 dataType: 'json',
@@ -2894,8 +2899,15 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
         };
 
         this.removeItem = function(item) {
+
+            var itemsUrl = '';
+            if(window.location.host && (/\:300/.test(window.location.host))) {
+                itemsUrl = '../../source/back/additem.json';
+            } else {
+                itemsUrl = '/ajax/basketitemdelete.html?';
+            }
             $.ajax({
-                url: '../../source/back/deleteitem.json',
+                url: itemsUrl,
                 cache: false,
                 type: 'post',
                 dataType: 'json',
@@ -2956,8 +2968,14 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
 
         this.getItem = function(callback, id) {
             var id = id || false;
+            var itemsUrl;
+            if(window.location.host && (/\:300/.test(window.location.host))) {
+                itemsUrl = '../../source/back/item.json';
+            } else {
+                itemsUrl = '/ajax/basketitem.html?';
+            }
             $.ajax({
-                url: '../../source/back/item.json',
+                url: itemsUrl,
                 cache: false,
                 type: 'get',
                 dataType: 'json',
