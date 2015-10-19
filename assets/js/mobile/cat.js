@@ -58,7 +58,7 @@
             this.state[this.filterName] = data;
         },
         view: function() {
-            var $activeLink = $('.category-section-block .list .selected');
+            var $activeLink = $('.category-section-block input');
             this.setName($activeLink.data('filter'));
             this.updateState($activeLink.data('value'));
 
@@ -106,7 +106,6 @@
             this.controller = controller;
             this.state = {};
             this.filterName = 'OtherFilter';
-
             var otherVal = $('#other').val();
             this.state[this.filterName] = otherVal?otherVal:null;
         },
