@@ -364,6 +364,7 @@
                 });
                 self.updateActiveCheckbox(data, $select.prop('name'));
                 self.controller.render();
+                self.controller.updateFilters();
             });
         },
         render: function() { //рендер доступных чекбоксов
@@ -374,11 +375,10 @@
                     var $item = $(this);
                     //console.log(filtersData[filter].indexOf("" + $item.data('value')));
                     //console.log(filtersData[filter], typeof $item.data('value'), filtersData[filter].indexOf($item.data('value')));
-                    console.log();
                     if (filtersData[filter].indexOf(filter == 'size'?$item.val():+$item.val()) > -1) {
-                        $item.show();
+                        $item.removeProp('disabled');
                     } else {
-                        $item.hide();
+                        $item.prop('disabled','disabled');
                     }
                 });
             }
@@ -449,7 +449,7 @@
             });
         },
         updateFilters: function() {
-            //this.sendMessage('filtersChange');
+            this.sendMessage('filtersChange');
         },
         getFilterRenderData: function(filter) {
             var obj = {};
@@ -498,7 +498,7 @@
         },
         removeActiveFilter: function(data){ //filterName, value
             this.getComponentByName(data.type).removeFilter(data);
-            this.render();
+            this.updateFilters();
         }
     };
 

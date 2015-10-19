@@ -4366,6 +4366,7 @@ h1 {
 .goods-filter__choosen .btn {
   background-color: #444444;
   width: 100%;
+  display: none;
 }
 .goods-filter .icon-x {
   font-size: 16px;
