@@ -4850,7 +4850,6 @@ h1 {
 .delivery-form .row .inputtext,
 .delivery-form .row textarea {
   width: 100%;
-  font-size: 14px;
   border: 1px solid #444444;
 }
 .delivery-form .error .inputtext,
