@@ -4918,6 +4918,9 @@ h1 {
 .delivery-form .select_delivery {
   height: 58px;
 }
+.delivery-form .error .select_delivery {
+  border-color: #e30c19;
+}
 .delivery-form select {
   font-size: 14px;
   text-transform: uppercase;

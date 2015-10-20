@@ -682,7 +682,7 @@
         self.shipCost = 0;
 
         self.validate = [
-            's-name', 's-phone'
+            's-name', 's-phone',  's-paytype', 's-delivery'
         ];
 
         self.basket = basket;

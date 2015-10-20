@@ -3396,7 +3396,7 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
         self.shipCost = 0;
 
         self.validate = [
-            's-name', 's-phone'
+            's-name', 's-phone',  's-paytype', 's-delivery'
         ];
 
         self.basket = basket;
