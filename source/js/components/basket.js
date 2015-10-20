@@ -2,7 +2,7 @@
 
     var ajxUrl = {};
 
-    var ENV_CONST = window.location.host && (/\:300/.test(window.location.host))?'dev':'prod';
+    var ENV_CONST = window.location.host && (/^[^\:]+\:[\d]+/.test(window.location.host))?'dev':'prod';
 
     function addUrl (name, urls) {
         if(ENV_CONST == 'dev') {
