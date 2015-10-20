@@ -4805,7 +4805,7 @@ h1 {
 .order-complete .order__inner {
   padding-top: 30px;
   padding-bottom: 50px;
-  width: 650px;
+  width: 100%;
 }
 .order-complete .order__inner:before {
   display: none;
