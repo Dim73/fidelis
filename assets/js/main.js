@@ -2714,6 +2714,27 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
 })(jQuery);
 (function($){
 
+    var ajxUrl = {};
+
+    var ENV_CONST = window.location.host && (/\:300/.test(window.location.host))?'dev':'prod';
+
+    function addUrl (name, urls) {
+        if(ENV_CONST == 'dev') {
+            ajxUrl[name] = '../../source/back/' + urls[0];
+        } else {
+            ajxUrl[name] = '/ajax/' + urls[1];
+        }
+    }
+
+    addUrl('town', ['town.html','town.html']);
+    addUrl('addItem', ['additem.json','additem.html?']);
+    addUrl('removeItem', ['additem.json','basketitemdelete.html?']);
+    addUrl('getItem', ['item.json','basketitem.html?']);
+    addUrl('setCoupon', ['coupon.json','coupon.html?']);
+    addUrl('modalItem', ['item.html','item.html?']);
+    addUrl('delivInfo', ['deliveryInfo.json','deliveryInfo.html']);
+    addUrl('delivSubmit', ['deliverySubmit.json','deliverySubmit.html']);
+
     function digitDiv (str) {
         return str.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
     }
@@ -2877,14 +2898,9 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
         };
 
         this.addItem = function (data, newItem) {
-            var itemsUrl = '';
-            if(window.location.host && (/\:300/.test(window.location.host))) {
-                itemsUrl = '../../source/back/additem.json';
-            } else {
-                itemsUrl = '/ajax/additem.html?';
-            }
+
             $.ajax({
-                url: itemsUrl,
+                url: ajxUrl.addItem,
                 cache: false,
                 type: 'post',
                 dataType: 'json',
@@ -2900,14 +2916,9 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
 
         this.removeItem = function(item) {
 
-            var itemsUrl = '';
-            if(window.location.host && (/\:300/.test(window.location.host))) {
-                itemsUrl = '../../source/back/additem.json';
-            } else {
-                itemsUrl = '/ajax/basketitemdelete.html?';
-            }
+
             $.ajax({
-                url: itemsUrl,
+                url: ajxUrl.removeItem,
                 cache: false,
                 type: 'post',
                 dataType: 'json',
@@ -2968,14 +2979,9 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
 
         this.getItem = function(callback, id) {
             var id = id || false;
-            var itemsUrl;
-            if(window.location.host && (/\:300/.test(window.location.host))) {
-                itemsUrl = '../../source/back/item.json';
-            } else {
-                itemsUrl = '/ajax/basketitem.html?';
-            }
+
             $.ajax({
-                url: itemsUrl,
+                url: ajxUrl.getItem,
                 cache: false,
                 type: 'get',
                 dataType: 'json',
@@ -2995,7 +3001,7 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
             var val = $inpt.val();
             if (val) {
                 $.ajax({
-                    url: '../../source/back/coupon.json',
+                    url: ajxUrl.setCoupon,
                     cache: false,
                     type: 'post',
                     dataType: 'json',
@@ -3054,7 +3060,7 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
         this.modalItem = function(item) {
             this.modalItemToggle(true);
             $.ajax({
-                url: '../../source/back/item.html',
+                url: ajxUrl.modalItem,
                 cache: false,
                 type: 'post',
                 dataType: 'html',
@@ -3257,7 +3263,7 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
         this.getDeliveryInfo = function(dest) {
 
             $.ajax({
-                url: '../../source/back/deliveryInfo.json',
+                url: ajxUrl.delivInfo,
                 cache: false,
                 type: 'post',
                 dataType: 'json',
@@ -3285,7 +3291,7 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
 
             self.$towns && self.$towns.remove();
             $.ajax({
-                url: '../../source/back/town.html',
+                url: ajxUrl.town,
                 cache: false,
                 type: 'post',
                 dataType: 'html',
@@ -3332,7 +3338,7 @@ if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.opti
             e.preventDefault();
             if (self.validateDelivery()) {
                 $.ajax({
-                    url: '../../source/back/deliverySubmit.json',
+                    url: ajxUrl.delivSubmit,
                     cache: false,
                     type: 'post',
                     dataType: 'json',
