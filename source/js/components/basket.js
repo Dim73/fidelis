@@ -21,6 +21,15 @@
     addUrl('delivInfo', ['deliveryInfo.json','deliveryInfo.html']);
     addUrl('delivSubmit', ['deliverySubmit.json','deliverySubmit.html']);
 
+    $.ajaxSetup({
+        beforeSend: function (xhr, setting) {
+            ajxLoader.attachTo($('.order'));
+        },
+        complete: function (xhr, status) {
+            ajxLoader._detach();
+        }
+    });
+
     function digitDiv (str) {
         return str.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
     }
