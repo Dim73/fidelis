@@ -1,0 +1,40 @@
+include ../includes/vars.jade
+- var device = '__d'
+
+
+doctype html
+html(lang="en")
+  head
+    meta(http-equiv="Content-Type", content="text/html;charset=UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    title= pageTitle
+    script(type='text/javascript', src='#{paths.js}/main.js')
+    link(rel="stylesheet", href='#{paths.css}/main.css')
+    link(rel="stylesheet", href='#{paths.css}/jquery-ui-1.10.3.custom.css')
+    include ../includes/_head.jade
+  body
+    .main
+      - var test = '../includes/_head.jade'
+      include  test
+      
+
+//- <head>
+//- 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+//- 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+//- 	<title>fidelis</title>
+//-     <link rel="stylesheet" href="<!--#echo var="css-path" -->/jquery-ui-1.10.3.custom.css" />
+//-     <link rel="stylesheet" href="<!--#echo var="css-path" -->/style.css" />
+//-     <script type="text/javascript" src="<!--#echo var="js-path" -->/main.js"></script>
+//- 
+//-     <!--#include virtual="html/includes/_head.html"-->
+//- </head>
+//- <body>
+//-     <div class="main">
+//-         <!--#include virtual="$includespath/layouts/header${device}.html" -->
+//-         <!--#include virtual="$includespath/index/primary.html" -->
+//- 
+//-         <!--#include virtual="$includespath/layouts/footer${device}.html" -->
+//-     </div>
+//-         <!--#include virtual="$includespath/_body.html"-->
+//- </body>
+//- </html>
