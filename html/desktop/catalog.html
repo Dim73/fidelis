@@ -28,16 +28,16 @@
     <link rel="stylesheet" href="<!--#echo var="css-path" -->/style.css" />
     <script type="text/javascript" src="<!--#echo var="js-path" -->/main.js"></script>
     <script type="text/javascript" src="<!--#echo var="js-path" -->/cat.js"></script>
-    <!--#include virtual="$includespath/_head.html"-->
+    include $includespath/_head.html
 </head>
 <body>
     <div class="main">
-        <!--#include virtual="$includespath/layouts/header${device}.html" -->
-        <!--#include virtual="$includespath/layouts/content-info.html?Grazzela" -->
-        <!--#include virtual="$includespath/catalog/primary.html" -->
+        include $includespath/layouts/header${device}.html
+        include $includespath/layouts/content-info.html?Grazzela
+        include $includespath/catalog/primary.html
 
-        <!--#include virtual="$includespath/layouts/footer${device}.html" -->
+        include $includespath/layouts/footer${device}.html
     </div>
-    <!--#include virtual="$includespath/_body.html"-->
+    include $includespath/_body.html
 </body>
 </html>

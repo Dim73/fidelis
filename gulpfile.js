@@ -60,8 +60,22 @@ var replace = require('gulp-replace');
 
 gulp.task('replace', function(){
     gulp.src(['./html/**/*.html'])
-        .pipe(replace('bar', 'foo'))
+        //.pipe(replace('<!--#echo var="img-path"-->', '#{paths.img}'))
+        //.pipe(replace('<!--#echo var="assets-path"-->', '#{paths.tmpimg}'))
+        .pipe(replace(/<!--#include virtual="([^"]*)" -->/g, 'include $1'))
         .pipe(gulp.dest(function(file) {
             return file.base;
         }));
+});
+
+var rename = require("gulp-rename");
+
+gulp.task('rename', function(){
+gulp.src("./html/**/*.html")
+    .pipe(rename(function (path) {
+        path.extname = ".jade"
+    }))
+    .pipe(gulp.dest(function(file) {
+        return file.base;
+    }));
 });

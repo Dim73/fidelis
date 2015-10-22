@@ -780,6 +780,201 @@
           </div>
         </div>
       </div>
+      <div class="footer">
+        <div class="footer-inner wrap">
+          <div class="footer-col__holder">
+            <div class="footer-col"><span class="footer-header">Информация</span>
+              <ul class="add-menu">
+                <li><a href="#">О компании</a></li>
+                <li><a href="#">Контакты</a></li>
+                <li><a href="#">Вакансии</a></li>
+                <li><a href="#">Дистрибуция</a></li>
+                <li><a href="#">Оптовым покупателям</a></li>
+              </ul>
+            </div>
+            <div class="footer-col"><span class="footer-header">сервис</span>
+              <ul class="add-menu">
+                <li><a href="#">Примерка на выбор</a></li>
+                <li><a href="#">Доставка по Москве и области</a></li>
+                <li><a href="#">Доставка по РФ и СНГ</a></li>
+                <li><a href="#">Гарантия</a></li>
+                <li><a href="#">Возврат</a></li>
+                <li><a href="#">Оплата</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <div class="social-footer"><span class="footer-header">Мы в соц. сетях</span>
+                <ul class="social-menu">
+                  <li><a href="#" class="icon-moon icon-tw"></a></li>
+                  <li><a href="#" class="icon-moon icon-fb"></a></li>
+                  <li><a href="#" class="icon-moon icon-ins"></a></li>
+                  <li><a href="#" class="icon-moon icon-vk"></a></li>
+                </ul>
+              </div>
+              <div class="subscribe subscribe_footer"><span class="title footer-header">Подписка на рассылку</span>
+                <div class="subscribe__body">
+                  <form action="" class="subscribe__form">
+                    <div class="row">
+                      <input type="email" name="email" placeholder="Введите ваш e-mail" class="inputtext">
+                    </div><a href="#" class="btn btn_white btn-submit">ок
+                      <input type="submit"></a>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="footer-col">
+              <div class="magazine-info"><span class="magazine-info__phone">+7 (495) 255 11 08</span>
+                <div class="magazine-info__address"><span href="#" class="magazine-info__title">Москва<i class="icon icon-pin"></i></span>
+                  <div class="desc">Берсеневская набережная д. 6 стр. 1<br> в будние дни с 9:00 до 19:00</div>
+                </div>
+                <div class="magazine-info__shipment"><span class="magazine-info__title">Доставка<i class="icon icon-car2"></i></span>
+                  <div class="desc">Ежедневно с 10:00 до 22:00</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer__bottom">
+          <div class="wrap">
+            <div class="copyright">Ювелирный интернет-магазин FIDELIS-STYLE<img src="../../assets/images/svg/logo-sign.svg" alt=""><br>                2013-2015 © All rights reserved.</div>
+            <div class="pay"><img src="../../assets/images/svg/pay-system.svg" alt=""></div>
+          </div>
+        </div>
+      </div>
+    </div><script id="basket-item" type="x-tmpl-mustache">
+                <div class="basket-item" data-id="{{id}}">
+                    <div class="basket-item__holder">
+                        <div class="basket-item__img">
+                            <img src="{{img}}" alt=""/>
+                        </div>
+                        <div class="basket-item__name">
+                            <a href="{{link}}" class="basket-item__link">{{name}}</a>
+                            <span class="article">Артикул: {{articul}}</span>
+                        </div>
+                        <div class="basket-item__size">
+                            <div class="select-size__wrap">
+                                <select class="no-styler select_size-order">
+                                    {{#sizes}}
+                                    <option value="{{size}}" {{selected}}>{{size}}</option>
+                                    {{/sizes}}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="basket-item__counter">
+                            <div class="counter">
+                                <span class="counter__val">{{count}}</span>
+                                <div class="counter__controls">
+                                    <a class="counter__control control_up" data-control="inc" href="#">+</a>
+                                    <a class="counter__control control_up" data-control="desc" href="#">-</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="basket-item__price">
+                            <span class="summ"></span><span class="rub"><span>руб</span></span>
+                        </div>
+                        <div class="basket-item__service">
+                            <a class="basket-item__delete icon-close">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+</script>
+<script id="basket-item__mobile" type="x-tmpl-mustache">
+                <div class="basket-item" data-id="{{id}}">
+                    <div class="basket-item__holder">
+                        <div class="basket-item__img">
+                            <img src="{{img}}" alt=""/>
+                        </div>
+                        <div class="basket-item__middle">
+                            <div class="basket-item__name">
+                                <a href="{{link}}" class="basket-item__link">{{name}}</a>
+                                <span class="article">Артикул: {{articul}}</span>
+                            </div>
+                             <div class="basket-item__counter">
+                                <span class="counter__title">К-во</span>
+                                <div class="counter">
+                                    <span class="counter__val">{{count}}</span>
+                                    <div class="counter__controls">
+                                        <a class="counter__control control_up" data-control="inc" href="#">+</a>
+                                        <a class="counter__control control_up" data-control="desc" href="#">-</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="basket-item__size">
+                                <span class="select-size__title">Размер</span>
+                                <div class="select-size__wrap">
+                                    <select class="no-styler select_size-order">
+                                        {{#sizes}}
+                                        <option value="{{size}}" {{selected}}>{{size}}</option>
+                                        {{/sizes}}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="basket-item__price">
+                                <span class="summ"></span><span class="rub"><span>руб</span></span>
+                            </div>
+                        </div>
+                        <div class="basket-item__service">
+                            <a class="basket-item__delete icon-x" href="#">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+</script>
+<script id="basket-sale" type="x-tmpl-mustache">
+    <div class="total__sale">
+        <span class="lbl">Итого c учетом {{sale}}% скидки:</span>
+        <span class="summ"></span><span class="rub"><span>руб</span></span>
     </div>
+</script>
+<div class="size-popup popup">
+    <a class="close icon-close" href="#"></a>
+    <div class="size__inner">
+
+    </div>
+</div>
+
+<script id="template-popup-size" type="x-tmpl-mustache">
+        <div class="item-img">
+            <img class="" src="{{img}}" alt=""/>
+        </div>
+        <div class="pitem-size">
+            <div class="select-size__wrap">
+                <select class="no-styler select_size">
+                    <option value="">Выберите размер</option>
+                    {{#sizes}}
+                    <option value="{{size}}">{{size}}</option>
+                    {{/sizes}}
+                </select>
+            </div>
+        </div>
+        <div class="cost">
+
+        </div>
+        <a href="#" class="btn">Купить</a>
+</script>
+
+<script id="template-popup-cost" type="x-tmpl-mustache">
+    <span class="dec">Цена: </span><span class="count">{{price}}</span><span class="rub"><span>руб</span></span>
+</script>
+<div class="fade fade-fixed"></div>
+<div class="scroll-top">
+    <div class="wrap">
+        <a class="scroll-top__link" href="#"></a>
+    </div>
+</div>
+
+<script id="town-change" type="x-tmpl-mustache">
+<div class="town-autocomplete">
+    <div class="town-autocomplete__inner" data-action="load">
+
+    </div>
+</div>
+</script>
+
+<div class="loader">
+    <i class="loader__icon"></i>
+</div>
   </body>
 </html>

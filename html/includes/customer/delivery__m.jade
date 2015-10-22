@@ -1,0 +1,141 @@
+<div class="customer__welcome-text">Добро пожаловать Елена Компотова в Ваш личный кабинет.</div>
+<div class="account-section__head wrap">
+    <div class="select-size__wrap customer-menu">
+         <span class="account-section__title">
+                Адрес доставки
+                <i class="icon icon-pin"></i>
+         </span>
+        <select id="item_size" class="no-styler select_size" onchange="window.location.href=this.querySelector('option:checked').getAttribute('value')">
+            <option value="customer.html">
+                Ваш профиль
+            </option>
+            <option value="customer-delivery.html">
+                Адрес доставки
+            </option>
+            <option value="customer-orders.html">
+                Заказы
+            </option>
+            <option value="customer-favorites.html">
+                Избранное
+            </option>
+            <option value="index.html">
+                Выход
+            </option>
+        </select>
+    </div>
+</div>
+
+<div class="customer-address account-section__body">
+    <div class="wrap">
+        <div class="customer-address__content">
+            <div class="customer-address__map">
+                <div id="customer-map"></div>
+            </div>
+            <div class="customer-address__data">
+                <form class="customer-address__form" action="">
+                    <div class="row">
+                        <div class="select-scroll__holder select-scroll_transparent">
+                            <select name="country" class="no-styler select-scroll">
+                                <option value="11">Россия</option>
+                                <option value="53">Адыгея респ.</option>
+                                <option value="54">Алтай респ.</option>
+                                <option value="3">Алтайский край</option>
+                                <option value="4">Амурская обл.</option>
+                                <option value="6">Архангельская обл.</option>
+                                <option value="7">Астраханская обл.</option>
+                                <option value="55">Башкортостан респ.</option>
+                                <option value="8">Белгородская обл.</option>
+                                <option value="10">Брянская обл.</option>
+                                <option value="56">Бурятия респ.</option>
+                                <option value="11">Владимирская обл.</option>
+                                <option value="12">Волгоградская обл.</option>
+                                <option value="13">Вологодская обл.</option>
+                                <option value="14">Воронежская обл.</option>
+                                <option value="57">Дагестан респ.</option>
+                                <option value="16">Еврейская авт. обл.</option>
+                                <option value="229758847">Забайкальский край</option>
+                                <option value="17">Ивановская обл.</option>
+                                <option value="101">Ингушская респ.</option>
+                                <option value="18">Иркутская обл.</option>
+                                <option value="19">Кабардино-Балкарская респ.</option>
+                                <option value="21">Калининградская обл.</option>
+                                <option value="58">Калмыкия респ.</option>
+                                <option value="22">Калужская обл.</option>
+                                <option value="23">Камчатский край</option>
+                                <option value="24">Карачаево-Черкесская респ.</option>
+                                <option value="59">Карелия респ.</option>
+                                <option value="25">Кемеровская обл.</option>
+                                <option value="27">Кировская обл.</option>
+                                <option value="60">Коми респ.</option>
+                                <option value="29">Костромская обл.</option>
+                                <option value="30">Краснодарский край</option>
+                                <option value="31">Красноярский край</option>
+                                <option value="694008984">Крым респ.</option>
+                                <option value="32">Курганская обл.</option>
+                                <option value="33">Курская обл.</option>
+                                <option value="35">Ленинградская обл.</option>
+                                <option value="36">Липецкая обл.</option>
+                                <option value="38">Магаданская обл.</option>
+                                <option value="61">Марий Эл респ.</option>
+                                <option value="62">Мордовия респ.</option>
+                                <option value="40">Московская обл.</option>
+                                <option value="41">Мурманская обл.</option>
+                                <option value="42">Ненецкий авт. округ</option>
+                                <option value="43">Нижегородская обл.</option>
+                                <option value="44">Новгородская обл.</option>
+                                <option value="45">Новосибирская обл.</option>
+                                <option value="46">Омская обл.</option>
+                                <option value="47">Оренбургская обл.</option>
+                                <option value="48">Орловская обл.</option>
+                                <option value="49">Пензенская обл.</option>
+                                <option value="50">Пермский край</option>
+                                <option value="51">Приморский край</option>
+                                <option value="52">Псковская обл.</option>
+                                <option value="68">Ростовская обл.</option>
+                                <option value="69">Рязанская обл.</option>
+                                <option value="70">Самарская обл.</option>
+                                <option value="71">Саратовская обл.</option>
+                                <option value="63">Саха (Якутия) респ.</option>
+                                <option value="72">Сахалинская обл.</option>
+                                <option value="73">Свердловская обл.</option>
+                                <option value="64">Северная Осетия-Алания респ.</option>
+                                <option value="74">Смоленская обл.</option>
+                                <option value="75">Ставропольский край</option>
+                                <option value="78">Тамбовская обл.</option>
+                                <option value="65">Татарстан респ.</option>
+                                <option value="79">Тверская обл.</option>
+                                <option value="80">Томская обл.</option>
+                                <option value="81">Тульская обл.</option>
+                                <option value="66">Тыва респ.</option>
+                                <option value="83">Тюменская обл.</option>
+                                <option value="84">Удмуртская респ.</option>
+                                <option value="87">Ульяновская обл.</option>
+                                <option value="427838930">Фиктивный регион</option>
+                                <option value="89">Хабаровский край</option>
+                                <option value="67">Хакасия респ.</option>
+                                <option value="90">Ханты-Мансийский авт. округ-Югра</option>
+                                <option value="91">Челябинская обл.</option>
+                                <option value="92">Чечня респ.</option>
+                                <option value="94">Чувашия респ.</option>
+                                <option value="95">Чукотский авт. округ</option>
+                                <option value="99">Ямало-Ненецкий авт. округ</option>
+                                <option value="100">Ярославская обл.</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    include $includespath/layouts/row_input.html?id=address-index&addClass=inputsmall&label=Индекс 
+                    <!--#include virtual="$includespath/layouts/row_input.html?id=address-region&label=Регион "-->
+                    <!--#include virtual="$includespath/layouts/row_input.html?id=address-town&label=Город&req=*"-->
+                    <!--#include virtual="$includespath/layouts/row_input.html?id=address-address&label=Адрес&type=textarea"-->
+                    <div class="customer-address__form-bottom">
+                        <a class="btn btn_black btn-submit" href="#">
+                            СОХРАНИТЬ ИЗМЕНЕНИЯ
+                            <input type="submit">
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

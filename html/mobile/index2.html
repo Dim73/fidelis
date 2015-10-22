@@ -26,16 +26,16 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,, initial-scale=0.7, minimum-scale=0.7, maximum-scale=0.7">
     <link rel="stylesheet" href="<!--#echo var="css-path" -->/mobile.css" />
-    <!--#include virtual="$includespath/_head.html"-->
+    include $includespath/_head.html
 
 </head>
 <body>
     <div class="main">
-        <!--#include virtual="$includespath/layouts/header${device}.html" -->
-        <!--#include virtual="$includespath/index/primary__m.html" -->
+        include $includespath/layouts/header${device}.html
+        include $includespath/index/primary__m.html
 
-        <!--#include virtual="$includespath/layouts/footer${device}.html" -->
+        include $includespath/layouts/footer${device}.html
     </div>
-    <!--#include virtual="$includespath/_body.html"-->
+    include $includespath/_body.html
 </body>
 </html>
