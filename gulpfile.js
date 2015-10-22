@@ -55,3 +55,13 @@ gulp.task('watch', ['scripts', 'styles'], function() {
     gulp.watch(SRC_PATH.js + '**', ['scripts']);
     gulp.watch('./html/**/*.jade', ['templates']);
 })
+
+var replace = require('gulp-replace');
+
+gulp.task('replace', function(){
+    gulp.src(['./html/**/*.html'])
+        .pipe(replace('bar', 'foo'))
+        .pipe(gulp.dest(function(file) {
+            return file.base;
+        }));
+});
