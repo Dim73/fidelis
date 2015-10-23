@@ -1,44 +1,21 @@
-<!DOCTYPE html>
-<html lang="ru" class="no-js">
-<!--#if expr="$DOCUMENT_URI = /(.*)\/.*\.html/" -->
-	<!--#set var="DOCUMENT_PATH" value="$1" -->
-<!--#endif -->
-<!--#if expr="$DOCUMENT_PATH = /(.*)\/html/" -->
-	<!--#set var="_PATH" value="$1" -->
-<!--#endif -->
+include ../includes/vars
+- var device = '__m'
 
-<!--
-<!--#echo var="DOCUMENT_PATH" -->
-<!--#echo var="DOCUMENT_URI" -->
-<!--#echo var="_PATH" -->
- -->
-<!--#set var="includespath" value="$_PATH/html/includes" -->
-<!--#set var="assets-path" value="$_PATH/assets/images/tmp" -->
-<!--#set var="img-path" value="$_PATH/assets/images" -->
-<!--#set var="js-path" value="$_PATH/assets/js" -->
-<!--#set var="css-path" value="$_PATH/assets/css" -->
-<!--#set var="transparent" value="$_PATH/assets/images/tr.000000.100.gif" -->
-<!--#set var="device" value="__m" -->
-<!--#set var="page" value="catalog" -->
-<head>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>fidelis</title>
-    <meta id="Viewport" name="viewport" width="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="<!--#echo var="css-path" -->/jquery-ui-1.10.3.custom.css" />
-    <link rel="stylesheet" href="<!--#echo var="css-path" -->/mobile.css" />
-    <script type="text/javascript" src="<!--#echo var="js-path" -->/mobile.js"></script>
-    <script type="text/javascript" src="<!--#echo var="js-path" -->/item.js"></script>
-    include ../includes/_head.html
-</head>
-<body>
-    <div class="main">
-        include ../includes/layouts/header${device}.html
-        include ../includes/layouts/content-info.html?
-        include ../includes/item/primary__m.html
-
-        include ../includes/layouts/footer${device}.html
-    </div>
-    include ../includes/_body.html
-</body>
-</html>
+doctype html
+html(lang="en")
+  head
+    meta(http-equiv="Content-Type", content="text/html;charset=UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    title= pageTitle
+    script(type='text/javascript', src='#{paths.js}/mobile.js')
+    script(type='text/javascript', src='#{paths.js}/item.js')
+    link(rel="stylesheet", href='#{paths.css}/jquery-ui-1.10.3.custom.css')
+    link(rel="stylesheet", href='#{paths.css}/mobile.css')
+    include ../includes/_head.jade
+  body
+    .main
+      include ../includes/layouts/header__m
+      include ../includes/layouts/content-info
+      include ../includes/item/primary__m
+      include ../includes/layouts/footer__m
+    include ../includes/_body

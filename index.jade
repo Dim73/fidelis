@@ -10,11 +10,10 @@ html(lang="en")
     script(type='text/javascript', src='#{paths.js}/mobile.js')
     link(rel="stylesheet", href='#{paths.css}/jquery-ui-1.10.3.custom.css')
     link(rel="stylesheet", href='#{paths.css}/mobile.css')
-    meta(name="viewport", content="width=device-width,, initial-scale=0.7, minimum-scale=0.7, maximum-scale=0.7")
     include ../includes/_head.jade
   body
     .main
       include ../includes/layouts/header__m
       include ../includes/index/primary__m
       include ../includes/layouts/footer__m
-    include ../includes/_body
+    include ../includes/_body.html

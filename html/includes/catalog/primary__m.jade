@@ -1,247 +1,219 @@
-include ../includes/layouts/main-banner.html?main-banner_catalog
-<div class="content wrap">
-    <div class="catalogue">
-
-
-
-
-        <input type="hidden" name="extra" value="">
-
-        <div class="container">
-            <div class="left">
-                <div class="goods-filter folding">
-                    <div class="goods-filter__title folding__title">
-                        <i class="icon icon-filter"></i>
-                        ФИЛЬТР
-                    </div>
-                    <div class="folding__wrap">
-                        <div class="folding__inner">
-                            <div class="goods-filter__list">
-                                <div class="category-section-block">
-                                    <input type="hidden" data-filter="brand" data-value="7"/>
-                                </div>
-                                <label for="good-brand" class="goods-filter__item btn-select">
-                                    БРЕНД
-                                    <select name="brand" id="good-brand" class="no-styler" multiple="">
-                                        <option value="10" data-filter="brand" data-value="10">1One</option>
-                                        <option value="9" data-filter="brand" data-value="9" style="display: none;">Breuning</option>
-                                        <option value="16" data-filter="brand" data-value="16">Brumani</option>
-                                        <option value="15" data-filter="brand" data-value="15">Cesare Paciotti</option>
-                                        <option value="8" data-filter="brand" data-value="8">Dea</option>
-                                        <option value="12" data-filter="brand" data-value="12">Eugenio Campos</option>
-                                        <option value="7" data-filter="brand" data-value="7">Graziella</option>
-                                        <option value="14" data-filter="brand" data-value="14">Jessica</option>
-                                        <option value="13" data-filter="brand" data-value="13" style="display: none;">Orele</option>
-                                    </select>
-                                </label>                                <label for="good-type" class="goods-filter__item btn-select">
-                                ТИП ИЗДЕЛИЯ
-                                <select name="type" id="good-type" class="no-styler" multiple="">
-                                    <option value="11" data-filter="type" data-value="11">Браслеты</option>
-                                    <option value="12" data-filter="type" data-value="12" style="display: none;">Броши</option>
-                                    <option value="15" data-filter="type" data-value="15" style="display: none;">Бусы</option>
-                                    <option value="6" data-filter="type" data-value="6" style="display: none;">Колье</option>
-                                    <option value="13" data-filter="type" data-value="13" style="display: none;">Кольца</option>
-                                    <option value="10" data-filter="type" data-value="10" style="display: none;">Подвески и кулоны</option>
-                                    <option value="2" data-filter="type" data-value="2" style="display: none;">Серьги</option>
-                                    <option value="14" data-filter="type" data-value="14" style="display: none;">Цепи</option>
-                                </select>
-                            </label>                                <label for="good-style" class="goods-filter__item btn-select">
-                                СТИЛЬ
-                                <select name="style" id="good-style" class="no-styler" multiple="">
-                                    <option value="5" data-filter="style" data-value="5">Вечерний (evening)</option>
-                                    <option value="13" data-filter="style" data-value="13">Гламурный (fashion)</option>
-                                    <option value="11" data-filter="style" data-value="11">Деловой (business)</option>
-                                    <option value="3" data-filter="style" data-value="3">Классический (classic)</option>
-                                    <option value="6" data-filter="style" data-value="6">Повседневный (casual)</option>
-                                    <option value="4" data-filter="style" data-value="4">Романтический (romantic)</option>
-                                </select>
-                            </label>                                <label for="good-collection" class="goods-filter__item btn-select">
-                                КОЛЛЕКЦИЯ
-                                <select name="collection" id="good-collection" class="no-styler" multiple="">
-                                    <option value="15" data-filter="collection" data-value="15">Без вставок</option>
-                                    <option value="40" data-filter="collection" data-value="40" style="display: none;">В стиле диор</option>
-                                    <option value="24" data-filter="collection" data-value="24">В тренде</option>
-                                    <option value="13" data-filter="collection" data-value="13">Жемчужная</option>
-                                    <option value="17" data-filter="collection" data-value="17">Мужская</option>
-                                    <option value="25" data-filter="collection" data-value="25" style="display: none;">Натуральные камни</option>
-                                    <option value="36" data-filter="collection" data-value="36" style="display: none;">Перламутровая мозаика</option>
-                                    <option value="42" data-filter="collection" data-value="42">Премиум</option>
-                                    <option value="12" data-filter="collection" data-value="12">Разноцветная</option>
-                                    <option value="18" data-filter="collection" data-value="18">Фантазия</option>
-                                    <option value="28" data-filter="collection" data-value="28">Фианитовая</option>
-                                </select>
-                            </label>                                <label for="good-metal" class="goods-filter__item btn-select">
-                                МЕТАЛЛ
-                                <select name="metal" id="good-metal" class="no-styler" multiple="">
-                                    <option value="3" data-filter="metal" data-value="3">Золото</option>
-                                    <option value="1" data-filter="metal" data-value="1">Серебро</option>
-                                    <option value="4" data-filter="metal" data-value="4">Сталь</option>
-                                </select>
-                            </label>                                <label for="good-surface" class="goods-filter__item btn-select">
-                                ПОКРЫТИЕ
-                                <select name="surface" id="good-surface" class="no-styler" multiple="">
-                                    <option value="8" data-filter="surface" data-value="8">Защитное покрытие</option>
-                                    <option value="2" data-filter="surface" data-value="2">Позолота</option>
-                                    <option value="1" data-filter="surface" data-value="1">Родирование</option>
-                                    <option value="3" data-filter="surface" data-value="3">Рутенирование</option>
-                                    <option value="7" data-filter="surface" data-value="7">Чернение</option>
-                                    <option value="4" data-filter="surface" data-value="4">Эмаль</option>
-                                </select>
-                            </label>                                <label for="good-insert" class="goods-filter__item btn-select">
-                                ВСТАВКА
-                                <select name="insert" id="good-insert" class="no-styler" multiple="">
-                                    <option value="31" data-filter="insert" data-value="31" style="display: none;">Авантюрин</option>
-                                    <option value="49" data-filter="insert" data-value="49">Агат</option>
-                                    <option value="48" data-filter="insert" data-value="48" style="display: none;">Александрит</option>
-                                    <option value="28" data-filter="insert" data-value="28" style="display: none;">Аметист</option>
-                                    <option value="9" data-filter="insert" data-value="9" style="display: none;">Бирюза</option>
-                                    <option value="23" data-filter="insert" data-value="23">Бриллиант</option>
-                                    <option value="64" data-filter="insert" data-value="64" style="display: none;">Глиттеринг</option>
-                                    <option value="22" data-filter="insert" data-value="22" style="display: none;">Горный хрусталь</option>
-                                    <option value="21" data-filter="insert" data-value="21" style="display: none;">Гранат</option>
-                                    <option value="2" data-filter="insert" data-value="2">Жемчуг</option>
-                                    <option value="36" data-filter="insert" data-value="36" style="display: none;">Зеленый агат</option>
-                                    <option value="67" data-filter="insert" data-value="67" style="display: none;">Изумруд</option>
-                                    <option value="47" data-filter="insert" data-value="47">Каучук</option>
-                                    <option value="46" data-filter="insert" data-value="46">Кварц</option>
-                                    <option value="55" data-filter="insert" data-value="55">Керамика</option>
-                                    <option value="16" data-filter="insert" data-value="16">Кожа</option>
-                                    <option value="7" data-filter="insert" data-value="7" style="display: none;">Коралл</option>
-                                    <option value="4" data-filter="insert" data-value="4">Кошачий глаз</option>
-                                    <option value="10" data-filter="insert" data-value="10">Кристалл swarovski</option>
-                                    <option value="56" data-filter="insert" data-value="56" style="display: none;">Лейкосапфир</option>
-                                    <option value="20" data-filter="insert" data-value="20" style="display: none;">Мистический кварц</option>
-                                    <option value="65" data-filter="insert" data-value="65" style="display: none;">Морская ракушка</option>
-                                    <option value="8" data-filter="insert" data-value="8">Оникс</option>
-                                    <option value="40" data-filter="insert" data-value="40" style="display: none;">Опал</option>
-                                    <option value="60" data-filter="insert" data-value="60" style="display: none;">Перидот</option>
-                                    <option value="38" data-filter="insert" data-value="38">Перламутр</option>
-                                    <option value="43" data-filter="insert" data-value="43" style="display: none;">Родолит</option>
-                                    <option value="58" data-filter="insert" data-value="58" style="display: none;">Рубин</option>
-                                    <option value="30" data-filter="insert" data-value="30" style="display: none;">Сапфир</option>
-                                    <option value="63" data-filter="insert" data-value="63" style="display: none;">Синтетический жемчуг</option>
-                                    <option value="45" data-filter="insert" data-value="45" style="display: none;">Синтетический камень</option>
-                                    <option value="53" data-filter="insert" data-value="53" style="display: none;">Синтетический рубин</option>
-                                    <option value="15" data-filter="insert" data-value="15">Сталь</option>
-                                    <option value="59" data-filter="insert" data-value="59">Текстиль</option>
-                                    <option value="66" data-filter="insert" data-value="66" style="display: none;">Тигровый глаз</option>
-                                    <option value="39" data-filter="insert" data-value="39">Ткань</option>
-                                    <option value="29" data-filter="insert" data-value="29">Топаз</option>
-                                    <option value="52" data-filter="insert" data-value="52" style="display: none;">Топаз лондон блю</option>
-                                    <option value="61" data-filter="insert" data-value="61">Турмалин</option>
-                                    <option value="1" data-filter="insert" data-value="1">Фианиты</option>
-                                    <option value="50" data-filter="insert" data-value="50" style="display: none;">Фианиты signity</option>
-                                    <option value="62" data-filter="insert" data-value="62" style="display: none;">Халцедон</option>
-                                    <option value="41" data-filter="insert" data-value="41" style="display: none;">Хризолит</option>
-                                    <option value="37" data-filter="insert" data-value="37">Цирконий</option>
-                                    <option value="42" data-filter="insert" data-value="42" style="display: none;">Цитрин</option>
-                                    <option value="24" data-filter="insert" data-value="24">Ювелирная смола</option>
-                                    <option value="11" data-filter="insert" data-value="11">Ювелирное стекло</option>
-                                </select>
-                            </label>
-
-                                <label for="good-size" class="goods-filter__item btn-select">
-                                    РАЗМЕР
-                                    <select name="size" id="good-size" class="no-styler" multiple="">
-                                        <option data-filter="size" value="Б.Р.">Б.Р.</option>
-                                        <option data-filter="size" value="16.0">16.0</option>
-                                        <option data-filter="size" value="16.5">16.5</option>
-                                        <option data-filter="size" value="17.0">17.0</option>
-                                        <option data-filter="size" value="17.5">17.5</option>
-                                        <option data-filter="size" value="18.0">18.0</option>
-                                        <option data-filter="size" value="18.5">18.5</option>
-                                        <option data-filter="size" value="19.0">19.0</option>
-                                        <option data-filter="size" value="20.0">20.0</option>
-                                        <option data-filter="size" value="20.5">20.5</option>
-                                        <option data-filter="size" value="21.0">21.0</option>
-                                        <option data-filter="size" value="21.5">21.5</option>
-                                        <option data-filter="size" value="22.0">22.0</option>
-                                        <option data-filter="size" value="23.0">23.0</option>
-                                    </select>
-                                </label>
-
-                                <!--<div class="goods-fsilter__price">-->
-                                    <!--<input data-max="429400" id="maxcost" type="hidden">-->
-                                    <!--<input data-min="170" id="mincost" type="hidden">-->
-                                    <!--<label for="price-from">От</label>-->
-                                    <!--<input id="price-from" type="number" class="inputtext" min="0" placeholder="170">-->
-                                    <!--<label for="price-to">до</label>-->
-                                    <!--<input id="price-to" type="number" class="inputtext" min="0" placeholder="429400">-->
-                                    <!--<span class="rub"><span>руб</span></span>-->
-                                <!--</div>-->
-                            </div>
-
-                            <div class="goods-filter__choosen">
-                                <div class="goods-filter__choosen-title">
-                                    ВЫ ВЫБРАЛИ:
-                                </div>
-                                <div class="goods-filter__choosen-list" id="itemsfilterresult">
-                                    <div class="filter_item" data-filter="collection" data-value="30">Graziella</div>
-                                    <div class="filter_item" data-filter="collection" data-value="30">Graziella</div>
-                                    <div class="filter_item" data-filter="collection" data-value="30">Graziella</div>
-                                    <div class="filter_item" data-filter="collection" data-value="30">Graziella</div>
-                                    <div class="filter_item" data-filter="collection" data-value="30">Graziella</div>
-                                </div>
-                                <a class="btn btn_black js-apply-filter" href="#">
-                                    ПРИМЕНИТЬ
-                                </a>
-                            </div>
-                            <div class="js-close-filter">
-                                <a class="icon icon-x" href="#"></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="right">
-
-                <div class="line-filter">
-                    <div class="itemsfilter">
-                        <label class="btn-select setcatcount">
-                            <span class="btn-select__label">Показать по: <span class="select-value">12</span></span>
-                            <select class="" data-type="items_per_page">
-                                <option selected="" value="12">12</option>
-                                <option value="24">24</option>
-                                <option value="36">36</option>
-                                <option value="all">Все</option>
-                            </select>
-                        </label>
-                        <label class="btn-select setcatorder">
-                            <span class="btn-select__label">Сортировать  по: <span class="select-value">умолчанию</span></span>
-                            <select class="" data-type="items_sort_order">
-                                <option value="casc">По возрастанию цены</option>
-                                <option value="cdesc">По убыванию цены</option>
-                                <option value="default">По умолчанию</option>
-                                <option value="pop">По популярности</option>
-                                <option selected="" value="new">По новизне</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="pageswitch"><a href="#" class="arrow arrow-prev icon-drop icon-drop__left"></a><a class="active" href="/cat/type/13/1.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13">1</a> <a href="/cat/type/13/2.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13" class="">2</a><a href="/cat/type/13/2.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13" class="">3</a><a href="/cat/type/13/2.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13" class="">4</a><span>. . .</span><a href="/cat/type/13/5.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13" class="">224</a> <a href="#" class="arrow arrow-next icon-drop icon-drop__right"></a> </div>
-                </div>
-                include itemlist.html
-            </div>
-
-        </div>
-        <div class="line-filter">
-            <div class="pageswitch"><a href="#" class="arrow arrow-prev icon-drop icon-drop__left"></a><a class="active" href="/cat/type/13/1.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13">1</a> <a href="/cat/type/13/2.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13" class="">2</a><a href="/cat/type/13/2.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13" class="">3</a><a href="/cat/type/13/2.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13" class="">4</a><span>. . .</span><a href="/cat/type/13/5.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13" class="">224</a> <a href="#" class="arrow arrow-next icon-drop icon-drop__right"></a> </div>
-        </div>
-        <script type="text/javascript">
-            var avfilters = {"style":[6,4,5,3,13,11],"type":[11],"collection":[17,42,24,18,28,12,15,13],"brand":[0,8,14,12,10,15,16,7],"insert":[2,24,29,1,11,37,4,8,39,10,16,15,59,47,55,46,38,23,61,49],"cover":[1,2,7,8,3,4],"size":["22.0","0.0","21.5","18.0","23.0","20.0","21.0","19.0","17.0","16.0","17.5","18.5","20.5","16.5"],"metals":[1,4,3]};
-        </script>
-    </div>
-</div>
-<div class="catdes catdes_catalog">
-    <div class="wrap">
-        <span class="title">GRAZIELLA </span>
-        <p>Таким образом, сочетая итальянский вкус и мастерство отделки, рождается безупречный результат: каждое ювелирное изделие превращается в маленькое произведение искусства.</p>
-
-        <p>Креативный Центр со временем создал новые направления предметов роскоши, которые были добавлены к исходной коллекции украшений из золота и серебра. В частности, линия бриллианты Graziella предлагает ювелирные изделия из золота, серебра, бриллиантов и драгоценных камней. Линия аксессуаров GRAZIELLA включает сумки и ремни, изготовленные из высококачественной кожи, обогащенные деталями из золота и серебра, а также драгоценных камней. Детали из драгоценных металлов изготовлены с использованием тех же креативных концепций что и ювелирные изделия, для создания совершенной координации с аксессуарами. Такой подход позволяет GRAZIELLA предложить своим потребителям ювелирные скульптуры и аксессуары.</p>
-
-        <p>Отличное сочетание творчества и технологии. Обещания GRAZIELLA своим клиентам проявляются в скульптурных формах ювелирных изделий, их стиль настолько уникален, что некоторые идентифицируют его как “современное барокко”. Темы разрабатываются в зависимости от рынка, размер и формы адаптируются к стране назначения. В арабских странах предпочитают драгоценности больших форм, в соответствии с эстетическими канонами. В других странах изделия GRAZIELLA с использованием тех же креативных тематик становятся меньше в размере, и порой могут быть обогащены драгоценными камнями. Общие черты лежат в типе изделий, которые легко идентифицируются по своему стилю и точным деталям, а также легкостью.</p>
-    </div>
-</div>
-
-        include size.html
-
+- var bannerClass = 'main-banner_catalog'
+include ../layouts/main-banner
+.content.wrap
+  .catalogue
+    input(type='hidden', name='extra', value='')
+    .category-section-block
+      input(type='hidden', data-filter='brand', data-value='7')
+    .container
+      .left
+        .goods-filter.folding
+          .goods-filter__title.folding__title
+            i.icon.icon-filter
+            |                         ФИЛЬТР
+          .folding__wrap
+            .folding__inner
+              .goods-filter__list
+                label.goods-filter__item.btn-select(for='good-brand')
+                  | БРЕНД
+                  select#good-brand.no-styler(name='brand', multiple='')
+                    option(value='10', data-filter='brand', data-value='10') 1One
+                    option(value='9', data-filter='brand', data-value='9', style='display: none;') Breuning
+                    option(value='16', data-filter='brand', data-value='16') Brumani
+                    option(value='15', data-filter='brand', data-value='15') Cesare Paciotti
+                    option(value='8', data-filter='brand', data-value='8') Dea
+                    option(value='12', data-filter='brand', data-value='12') Eugenio Campos
+                    option(value='7', data-filter='brand', data-value='7') Graziella
+                    option(value='14', data-filter='brand', data-value='14') Jessica
+                    option(value='13', data-filter='brand', data-value='13', style='display: none;') Orele
+                label.goods-filter__item.btn-select(for='good-type')
+                  | ТИП ИЗДЕЛИЯ
+                  select#good-type.no-styler(name='type', multiple='')
+                    option(value='11', data-filter='type', data-value='11') Браслеты
+                    option(value='12', data-filter='type', data-value='12', style='display: none;') Броши
+                    option(value='15', data-filter='type', data-value='15', style='display: none;') Бусы
+                    option(value='6', data-filter='type', data-value='6', style='display: none;') Колье
+                    option(value='13', data-filter='type', data-value='13', style='display: none;') Кольца
+                    option(value='10', data-filter='type', data-value='10', style='display: none;') Подвески и кулоны
+                    option(value='2', data-filter='type', data-value='2', style='display: none;') Серьги
+                    option(value='14', data-filter='type', data-value='14', style='display: none;') Цепи
+                label.goods-filter__item.btn-select(for='good-style')
+                  | СТИЛЬ
+                  select#good-style.no-styler(name='style', multiple='')
+                    option(value='5', data-filter='style', data-value='5') Вечерний (evening)
+                    option(value='13', data-filter='style', data-value='13') Гламурный (fashion)
+                    option(value='11', data-filter='style', data-value='11') Деловой (business)
+                    option(value='3', data-filter='style', data-value='3') Классический (classic)
+                    option(value='6', data-filter='style', data-value='6') Повседневный (casual)
+                    option(value='4', data-filter='style', data-value='4') Романтический (romantic)
+                label.goods-filter__item.btn-select(for='good-collection')
+                  | КОЛЛЕКЦИЯ
+                  select#good-collection.no-styler(name='collection', multiple='')
+                    option(value='15', data-filter='collection', data-value='15') Без вставок
+                    option(value='40', data-filter='collection', data-value='40', style='display: none;') В стиле диор
+                    option(value='24', data-filter='collection', data-value='24') В тренде
+                    option(value='13', data-filter='collection', data-value='13') Жемчужная
+                    option(value='17', data-filter='collection', data-value='17') Мужская
+                    option(value='25', data-filter='collection', data-value='25', style='display: none;') Натуральные камни
+                    option(value='36', data-filter='collection', data-value='36', style='display: none;') Перламутровая мозаика
+                    option(value='42', data-filter='collection', data-value='42') Премиум
+                    option(value='12', data-filter='collection', data-value='12') Разноцветная
+                    option(value='18', data-filter='collection', data-value='18') Фантазия
+                    option(value='28', data-filter='collection', data-value='28') Фианитовая
+                label.goods-filter__item.btn-select(for='good-metal')
+                  | МЕТАЛЛ
+                  select#good-metal.no-styler(name='metal', multiple='')
+                    option(value='3', data-filter='metal', data-value='3') Золото
+                    option(value='1', data-filter='metal', data-value='1') Серебро
+                    option(value='4', data-filter='metal', data-value='4') Сталь
+                label.goods-filter__item.btn-select(for='good-surface')
+                  | ПОКРЫТИЕ
+                  select#good-surface.no-styler(name='surface', multiple='')
+                    option(value='8', data-filter='surface', data-value='8') Защитное покрытие
+                    option(value='2', data-filter='surface', data-value='2') Позолота
+                    option(value='1', data-filter='surface', data-value='1') Родирование
+                    option(value='3', data-filter='surface', data-value='3') Рутенирование
+                    option(value='7', data-filter='surface', data-value='7') Чернение
+                    option(value='4', data-filter='surface', data-value='4') Эмаль
+                label.goods-filter__item.btn-select(for='good-insert')
+                  | ВСТАВКА
+                  select#good-insert.no-styler(name='insert', multiple='')
+                    option(value='31', data-filter='insert', data-value='31', style='display: none;') Авантюрин
+                    option(value='49', data-filter='insert', data-value='49') Агат
+                    option(value='48', data-filter='insert', data-value='48', style='display: none;') Александрит
+                    option(value='28', data-filter='insert', data-value='28', style='display: none;') Аметист
+                    option(value='9', data-filter='insert', data-value='9', style='display: none;') Бирюза
+                    option(value='23', data-filter='insert', data-value='23') Бриллиант
+                    option(value='64', data-filter='insert', data-value='64', style='display: none;') Глиттеринг
+                    option(value='22', data-filter='insert', data-value='22', style='display: none;') Горный хрусталь
+                    option(value='21', data-filter='insert', data-value='21', style='display: none;') Гранат
+                    option(value='2', data-filter='insert', data-value='2') Жемчуг
+                    option(value='36', data-filter='insert', data-value='36', style='display: none;') Зеленый агат
+                    option(value='67', data-filter='insert', data-value='67', style='display: none;') Изумруд
+                    option(value='47', data-filter='insert', data-value='47') Каучук
+                    option(value='46', data-filter='insert', data-value='46') Кварц
+                    option(value='55', data-filter='insert', data-value='55') Керамика
+                    option(value='16', data-filter='insert', data-value='16') Кожа
+                    option(value='7', data-filter='insert', data-value='7', style='display: none;') Коралл
+                    option(value='4', data-filter='insert', data-value='4') Кошачий глаз
+                    option(value='10', data-filter='insert', data-value='10') Кристалл swarovski
+                    option(value='56', data-filter='insert', data-value='56', style='display: none;') Лейкосапфир
+                    option(value='20', data-filter='insert', data-value='20', style='display: none;') Мистический кварц
+                    option(value='65', data-filter='insert', data-value='65', style='display: none;') Морская ракушка
+                    option(value='8', data-filter='insert', data-value='8') Оникс
+                    option(value='40', data-filter='insert', data-value='40', style='display: none;') Опал
+                    option(value='60', data-filter='insert', data-value='60', style='display: none;') Перидот
+                    option(value='38', data-filter='insert', data-value='38') Перламутр
+                    option(value='43', data-filter='insert', data-value='43', style='display: none;') Родолит
+                    option(value='58', data-filter='insert', data-value='58', style='display: none;') Рубин
+                    option(value='30', data-filter='insert', data-value='30', style='display: none;') Сапфир
+                    option(value='63', data-filter='insert', data-value='63', style='display: none;') Синтетический жемчуг
+                    option(value='45', data-filter='insert', data-value='45', style='display: none;') Синтетический камень
+                    option(value='53', data-filter='insert', data-value='53', style='display: none;') Синтетический рубин
+                    option(value='15', data-filter='insert', data-value='15') Сталь
+                    option(value='59', data-filter='insert', data-value='59') Текстиль
+                    option(value='66', data-filter='insert', data-value='66', style='display: none;') Тигровый глаз
+                    option(value='39', data-filter='insert', data-value='39') Ткань
+                    option(value='29', data-filter='insert', data-value='29') Топаз
+                    option(value='52', data-filter='insert', data-value='52', style='display: none;') Топаз лондон блю
+                    option(value='61', data-filter='insert', data-value='61') Турмалин
+                    option(value='1', data-filter='insert', data-value='1') Фианиты
+                    option(value='50', data-filter='insert', data-value='50', style='display: none;') Фианиты signity
+                    option(value='62', data-filter='insert', data-value='62', style='display: none;') Халцедон
+                    option(value='41', data-filter='insert', data-value='41', style='display: none;') Хризолит
+                    option(value='37', data-filter='insert', data-value='37') Цирконий
+                    option(value='42', data-filter='insert', data-value='42', style='display: none;') Цитрин
+                    option(value='24', data-filter='insert', data-value='24') Ювелирная смола
+                    option(value='11', data-filter='insert', data-value='11') Ювелирное стекло
+                label.goods-filter__item.btn-select(for='good-size')
+                  | РАЗМЕР
+                  select#good-size.no-styler(name='size', multiple='')
+                    option(data-filter='size', value='Б.Р.') Б.Р.
+                    option(data-filter='size', value='16.0') 16.0
+                    option(data-filter='size', value='16.5') 16.5
+                    option(data-filter='size', value='17.0') 17.0
+                    option(data-filter='size', value='17.5') 17.5
+                    option(data-filter='size', value='18.0') 18.0
+                    option(data-filter='size', value='18.5') 18.5
+                    option(data-filter='size', value='19.0') 19.0
+                    option(data-filter='size', value='20.0') 20.0
+                    option(data-filter='size', value='20.5') 20.5
+                    option(data-filter='size', value='21.0') 21.0
+                    option(data-filter='size', value='21.5') 21.5
+                    option(data-filter='size', value='22.0') 22.0
+                    option(data-filter='size', value='23.0') 23.0
+                // <div class="goods-fsilter__price">
+                // <input data-max="429400" id="maxcost" type="hidden">
+                // <input data-min="170" id="mincost" type="hidden">
+                // <label for="price-from">От</label>
+                // <input id="price-from" type="number" class="inputtext" min="0" placeholder="170">
+                // <label for="price-to">до</label>
+                // <input id="price-to" type="number" class="inputtext" min="0" placeholder="429400">
+                // <span class="rub"><span>руб</span></span>
+                // </div>
+              .goods-filter__choosen
+                .goods-filter__choosen-title
+                  | ВЫ ВЫБРАЛИ:
+                #itemsfilterresult.goods-filter__choosen-list
+                  .filter_item(data-filter='collection', data-value='30') Graziella
+                  .filter_item(data-filter='collection', data-value='30') Graziella
+                  .filter_item(data-filter='collection', data-value='30') Graziella
+                  .filter_item(data-filter='collection', data-value='30') Graziella
+                  .filter_item(data-filter='collection', data-value='30') Graziella
+                a.btn.btn_black.js-apply-filter(href='#')
+                  | ПРИМЕНИТЬ
+              .js-close-filter
+                a.icon.icon-x(href='#')
+      .right
+        .line-filter
+          .itemsfilter
+            label.btn-select.setcatcount
+              span.btn-select__label
+                | Показать по: 
+                span.select-value 12
+              select(data-type='items_per_page')
+                option(selected='', value='12') 12
+                option(value='24') 24
+                option(value='36') 36
+                option(value='all') Все
+            label.btn-select.setcatorder
+              span.btn-select__label
+                | Сортировать  по: 
+                span.select-value умолчанию
+              select(data-type='items_sort_order')
+                option(value='casc') По возрастанию цены
+                option(value='cdesc') По убыванию цены
+                option(value='default') По умолчанию
+                option(value='pop') По популярности
+                option(selected='', value='new') По новизне
+          .pageswitch
+            a.arrow.arrow-prev.icon-drop.icon-drop__left(href='#')
+            a.active(href='/cat/type/13/1.html?items_sort_order=new&items_per_page=12&brand=7&type=13') 1
+            a(href='/cat/type/13/2.html?items_sort_order=new&items_per_page=12&brand=7&type=13') 2
+            a(href='/cat/type/13/2.html?items_sort_order=new&items_per_page=12&brand=7&type=13') 3
+            a(href='/cat/type/13/2.html?items_sort_order=new&items_per_page=12&brand=7&type=13') 4
+            span . . .
+            a(href='/cat/type/13/5.html?items_sort_order=new&items_per_page=12&brand=7&type=13') 224
+            a.arrow.arrow-next.icon-drop.icon-drop__right(href='#')
+        include itemlist
+    .line-filter
+      .pageswitch
+        a.arrow.arrow-prev.icon-drop.icon-drop__left(href='#')
+        a.active(href='/cat/type/13/1.html?items_sort_order=new&items_per_page=12&brand=7&type=13') 1
+        a(href='/cat/type/13/2.html?items_sort_order=new&items_per_page=12&brand=7&type=13') 2
+        a(href='/cat/type/13/2.html?items_sort_order=new&items_per_page=12&brand=7&type=13') 3
+        a(href='/cat/type/13/2.html?items_sort_order=new&items_per_page=12&brand=7&type=13') 4
+        span . . .
+        a(href='/cat/type/13/5.html?items_sort_order=new&items_per_page=12&brand=7&type=13') 224
+        a.arrow.arrow-next.icon-drop.icon-drop__right(href='#')
+    script(type='text/javascript').
+      var avfilters = {"style":[6,4,5,3,13,11],"type":[11],"collection":[17,42,24,18,28,12,15,13],"brand":[0,8,14,12,10,15,16,7],"insert":[2,24,29,1,11,37,4,8,39,10,16,15,59,47,55,46,38,23,61,49],"cover":[1,2,7,8,3,4],"size":["22.0","0.0","21.5","18.0","23.0","20.0","21.0","19.0","17.0","16.0","17.5","18.5","20.5","16.5"],"metals":[1,4,3]};
+.catdes.catdes_catalog
+  .wrap
+    span.title GRAZIELLA 
+    p
+      | Таким образом, сочетая итальянский вкус и мастерство отделки, рождается безупречный результат: каждое ювелирное изделие превращается в маленькое произведение искусства.
+    p
+      | Креативный Центр со временем создал новые направления предметов роскоши, которые были добавлены к исходной коллекции украшений из золота и серебра. В частности, линия бриллианты Graziella предлагает ювелирные изделия из золота, серебра, бриллиантов и драгоценных камней. Линия аксессуаров GRAZIELLA включает сумки и ремни, изготовленные из высококачественной кожи, обогащенные деталями из золота и серебра, а также драгоценных камней. Детали из драгоценных металлов изготовлены с использованием тех же креативных концепций что и ювелирные изделия, для создания совершенной координации с аксессуарами. Такой подход позволяет GRAZIELLA предложить своим потребителям ювелирные скульптуры и аксессуары.
+    p
+      | Отличное сочетание творчества и технологии. Обещания GRAZIELLA своим клиентам проявляются в скульптурных формах ювелирных изделий, их стиль настолько уникален, что некоторые идентифицируют его как “современное барокко”. Темы разрабатываются в зависимости от рынка, размер и формы адаптируются к стране назначения. В арабских странах предпочитают драгоценности больших форм, в соответствии с эстетическими канонами. В других странах изделия GRAZIELLA с использованием тех же креативных тематик становятся меньше в размере, и порой могут быть обогащены драгоценными камнями. Общие черты лежат в типе изделий, которые легко идентифицируются по своему стилю и точным деталям, а также легкостью.

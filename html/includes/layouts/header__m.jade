@@ -1,249 +1,188 @@
-<div class="header">
-    <div class="header-top wrap">
-
-        <a class="logo" href="#">
-            <img src="<!--#echo var=" img-path"-->/svg/logo.svg" alt=""/>
-        </a>
-
-        <div class="main-nav">
-            <nav class="main-nav-items">
-                <a class="main-nav-toggle js-menu-toggle" href="#">
-                    <span class="nav-icon">
-                        <span></span><span></span><span></span>
-                    </span>
-                </a>
-
-                <div class="main-nav-line">
-                    <div class="main-nav-line__holder">
-                        <ul class="main-nav-line__list">
-                            <li class="item"><a href="catalog.html" class="link"><span>НОВИНКИ</span></a></li>
-                            <li class="item hasSubmenu">
-                                <a href="catalog.html" class="link"><span>ИЗДЕЛИЯ</span></a>
-
-                                <div class="main-nav__submenu submenu_lvl1">
-                                    <ul class="main-nav-line__list">
-                                        <li class="item hasSubmenu">
-                                            <a href="catalog.html" class="link"><span>Аксессуары</span></a>
-
-                                            <div class="main-nav__submenu submenu_lvl2">
-                                                <ul class="main-nav-line__list">
-                                                    <li class="item">
-                                                        <a href="catalog.html" class="link"><span>Аксессуары</span></a>
-                                                    </li>
-                                                    <li class="item">
-                                                        <a href="catalog.html" class="link"><span>Аксессуары</span></a>
-                                                    </li><li class="item">
-                                                    <a href="catalog.html" class="link"><span>Аксессуары</span></a>
-                                                </li>
-
-                                                </ul>
-                                            </div>
-
-                                        </li>
-                                        <li class="item">
-                                            <a href="catalog.html" class="link"><span>Браслеты</span></a>
-                                        </li>
-                                        <li class="item">
-                                            <a href="catalog.html" class="link"><span>Броши</span></a>
-                                        </li>
-                                        <li class="item">
-                                            <a href="catalog.html" class="link"><span>Бусы</span></a>
-                                        </li>
-                                        <li class="item">
-                                            <a href="catalog.html" class="link"><span>Колье</span></a>
-                                        </li>
-                                        <li class="item">
-                                            <a href="catalog.html" class="link"><span>Кольца</span></a>
-                                        </li>
-                                        <li class="item">
-                                            <a href="catalog.html" class="link"><span>Подвески</span></a>
-                                        </li>
-                                        <li class="item">
-                                            <a href="catalog.html" class="link"><span>Серьги</span></a>
-                                        </li>
-                                        <li class="item">
-                                            <a href="catalog.html" class="link"><span>Цепи</span></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="item"><a href="catalog.html" class="link"><span>КОЛЛЕКЦИИ</span></a></li>
-                            <li class="item"><a href="catalog.html" class="link"><span>СТИЛИ</span></a></li>
-                            <li class="item"><a href="catalog.html" class="link"><span>БРЕНДЫ</span></a></li>
-                            <li class="item"><a href="catalog.html" class="link"><span>SALE</span></a></li>
-                            <li class="item"><a href="catalog.html" class="link"><span>О КОМПАНИИ</span></a></li>
-                            <li class="item"><a href="catalog.html" class="link"><span>КОНТАКТЫ</span></a></li>
-                        </ul>
-                        <a class="icon-x js-menu-toggle btn-close" href=""></a>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </div>
-
-    <div class="site-phone">
-        <span class="magazine-info__title">
-           <i class="icon icon-phone"></i> <a href="tel:8(800)2551108" class="link_phone">8 (800) 255 11 08</a>  Звонок бесплатный
-        </span>
-
-    </div>
-
-    <div class="service-menu">
-
-        <div class="service-menu__item magazine-info__address">
-            <a class="js-address-popup" href="#">
-                <i class="icon icon-pin"></i>
-            </a>
-
-            <div class="address-info__holder dropdown_top">
-                <div class="address-info">
-                    <div class="address-info__title dropdown-fade-to dropdown__header">
-                        ВАШ ГОРОД
-                    </div>
-                    <div class="dropdown__body">
-                        <script>
-                            ymaps.ready(function () {
-                                var $map = $('#address-map');
-                                var map = new ymaps.Map("address-map", {
-                                    center: [55.74011678, 37.60888550],
-                                    zoom: 15,
-                                    controls: ['zoomControl']
-                                });
-                                var moscowPin = new ymaps.Placemark(map.getCenter(), {
-                                    hintContent: 'Fidelis style'
-                                }, {
-                                    // Опции.
-                                    // Необходимо указать данный тип макета.
-                                    iconLayout: 'default#image'
-                                });
-                                map.geoObjects.add(moscowPin);
-                            });
-                        </script>
-                        <div class="address-info__inner">
-                            <div class="address-info__town">
-                                <span class="magazine-info__title">Москва <i class="icon icon-pin"></i></span>
-
-                                <div class="address-time">
-                                    <div class="address_moscow">
-                                        Берсеневская набережная д. 6 стр. 1 <br/>
-                                        пн-пт 9:00–18:00, <i>Сб. Вс. - Выходной</i>
-                                    </div>
-                                </div>
-                                <div class="address-info__town-change">
-                                    <a class=" js-change-town" href="#">Изменить город</a>
-                                </div>
-                            </div>
-                            <div class="address-map__container">
-                                <div id="address-map" class="address-map"></div>
-                            </div>
-                            <div class="address-info__body">
-
-                                <div class="address__phone">
-                                    7 (495) 255-11-08 <br/>
-                                    Колл-центр работает ежедневно с 9:00 до 22:00
-                                </div>
-                                <div class="btn-holder">
-                                    <a class="btn" href="#">ПОДРОБНЕЕ</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="town-changer">
-                            <div class="hint">Укажите город, в котором собираетесь получить товар</div>
-                            <form class="town-changer__form" action="#townChange"
-                                  data-autocompleteurl="../../source/back/townComplete.html">
-                                <div class="row">
-                                    <label for="changeTown">Ваш Город</label>
-                                    <input class="inputtext" id="changeTown" name="town" type="text"/>
-
-                                    <div class="town-changer__related-list">
-                                        <a href="#" class="js-town">Москва</a>
-                                        <a href="#" class="js-town">Нижний Новгород</a>
-                                        <a href="#" class="js-town">Якутск</a>
-                                    </div>
-                                    <a class="btn btn-submit" href="#">СОХРАНИТЬ <input type="submit" value=""/></a>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="dropdown__close">
-                            <a class="icon icon-x" href="#"></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-      <!--  <div class="service-menu__item service-link__holder service-link_account not-logged">
-            <div class="service-link_relative">
-                <a href="" class="service-link js-login-open">
-                    <span class="icon icon-customer">
-
-                    </span>
-                </a>
-                <a class="account-exit icon icon-x" href="#exit"></a>
-            </div>
-
-            &lt;!&ndash;login&ndash;&gt;
-            <div class="login-dropdown__holder dropdown_top">
-                <div class="login-dropdown">
-                    <div class="dropdown-fade-to dropdown__header">
-                        ВХОД В ЛИЧНЫЙ КАБИНЕТ
-                    </div>
-                    <div class="login__body dropdown__body">
-                        <form class="login-form" action="customer.html">
-                            &lt;!&ndash;#include virtual="../includes/layouts/row_input.html?id=login-email&type=email&label=E-mail"&ndash;&gt;
-                            &lt;!&ndash;#include virtual="../includes/layouts/row_input.html?id=login-pass&label=Пароль"&ndash;&gt;
-                            <div class="login-form__bottom">
-                                <a class="btn btn-submit btn_black" href="#">
-                                    Вход
-                                    <input type="submit" value=""/>
-                                </a>
-
-                                <div class="add-links">
-                                    <a href="customer-registration.html">Регистрация</a>
-                                    <a href="#">Забыли пароль?</a>
-                                </div>
-                            </div>
-                        </form>
-                        <div class="login-social">
-                            <span class="login-social__lbl">Или войти через:</span>
-
-                            <div class="social-dark">
-                                <a class="icon icon-fb" href="#"></a>
-                                <a class="icon icon-vk" href="#"></a>
-                                <a class="icon icon-tw" href="#"></a>
-                                <a class="icon icon-ok" href="#"></a>
-                                <a class="icon icon-gplus" href="#"></a>
-                            </div>
-                        </div>
-                        <div class="dropdown__close">
-                            <a class="icon icon-x" href="#"></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="service-menu__item service-link__holder service-link_favorites">
-            <a href="customer-favorites.html" class="service-link">
-                <span class="icon icon-heart">
-
-                </span>
-                <span class="service-count">
-                    26
-                </span>
-            </a>
-        </div>-->
-
-        <div class="service-menu__item basket basket-top">
-            <div class="basket-top__items">
-                <a class="js-basket-open" href="basket.html">
-                    <span class="basket-top__icon icon-basket">
-                        <span class="count"></span>
-                    </span>
-                </a>
-            </div>
-        </div>
-
-
-    </div>
-</div>
+.header
+  .header-top.wrap
+    a.logo(href='#')
+      img(src='#{paths.img}/svg/logo.svg', alt='')
+    .main-nav
+      nav.main-nav-items
+        a.main-nav-toggle.js-menu-toggle(href='#')
+          span.nav-icon
+            span
+            span
+            span
+        .main-nav-line
+          .main-nav-line__holder
+            ul.main-nav-line__list
+              li.item
+                a.link(href='catalog.html')
+                  span НОВИНКИ
+              li.item.hasSubmenu
+                a.link(href='catalog.html')
+                  span ИЗДЕЛИЯ
+                .main-nav__submenu.submenu_lvl1
+                  ul.main-nav-line__list
+                    li.item.hasSubmenu
+                      a.link(href='catalog.html')
+                        span Аксессуары
+                      .main-nav__submenu.submenu_lvl2
+                        ul.main-nav-line__list
+                          li.item
+                            a.link(href='catalog.html')
+                              span Аксессуары
+                          li.item
+                            a.link(href='catalog.html')
+                              span Аксессуары
+                          li.item
+                            a.link(href='catalog.html')
+                              span Аксессуары
+                    li.item
+                      a.link(href='catalog.html')
+                        span Браслеты
+                    li.item
+                      a.link(href='catalog.html')
+                        span Броши
+                    li.item
+                      a.link(href='catalog.html')
+                        span Бусы
+                    li.item
+                      a.link(href='catalog.html')
+                        span Колье
+                    li.item
+                      a.link(href='catalog.html')
+                        span Кольца
+                    li.item
+                      a.link(href='catalog.html')
+                        span Подвески
+                    li.item
+                      a.link(href='catalog.html')
+                        span Серьги
+                    li.item
+                      a.link(href='catalog.html')
+                        span Цепи
+              li.item
+                a.link(href='catalog.html')
+                  span КОЛЛЕКЦИИ
+              li.item
+                a.link(href='catalog.html')
+                  span СТИЛИ
+              li.item
+                a.link(href='catalog.html')
+                  span БРЕНДЫ
+              li.item
+                a.link(href='catalog.html')
+                  span SALE
+              li.item
+                a.link(href='catalog.html')
+                  span О КОМПАНИИ
+              li.item
+                a.link(href='catalog.html')
+                  span КОНТАКТЫ
+            a.icon-x.js-menu-toggle.btn-close(href='')
+  .site-phone
+    span.magazine-info__title
+      i.icon.icon-phone
+      a.link_phone(href='tel:8(800)2551108') 8 (800) 255 11 08
+      |   Звонок бесплатный
+  .service-menu
+    .service-menu__item.magazine-info__address
+      a.js-address-popup(href='#')
+        i.icon.icon-pin
+      .address-info__holder.dropdown_top
+        .address-info
+          .address-info__title.dropdown-fade-to.dropdown__header
+            | ВАШ ГОРОД
+          .dropdown__body
+            script.
+              ymaps.ready(function () {
+              var $map = $('#address-map');
+              var map = new ymaps.Map("address-map", {
+              center: [55.74011678, 37.60888550],
+              zoom: 15,
+              controls: ['zoomControl']
+              });
+              var moscowPin = new ymaps.Placemark(map.getCenter(), {
+              hintContent: 'Fidelis style'
+              }, {
+              // Опции.
+              // Необходимо указать данный тип макета.
+              iconLayout: 'default#image'
+              });
+              map.geoObjects.add(moscowPin);
+              });
+            .address-info__inner
+              .address-info__town
+                span.magazine-info__title
+                  | Москва 
+                  i.icon.icon-pin
+                .address-time
+                  .address_moscow
+                    | Берсеневская набережная д. 6 стр. 1 
+                    br
+                    |                                         пн-пт 9:00–18:00, 
+                    i Сб. Вс. - Выходной
+                .address-info__town-change
+                  a.js-change-town(href='#') Изменить город
+              .address-map__container
+                #address-map.address-map
+              .address-info__body
+                .address__phone
+                  | 7 (495) 255-11-08 
+                  br
+                  |                                     Колл-центр работает ежедневно с 9:00 до 22:00
+                .btn-holder
+                  a.btn(href='#') ПОДРОБНЕЕ
+            .town-changer
+              .hint Укажите город, в котором собираетесь получить товар
+              form.town-changer__form(action='#townChange', data-autocompleteurl='../../source/back/townComplete.html')
+                .row
+                  label(for='changeTown') Ваш Город
+                  input#changeTown.inputtext(name='town', type='text')
+                  .town-changer__related-list
+                    a.js-town(href='#') Москва
+                    a.js-town(href='#') Нижний Новгород
+                    a.js-town(href='#') Якутск
+                  a.btn.btn-submit(href='#')
+                    | СОХРАНИТЬ 
+                    input(type='submit', value='')
+            .dropdown__close
+              a.icon.icon-x(href='#')
+    //          
+      .service-menu__item.service-link__holder.service-link_account.not-logged
+        .service-link_relative
+          a.service-link.js-login-open(href='')
+            span.icon.icon-customer
+          a.account-exit.icon.icon-x(href='#exit')
+        .login-dropdown__holder.dropdown_top
+          .login-dropdown
+            .dropdown-fade-to.dropdown__header
+              | ВХОД В ЛИЧНЫЙ КАБИНЕТ
+            .login__body.dropdown__body
+              form.login-form(action='customer.html')
+                //- | <!–#include virtual="../includes/layouts/row_input.html?id=login-email&type=email&label=E-mail"–>
+                //- | <!–#include virtual="../includes/layouts/row_input.html?id=login-pass&label=Пароль"–>
+                .login-form__bottom
+                  a.btn.btn-submit.btn_black(href='#')
+                    | Вход
+                    input(type='submit', value='')
+                  .add-links
+                    a(href='customer-registration.html') Регистрация
+                    a(href='#') Забыли пароль?
+              .login-social
+                span.login-social__lbl Или войти через:
+                .social-dark
+                  a.icon.icon-fb(href='#')
+                  a.icon.icon-vk(href='#')
+                  a.icon.icon-tw(href='#')
+                  a.icon.icon-ok(href='#')
+                  a.icon.icon-gplus(href='#')
+              .dropdown__close
+                a.icon.icon-x(href='#')
+      .service-menu__item.service-link__holder.service-link_favorites
+        a.service-link(href='customer-favorites.html')
+          span.icon.icon-heart
+          span.service-count
+            | 26
+    .service-menu__item.basket.basket-top
+      .basket-top__items
+        a.js-basket-open(href='basket.html')
+          span.basket-top__icon.icon-basket
+            span.count

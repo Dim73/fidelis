@@ -1,4 +1,4 @@
-script#basket-item(type='x-tmpl-mustache').
+script#basket-item(type="x-tmpl-mustache").
   <div class="basket-item" data-id="{{id}}">
       <div class="basket-item__holder">
           <div class="basket-item__img">
@@ -35,7 +35,8 @@ script#basket-item(type='x-tmpl-mustache').
           </div>
       </div>
   </div>
-script#basket-item__mobile(type='x-tmpl-mustache').
+  
+script#basket-item__mobile(type="x-tmpl-mustache").
   <div class="basket-item" data-id="{{id}}">
       <div class="basket-item__holder">
           <div class="basket-item__img">
@@ -46,7 +47,7 @@ script#basket-item__mobile(type='x-tmpl-mustache').
                   <a href="{{link}}" class="basket-item__link">{{name}}</a>
                   <span class="article">Артикул: {{articul}}</span>
               </div>
-              <div class="basket-item__counter">
+               <div class="basket-item__counter">
                   <span class="counter__title">К-во</span>
                   <div class="counter">
                       <span class="counter__val">{{count}}</span>
@@ -66,6 +67,7 @@ script#basket-item__mobile(type='x-tmpl-mustache').
                       </select>
                   </div>
               </div>
+
               <div class="basket-item__price">
                   <span class="summ"></span><span class="rub"><span>руб</span></span>
               </div>
@@ -76,41 +78,55 @@ script#basket-item__mobile(type='x-tmpl-mustache').
           </div>
       </div>
   </div>
-script#basket-sale(type='x-tmpl-mustache').
-  <div class="total__sale">
-      <span class="lbl">Итого c учетом {{sale}}% скидки:</span>
-      <span class="summ"></span><span class="rub"><span>руб</span></span>
-  </div>
-.size-popup.popup
-a.close.icon-close(href='#')
-.size__inner
-script#template-popup-size(type='x-tmpl-mustache').
-  <div class="item-img">
-      <img class="" src="{{img}}" alt=""/>
-  </div>
-  <div class="pitem-size">
-      <div class="select-size__wrap">
-          <select class="no-styler select_size">
-              <option value="">Выберите размер</option>
-              {{#sizes}}
-              <option value="{{size}}">{{size}}</option>
-              {{/sizes}}
-          </select>
-      </div>
-  </div>
-  <div class="cost">
-  </div>
-  <a href="#" class="btn">Купить</a>
-script#template-popup-cost(type='x-tmpl-mustache').
-  <span class="dec">Цена: </span><span class="count">{{price}}</span><span class="rub"><span>руб</span></span>
-.fade.fade-fixed
-.scroll-top
-.wrap
-a.scroll-top__link(href='#')
-script#town-change(type='x-tmpl-mustache').
+
+script#basket-sale(type="x-tmpl-mustache").
+    <div class="total__sale">
+        <span class="lbl">Итого c учетом {{sale}}% скидки:</span>
+        <span class="summ"></span><span class="rub"><span>руб</span></span>
+    </div>
+
+script#template-popup-size(type="x-tmpl-mustache").
+    <div class="item-img">
+        <img class="" src="{{img}}" alt=""/>
+    </div>
+    <div class="pitem-size">
+        <div class="select-size__wrap">
+            <select class="no-styler select_size">
+                <option value="">Выберите размер</option>
+                {{#sizes}}
+                <option value="{{size}}">{{size}}</option>
+                {{/sizes}}
+            </select>
+        </div>
+    </div>
+    <div class="cost">
+
+    </div>
+    <a href="#" class="btn">Купить</a>
+
+
+script#template-popup-cost(type="x-tmpl-mustache").
+    <span class="dec">Цена: </span><span class="count">{{price}}</span><span class="rub"><span>руб</span></span>
+
+
+
+
+script#town-change(type="x-tmpl-mustache").
   <div class="town-autocomplete">
       <div class="town-autocomplete__inner" data-action="load">
+
       </div>
   </div>
-.loader
-i.loader__icon
+  
+.fade.fade-fixed
+
+.scroll-top
+  .wrap
+    a.scroll-top__link(href="#")
+
+.size-popup.popup
+  a.close.icon-close(href="#")
+  .size__inner
+  
+loader.
+  i.loader__icon
