@@ -1,10 +1,30 @@
-var bxSlider = require('../../node_modules/bxslider/dist/jquery.bxslider.min.js');
-var sliderConstructor = require('./_lib/constructor.bxslider.js');
+var $ =  jQuery =  require('jquery');
+require('../../node_modules/bxslider/dist/jquery.bxslider.min');
+var sliderConstructor = require('./lib/constructor.bxslider');
+
+require('jquery.browser');
+require('jquery-mousewheel');
+require('./main/prlx-banner.plugin');
+
+require('./vendor/jquery.maskedinput');
+require('./vendor/size.scroll');
+require('./vendor/tipped');
+require('./vendor/jquery.simplr.smoothscroll.min');
+require('./vendor/jquery.formstyler.min');
+
+require('./lib/folding.plugin');
+require('./lib/dropdown.plugin');
+require('./lib/subscribe');
+
+
+require('./main/call');
 
     $(function(){
         if ($.browser.msie) {
             $("html").addClass("ie");
         }
+
+
 
         setTimeout(function() {
             $('select, input[type=checkbox]').not('.no-styler').styler({selectSearch:false});
@@ -58,12 +78,8 @@ var sliderConstructor = require('./_lib/constructor.bxslider.js');
             msgCont: '.call-info__body'
         });
 
-
-
         //subscribe
         $('.subscribe').subscribe();
-
-
 
         //tooltips
         Tipped.create('.tooltip', '', {
@@ -303,6 +319,7 @@ var sliderConstructor = require('./_lib/constructor.bxslider.js');
                             console.log($item.find('.bg'));
                             initBannerPrlx($item.find('.bg'));
                         }*/
+                        console.log(this);
                         this.$self.addClass('loaded');
                         $('.main-banner .prlx-item').prlx();
                     },

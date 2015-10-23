@@ -6,11 +6,10 @@
     "jquery-mousewheel": "^3.1.13",
     "jquery-ui": "^1.10.5",
     "jquery-zoom": "^1.7.14",
-    "jquery.formstyler": "^1.7.5-repackage",
+    "jquery.browser": "0.0.8",
     "jquery.maskedinput": "^1.4.1",
     "mustache": "^2.2.0",
-    "nanoscroller": "^0.8.7",
-    "simplr-smoothscroll": "^1.0.1"
+    "nanoscroller": "^0.8.7"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
