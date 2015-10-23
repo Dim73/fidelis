@@ -1,23 +1,16 @@
-<div class="content-info wrap">
-    <div class="breadcrumbs">
-        <a href="/">Главная</a>
-        /
-        <a href="#">Каталог</a>
-        /
-        <a href="#">бренды</a>
-        /
-        <span>GRAZIELLA</span>
-    </div>
-    <!--#if expr="${QUERY_STRING}" -->
-    <h1><!--#echo encoding="none"  var="QUERY_STRING" --></h1>
-    <!--#endif -->
-    <div class="search">
-        <form method="post">
-            <input type="text" placeholder="Поиск по названию или артикулу..." name="search">
-            <span class="btn-submit icon icon-zoom">
-                <input type="submit">
-            </span>
-        </form>
-    </div>
-
-</div>
+.content-info.wrap
+  .breadcrumbs
+    a(href='/') Главная
+    |         /
+    a(href='#') Каталог
+    |         /
+    a(href='#') бренды
+    |         /
+    span GRAZIELLA
+  if pageTitle
+    h1= pageTitle
+  .search
+    form(method='post')
+      input(type='text', placeholder='Поиск по названию или артикулу...', name='search')
+      span.btn-submit.icon.icon-zoom
+        input(type='submit')

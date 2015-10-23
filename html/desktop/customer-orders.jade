@@ -29,16 +29,16 @@
     <script type="text/javascript" src="<!--#echo var="js-path" -->/main.js"></script>
     <script type="text/javascript" src="<!--#echo var="js-path" -->/basket.js"></script>
 
-    include $includespath/_head.html
+    include ../includes/_head.html
 </head>
 <body>
     <div class="main">
-        <!--#include virtual="$includespath/layouts/header${device}.html" -->
-        <!--#include virtual="$includespath/layouts/content-info.html?${article}" -->
-        <!--#include virtual="$includespath/customer/orders.html" -->
+        include ../includes/layouts/header${device}.html
+        include ../includes/layouts/content-info.html?${article}
+        include ../includes/customer/orders.html
 
-        <!--#include virtual="$includespath/layouts/footer${device}.html" -->
+        include ../includes/layouts/footer${device}.html
     </div>
-        <!--#include virtual="$includespath/_body.html"-->
+        <!--#include virtual="../includes/_body.html"-->
 </body>
 </html>

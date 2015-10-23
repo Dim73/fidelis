@@ -19,12 +19,13 @@ var DIST_PATH =  {
 
 gulp.task('default', ['scripts', 'styles']);
 
+
 gulp.task('templates', function() {
   var YOUR_LOCALS = {
 
   };
 
-  gulp.src(SRC_PATH.tmplDesk + '*.jade')
+  gulp.src(SRC_PATH.tmplDesk + 'basket.jade')
     .pipe(plumber())
     .pipe(jade({
       locals: YOUR_LOCALS,
@@ -53,16 +54,19 @@ gulp.task('watch', ['scripts', 'styles'], function() {
 
     gulp.watch(SRC_PATH.css + '**', ['styles']);
     gulp.watch(SRC_PATH.js + '**', ['scripts']);
+
     gulp.watch('./html/**/*.jade', ['templates']);
 })
 
 var replace = require('gulp-replace');
 
 gulp.task('replace', function(){
-    gulp.src(['./html/**/*.html'])
+    gulp.src(['./html/**/*.jade'])
         //.pipe(replace('<!--#echo var="img-path"-->', '#{paths.img}'))
         //.pipe(replace('<!--#echo var="assets-path"-->', '#{paths.tmpimg}'))
-        .pipe(replace(/<!--#include virtual="([^"]*)" -->/g, 'include $1'))
+      //  .pipe(replace(/<!--#include virtual="([^"]*)" -->/g, 'include $1'))
+        .pipe(replace("$includespath", '../includes'))
+
         .pipe(gulp.dest(function(file) {
             return file.base;
         }));

@@ -30,16 +30,16 @@
     <link rel="stylesheet" href="<!--#echo var="css-path" -->/jquery-ui-1.10.3.custom.css" />
     <link rel="stylesheet" href="<!--#echo var="css-path" -->/mobile.css" />
     <script type="text/javascript" src="<!--#echo var="js-path" -->/mobile.js"></script>
-    include $includespath/_head.html
+    include ../includes/_head.html
 </head>
 <body>
     <div class="main">
-        <!--#include virtual="$includespath/layouts/header${device}.html" -->
-        <!--#include virtual="$includespath/layouts/content-info.html?Корзина" -->
-        <!--#include virtual="$includespath/basket/primary__m.html" -->
+        include ../includes/layouts/header${device}.html
+        include ../includes/layouts/content-info.html?Корзина
+        include ../includes/basket/primary__m.html
 
-        <!--#include virtual="$includespath/layouts/footer${device}.html" -->
+        include ../includes/layouts/footer${device}.html
     </div>
-    <!--#include virtual="$includespath/_body.html"-->
+    <!--#include virtual="../includes/_body.html"-->
 </body>
 </html>

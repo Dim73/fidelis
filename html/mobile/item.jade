@@ -29,16 +29,16 @@
     <link rel="stylesheet" href="<!--#echo var="css-path" -->/mobile.css" />
     <script type="text/javascript" src="<!--#echo var="js-path" -->/mobile.js"></script>
     <script type="text/javascript" src="<!--#echo var="js-path" -->/item.js"></script>
-    include $includespath/_head.html
+    include ../includes/_head.html
 </head>
 <body>
     <div class="main">
-        <!--#include virtual="$includespath/layouts/header${device}.html" -->
-        <!--#include virtual="$includespath/layouts/content-info.html?" -->
-        <!--#include virtual="$includespath/item/primary__m.html" -->
+        include ../includes/layouts/header${device}.html
+        include ../includes/layouts/content-info.html?
+        include ../includes/item/primary__m.html
 
-        <!--#include virtual="$includespath/layouts/footer${device}.html" -->
+        include ../includes/layouts/footer${device}.html
     </div>
-    <!--#include virtual="$includespath/_body.html"-->
+    <!--#include virtual="../includes/_body.html"-->
 </body>
 </html>
