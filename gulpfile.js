@@ -25,7 +25,7 @@ gulp.task('templates', function() {
 
   };
 
-  gulp.src(SRC_PATH.tmplDesk + 'basket.jade')
+  gulp.src(SRC_PATH.tmplDesk + '*.jade')
     .pipe(plumber())
     .pipe(jade({
       locals: YOUR_LOCALS,
@@ -64,8 +64,8 @@ gulp.task('replace', function(){
     gulp.src(['./html/**/*.jade'])
         //.pipe(replace('<!--#echo var="img-path"-->', '#{paths.img}'))
         //.pipe(replace('<!--#echo var="assets-path"-->', '#{paths.tmpimg}'))
-      //  .pipe(replace(/<!--#include virtual="([^"]*)" -->/g, 'include $1'))
-        .pipe(replace("$includespath", '../includes'))
+        .pipe(replace(/<!--#include virtual="([^"]*)"-->/g, 'include $1'))
+      //  .pipe(replace("$includespath", '../includes'))
 
         .pipe(gulp.dest(function(file) {
             return file.base;

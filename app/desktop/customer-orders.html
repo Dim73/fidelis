@@ -3,9 +3,8 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
+    <title>Личный кабинет</title>
     <script type="text/javascript" src="../../assets/js/main.js"></script>
-    <script type="text/javascript" src="../../assets/js/basket.js"></script>
     <link rel="stylesheet" href="../../assets/css/jquery-ui-1.10.3.custom.css">
     <link rel="stylesheet" href="../../assets/css/main.css">
     <script type="text/javascript" src="http://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
@@ -302,7 +301,7 @@
       </div>
       <div class="content-info wrap">
         <div class="breadcrumbs"><a href="/">Главная</a>        /<a href="#">Каталог</a>        /<a href="#">бренды</a>        /<span>GRAZIELLA</span></div>
-        <h1>Корзина</h1>
+        <h1>Личный кабинет</h1>
         <div class="search">
           <form method="post">
             <input type="text" placeholder="Поиск по названию или артикулу..." name="search"><span class="btn-submit icon icon-zoom">
@@ -310,231 +309,129 @@
           </form>
         </div>
       </div>
-      <div class="order">
-        <div class="basket-empty">
-          <div class="wrap">
-            <h2>Корзина пуста</h2>
-          </div>
-        </div>
-        <div class="basket basket_order order-step">
-          <div class="basket-items scroll-to">
-            <div class="basket-items__header">
-              <div class="basket-item">
-                <div class="basket-item__holder">
-                  <div class="basket-item__img">ТОВАР</div>
-                  <div class="basket-item__name">описание</div>
-                  <div class="basket-item__size">Размер</div>
-                  <div class="basket-item__counter">К-во</div>
-                  <div class="basket-item__price">Цена</div>
-                  <div class="basket-item__service">Убрать</div>
-                </div>
-              </div>
-            </div>
-            <div class="basket-items__body">
-              <div class="basket-items__list"></div>
-            </div>
-          </div>
-          <div class="basket__bottom">
-            <div class="wrap">
-              <div class="basket__total">
-                <div class="cell total">
-                  <div class="total__summ"><span class="lbl">Итого:</span><span class="summ"></span><span class="rub"><span>руб</span></span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="basket__buttons"><a href="#" class="btn btn_back">ВЕРНУТСЯ В КАТАЛОГ</a><a href="#" class="btn btn_order btn_checkout">ОФОРМИТЬ ЗАКАЗ</a></div>
-        </div>
-        <div id="order-delivery" class="order-delivery order-step">
-          <div class="order__inner order-expand">
-            <div class="order-delivery__top"><span class="delivery__title scroll-to">АДРЕС ДОСТАВКИ</span><span class="delivery__tip">* поля обязательны для заполнения</span></div>
-            <div class="order-delivery__body">
-              <form action="" class="delivery-form">
-                <div class="delivery-form__fieldset">
-                  <div class="div-2">
-                    <div class="row">
-                      <label for="s-name">ваше имя<span class="req">*</span></label>
-                      <input id="s-name" name="name" type="text" class="inputtext require">
-                    </div>
-                    <div class="row">
-                      <label for="s-lastname">фамилия</label>
-                      <input id="s-lastname" name="family" type="text" class="inputtext">
-                    </div>
-                  </div>
-                  <div class="div-2">
-                    <div class="row">
-                      <label for="s-phone">Телефон<span class="req">*</span></label>
-                      <input id="s-phone" name="phone" type="text" class="inputtext require phone-mask">
-                    </div>
-                    <div class="row">
-                      <label for="s-email">E-mail<span class="req">*</span></label>
-                      <input id="s-email" name="email" type="email" class="inputtext require">
-                    </div>
-                  </div>
-                  <div class="row">
-                    <label for="s-paytype">Варианты оплаты</label>
-                    <div class="select_delivery">
-                      <select id="s-paytype" name="paytype" class="no-styler select_delivery-start">
-                        <option value="">Наличными либо картой при получении</option>
-                        <option value="">Картой Visa/Mastercard на сайте</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <label for="s-delivery">СПОСОБ ДОСТАВКИ</label>
-                    <div class="select_delivery">
-                      <select id="s-delivery" name="delivery" class="no-styler select_delivery-start">
-                        <option value="courier">Курьером по Москве и области</option>
-                        <option value="self">Самовывоз</option>
-                        <option value="spsr_regions">Курьером СПСР-ЭКСПРЕСС в регионы РФ</option>
-                        <option value="post">Почта России</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="selected_delivery">
-                    <div class="row">
-                      <label for="s-region">Регион<span class="req">*</span></label>
-                      <div class="select_delivery">
-                        <select id="s-region" name="region" class="no-styler require post-select">
-                          <option value="">Выберите регион</option>
-                          <option value="53">Адыгея респ.</option>
-                          <option value="54">Алтай респ.</option>
-                          <option value="3">Алтайский край</option>
-                          <option value="4">Амурская обл.</option>
-                          <option value="6">Архангельская обл.</option>
-                          <option value="7">Астраханская обл.</option>
-                          <option value="55">Башкортостан респ.</option>
-                          <option value="8">Белгородская обл.</option>
-                          <option value="10">Брянская обл.</option>
-                          <option value="56">Бурятия респ.</option>
-                          <option value="11">Владимирская обл.</option>
-                          <option value="12">Волгоградская обл.</option>
-                          <option value="13">Вологодская обл.</option>
-                          <option value="14">Воронежская обл.</option>
-                          <option value="57">Дагестан респ.</option>
-                          <option value="16">Еврейская авт. обл.</option>
-                          <option value="229758847">Забайкальский край</option>
-                          <option value="17">Ивановская обл.</option>
-                          <option value="101">Ингушская респ.</option>
-                          <option value="18">Иркутская обл.</option>
-                          <option value="19">Кабардино-Балкарская респ.</option>
-                          <option value="21">Калининградская обл.</option>
-                          <option value="58">Калмыкия респ.</option>
-                          <option value="22">Калужская обл.</option>
-                          <option value="23">Камчатский край</option>
-                          <option value="24">Карачаево-Черкесская респ.</option>
-                          <option value="59">Карелия респ.</option>
-                          <option value="25">Кемеровская обл.</option>
-                          <option value="27">Кировская обл.</option>
-                          <option value="60">Коми респ.</option>
-                          <option value="29">Костромская обл.</option>
-                          <option value="30">Краснодарский край</option>
-                          <option value="31">Красноярский край</option>
-                          <option value="694008984">Крым респ.</option>
-                          <option value="32">Курганская обл.</option>
-                          <option value="33">Курская обл.</option>
-                          <option value="35">Ленинградская обл.</option>
-                          <option value="36">Липецкая обл.</option>
-                          <option value="38">Магаданская обл.</option>
-                          <option value="61">Марий Эл респ.</option>
-                          <option value="62">Мордовия респ.</option>
-                          <option value="40">Московская обл.</option>
-                          <option value="41">Мурманская обл.</option>
-                          <option value="42">Ненецкий авт. округ</option>
-                          <option value="43">Нижегородская обл.</option>
-                          <option value="44">Новгородская обл.</option>
-                          <option value="45">Новосибирская обл.</option>
-                          <option value="46">Омская обл.</option>
-                          <option value="47">Оренбургская обл.</option>
-                          <option value="48">Орловская обл.</option>
-                          <option value="49">Пензенская обл.</option>
-                          <option value="50">Пермский край</option>
-                          <option value="51">Приморский край</option>
-                          <option value="52">Псковская обл.</option>
-                          <option value="68">Ростовская обл.</option>
-                          <option value="69">Рязанская обл.</option>
-                          <option value="70">Самарская обл.</option>
-                          <option value="71">Саратовская обл.</option>
-                          <option value="63">Саха (Якутия) респ.</option>
-                          <option value="72">Сахалинская обл.</option>
-                          <option value="73">Свердловская обл.</option>
-                          <option value="64">Северная Осетия-Алания респ.</option>
-                          <option value="74">Смоленская обл.</option>
-                          <option value="75">Ставропольский край</option>
-                          <option value="78">Тамбовская обл.</option>
-                          <option value="65">Татарстан респ.</option>
-                          <option value="79">Тверская обл.</option>
-                          <option value="80">Томская обл.</option>
-                          <option value="81">Тульская обл.</option>
-                          <option value="66">Тыва респ.</option>
-                          <option value="83">Тюменская обл.</option>
-                          <option value="84">Удмуртская респ.</option>
-                          <option value="87">Ульяновская обл.</option>
-                          <option value="427838930">Фиктивный регион</option>
-                          <option value="89">Хабаровский край</option>
-                          <option value="67">Хакасия респ.</option>
-                          <option value="90">Ханты-Мансийский авт. округ-Югра</option>
-                          <option value="91">Челябинская обл.</option>
-                          <option value="92">Чечня респ.</option>
-                          <option value="94">Чувашия респ.</option>
-                          <option value="95">Чукотский авт. округ</option>
-                          <option value="99">Ямало-Ненецкий авт. округ</option>
-                          <option value="100">Ярославская обл.</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <label for="s-city">Город <span class="req">*</span></label>
-                      <div class="select_delivery">
-                        <select id="s-city" name="city" class="no-styler require post-select">
-                          <option value="">Выберите город</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="selected_post">
-                    <div class="row">
-                      <label for="s-postTown">Город<span class="req">*</span></label>
-                      <input id="s-postTown" name="postTown" type="text" class="inputtext require">
-                    </div>
-                  </div>
-                  <div class="row delivery__address">
-                    <label for="s-address">Адрес</label>
-                    <textarea id="s-address" name="address"></textarea>
-                  </div>
-                </div>
-                <div class="basket-promocode folding"><a href="#" class="basket-promocode__link folding__title">Промокод</a>
-                  <div class="folding__wrap">
-                    <div class="basket-promocode__inner folding__inner">
-                      <div class="basket-promocode__form">
-                        <input type="text" placeholder="ВВЕДИТЕ  ПРОМОКОД" class="inputtext"><a href="#" class="btn-submit"></a><span title="Нанесение тонкого слоя родия на поверхность изделия из металла, для его защиты от повреждений и потемнения, придания ему более яркого блеска и определенного цвета.Холодный белый блеск родия хорошо сочетается с бриллиантами, фианитами и другими вставками." class="basket-promocode__hint tooltip">Как получить промокод</span>
-                      </div>
-                      <div class="basket-promocode__val">Ваша скидка по промокоду <span></span>%</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="order-delivery__total">
-                  <div class="delivery-total">
-                    <div class="delivery__info"><span class="icon icon-car2"></span>                                Срок доставки <span class="delivery-day">3-5 дней</span>, стоимость <span class="delivery-summ">764</span><span class="rub"><span>руб</span></span></div>
-                    <div class="order__total"><span class="lbl">Стоимость заказа</span><span class="lbl__add"></span>:<span class="summ">194 900</span><span class="rub"><span>руб</span></span></div>
-                  </div>
-                  <div class="order__controls">
-                    <div class="subscribe__info">
-                      <input id="wannaaction" type="checkbox" name="wannaaction">
-                      <label for="wannaaction">Я хочу получать информацию об акциях и скидках</label>
-                    </div><a href="#" class="btn btn_order btn-submit"><span class="status">ЗАВЕРШИТЬ ОФОРМЛЕНИЕ</span>
-                      <input type="submit" value=""></a>
-                  </div>
-                </div>
-              </form>
-            </div>
-            <div class="order__agree">Нажимая на кнопку «Подтвердить заказ», вы принимаете условия <a href="#">Публичной оферты</a></div>
-          </div>
+      <div class="account-section__top">
+        <div class="wrap">
+          <div class="customer__welcome-text">Добро пожаловать Елена Компотова в Ваш личный кабинет.</div>
+          <div class="customer-menu"><a href="customer.html" class="customer-menu__link btn active"><i class="icon icon-customer"></i>                Ваш профиль</a><a href="customer-delivery.html" class="customer-menu__link btn"><i class="icon icon-pin"></i>                Адрес доставки</a><a href="customer-orders.html" class="customer-menu__link btn"><i class="icon icon-car2"></i>                Заказы</a><a href="customer-favorites.html" class="customer-menu__link btn"><i class="icon icon-heart"></i>                Избранное</a><a href="index.html" class="customer-menu__link btn"><i class="icon icon-x"></i>                Выход</a></div>
         </div>
       </div>
-      <div class="ajxItemModal">
-        <div class="ajxItemModal__holder">
-          <div class="ajxItemModal__inner"><a href="javascript:void(0)" class="close icon-close"></a></div>
+      <div class="account-section__head wrap"><span class="account-section__title"><i class="icon icon-car2"></i>        ЗАКАЗЫ</span><span class="account-section__hint">Здесь Вы можете проверить статус своего заказа и посмотреть историю заказов</span></div>
+      <div class="customer-orders account-section__body">
+        <div class="customer-orders__head">
+          <div class="order-head__cols wrap">
+            <div class="order-head__col order-head_num">номер заказа</div>
+            <div class="order-head__col order-head_date">дата заказа</div>
+            <div class="order-head__col order-head_status">статус</div>
+            <div class="order-head__col order-head_total">СУММА</div>
+          </div>
+        </div>
+        <div class="customer-orders__list">
+          <div class="customer-orders__item">
+            <div class="order-spoiler folding">
+              <div class="folding__title">
+                <div class="order-head__cols wrap">
+                  <div class="order-head__col order-head_num"><span class="order-link">Заказ №1472</span></div>
+                  <div class="order-head__col order-head_date">24.12.15</div>
+                  <div class="order-head__col order-head_status">передан курьерской службе</div>
+                  <div class="order-head__col order-head_total">137 700<span class="rub"><span>руб</span></span></div>
+                </div>
+              </div>
+              <div class="folding__wrap">
+                <div class="folding__inner">
+                  <div class="wrap">
+                    <div class="basket_order basket_account">
+                      <div class="basket-items__list">
+                        <div class="basket-item">
+                          <div class="basket-item__holder">
+                            <div class="basket-item__img"><img src="../../assets/images/tmp/pitem-slider.jpg" alt=""></div>
+                            <div class="basket-item__name"><a href="item.html" class="basket-item__link">1ЗОЛОТОЕ КОЛЬЦО С ГРАФИТОВОЙ ЭМАЛЬЮ ROSA ОТ КОМПАНИИ GRAZIELLA</a><span class="article">Артикул: M0000047748</span></div>
+                            <div class="basket-item__size">18</div>
+                            <div class="basket-item__counter">1</div>
+                            <div class="basket-item__price">54 700<span class="rub"><span>руб</span></span></div>
+                          </div>
+                        </div>
+                        <!-- item-->
+                        <div class="basket-item">
+                          <div class="basket-item__holder">
+                            <div class="basket-item__img"><img src="../../assets/images/tmp/pitem-slider.jpg" alt=""></div>
+                            <div class="basket-item__name"><a href="item.html" class="basket-item__link">1ЗОЛОТОЕ КОЛЬЦО С ГРАФИТОВОЙ ЭМАЛЬЮ ROSA ОТ КОМПАНИИ GRAZIELLA</a><span class="article">Артикул: M0000047748</span></div>
+                            <div class="basket-item__size">18</div>
+                            <div class="basket-item__counter">1</div>
+                            <div class="basket-item__price">54 700<span class="rub"><span>руб</span></span></div>
+                          </div>
+                        </div>
+                        <!-- item-->
+                        <div class="basket-item">
+                          <div class="basket-item__holder">
+                            <div class="basket-item__img"><img src="../../assets/images/tmp/pitem-slider.jpg" alt=""></div>
+                            <div class="basket-item__name"><a href="item.html" class="basket-item__link">1ЗОЛОТОЕ КОЛЬЦО С ГРАФИТОВОЙ ЭМАЛЬЮ ROSA ОТ КОМПАНИИ GRAZIELLA</a><span class="article">Артикул: M0000047748</span></div>
+                            <div class="basket-item__size">18</div>
+                            <div class="basket-item__counter">1</div>
+                            <div class="basket-item__price">54 700<span class="rub"><span>руб</span></span></div>
+                          </div>
+                        </div>
+                        <!-- item-->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- item-->
+          <div class="customer-orders__item">
+            <div class="order-spoiler folding">
+              <div class="folding__title">
+                <div class="order-head__cols wrap">
+                  <div class="order-head__col order-head_num"><span class="order-link">Заказ №1472</span></div>
+                  <div class="order-head__col order-head_date">24.12.15</div>
+                  <div class="order-head__col order-head_status status_delivered">доставлен</div>
+                  <div class="order-head__col order-head_total">137 700<span class="rub"><span>руб</span></span></div>
+                </div>
+              </div>
+              <div class="folding__wrap">
+                <div class="folding__inner">
+                  <div class="wrap">
+                    <div class="basket_order basket_account">
+                      <div class="basket-items__list">
+                        <div class="basket-item">
+                          <div class="basket-item__holder">
+                            <div class="basket-item__img"><img src="../../assets/images/tmp/pitem-slider.jpg" alt=""></div>
+                            <div class="basket-item__name"><a href="item.html" class="basket-item__link">1ЗОЛОТОЕ КОЛЬЦО С ГРАФИТОВОЙ ЭМАЛЬЮ ROSA ОТ КОМПАНИИ GRAZIELLA</a><span class="article">Артикул: M0000047748</span></div>
+                            <div class="basket-item__size">18</div>
+                            <div class="basket-item__counter">1</div>
+                            <div class="basket-item__price">54 700<span class="rub"><span>руб</span></span></div>
+                          </div>
+                        </div>
+                        <!-- item-->
+                        <div class="basket-item">
+                          <div class="basket-item__holder">
+                            <div class="basket-item__img"><img src="../../assets/images/tmp/pitem-slider.jpg" alt=""></div>
+                            <div class="basket-item__name"><a href="item.html" class="basket-item__link">1ЗОЛОТОЕ КОЛЬЦО С ГРАФИТОВОЙ ЭМАЛЬЮ ROSA ОТ КОМПАНИИ GRAZIELLA</a><span class="article">Артикул: M0000047748</span></div>
+                            <div class="basket-item__size">18</div>
+                            <div class="basket-item__counter">1</div>
+                            <div class="basket-item__price">54 700<span class="rub"><span>руб</span></span></div>
+                          </div>
+                        </div>
+                        <!-- item-->
+                        <div class="basket-item">
+                          <div class="basket-item__holder">
+                            <div class="basket-item__img"><img src="../../assets/images/tmp/pitem-slider.jpg" alt=""></div>
+                            <div class="basket-item__name"><a href="item.html" class="basket-item__link">1ЗОЛОТОЕ КОЛЬЦО С ГРАФИТОВОЙ ЭМАЛЬЮ ROSA ОТ КОМПАНИИ GRAZIELLA</a><span class="article">Артикул: M0000047748</span></div>
+                            <div class="basket-item__size">18</div>
+                            <div class="basket-item__counter">1</div>
+                            <div class="basket-item__price">54 700<span class="rub"><span>руб</span></span></div>
+                          </div>
+                        </div>
+                        <!-- item-->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- item-->
         </div>
       </div>
       <div class="footer">

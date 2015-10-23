@@ -1,87 +1,58 @@
-include _top.html
-<div class="account-section__head wrap">
-     <span class="account-section__title">
-            <i class="icon icon-customer"></i>
-            Ваш профиль
-        </span>
-     <span class="account-section__hint">Здесь Вы можете изменить свои персональные данные и активировать подарочные карты</span>
-</div>
-<div class="customer-profile account-section__body">
-    <div class="wrap">
-        <div class="customer-profile__content">
-            <div class="customer-profile__info">
-                <div class="customer-profile__avatar">
-                    <img class="customer-profile__avatar-img" src="#{paths.tmpimg}/avatar.jpg" alt=""/>
-                    <a class="customer-profile__avatar-change" href="#">
-                        <span>изменить фотографию</span>
-                    </a>
-                </div>
-                <div class="customer-profile__social">
-                    <ul class="social-menu">
-                        <li>
-                            <a href="#" class="icon-moon icon-tw">
-
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="icon-moon icon-fb">
-
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="icon-moon icon-gplus">
-
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="icon-moon icon-vk">
-
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="customer-expense">
-                    На Вашем счету
-                    <span class="customer-expense__count"><span class="val">0</span> <span class="rub"><span>руб</span></span></span>
-                </div>
-                <div class="customer-giftcard-add">
-                    <form class="giftcard-form" action="">
-                        <input class="inputtext" type="text" placeholder="Введите код подарочной карты"/>
-                        <a class="btn btn-submit" href="#">
-                            ок
-                            <input type="submit">
-                        </a>
-                    </form>
-                </div>
-            </div>
-            <div class="customer-profile__data">
-                <form class="customer-profile-form" action="">
-                    <div class="col">
-                        <span class="col__title">Личные данные:</span>
-                        <!--#include virtual="../includes/layouts/row_input.html?id=profile-name&label=ваше имя&req=*"-->
-                        <!--#include virtual="../includes/layouts/row_input.html?id=profile-surname&label=фамилия"-->
-                        <!--#include virtual="../includes/layouts/row_input.html?id=profile-phone&label=Телефон&addClass=phone-mask&req=*"-->
-                        <!--#include virtual="../includes/layouts/row_input.html?id=profile-email&label=E-mail&type=email&req=*"-->
-                        <!--#include virtual="../includes/layouts/row_input.html?id=profile-birth&label=День рождения&addClass=date-mask"-->
-                    </div>
-                    <div class="col">
-                        <span class="col__title">Изменить пароль:</span>
-                        <!--#include virtual="../includes/layouts/row_input.html?id=profile-oldpass&label=старый Пароль&req=*"-->
-                        <!--#include virtual="../includes/layouts/row_input.html?id=profile-newpass&label=новый Пароль&addClass=similar&req=*"-->
-                        <!--#include virtual="../includes/layouts/row_input.html?id=profile-repeatpass&label=Повторите Пароль&addClass=similar&req=*"-->
-                    </div>
-                    <div class="customer-profile-form__bottom">
-                        <div class="customer-profile__subscribe">
-                            <label for="profile-subscribe">Уберите галочку, если не хотите получать информацию об акциях и скидках</label>
-                            <input type="checkbox" name="subscribe" id="profile-subscribe"/>
-                        </div>
-                        <a class="btn btn_black btn-submit" href="#">
-                            СОХРАНИТЬ ИЗМЕНЕНИЯ
-                            <input type="submit">
-                        </a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+include _top
+.account-section__head.wrap
+  span.account-section__title
+    i.icon.icon-customer
+    |             Ваш профиль
+  span.account-section__hint
+    | Здесь Вы можете изменить свои персональные данные и активировать подарочные карты
+.customer-profile.account-section__body
+  .wrap
+    .customer-profile__content
+      .customer-profile__info
+        .customer-profile__avatar
+          img.customer-profile__avatar-img(src='#{paths.tmpimg}/avatar.jpg', alt='')
+          a.customer-profile__avatar-change(href='#')
+            span изменить фотографию
+        .customer-profile__social
+          ul.social-menu
+            li
+              a.icon-moon.icon-tw(href='#')
+            li
+              a.icon-moon.icon-fb(href='#')
+            li
+              a.icon-moon.icon-gplus(href='#')
+            li
+              a.icon-moon.icon-vk(href='#')
+        .customer-expense
+          | На Вашем счету
+          span.customer-expense__count
+            span.val 0
+            span.rub
+              span руб
+        .customer-giftcard-add
+          form.giftcard-form(action='')
+            input.inputtext(type='text', placeholder='Введите код подарочной карты')
+            a.btn.btn-submit(href='#')
+              | ок
+              input(type='submit')
+      .customer-profile__data
+        form.customer-profile-form(action='')
+          .col
+            span.col__title Личные данные:
+            //- include ../includes/layouts/row_input.html?id=profile-name&label=ваше имя&req=*
+            //- include ../includes/layouts/row_input.html?id=profile-surname&label=фамилия
+            //- include ../includes/layouts/row_input.html?id=profile-phone&label=Телефон&addClass=phone-mask&req=*
+            //- include ../includes/layouts/row_input.html?id=profile-email&label=E-mail&type=email&req=*
+            //- include ../includes/layouts/row_input.html?id=profile-birth&label=День рождения&addClass=date-mask
+          .col
+            span.col__title Изменить пароль:
+            //- include ../includes/layouts/row_input.html?id=profile-oldpass&label=старый Пароль&req=*
+            //- include ../includes/layouts/row_input.html?id=profile-newpass&label=новый Пароль&addClass=similar&req=*
+            //- include ../includes/layouts/row_input.html?id=profile-repeatpass&label=Повторите Пароль&addClass=similar&req=*
+          .customer-profile-form__bottom
+            .customer-profile__subscribe
+              label(for='profile-subscribe') Уберите галочку, если не хотите получать информацию об акциях и скидках
+              input#profile-subscribe(type='checkbox', name='subscribe')
+            a.btn.btn_black.btn-submit(href='#')
+              | СОХРАНИТЬ ИЗМЕНЕНИЯ
+              input(type='submit')
