@@ -1,25 +1,25 @@
+var $ =  jQuery =  require('jquery');
+require('../../node_modules/bxslider/dist/jquery.bxslider.min');
+var sliderConstructor = require('./lib/constructor.bxslider');
+require('jquery-mousewheel')($);
+var Mustache = require('mustache');
+require('jquery.browser');
+require('./main/prlx-banner.plugin');
 
-$(document).ready(function() {
-	$.each($('img[data-alternative]'),function(ind,val){
-		var aimg = new Image;
-		var img = $(val);
-		aimg.src = img.attr('data-alternative')
-		img.attr('data-original',img.attr('src'));
-		$(aimg).load(function(e){
-			img.hover(function(e){
-				$(this).attr('src',$(this).attr('data-alternative'));
-			},function(e){
-				$(this).attr('src',$(this).attr('data-original'));
+require('./vendor/jquery.maskedinput');
+require('./vendor/size.scroll');
+require('./vendor/tipped');
 
-			});
-		});
-	});
+require('./vendor/jquery.simplr.smoothscroll.min');
+require('./vendor/jquery.formstyler.min');
 
+require('./lib/folding.plugin');
+require('./lib/dropdown.plugin');
+require('./lib/subscribe');
 
-});
+require('./main/call');
+var Basket = require('./components/basket');
 
-
-(function($){
     $(function(){
 
         setTimeout(function() {
@@ -162,7 +162,7 @@ $(document).ready(function() {
                     auto: false,
                     onSliderLoad: function(currentIndex) {
 
-                        this.$self.addClass('loaded');
+                        this.addClass('loaded');
                     },
                     onSlideAfter: function($item) {
 
@@ -357,33 +357,9 @@ $(document).ready(function() {
         })();
     });
 
-})(jQuery);
 
 function closePopup ($popup) {
     $popup.fadeOut();
     $('.fade:visible').fadeOut();
     $(window).trigger('popupClosed', [$popup]);
 }
-
-var ajxLoader  = (function() {
-
-    return {
-        attachTo: function ($elm, posProc) {
-            if (!$elm) return false;
-            this.attechedTo = $elm;
-            var $self = $('.loader'),
-                $icon = $('.loader .loader__icon');
-            var pos = this.attechedTo.offset();
-            var posIcon = posProc;
-            this.attechedTo.prepend($self);
-            this.attechedTo.addClass('ajx-loader');
-        },
-        _detach: function () {
-            if (this.attechedTo) {
-                this.attechedTo.removeClass('ajx-loader');
-                //$self.detach();
-                this.attechedTo = null;
-            }
-        }
-    }
-})();
