@@ -103,6 +103,6 @@ gulp.src("./html/**/*.html")
 var del = require('del');
 gulp.task('clean:html', function () {
   return del([
-    '/html/**/*.html'
+    './html/**/*.html'
   ]);
 });
