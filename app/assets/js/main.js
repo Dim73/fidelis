@@ -11402,703 +11402,726 @@ return jQuery;
 },{}],6:[function(require,module,exports){
 var Mustache = require('mustache');
 var $ = require('jquery');
+var ajxLoader = require('../lib/ajxLoader');
 
-function digitDiv (str) {
-    return str.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
-}
+    var ajxUrl = {};
 
-var BasketItem = function(basket, data) {
-    var self = this;
+    var ENV_CONST = window.location.host && (/^[^\:]+\:[\d]+/.test(window.location.host))?'dev':'prod';
 
-    this.basket = basket;
-    this.data = data;
-    this.id = data.id;
-    this.count = data.count;
-    this.sizes = data.sizes;
-    this.isBuy = data.isBuy;
-
-    $.each(data.sizes, function(i,v){
-        var c = 0;
-        if (data.sizes[i].selected) {
-            for (var n in data.sizes[i]) {
-                if (c) return;
-                self.price = data.sizes[i][n];
-                self.size = n;
-                c++;
-            }
+    function addUrl (name, urls) {
+        if(ENV_CONST == 'dev') {
+            ajxUrl[name] = '../../source/back/' + urls[0];
+        } else {
+            ajxUrl[name] = '/ajax/' + urls[1];
         }
-        if (c) return;
-        if (i === 0) {
-            for (var n in data.sizes[i]) {
-                self.price = data.sizes[i][n];
-                self.size = n;
-            }
+    }
+
+    addUrl('town', ['town.html','town.html']);
+    addUrl('addItem', ['additem.json','additem.html?']);
+    addUrl('removeItem', ['additem.json','basketitemdelete.html?']);
+    addUrl('getItem', ['item.json','basketitem.html?']);
+    addUrl('setCoupon', ['coupon.json','coupon.html?']);
+    addUrl('modalItem', ['item.html','item.html?']);
+    addUrl('delivInfo', ['deliveryInfo.json','deliveryInfo.html']);
+    addUrl('delivSubmit', ['deliverySubmit.json','deliverySubmit.html']);
+
+    $.ajaxSetup({
+        beforeSend: function (xhr, setting) {
+            ajxLoader.attachTo($('.order'));
+        },
+        complete: function (xhr, status) {
+            ajxLoader._detach();
         }
+    });
+
+    function digitDiv (str) {
+        return str.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+    }
+
+    var BasketItem = function(basket, data) {
+        var self = this;
+
+        this.basket = basket;
+        this.data = data;
+        this.id = data.id;
+        this.count = data.count;
+        this.sizes = data.sizes;
+        this.isBuy = data.isBuy;
+
+        $.each(data.sizes, function(i,v){
+            var c = 0;
+            if (data.sizes[i].selected) {
+                for (var n in data.sizes[i]) {
+                    if (c) return;
+                    self.price = data.sizes[i][n];
+                    self.size = n;
+                    c++;
+                }
+            }
+            if (c) return;
+            if (i === 0) {
+                for (var n in data.sizes[i]) {
+                    self.price = data.sizes[i][n];
+                    self.size = n;
+                }
+            }
+
+        });
+
+        this.init();
+    };
+
+    BasketItem.prototype = {
+        init: function() {
+            this.render();
+
+            this.$sizes = this.$self.find('.select_size-order');
+            this.$delete = this.$self.find('.basket-item__delete');
+            this.$countControl = this.$self.find('.counter__control');
+            this.$counter = this.$self.find('.counter__val');
+            this.$link = this.$self.find('.basket-item__link');
+
+            this.$sizes.on('change',this,this._sizeChange);
+            this.$countControl.on('click',this,this._countChange);
+            this.$delete.on('click',this,this._remove);
+            this.$link.on('click',this,this._linkItem);
+
+            this.$items = this.basket.renderItem(this);
+
+            this.$price = this.$items.find('.basket-item__price .summ');
+
+            if (this.sizes.length === 1) { //нет размеров
+                for (var size in this.sizes[0]) {
+                    if (!size) {
+                        $('.basket-item__size').css('visibility','hidden');
+                    }
+                }
+            }
+            !IS_MOBILE && this.$sizes.CustomSelect({visRows:4});
+            this.updatePrice(true);
+        },
+        _sizeChange: function(e) {
+            var self = e.data;
+            var valSize = $(this).val();
+            for (var i in self.sizes) {
+                for (var property in self.sizes[i] ) {
+                    if (property == valSize) {
+                        self.size = property;
+                        self.price = self.sizes[i][property];
+                        break;
+                    }
+                }
+            }
+            self.updatePrice();
+            self.updateRefresh();
+        },
+        _countChange: function(e) {
+            e.preventDefault();
+            var self = e.data;
+            var dir = $(this).data('control');
+            switch (dir) {
+                case 'inc' :
+                    self.count++;
+                    break;
+                case 'desc' :
+                    if (self.count > 1)
+                        self.count--;
+                    break;
+            }
+            self.$counter.text(self.count);
+            self.updatePrice();
+            self.updateRefresh();
+        },
+        _remove: function(e) {
+            e.preventDefault();
+            var self = e.data;
+
+            self.$items.fadeOut(500,function(){
+                self.$self.remove();
+                self.$sizes.off('change');
+                self.$countControl.off('click');
+                self.$delete.off('click');
+                self.basket.removeItem(self);
+            })
+        },
+        _linkItem: function(e) {
+            var self = e.data;
+
+            console.log(IS_MOBILE);
+            if ($(this).closest('.basket_order').length && !IS_MOBILE) {
+                e.preventDefault();
+                self.basket.modalItem(self);
+            }
+
+        },
+        updateRefresh: function() {
+            var self = this;
+            clearTimeout(self.counterUpdate);
+            self.counterUpdate = setTimeout(function(){
+                self.basket.addItem({id: self.id, size: self.size, count: self.count});
+            },3000)
+        },
+        render: function() {
+            var renderData = this.data;
+            renderData.size = function() {
+                for ( property in this ) {
+                    return property;
+                }
+            };
+            this.$self = $(Mustache.render(this.basket.tplItem, renderData));
+        },
+        updatePrice: function(onlyItem) {
+            this.total = this.price * this.count;
+
+            this.$price.text(digitDiv(this.total));
+            !onlyItem && this.basket.updateTotal();
+        }
+    };
+
+    window.Basket = function  () {
+        var self = this;
+
+        this.init = function() {
+            self.loadItems();
+            self.$couponFormSubmit.on('click', self.setCoupon);
+            self.itemModal.on('click', self._modalClick);
+        };
+
+        this.loadItems = function() {
+          self.getItem(function(data){
+              !data.length && self.updateCount();
+              for (var i in data) {
+                  self.addToBasket(data[i]);
+              }
+          });
+        };
+
+        this.addItem = function (data, newItem) {
+
+            $.ajax({
+                url: ajxUrl.addItem,
+                cache: false,
+                type: 'post',
+                dataType: 'json',
+                data: {data: data}, // data.id, data.count, data.size
+                success: function(resp,status,xhr){
+                    if (newItem) {
+                        self.addToBasket(data.name?data:resp, true);
+                    }
+                }
+            });
+
+        };
+
+        this.removeItem = function(item) {
+
+
+            $.ajax({
+                url: ajxUrl.removeItem,
+                cache: false,
+                type: 'post',
+                dataType: 'json',
+                data: {id: item.id}, // data.id, data.count, data.size
+                success: function(data,status,xhr){
+                    for (var i = 0, l = items.length; i < l ; i++) {
+                        if(items[i] == item)
+                            items.splice(i, 1);
+                    }
+                    var $itemBtn = $('.js-buy[data-item='+item.id+']');
+                    $itemBtn.removeClass('btn_red btn_cart-added');
+                    $itemBtn.text('купить');
+                    self.updateBasket();
+                }
+            });
+        };
+
+        this.addToBasket = function(data, isBuy) {
+            self.toggleBasket();
+            if (isBuy && !IS_MOBILE) {
+                data.isBuy = true
+            }
+            items.push(new BasketItem(self, data));
+            self.updateBasket();
+            if (isBuy && !IS_MOBILE) {
+                self.$topList.trigger('open');
+            }
+        };
+
+        this.toggleBasket = function(flag,callback) {
+            if (flag) {
+                this.isEmpty = true;
+                self.$step.fadeOut(500,function(){
+                    self.$step.remove();
+                    self.$emptyBasket.fadeIn(300);
+                });
+                !self.$step.length && self.$emptyBasket.fadeIn(300);
+            } else {
+                this.isEmpty = false;
+                self.$emptyBasket.hide();
+                self.$self.show();
+            }
+        };
+
+        this.renderItem = function (item) {
+            item.isBuy && item.$self.addClass('active');
+            return item.$self.prependTo(self.$list);
+        };
+
+        this.findItem = function(id) {
+           for (var i in items) {
+               if (items[i].id == id) {
+                   return items[i];
+               }
+           }
+           return false;
+        };
+
+        this.getItem = function(callback, id) {
+            var id = id || false;
+
+            $.ajax({
+                url: ajxUrl.getItem,
+                cache: false,
+                type: 'get',
+                dataType: 'json',
+                data: {id : id},
+                success: function(data,status,xhr){
+                    typeof callback == 'function' && callback(data);
+                },
+                error: function(d,msg) {
+                    self.toggleBasket(true);
+                }
+            });
+        };
+
+        this.setCoupon = function(e) {
+
+            $inpt = $('input[type=text]',self.$couponForm);
+            var val = $inpt.val();
+            if (val) {
+                $.ajax({
+                    url: ajxUrl.setCoupon,
+                    cache: false,
+                    type: 'post',
+                    dataType: 'json',
+                    data: {coupon: val}, // data.id, data.count, data.size
+                    success: function(data,status,xhr){
+                        if (data.count) {
+                            self.sale = data.count;
+                            self.$sale && self.$sale.remove();
+                            self.$sale = $(Mustache.render(self.tplSale, {sale: self.sale}));
+                            self.$coupon = $('.summ',self.$sale);
+                            self.$couponFormVal.find('span').text(self.sale);
+                            self.$couponFormVal.show();
+                            self.$couponForm.trigger('update');
+                            self.$totalCont.append(self.$sale);
+                            $inpt.val('');
+                            self.updateTotal();
+                        }
+                    }
+                });
+            }
+            return false;
+        };
+
+        this.updateBasket = function() {
+            self.updateTotal();
+            self.updateCount();
+            try{
+                self.$scroller.nanoScroller();
+            }
+            catch(e) {}
+        };
+
+        this.updateTotal = function() {
+            self.total = 0;
+            for (var i in items) {
+                self.total += items[i].total;
+            }
+            self.$total.text(digitDiv(self.total));
+            if (self.sale) {
+                self.saleTotal = Math.round((100-self.sale)/100 * self.total);
+                self.$coupon.text(digitDiv(self.saleTotal));
+            }
+            self.$self.trigger('updateTotal');
+        };
+
+        this.getTotal = function() {
+            return self.sale?self.saleTotal:self.total;
+        };
+
+        this.updateCount = function() {
+            console.log('update');
+            self.$topCount.text(items.length || 0);
+            !items.length && self.toggleBasket(true);
+        };
+
+        this.modalItem = function(item) {
+            this.modalItemToggle(true);
+            $.ajax({
+                url: ajxUrl.modalItem,
+                cache: false,
+                type: 'post',
+                dataType: 'html',
+                data: {id: item.id},
+                success: function(data,status,xhr){
+                    if (data) {
+                        self.$itemCont && self.$itemCont.remove();
+                        self.$itemCont = $(data);
+                        self.itemModalCont.append(self.$itemCont);
+                        self.itemModalInit();
+                    }
+                },
+                error: function(res,err) {
+                    console.log(res);
+                    console.log(err);
+                }
+            });
+        };
+
+        this.modalItemToggle =  function(flag) {
+            self.itemModal.fadeToggle(500, function(){
+                $('body').toggleClass('popup-show',flag);
+            });
+            if (!flag) {
+                self.itemModalCont.css({opacity:0});
+                smoothScrollInit();
+            } else {
+                $('body').addClass('popup-show');
+            }
+        };
+
+        this._modalClick = function(e) {
+            if ($(e.target).closest(self.itemModalCont).length && !$(e.target).is('.icon-close')) return false;
+            self.modalItemToggle(false);
+        };
+
+        this.itemModalInit = function() {
+            //slider
+            var modalSlider = [
+                {
+                    sliderClass: '.pitem-slider_side',
+                    options: {
+                        pager: false,
+                        minSlides: 4,
+                        infiniteLoop: false,
+                        slideMargin: 23,
+                        mode: 'vertical',
+                        onSliderLoad: function() {
+
+                        }
+                    }
+                }
+            ];
+            sliderConstructor(modalSlider);
+            self.itemModalCont.css({opacity:1});
+            //spoilers
+            $('.pitem-specs__spoilers .folding').folding({openHeight: 163, closeOther: '.pitem-specs__spoilers .spoiler-item'});
+            //tooltip
+            Tipped.create('.tooltip', '', {
+                maxWidth: 290
+            });
+            //big img && zoom
+            $('.pitem-slider_side', self.itemModal).itemImg({
+                containerImg: '.pitem-preview-main_side .pitem-preview-main__loader',
+                containerVideo: '.pitem-preview-main_side .pitem-preview-main__video'
+            });
+            //select
+            !IS_MOBILE && $('.select_size', self.itemModal).CustomSelect({visRows:4});
+            var $curItem = $('.js-item-data', self.itemModal),
+                itemData = eval('('+$curItem.data('item')+')'),
+                $selectSize = $('.select_size',$curItem),
+                $cost = $('.count',$curItem);
+
+            $selectSize.change(function(){
+                var valSize = self.size = $(this).val(),
+                    cost;
+                if (valSize) {
+                    for (var i in itemData.sizes) {
+                        for (var property in itemData.sizes[i] ) {
+                            if (property == valSize) {
+                                cost = itemData.sizes[i][property];
+                                break;
+                            }
+                        }
+                    }
+                    $cost.html(cost);
+                }
+
+            });
+            $('body').off('mousewheel');
+        };
+
+        var items = [];
+        self.$self = $('.basket');
+        self.$list = $('.basket-items__list', self.$self);
+        self.$topList = $('.basket-items__holder');
+        self.$totalCont = $('.total', self.$self);
+        self.$total = $('.total__summ .summ', self.$self);
+        self.$scroller = $('.nano-scroll', self.$self);
+        self.$topCount = $('.basket-top__icon .count',self.$self);
+        self.tplItem = IS_MOBILE?$('#basket-item__mobile').html():$('#basket-item').html();
+        self.tplSale = $('#basket-sale').html();
+        self.$couponForm = $('.basket-promocode__form');
+        self.$couponFormVal = $('.basket-promocode__val');
+        self.$couponFormSubmit = $('.btn-submit', self.$couponForm);
+        self.itemModal = $('.ajxItemModal');
+        self.itemModalCont = $('.ajxItemModal__inner');
+        self.$emptyBasket = $('.basket-empty');
+        self.$step = $('.order-step');
+        Mustache.parse(self.tplItem);
+        Mustache.parse(self.tplSale);
+
+        self.init();
+    };
+
+
+    window.Checkout = function  (basket) {
+        var self = this;
+
+        this.init = function() {
+            self.$typeSel.on('change', self._deliverySelect);
+            self.$regionSel.on('change', self.setTown);
+            self.$citySel.on('change', self.setPostDelivery);
+            self.$form.on('submit',self.submitDelivery);
+
+            self.$step.each(function(){
+                self.steps.push($(this));
+            });
+
+            self.basket.$self.bind('updateTotal',self.updateTotal);
+        };
+
+        this.nextStep = function(step) {
+            var curOffset,$curStep;
+            self.curStep = step || (self.curStep + 1 > self.steps.length - 1?self.steps.length - 1:self.curStep + 1);
+
+            $curStep = self.steps[self.curStep];
+            $curStep.fadeIn(500,self.stepDetect);
+
+            setTimeout(function(){
+                curOffset = $curStep.find('.scroll-to').offset().top;
+                $("html, body").animate({ scrollTop: curOffset*.95 }, 300);
+            },10);
+        };
+
+
+        this.stepDetect = function() {
+            switch (self.curStep) {
+                case 1:
+                    var $sel = $('.select_delivery-start');
+                    $('.basket-promocode').folding({});
+                    if ($sel.data('plugin') != 'select' && !IS_MOBILE)
+                        $sel.CustomSelect({visRows:5, modifier: 'delivery'});
+                    break;
+
+            }
+        };
+
+        this._deliverySelect = function() {
+            var dType = $(this).val();
+            self.setDelivery(dType);
+        };
+
+
+        this.setDelivery = function(dType) {
+            self.dType = dType || self.$typeSel.val();
+            self.validateAdd = [];
+            self.$destSel.hide();
+            self.$postSel.hide();
+            switch (self.dType) {
+                case 'courier':
+                    self.$addresss.show();
+                    self.getDeliveryInfo();
+                   // self.validateAdd = ['s-address'];
+                    break;
+                case 'self':
+                    self.toggleDestination(false);
+                    self.shipCost = 0;
+                    self.updateTotal();
+                    break;
+                case 'spsr_regions':
+                    self.$deliveryInfo.hide();
+                    self.$addresss.show();
+                    self.$destSel.show();
+                    if (!selInit && !IS_MOBILE) {
+                        $('.post-select', self.$self).CustomSelect({visRows:5, modifier: 'delivery'});
+                    }
+                    selInit = true;
+                    self.validateAdd = [/*'s-address',*/ 's-region', 's-city'];
+                    break;
+                case 'post':
+                    self.$addresss.show();
+                    self.$postSel.show();
+                    self.getDeliveryInfo();
+                    self.validateAdd = [/*'s-address',*/ 's-postTown'];
+                    break;
+            }
+        };
+
+        this.getDeliveryInfo = function(dest) {
+
+            $.ajax({
+                url: ajxUrl.delivInfo,
+                cache: false,
+                type: 'post',
+                dataType: 'json',
+                data: {type: self.dType, destination: dest || ''},
+                success: function(data,status,xhr){
+                    if (data) {
+                        self.shipCost = data.summ;
+                        self.$deliverySumm.text(digitDiv(data.summ));
+                        self.$deliveryDays.text(data.days);
+                        self.updateTotal();
+                        self.$deliveryInfo.show();
+                    }
+                }
+            });
+        };
+
+        this.toggleDestination = function(flag) {
+            self.$deliveryInfo.toggle(flag);
+            self.$addresss.toggle(flag);
+            self.$destSel.toggle(flag);
+        };
+
+        this.setTown = function() {
+            var region = $(this).val();
+
+            self.$towns && self.$towns.remove();
+            $.ajax({
+                url: ajxUrl.town,
+                cache: false,
+                type: 'post',
+                dataType: 'html',
+                data: {region: region},
+                success: function(data,status,xhr){
+                    if (data) {
+                        self.$towns = $(data);
+                        self.$citySel.append(self.$towns).trigger('update');
+                    }
+                }
+            });
+        };
+
+        this.setPostDelivery = function() {
+            var town = $(this).val();
+            town && self.getDeliveryInfo(town);
+            if (!town) {
+                self.$deliveryInfo.hide();
+            }
+        };
+
+        this.validateDelivery = function(e) {
+            var validateFields = self.validate.concat(self.validateAdd);
+            var $field,$fieldRow, isValid = true, forValid;
+            for (var i in validateFields) {
+                $field = $('#'+validateFields[i]);
+                $fieldRow = $field.closest('.row');
+                switch ($field.attr('type')) {
+                    case 'email':
+                        forValid = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/.test($field.val());
+                        break;
+                    default :
+                        forValid = !!$field.val();
+                }
+                if (!forValid) {
+                    isValid = forValid;
+                }
+                $fieldRow.toggleClass('error',!forValid);
+            }
+            return isValid;
+        };
+
+        this.submitDelivery = function(e) {
+            e.preventDefault();
+            if (self.validateDelivery()) {
+                $.ajax({
+                    url: ajxUrl.delivSubmit,
+                    cache: false,
+                    type: 'post',
+                    dataType: 'json',
+                    data: {data: self.$form.serialize()},
+                    success: function(data,status,xhr){
+                        /*if (data.url) {
+                            /!*self.$orderNum.text(data.order);*!/
+                            window.location = data.url;
+                            self.nextStep();
+                        }*/
+                        if (typeof data.type != 'undefined') {
+                            if (data.type=='form') {
+                                var form = $(data.form);
+                                $(document.body).append(form);
+                                form.submit();
+                            }
+                            else
+                            if (data.type=='url') {
+                                window.location.href=data.url;
+                            }
+                        } else {
+                            alert('Заказ успешно отправлен. В ближайшее время наш менеджер свяжется с вами.');
+                            window.location.href='/';
+                        }
+                    }
+                });
+            }
+        };
+
+        this.updateTotal = function() {
+            var lbl = '';
+            var total = self.shipCost + self.basket.getTotal();
+            if (self.shipCost || self.basket.sale ) {
+                lbl = 'с учетом';
+                self.basket.sale && (lbl+=' скидки');
+                lbl+=(self.basket.sale && self.shipCost)?' и':'';
+                self.shipCost && (lbl+=' доставки');
+            }
+            self.$totalLbl.text(lbl);
+            self.$total.text(digitDiv(total));
+        };
+
+        self.$self = $('.order');
+        if (!self.$self.length) return;
+        self.$typeSel = $('#s-delivery');
+        self.$regionSel = $('#s-region');
+        self.$citySel = $('#s-city');
+        self.$destSel = $('.selected_delivery',self.$self);
+        self.$postSel = $('.selected_post',self.$self);
+        self.$deliveryInfo = $('.delivery__info',self.$self);
+        self.$deliverySumm = $('.delivery-summ', self.$deliveryInfo);
+        self.$deliveryDays = $('.delivery-day', self.$deliveryInfo);
+        self.$addresss = $('.delivery__address',self.$self);
+        self.$total = $('.order__total .summ', self.$self);
+        self.$totalLbl = $('.order__total .lbl__add', self.$self);
+        self.$form = $('.delivery-form', self.$self);
+        self.$orderNum = $('.order-num',self.$self);
+        self.$step = $('.order-step');
+        self.steps = [];
+        self.curStep = -1;
+        self.shipCost = 0;
+
+        self.validate = [
+            's-name', 's-phone',  's-paytype', 's-delivery'
+        ];
+
+        self.basket = basket;
+
+        var selInit = false;
+        self.init();
+        self.nextStep();
+        self.setDelivery();
+    };
+
+
+    $(function(){
+
 
     });
 
-    this.init();
-};
-
-BasketItem.prototype = {
-    init: function() {
-        this.render();
-
-        this.$sizes = this.$self.find('.select_size-order');
-        this.$delete = this.$self.find('.basket-item__delete');
-        this.$countControl = this.$self.find('.counter__control');
-        this.$counter = this.$self.find('.counter__val');
-        this.$link = this.$self.find('.basket-item__link');
-
-        this.$sizes.on('change',this,this._sizeChange);
-        this.$countControl.on('click',this,this._countChange);
-        this.$delete.on('click',this,this._remove);
-        this.$link.on('click',this,this._linkItem);
-
-        this.$items = this.basket.renderItem(this);
-
-        this.$price = this.$items.find('.basket-item__price .summ');
-
-        if (this.sizes.length === 1) { //нет размеров
-            for (var size in this.sizes[0]) {
-                if (!size) {
-                    $('.basket-item__size').css('visibility','hidden');
-                }
-            }
-        }
-        !IS_MOBILE && this.$sizes.CustomSelect({visRows:4});
-        this.updatePrice(true);
-    },
-    _sizeChange: function(e) {
-        var self = e.data;
-        var valSize = $(this).val();
-        for (var i in self.sizes) {
-            for (var property in self.sizes[i] ) {
-                if (property == valSize) {
-                    self.size = property;
-                    self.price = self.sizes[i][property];
-                    break;
-                }
-            }
-        }
-        self.updatePrice();
-        self.updateRefresh();
-    },
-    _countChange: function(e) {
-        e.preventDefault();
-        var self = e.data;
-        var dir = $(this).data('control');
-        switch (dir) {
-            case 'inc' :
-                self.count++;
-                break;
-            case 'desc' :
-                if (self.count > 1)
-                    self.count--;
-                break;
-        }
-        self.$counter.text(self.count);
-        self.updatePrice();
-        self.updateRefresh();
-    },
-    _remove: function(e) {
-        e.preventDefault();
-        var self = e.data;
-
-        self.$items.fadeOut(500,function(){
-            self.$self.remove();
-            self.$sizes.off('change');
-            self.$countControl.off('click');
-            self.$delete.off('click');
-            self.basket.removeItem(self);
-        })
-    },
-    _linkItem: function(e) {
-        var self = e.data;
-
-        console.log(IS_MOBILE);
-        if ($(this).closest('.basket_order').length && !IS_MOBILE) {
-            e.preventDefault();
-            self.basket.modalItem(self);
-        }
-
-    },
-    updateRefresh: function() {
-        var self = this;
-        clearTimeout(self.counterUpdate);
-        self.counterUpdate = setTimeout(function(){
-            self.basket.addItem({id: self.id, size: self.size, count: self.count});
-        },3000)
-    },
-    render: function() {
-        var renderData = this.data;
-        renderData.size = function() {
-            for ( property in this ) {
-                return property;
-            }
-        };
-        this.$self = $(Mustache.render(this.basket.tplItem, renderData));
-    },
-    updatePrice: function(onlyItem) {
-        this.total = this.price * this.count;
-
-        this.$price.text(digitDiv(this.total));
-        !onlyItem && this.basket.updateTotal();
-    }
-};
-
-Basket = function  () {
-    var self = this;
-
-    this.init = function() {
-        self.loadItems();
-        self.$couponFormSubmit.on('click', self.setCoupon);
-        self.itemModal.on('click', self._modalClick);
-    };
-
-    this.loadItems = function() {
-      self.getItem(function(data){
-          !data.length && self.updateCount();
-          for (var i in data) {
-              self.addToBasket(data[i]);
-          }
-      });
-    };
-
-    this.addItem = function (data, newItem) {
-        var itemsUrl = '';
-        if(window.location.host && (/\:300/.test(window.location.host))) {
-            itemsUrl = '../../source/back/additem.json';
-        } else {
-            itemsUrl = '/ajax/additem.html?';
-        }
-        $.ajax({
-            url: itemsUrl,
-            cache: false,
-            type: 'post',
-            dataType: 'json',
-            data: {data: data}, // data.id, data.count, data.size
-            success: function(resp,status,xhr){
-                if (newItem) {
-                    self.addToBasket(data.name?data:resp, true);
-                }
-            }
-        });
-
-    };
-
-    this.removeItem = function(item) {
-
-        var itemsUrl = '';
-        if(window.location.host && (/\:300/.test(window.location.host))) {
-            itemsUrl = '../../source/back/additem.json';
-        } else {
-            itemsUrl = '/ajax/basketitemdelete.html?';
-        }
-        $.ajax({
-            url: itemsUrl,
-            cache: false,
-            type: 'post',
-            dataType: 'json',
-            data: {id: item.id}, // data.id, data.count, data.size
-            success: function(data,status,xhr){
-                for (var i = 0, l = items.length; i < l ; i++) {
-                    if(items[i] == item)
-                        items.splice(i, 1);
-                }
-                var $itemBtn = $('.js-buy[data-item='+item.id+']');
-                $itemBtn.removeClass('btn_red btn_cart-added');
-                $itemBtn.text('купить');
-                self.updateBasket();
-            }
-        });
-    };
-
-    this.addToBasket = function(data, isBuy) {
-        self.toggleBasket();
-        if (isBuy && !IS_MOBILE) {
-            data.isBuy = true
-        }
-        items.push(new BasketItem(self, data));
-        self.updateBasket();
-        if (isBuy && !IS_MOBILE) {
-            self.$topList.trigger('open');
-        }
-    };
-
-    this.toggleBasket = function(flag,callback) {
-        if (flag) {
-            this.isEmpty = true;
-            self.$step.fadeOut(500,function(){
-                self.$step.remove();
-                self.$emptyBasket.fadeIn(300);
-            });
-            !self.$step.length && self.$emptyBasket.fadeIn(300);
-        } else {
-            this.isEmpty = false;
-            self.$emptyBasket.hide();
-            self.$self.show();
-        }
-    };
-
-    this.renderItem = function (item) {
-        item.isBuy && item.$self.addClass('active');
-        return item.$self.prependTo(self.$list);
-    };
-
-    this.findItem = function(id) {
-       for (var i in items) {
-           if (items[i].id == id) {
-               return items[i];
-           }
-       }
-       return false;
-    };
-
-    this.getItem = function(callback, id) {
-        var id = id || false;
-        var itemsUrl;
-        if(window.location.host && (/\:300/.test(window.location.host))) {
-            itemsUrl = '../../source/back/item.json';
-        } else {
-            itemsUrl = '/ajax/basketitem.html?';
-        }
-        $.ajax({
-            url: itemsUrl,
-            cache: false,
-            type: 'get',
-            dataType: 'json',
-            data: {id : id},
-            success: function(data,status,xhr){
-                typeof callback == 'function' && callback(data);
-            },
-            error: function(d,msg) {
-                self.toggleBasket(true);
-            }
-        });
-    };
-
-    this.setCoupon = function(e) {
-
-        $inpt = $('input[type=text]',self.$couponForm);
-        var val = $inpt.val();
-        if (val) {
-            $.ajax({
-                url: '../../source/back/coupon.json',
-                cache: false,
-                type: 'post',
-                dataType: 'json',
-                data: {coupon: val}, // data.id, data.count, data.size
-                success: function(data,status,xhr){
-                    if (data.count) {
-                        self.sale = data.count;
-                        self.$sale && self.$sale.remove();
-                        self.$sale = $(Mustache.render(self.tplSale, {sale: self.sale}));
-                        self.$coupon = $('.summ',self.$sale);
-                        self.$couponFormVal.find('span').text(self.sale);
-                        self.$couponFormVal.show();
-                        self.$couponForm.trigger('update');
-                        self.$totalCont.append(self.$sale);
-                        $inpt.val('');
-                        self.updateTotal();
-                    }
-                }
-            });
-        }
-        return false;
-    };
-
-    this.updateBasket = function() {
-        self.updateTotal();
-        self.updateCount();
-        try{
-            self.$scroller.nanoScroller();
-        }
-        catch(e) {}
-    };
-
-    this.updateTotal = function() {
-        self.total = 0;
-        for (var i in items) {
-            self.total += items[i].total;
-        }
-        self.$total.text(digitDiv(self.total));
-        if (self.sale) {
-            self.saleTotal = Math.round((100-self.sale)/100 * self.total);
-            self.$coupon.text(digitDiv(self.saleTotal));
-        }
-        self.$self.trigger('updateTotal');
-    };
-
-    this.getTotal = function() {
-        return self.sale?self.saleTotal:self.total;
-    };
-
-    this.updateCount = function() {
-        console.log('update');
-        self.$topCount.text(items.length || 0);
-        !items.length && self.toggleBasket(true);
-    };
-
-    this.modalItem = function(item) {
-        this.modalItemToggle(true);
-        $.ajax({
-            url: '../../source/back/item.html',
-            cache: false,
-            type: 'post',
-            dataType: 'html',
-            data: {id: item.id},
-            success: function(data,status,xhr){
-                if (data) {
-                    self.$itemCont && self.$itemCont.remove();
-                    self.$itemCont = $(data);
-                    self.itemModalCont.append(self.$itemCont);
-                    self.itemModalInit();
-                }
-            },
-            error: function(res,err) {
-                console.log(res);
-                console.log(err);
-            }
-        });
-    };
-
-    this.modalItemToggle =  function(flag) {
-        self.itemModal.fadeToggle(500, function(){
-            $('body').toggleClass('popup-show',flag);
-        });
-        if (!flag) {
-            self.itemModalCont.css({opacity:0});
-            smoothScrollInit();
-        } else {
-            $('body').addClass('popup-show');
-        }
-    };
-
-    this._modalClick = function(e) {
-        if ($(e.target).closest(self.itemModalCont).length && !$(e.target).is('.icon-close')) return false;
-        self.modalItemToggle(false);
-    };
-
-    this.itemModalInit = function() {
-        //slider
-        var modalSlider = [
-            {
-                sliderClass: '.pitem-slider_side',
-                options: {
-                    pager: false,
-                    minSlides: 4,
-                    infiniteLoop: false,
-                    slideMargin: 23,
-                    mode: 'vertical',
-                    onSliderLoad: function() {
-
-                    }
-                }
-            }
-        ];
-        sliderConstructor(modalSlider);
-        self.itemModalCont.css({opacity:1});
-        //spoilers
-        $('.pitem-specs__spoilers .folding').folding({openHeight: 163, closeOther: '.pitem-specs__spoilers .spoiler-item'});
-        //tooltip
-        Tipped.create('.tooltip', '', {
-            maxWidth: 290
-        });
-        //big img && zoom
-        $('.pitem-slider_side', self.itemModal).itemImg({
-            containerImg: '.pitem-preview-main_side .pitem-preview-main__loader',
-            containerVideo: '.pitem-preview-main_side .pitem-preview-main__video'
-        });
-        //select
-        !IS_MOBILE && $('.select_size', self.itemModal).CustomSelect({visRows:4});
-        var $curItem = $('.js-item-data', self.itemModal),
-            itemData = eval('('+$curItem.data('item')+')'),
-            $selectSize = $('.select_size',$curItem),
-            $cost = $('.count',$curItem);
-
-        $selectSize.change(function(){
-            var valSize = self.size = $(this).val(),
-                cost;
-            if (valSize) {
-                for (var i in itemData.sizes) {
-                    for (var property in itemData.sizes[i] ) {
-                        if (property == valSize) {
-                            cost = itemData.sizes[i][property];
-                            break;
-                        }
-                    }
-                }
-                $cost.html(cost);
-            }
-
-        });
-        $('body').off('mousewheel');
-    };
-
-    var items = [];
-    self.$self = $('.basket');
-    self.$list = $('.basket-items__list', self.$self);
-    self.$topList = $('.basket-items__holder');
-    self.$totalCont = $('.total', self.$self);
-    self.$total = $('.total__summ .summ', self.$self);
-    self.$scroller = $('.nano-scroll', self.$self);
-    self.$topCount = $('.basket-top__icon .count',self.$self);
-    self.tplItem = IS_MOBILE?$('#basket-item__mobile').html():$('#basket-item').html();
-    self.tplSale = $('#basket-sale').html();
-    self.$couponForm = $('.basket-promocode__form');
-    self.$couponFormVal = $('.basket-promocode__val');
-    self.$couponFormSubmit = $('.btn-submit', self.$couponForm);
-    self.itemModal = $('.ajxItemModal');
-    self.itemModalCont = $('.ajxItemModal__inner');
-    self.$emptyBasket = $('.basket-empty');
-    self.$step = $('.order-step');
-    Mustache.parse(self.tplItem);
-    Mustache.parse(self.tplSale);
-
-    self.init();
-};
-
-
-window.Checkout = function  (basket) {
-    var self = this;
-
-    this.init = function() {
-        self.$typeSel.on('change', self._deliverySelect);
-        self.$regionSel.on('change', self.setTown);
-        self.$citySel.on('change', self.setPostDelivery);
-        self.$form.on('submit',self.submitDelivery);
-
-        self.$step.each(function(){
-            self.steps.push($(this));
-        });
-
-        self.basket.$self.bind('updateTotal',self.updateTotal);
-    };
-
-    this.nextStep = function(step) {
-        var curOffset,$curStep;
-        self.curStep = step || (self.curStep + 1 > self.steps.length - 1?self.steps.length - 1:self.curStep + 1);
-
-        $curStep = self.steps[self.curStep];
-        $curStep.fadeIn(500,self.stepDetect);
-
-        setTimeout(function(){
-            curOffset = $curStep.find('.scroll-to').offset().top;
-            $("html, body").animate({ scrollTop: curOffset*.95 }, 300);
-        },10);
-    };
-
-
-    this.stepDetect = function() {
-        switch (self.curStep) {
-            case 1:
-                var $sel = $('.select_delivery-start');
-                $('.basket-promocode').folding({});
-                if ($sel.data('plugin') != 'select' && !IS_MOBILE)
-                    $sel.CustomSelect({visRows:5, modifier: 'delivery'});
-                break;
-
-        }
-    };
-
-    this._deliverySelect = function() {
-        var dType = $(this).val();
-        self.setDelivery(dType);
-    };
-
-
-    this.setDelivery = function(dType) {
-        self.dType = dType || self.$typeSel.val();
-        self.validateAdd = [];
-        self.$destSel.hide();
-        self.$postSel.hide();
-        switch (self.dType) {
-            case 'courier':
-                self.$addresss.show();
-                self.getDeliveryInfo();
-               // self.validateAdd = ['s-address'];
-                break;
-            case 'self':
-                self.toggleDestination(false);
-                self.shipCost = 0;
-                self.updateTotal();
-                break;
-            case 'spsr_regions':
-                self.$deliveryInfo.hide();
-                self.$addresss.show();
-                self.$destSel.show();
-                if (!selInit && !IS_MOBILE) {
-                    $('.post-select', self.$self).CustomSelect({visRows:5, modifier: 'delivery'});
-                }
-                selInit = true;
-                self.validateAdd = [/*'s-address',*/ 's-region', 's-city'];
-                break;
-            case 'post':
-                self.$addresss.show();
-                self.$postSel.show();
-                self.getDeliveryInfo();
-                self.validateAdd = [/*'s-address',*/ 's-postTown'];
-                break;
-        }
-    };
-
-    this.getDeliveryInfo = function(dest) {
-
-        $.ajax({
-            url: '../../source/back/deliveryInfo.json',
-            cache: false,
-            type: 'post',
-            dataType: 'json',
-            data: {type: self.dType, destination: dest || ''},
-            success: function(data,status,xhr){
-                if (data) {
-                    self.shipCost = data.summ;
-                    self.$deliverySumm.text(digitDiv(data.summ));
-                    self.$deliveryDays.text(data.days);
-                    self.updateTotal();
-                    self.$deliveryInfo.show();
-                }
-            }
-        });
-    };
-
-    this.toggleDestination = function(flag) {
-        self.$deliveryInfo.toggle(flag);
-        self.$addresss.toggle(flag);
-        self.$destSel.toggle(flag);
-    };
-
-    this.setTown = function() {
-        var region = $(this).val();
-
-        self.$towns && self.$towns.remove();
-        $.ajax({
-            url: '../../source/back/town.html',
-            cache: false,
-            type: 'post',
-            dataType: 'html',
-            data: {region: region},
-            success: function(data,status,xhr){
-                if (data) {
-                    self.$towns = $(data);
-                    self.$citySel.append(self.$towns).trigger('update');
-                }
-            }
-        });
-    };
-
-    this.setPostDelivery = function() {
-        var town = $(this).val();
-        town && self.getDeliveryInfo(town);
-        if (!town) {
-            self.$deliveryInfo.hide();
-        }
-    };
-
-    this.validateDelivery = function(e) {
-        var validateFields = self.validate.concat(self.validateAdd);
-        var $field,$fieldRow, isValid = true, forValid;
-        for (var i in validateFields) {
-            $field = $('#'+validateFields[i]);
-            $fieldRow = $field.closest('.row');
-            switch ($field.attr('type')) {
-                case 'email':
-                    forValid = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/.test($field.val());
-                    break;
-                default :
-                    forValid = !!$field.val();
-            }
-            if (!forValid) {
-                isValid = forValid;
-            }
-            $fieldRow.toggleClass('error',!forValid);
-        }
-        return isValid;
-    };
-
-    this.submitDelivery = function(e) {
-        e.preventDefault();
-        if (self.validateDelivery()) {
-            $.ajax({
-                url: '../../source/back/deliverySubmit.json',
-                cache: false,
-                type: 'post',
-                dataType: 'json',
-                data: {data: self.$form.serialize()},
-                success: function(data,status,xhr){
-                    /*if (data.url) {
-                        /!*self.$orderNum.text(data.order);*!/
-                        window.location = data.url;
-                        self.nextStep();
-                    }*/
-                    if (typeof data.type != 'undefined') {
-                        if (data.type=='form') {
-                            var form = $(data.form);
-                            $(document.body).append(form);
-                            form.submit();
-                        }
-                        else
-                        if (data.type=='url') {
-                            window.location.href=data.url;
-                        }
-                    } else {
-                        alert('Заказ успешно отправлен. В ближайшее время наш менеджер свяжется с вами.');
-                        window.location.href='/';
-                    }
-                }
-            });
-        }
-    };
-
-    this.updateTotal = function() {
-        var lbl = '';
-        var total = self.shipCost + self.basket.getTotal();
-        if (self.shipCost || self.basket.sale ) {
-            lbl = 'с учетом';
-            self.basket.sale && (lbl+=' скидки');
-            lbl+=(self.basket.sale && self.shipCost)?' и':'';
-            self.shipCost && (lbl+=' доставки');
-        }
-        self.$totalLbl.text(lbl);
-        self.$total.text(digitDiv(total));
-    };
-
-    self.$self = $('.order');
-    if (!self.$self.length) return;
-    self.$typeSel = $('#s-delivery');
-    self.$regionSel = $('#s-region');
-    self.$citySel = $('#s-city');
-    self.$destSel = $('.selected_delivery',self.$self);
-    self.$postSel = $('.selected_post',self.$self);
-    self.$deliveryInfo = $('.delivery__info',self.$self);
-    self.$deliverySumm = $('.delivery-summ', self.$deliveryInfo);
-    self.$deliveryDays = $('.delivery-day', self.$deliveryInfo);
-    self.$addresss = $('.delivery__address',self.$self);
-    self.$total = $('.order__total .summ', self.$self);
-    self.$totalLbl = $('.order__total .lbl__add', self.$self);
-    self.$form = $('.delivery-form', self.$self);
-    self.$orderNum = $('.order-num',self.$self);
-    self.$step = $('.order-step');
-    self.steps = [];
-    self.curStep = -1;
-    self.shipCost = 0;
-
-    self.validate = [
-        's-name', 's-phone'
-    ];
-
-    self.basket = basket;
-
-    var selInit = false;
-    self.init();
-    self.nextStep();
-    self.setDelivery();
-};
 
 module.exports = Basket;
 
-},{"jquery":4,"mustache":5}],7:[function(require,module,exports){
+},{"../lib/ajxLoader":8,"jquery":4,"mustache":5}],7:[function(require,module,exports){
 var $ =  jQuery =  require('jquery');
 require('../../node_modules/bxslider/dist/jquery.bxslider.min');
 var sliderConstructor = require('./lib/constructor.bxslider');
@@ -12625,31 +12648,35 @@ function closePopup ($popup) {
     $(window).trigger('popupClosed', [$popup]);
 }
 
+},{"../../node_modules/bxslider/dist/jquery.bxslider.min":1,"./components/basket":6,"./lib/constructor.bxslider":9,"./lib/dropdown.plugin":10,"./lib/folding.plugin":11,"./lib/subscribe":12,"./main/call":13,"./main/prlx-banner.plugin":14,"./vendor/jquery.formstyler.min":15,"./vendor/jquery.maskedinput":16,"./vendor/jquery.simplr.smoothscroll.min":17,"./vendor/size.scroll":18,"./vendor/tipped":19,"jquery":4,"jquery-mousewheel":2,"jquery.browser":3,"mustache":5}],8:[function(require,module,exports){
+var $ = require('jquery');
 
-var ajxLoader  = (function() {
-
-    return {
-        attachTo: function ($elm, posProc) {
-            if (!$elm) return false;
-            this.attechedTo = $elm;
-            var $self = $('.loader'),
-                $icon = $('.loader .loader__icon');
-            var pos = this.attechedTo.offset();
-            var posIcon = posProc;
-            this.attechedTo.prepend($self);
-            this.attechedTo.addClass('ajx-loader');
-        },
-        _detach: function () {
-            if (this.attechedTo) {
-                this.attechedTo.removeClass('ajx-loader');
-                //$self.detach();
-                this.attechedTo = null;
+var ajxLoader  =  (function() {
+        return {
+            attachTo: function ($elm, posProc) {
+                if (!$elm) return false;
+                this.attechedTo = $elm;
+                var $self = $('.loader'),
+                    $icon = $('.loader .loader__icon');
+                var pos = this.attechedTo.offset();
+                var posIcon = posProc;
+                this.attechedTo.prepend($self);
+                this.attechedTo.addClass('ajx-loader');
+            },
+            _detach: function () {
+                if (this.attechedTo) {
+                    this.attechedTo.removeClass('ajx-loader');
+                    //$self.detach();
+                    this.attechedTo = null;
+                }
             }
-        }
-    }
-})();
+      }
+})()
 
-},{"../../node_modules/bxslider/dist/jquery.bxslider.min":1,"./components/basket":6,"./lib/constructor.bxslider":8,"./lib/dropdown.plugin":9,"./lib/folding.plugin":10,"./lib/subscribe":11,"./main/call":12,"./main/prlx-banner.plugin":13,"./vendor/jquery.formstyler.min":14,"./vendor/jquery.maskedinput":15,"./vendor/jquery.simplr.smoothscroll.min":16,"./vendor/size.scroll":17,"./vendor/tipped":18,"jquery":4,"jquery-mousewheel":2,"jquery.browser":3,"mustache":5}],8:[function(require,module,exports){
+
+module.exports = ajxLoader;
+
+},{"jquery":4}],9:[function(require,module,exports){
 module.exports = function(sliders) {
     var sliderConfig =
     {
@@ -12722,7 +12749,7 @@ module.exports = function(sliders) {
     return sliderInit();
 };
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 (function($){
     'use strict';
 
@@ -12809,7 +12836,7 @@ module.exports = function(sliders) {
         })
     }
 })(jQuery);
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 (function($){
     'use strict';
 
@@ -12879,7 +12906,7 @@ module.exports = function(sliders) {
         })
     }
 })(jQuery);
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 (function($) {
 	$.fn.subscribe = function(opt) {
 		var opt = $.extend({
@@ -12950,7 +12977,7 @@ module.exports = function(sliders) {
 		});
 	};
 })(jQuery);
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 ;(function($) {
 	$.fn.callForm = function(opt) {
 		var opt = $.extend({
@@ -13020,7 +13047,7 @@ module.exports = function(sliders) {
 		});
 	};
 })(jQuery);
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 (function($){
     'use strict';
 
@@ -13083,7 +13110,7 @@ module.exports = function(sliders) {
         })
     }
 })(jQuery);
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /* jQuery Form Styler v1.7.4 | (c) Dimox | https://github.com/Dimox/jQueryFormStyler */
 (function(b){"function"===typeof define&&define.amd?define(["jquery"],b):"object"===typeof exports?module.exports=b(require("jquery")):b(jQuery)})(function(b){function z(c,a){this.element=c;this.options=b.extend({},N,a);this.init()}function G(c){if(!b(c.target).parents().hasClass("jq-selectbox")&&"OPTION"!=c.target.nodeName&&b("div.jq-selectbox.opened").length){c=b("div.jq-selectbox.opened");var a=b("div.jq-selectbox__search input",c),f=b("div.jq-selectbox__dropdown",c);c.find("select").data("_"+
 h).options.onSelectClosed.call(c);a.length&&a.val("").keyup();f.hide().find("li.sel").addClass("selected");c.removeClass("focused opened dropup dropdown")}}var h="styler",N={wrapper:"form",idSuffix:"-styler",filePlaceholder:"\u0424\u0430\u0439\u043b \u043d\u0435 \u0432\u044b\u0431\u0440\u0430\u043d",fileBrowse:"\u041e\u0431\u0437\u043e\u0440...",fileNumber:"\u0412\u044b\u0431\u0440\u0430\u043d\u043e \u0444\u0430\u0439\u043b\u043e\u0432: %s",selectPlaceholder:"\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435...",
@@ -13121,7 +13148,7 @@ d.addClass("first")}l.prop("selected",!1);k.filter(".selected").each(function(){
 function(){f.removeClass("focused")}),y>f.height())a.on("keydown.styler",function(a){38!=a.which&&37!=a.which&&33!=a.which||h.scrollTop(h.scrollTop()+k.filter(".selected").position().top-u);40!=a.which&&39!=a.which&&34!=a.which||h.scrollTop(h.scrollTop()+k.filter(".selected:last").position().top-h.innerHeight()+2*u)})}var l=b("option",a),t="";a.is("[multiple]")?h||y||e():z()};M();a.on("refresh",function(){a.off(".styler").parent().before(a).remove();M()})}else if(a.is(":reset"))a.on("click",function(){setTimeout(function(){a.closest(f.wrapper).find("input, select").trigger("refresh")},
 1)})},destroy:function(){var c=b(this.element);c.is(":checkbox")||c.is(":radio")?(c.removeData("_"+h).off(".styler refresh").removeAttr("style").parent().before(c).remove(),c.closest("label").add('label[for="'+c.attr("id")+'"]').off(".styler")):c.is('input[type="number"]')?c.removeData("_"+h).off(".styler refresh").closest(".jq-number").before(c).remove():(c.is(":file")||c.is("select"))&&c.removeData("_"+h).off(".styler refresh").removeAttr("style").parent().before(c).remove()}};b.fn[h]=function(c){var a=
 arguments;if(void 0===c||"object"===typeof c)return this.each(function(){b.data(this,"_"+h)||b.data(this,"_"+h,new z(this,c))}).promise().done(function(){var a=b(this[0]).data("_"+h);a&&a.options.onFormStyled.call()}),this;if("string"===typeof c&&"_"!==c[0]&&"init"!==c){var f;this.each(function(){var y=b.data(this,"_"+h);y instanceof z&&"function"===typeof y[c]&&(f=y[c].apply(y,Array.prototype.slice.call(a,1)))});return void 0!==f?f:this}};G.registered=!1});
-},{"jquery":4}],15:[function(require,module,exports){
+},{"jquery":4}],16:[function(require,module,exports){
 (function (factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
@@ -13571,11 +13598,11 @@ $.fn.extend({
 });
 }));
 
-},{"jquery":4}],16:[function(require,module,exports){
+},{"jquery":4}],17:[function(require,module,exports){
 /* jquery.simplr.smoothscroll version 1.0.1 copyright (c) 2012 https://github.com/simov/simplr-smoothscroll licensed under MIT */
 !function(e){"use strict";e.srSmoothscroll=function(t){var n=e.extend({step:55,speed:400,ease:"swing",target:e("body"),container:e(window)},t||{}),o=n.container,r=0,i=n.step,s=o.height(),a=!1,c="body"==n.target.selector?-1!==navigator.userAgent.indexOf("AppleWebKit")?n.target:e("html"):o;n.target.mousewheel(function(e,t){return a=!0,r=0>t?r+s>=n.target.outerHeight(!0)?r:r+=i:0>=r?0:r-=i,c.stop().animate({scrollTop:r},n.speed,n.ease,function(){a=!1}),!1}),o.on("resize",function(){s=o.height()}).on("scroll",function(){a||(r=o.scrollTop())})}}(jQuery);
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 /*
  * CustomSelect - jQuery plugin for stylize select
  * author: Shashenko Andrei
@@ -14055,7 +14082,7 @@ $.fn.extend({
             });
     }
 })(jQuery);
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 /*!
  * Tipped - A Complete Javascript Tooltip Solution - v4.2.8
  * (c) 2012-2015 Nick Stakenburg
