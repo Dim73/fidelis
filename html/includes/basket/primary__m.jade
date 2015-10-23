@@ -28,20 +28,20 @@
           .delivery-form__fieldset
             .div-2
               .row
-                input#s-name.inputtext.require(name='name', type='text', placeholder='ваше имя*')
+                input#s-name.inputtext.require(name='name', type='text', placeholder='ваше имя *')
               .row
                 input#s-lastname.inputtext(name='family', type='text', placeholder='ФАМИЛИЯ ')
             .div-2
               .row
-                input#s-phone.inputtext.require.phone-mask(name='phone', type='text', placeholder='+7 (___) ___-__-__')
+                input#s-phone.inputtext.require.phone-mask(name='phone', type='text', placeholder='+7 (___) ___-__-__ *')
               .row
-                input#s-email.inputtext.require(name='email', type='email', placeholder='E-MAIL* ')
+                input#s-email.inputtext.require(name='email', type='email', placeholder='E-MAIL')
             .row
               .select_delivery
                 select#s-paytype.no-styler.select_delivery-start(name='paytype')
                   option(value='') ВАРИАНТЫ ОПЛАТЫ
-                  option(value='') Наличными либо картой при получении
-                  option(value='') Картой Visa/Mastercard на сайте
+                  option(value='nal') Наличными либо картой при получении
+                  option(value='card') Картой Visa/Mastercard на сайте
             .row
               .select_delivery
                 select#s-delivery.no-styler.select_delivery-start(name='delivery')
@@ -53,7 +53,6 @@
               .row
                 .select_delivery
                   select#s-region.no-styler.require.post-select(name='region')
-                    option(value='') Регион
                     option(value='') Выберите регион
                     option(value='53') Адыгея респ.
                     option(value='54') Алтай респ.

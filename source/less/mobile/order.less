@@ -97,7 +97,7 @@
     .order__inner {
       padding-top: 30px;
       padding-bottom: 50px;
-      width: 650px;
+      width: 100%;
 
 
       &:before {
@@ -147,19 +147,18 @@
     font: italic 18px/1 Georgia;
     letter-spacing: 0.05em;
   }
-  
+
   &-form {
-    
+
     &__fieldset {
     }
-    
+
     .row {
       margin-bottom: 20px;
       width: 100%;
 
       .inputtext, textarea {
         width: 100%;
-        font-size: 14px;
         border: 1px solid #444444;
       }
 
@@ -213,6 +212,13 @@
 
     .select_delivery {
       height: 58px;
+    }
+
+    .error {
+
+      .select_delivery {
+        border-color: @red;
+      }
     }
 
     select {
