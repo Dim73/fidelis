@@ -13,10 +13,10 @@ var SRC_PATH = {
 };
 
 var DIST_PATH =  {
-  'css' : 'assets/css',
-  'js' : './assets/js',
-  'tmplDesk': 'app/desktop',
-  'tmplMob': 'app/mobile'
+  'css' : './app/assets/css',
+  'js' : './app/assets/js',
+  'tmplDesk': './app/desktop',
+  'tmplMob': './app/mobile'
 }
 
 gulp.task('default', ['scripts', 'styles']);
@@ -105,4 +105,15 @@ gulp.task('clean:html', function () {
   return del([
     './html/**/*.html'
   ]);
+});
+
+var server = require('gulp-server-livereload');
+
+gulp.task('webserver', function() {
+  gulp.src('./')
+    .pipe(server({
+      livereload: true,
+      directoryListing: true,
+      open: true
+    }));
 });

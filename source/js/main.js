@@ -1,14 +1,15 @@
 var $ =  jQuery =  require('jquery');
 require('../../node_modules/bxslider/dist/jquery.bxslider.min');
 var sliderConstructor = require('./lib/constructor.bxslider');
-
+require('jquery-mousewheel')($);
+var Mustache = require('mustache');
 require('jquery.browser');
-require('jquery-mousewheel');
 require('./main/prlx-banner.plugin');
 
 require('./vendor/jquery.maskedinput');
 require('./vendor/size.scroll');
 require('./vendor/tipped');
+
 require('./vendor/jquery.simplr.smoothscroll.min');
 require('./vendor/jquery.formstyler.min');
 
@@ -16,15 +17,13 @@ require('./lib/folding.plugin');
 require('./lib/dropdown.plugin');
 require('./lib/subscribe');
 
-
 require('./main/call');
+var Basket = require('./components/basket');
 
     $(function(){
         if ($.browser.msie) {
             $("html").addClass("ie");
         }
-
-
 
         setTimeout(function() {
             $('select, input[type=checkbox]').not('.no-styler').styler({selectSearch:false});
@@ -314,13 +313,7 @@ require('./main/call');
                     responsive: true,
                     pause: 5000,
                     onSliderLoad: function(currentIndex) {
-                       /* var $item = $('.slider-item',this.$self).eq(currentIndex);
-                        if ($item.is('.slider-item__prlx')) {
-                            console.log($item.find('.bg'));
-                            initBannerPrlx($item.find('.bg'));
-                        }*/
-                        console.log(this);
-                        this.$self.addClass('loaded');
+                        this.addClass('loaded');
                         $('.main-banner .prlx-item').prlx();
                     },
                     onSlideAfter: function($item) {
