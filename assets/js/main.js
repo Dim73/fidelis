@@ -148,6 +148,7 @@ var nAgt=navigator.userAgent; if(!jQuery.browser){jQuery.browser={};jQuery.brows
 
 
 
+
             $self.is('.'+opt.openClass) && toggleC(true);
 
 
@@ -160,7 +161,8 @@ var nAgt=navigator.userAgent; if(!jQuery.browser){jQuery.browser={};jQuery.brows
             function toggleC (flag) {
                 isOpened = flag || !isOpened;
                 isOpened && opt.closeOther && $(opt.closeOther).filter('.'+opt.openClass).trigger('close');
-                if ($inner.outerHeight() < openHeight) {
+                console.log($inner.outerHeight(), openHeight)
+                if ($inner.outerHeight() < optHeight) {
                     openHeight = $inner.outerHeight();
                 }
                 $self.toggleClass(opt.openClass, isOpened);

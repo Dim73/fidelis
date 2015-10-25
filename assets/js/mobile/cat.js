@@ -235,7 +235,7 @@
         }
     };
 
-    var CheckboxFilter = { //фильтры типа чекбокс (коллекции,...,размеры)
+    /*var CheckboxFilter = { //фильтры типа чекбокс (коллекции,...,размеры)
         init: function(controller) {
             this.controller = controller;
             this.filterName = [];
@@ -391,6 +391,161 @@
                 }.bind(this));
             }
         }
+    };*/
+
+    var CheckboxFilter = { //фильтры типа чекбокс (коллекции,...,размеры)
+        init: function(controller) {
+            this.controller = controller;
+            this.filterName = [];
+            this.activeCheckboxes = {};
+            this.namesCheckboxes = {};
+            this.backState = [];
+            this.viewInit();
+        },
+        addFilterName: function(name) {
+            if (this.filterName.indexOf(name) === -1)
+                this.filterName.push(name);
+        },
+        getState: function() {
+            var stateObj = {};
+            for (var group in this.activeCheckboxes) {
+                stateObj[group] = [];
+                this.activeCheckboxes[group].forEach(function (item) {
+                    for (var val in item) {
+                        stateObj[group].push(val);
+                    }
+                })
+            }
+            return stateObj; //{filter: [1,2,3],....}
+        },
+        getStateRaw: function() {
+            return this.activeCheckboxes;
+        },
+        returnState: function(state) {
+            this.activeCheckboxes = {};
+            for (var fName in state) {
+                if (this.filterName.indexOf(fName) > -1) {
+                    state[fName].forEach(function(item){
+                        this.addActiveCheckbox({type: fName, value: item, label : this.getNameCheckbox({fName: fName, value : item})});
+                    }.bind(this));
+                }
+            }
+            this.renderCheckboxes();
+        },
+        isName: function(name) {
+            return (this.filterName.join(',').indexOf(name) > -1);
+        },
+        removeFilter: function(data){
+            this.removeActiveCheckbox(data);
+            this.renderCheckboxes();
+        },
+        addNameCheckbox: function(data) {
+            if (!this.namesCheckboxes[data.type]) {
+                this.namesCheckboxes[data.type] = [];
+            }
+            var objValue = {};
+            objValue[data.value] = data.label;
+            this.namesCheckboxes[data.type].push(objValue);
+        },
+        getNameCheckbox: function(data) {
+            var lbl = '';
+            for (var filter in this.namesCheckboxes) {
+                if (lbl) break; //finded
+                if (filter !== data.fName) continue; //next Filter name
+                this.namesCheckboxes[filter].forEach(function(values){
+                    if (lbl) return; //finded
+                    for (var value in values) {
+                        if (value === data.value) {
+                            lbl =  values[value];
+                        }
+                    }
+                });
+            }
+            return lbl;
+        },
+        updateActiveCheckbox: function(data, isInit) {
+            if (data.checked) {
+                this.addActiveCheckbox(data);
+            } else {
+                this.removeActiveCheckbox(data);
+            }
+            !isInit && this.controller.updateFilters();
+        },
+        addActiveCheckbox: function(data) {
+            if (!this.activeCheckboxes[data.type]) {
+                this.activeCheckboxes[data.type] = [];
+            }
+            var objValue = {};
+            objValue[data.value] = data.label;
+            this.activeCheckboxes[data.type].push(objValue); //{filterName: [val:lbl,val:lbl,....],....}
+        },
+        removeActiveCheckbox: function(data) {
+            var indexToDelete;
+            var typeFilter = this.activeCheckboxes[data.type];
+            for (var i = typeFilter.length - 1 ; i >= 0; i--) {
+                if (data.value in typeFilter[i]) {
+                    indexToDelete = i;
+                    break;
+                }
+            }
+            typeFilter.splice(indexToDelete, 1);
+            !typeFilter.length && delete this.activeCheckboxes[data.type];
+        },
+        getAvailableCheckboxes: function() {
+            return this.controller.getFilterRenderData(this.filterName)
+        },
+        getActiveCheckboxes: function() {
+            return this.getState();
+        },
+        viewInit: function() {
+            var self = this;
+            this.view = {};
+            this.view.checkoxFilters = $('.block .list input[type=checkbox], .square_sizes .squaresize');
+
+            this.view.checkoxFilters.each(function(){
+                var $item = $(this);
+                var filterName = $item.data('filter');
+                filterName && self.addFilterName(filterName);
+                self.addNameCheckbox({type: filterName,value: parseInt($item.data('value')), label: $item.closest('label').text()});
+                if ($item.is(':checked') && !$item.is(':disabled')) {
+                    self.updateActiveCheckbox({type: $item.data('filter'),value: parseInt($item.data('value')), checked: $item.is(':checked'), label: $item.closest('label').text()}, true);
+                }
+            });
+
+            this.view.checkoxFilters.on('change', function(event){
+                var $item = $(this);
+                self.updateActiveCheckbox({type: $item.data('filter'),value: $item.data('value'), checked: $item.is(':checked'), label: $item.closest('label').text()});
+            });
+        },
+        render: function() { //рендер доступных чекбоксов
+            var $li;
+            var filtersData = this.getAvailableCheckboxes();
+
+            for (var filter in filtersData) {
+                this.view.checkoxFilters.filter('[data-filter=' + filter + ']').each(function () {
+                    var $item = $(this);
+                    $li = $item.closest('li');
+                    //console.log(filtersData[filter].indexOf("" + $item.data('value')));
+                    console.log(filtersData[filter], $item.data('value'),$item.val(), filtersData[filter].indexOf(filter == 'size'?$item.val():$item.data('value')));
+                    if (filtersData[filter].indexOf(filter == 'size'?$item.val():$item.data('value')) > -1) {
+                        $li.show();
+                    } else {
+                        $li.hide();
+                    }
+                });
+            }
+            $('.block.folding').trigger('update');
+        },
+        renderCheckboxes: function() { //рендер состояния чекбоксов
+            var activeCheckboxes = this.getActiveCheckboxes();
+            this.view.checkoxFilters.not(':disabled').prop('checked',false);
+            for (var fName in activeCheckboxes) {
+                activeCheckboxes[fName].forEach(function(val){
+                    this.view.checkoxFilters.filter('[data-filter='+fName+'][data-value="'+val+'"]').prop('checked',true);
+                }.bind(this));
+            }
+            this.view.checkoxFilters.trigger('refresh');
+        }
     };
 
     /**** Filters controller ****/
@@ -514,7 +669,7 @@
         view: function() {
             this.self = document.getElementById('itemsfilterresult');
             this.$self = $(this.self);
-            this.$title = $('.goods-filter__choosen-title');
+            this.$title = $('.filter-pane__choosen-title');
             this.linkClass = 'filter_item';
             this.tpl  = '<div class="'+this.linkClass+'" data-filter="{type}" data-value="{value}">{lbl}</div>';
 
@@ -682,12 +837,14 @@
             viewGoods = {},
             pageToView = 1,
             $GoodsBlock,
+            $content,
             lastData = {},
             isEndOfGoods = false,
             isBlankState = false,
             documentTitle = document.title,
             firstPopState = true,
             currentXhr = null;
+
 
         var historyState = {
             init: function() {
@@ -743,6 +900,7 @@
             catalogComponents = components;
             historyState.init();
             viewScroll();
+            $content = $('.content')
             try  {
                 !!avfilters && newDataIsRecived({filters: avfilters}, true);
             } catch(e) {
@@ -805,7 +963,7 @@
                 type: 'get',
                 dataType: 'json',
                 beforeSend: function (xhr, setting) {
-                    ajxLoader.attachTo($GoodsBlock);
+                    ajxLoader.attachTo($content, true);
                 },
                 success: function (data, status, xhr) {
                     lastData = data;
@@ -899,6 +1057,23 @@
         ShowOptions.init(CatalogManager);
         Goods.init(CatalogManager);
         CatalogManager.init(Goods, [Filters, ShowOptions]);
+
+        var $fp = $('.filter-pane');
+
+        function toogleFP (flag) {
+            flag = flag == undefined?!flag: flag;
+            $fp.fadeToggle();
+            $('body').toggleClass('popup-show',flag);
+        }
+
+        $('.goods-filter').click(function(){
+            toogleFP(true);
+        })
+
+        $('.filter-pane__title').click(function(){
+            toogleFP(false);
+        })
+
     })
 
 })(jQuery);

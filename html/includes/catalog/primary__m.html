@@ -1,5 +1,203 @@
 <!--#include virtual="$includespath/layouts/main-banner.html?main-banner_catalog"-->
+
 <div class="content wrap">
+    <div class="filter-pane">
+        <div class="filter-pane__title">
+            <i class="icon icon-filter"></i>
+            ФИЛЬТР
+            <span class="icon-close"></span>
+        </div>
+        <div class="filter-pane__inner">
+            <div class="filter-pane__choosen">
+                <div class="filter-pane__choosen-title">
+                    ВЫ ВЫБРАЛИ:
+                </div>
+                <div class="filter-pane__choosen-list" id="itemsfilterresult">
+                    <div class="filter_item" data-filter="collection" data-value="30">Graziella</div>
+                    <div class="filter_item" data-filter="collection" data-value="30">Graziella</div>
+                    <div class="filter_item" data-filter="collection" data-value="30">Graziella</div>
+                    <div class="filter_item" data-filter="collection" data-value="30">Graziella</div>
+                    <div class="filter_item" data-filter="collection" data-value="30">Graziella</div>
+                </div>
+            </div>
+            <div class="filter-pane__items">
+                <div class="block folding category-section-block">
+                    <div class="rheader folding__title">
+                        <a href="#">
+                            Бренд
+                        </a>
+                    </div>
+                    <div class="folding__wrap">
+                        <div class="folding__inner">
+                            <div class="list">
+                                <ul data-seltype="single" id="ftypes">
+                                    <li><a class="selected" data-filter="type" data-value="19" href="/cat/type/19.html">Аксессуары</a></li>
+                                    <li><a class="back" data-filter="type" data-value="11" href="/cat/type/11.html">Браслеты</a></li>
+                                    <li><a class="back" data-filter="type" data-value="12" href="/cat/type/12.html">Броши</a></li>
+                                    <li><a class="back" data-filter="type" data-value="15" href="/cat/type/15.html">Бусы</a></li>
+                                    <li><a class="back" data-filter="type" data-value="6" href="/cat/type/6.html">Колье</a></li>
+                                    <li><a class="back" data-filter="type" data-value="13" href="/cat/type/13.html">Кольца</a></li>
+                                    <li><a class="back" data-filter="type" data-value="10" href="/cat/type/10.html">Подвески</a></li>
+                                    <li><a class="back" data-filter="type" data-value="2" href="/cat/type/2.html">Серьги</a></li>
+                                    <li><a class="back" data-filter="type" data-value="14" href="/cat/type/14.html">Цепи</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="block folding">
+                    <div class="rheader folding__title">
+                        <a href="#">
+                            Тип изделия
+                        </a>
+                    </div>
+                    <div class="folding__wrap">
+                        <div class="folding__inner">
+                            <div class="list">
+                                <ul data-seltype="single" id="fcollection">
+                                    <li style="" class="disabled"><label><input type="checkbox"
+                                                                                data-filter="collection"
+                                                                                data-value="30" disabled checked>Graziella</label>
+                                    </li>
+                                    <li style=""><label><input type="checkbox"
+                                                               data-filter="collection"
+                                                               data-value="27" checked>Dea
+                                        (Италия)</label></li>
+                                    <li><label><input type="checkbox"
+                                                      data-filter="collection"
+                                                      data-value="23">Graziella (Италия)</label>
+                                    </li>
+                                    <li><label><input type="checkbox"
+                                                      data-filter="collection"
+                                                      data-value="13">Graziella
+                                        Золото</label></li>
+                                    <li style=""><label><input type="checkbox"
+                                                               data-filter="collection"
+                                                               data-value="15">Базовая</label>
+                                    </li>
+                                    <li style=""><label><input type="checkbox"
+                                                               data-filter="collection"
+                                                               data-value="21">Глиттеринг</label>
+                                    </li>
+                                    <li style=""><label><input type="checkbox"
+                                                               data-filter="collection"
+                                                               data-value="31">Жемчужная</label>
+                                    </li>
+                                    <li style=""><label><input type="checkbox"
+                                                               data-filter="collection"
+                                                               data-value="20">Кавальери</label>
+                                    </li>
+                                    <li style=""><label><input type="checkbox"
+                                                               data-filter="collection"
+                                                               data-value="18">Макраме</label>
+                                    </li>
+                                    <li style=""><label><input type="checkbox"
+                                                               data-filter="collection"
+                                                               data-value="19">Микро-Фьюжн</label>
+                                    </li>
+                                    <li style=""><label><input type="checkbox"
+                                                               data-filter="collection"
+                                                               data-value="17">Мужская</label>
+                                    </li>
+                                    <li style=""><label><input type="checkbox"
+                                                               data-filter="collection"
+                                                               data-value="36">Перламутровая
+                                        мозаика</label></li>
+                                    <li style=""><label><input type="checkbox"
+                                                               data-filter="collection"
+                                                               data-value="25">Полудрагоценные
+                                        камни</label></li>
+                                    <li style=""><label><input type="checkbox"
+                                                               data-filter="collection"
+                                                               data-value="26">Природные
+                                        камни</label></li>
+                                    <li style=""><label><input type="checkbox"
+                                                               data-filter="collection"
+                                                               data-value="35">реплика
+                                        "Диор"</label></li>
+                                    <li style=""><label><input type="checkbox"
+                                                               data-filter="collection"
+                                                               data-value="11">Сеточка</label>
+                                    </li>
+                                    <li style=""><label><input type="checkbox"
+                                                               data-filter="collection"
+                                                               data-value="28">Фианитовая</label>
+                                    </li>
+                                    <li style=""><label><input type="checkbox"
+                                                               data-filter="collection"
+                                                               data-value="22">Филигрань</label>
+                                    </li>
+                                    <li style=""><label><input type="checkbox"
+                                                               data-filter="collection"
+                                                               data-value="24">Фэшн
+                                        (Италия)</label></li>
+                                    <li style=""><label><input type="checkbox"
+                                                               data-filter="collection"
+                                                               data-value="12">Цветная</label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="block folding">
+                    <div class="rheader folding__title">
+                        <a href="#">
+                            размер
+                        </a>
+                    </div>
+                    <div class="folding__wrap">
+                        <div class="folding__inner">
+                            <ul class="square_sizes" id="fsizes">
+                                <li>
+                                    <label>
+                                        <input data-filter="size" data-value="0" class="squaresize" value="Б.Р." type="checkbox">
+                                        <span>Б.Р.</span>					</label>
+                                </li>
+                                <li> <label>
+                                    <input data-filter="size" data-value="14" class="squaresize" value="14" type="checkbox">
+                                    <span>  14		</span>			</label></li>
+                                <li><label>
+                                    <input data-filter="size" data-value="15" class="squaresize" value="15" type="checkbox">
+                                    <span> 15	</span>				</label></li>
+                                <li><label>
+                                    <input data-filter="size" data-value="15.5" class="squaresize" value="15.5" type="checkbox">
+                                    <span> 15.5</span>					</label></li>
+                                <li><label>
+                                    <input data-filter="size" data-value="16" class="squaresize" value="16" type="checkbox">
+                                    <span> 16	</span>				</label></li>
+                                <li><label>
+                                    <input data-filter="size" data-value="16.5" class="squaresize" value="16.5" type="checkbox">
+                                    <span> 16.5</span>					</label></li>
+                                <li><label>
+                                    <input data-filter="size" data-value="17" class="squaresize" value="17" type="checkbox">
+                                    <span> 17		</span>			</label></li>
+                                <li><label>
+                                    <input data-filter="size" data-value="17.5" class="squaresize" value="17.5" type="checkbox">
+                                    <span>17.5</span>					</label></li>
+                                <li><label>
+                                    <input data-filter="size" data-value="18" class="squaresize" value="18" type="checkbox">
+                                    <span> 18		</span>			</label></li>
+                                <li><label>
+                                    <input data-filter="size" data-value="18.5" class="squaresize" value="18.5" type="checkbox">
+                                    <span>18.5	</span>				</label></li>
+                                <li><label>
+                                    <input data-filter="size" data-value="19" class="squaresize" value="19" type="checkbox">
+                                    <span> 19		</span>			</label></li>
+                                <li><label>
+                                    <input data-filter="size" data-value="19.5" class="squaresize" value="19.5" type="checkbox">
+                                    <span> 19.5</span>					</label></li>
+                                <li><label>
+                                    <input data-filter="size" data-value="20" class="squaresize" value="20" type="checkbox">
+                                    <span> 20	</span>				</label></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="catalogue">
 
 
@@ -12,7 +210,11 @@
                 <div class="category-section-block">
                     <input type="hidden" data-filter="brand" data-value="7"/>
                 </div>
-                <div class="goods-filter folding">
+                <div class="goods-filter goods-filter__title folding__title">
+                    <i class="icon icon-filter"></i>
+                    ФИЛЬТР
+                </div>
+<!--                <div class="goods-filter folding">
                     <div class="goods-filter__title folding__title">
                         <i class="icon icon-filter"></i>
                         ФИЛЬТР
@@ -161,15 +363,15 @@
                                     </select>
                                 </label>
 
-                                <!--<div class="goods-fsilter__price">-->
-                                    <!--<input data-max="429400" id="maxcost" type="hidden">-->
-                                    <!--<input data-min="170" id="mincost" type="hidden">-->
-                                    <!--<label for="price-from">От</label>-->
-                                    <!--<input id="price-from" type="number" class="inputtext" min="0" placeholder="170">-->
-                                    <!--<label for="price-to">до</label>-->
-                                    <!--<input id="price-to" type="number" class="inputtext" min="0" placeholder="429400">-->
-                                    <!--<span class="rub"><span>руб</span></span>-->
-                                <!--</div>-->
+                                &lt;!&ndash;<div class="goods-fsilter__price">&ndash;&gt;
+                                    &lt;!&ndash;<input data-max="429400" id="maxcost" type="hidden">&ndash;&gt;
+                                    &lt;!&ndash;<input data-min="170" id="mincost" type="hidden">&ndash;&gt;
+                                    &lt;!&ndash;<label for="price-from">От</label>&ndash;&gt;
+                                    &lt;!&ndash;<input id="price-from" type="number" class="inputtext" min="0" placeholder="170">&ndash;&gt;
+                                    &lt;!&ndash;<label for="price-to">до</label>&ndash;&gt;
+                                    &lt;!&ndash;<input id="price-to" type="number" class="inputtext" min="0" placeholder="429400">&ndash;&gt;
+                                    &lt;!&ndash;<span class="rub"><span>руб</span></span>&ndash;&gt;
+                                &lt;!&ndash;</div>&ndash;&gt;
                             </div>
 
                             <div class="goods-filter__choosen">
@@ -192,7 +394,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
 
             </div>
             <div class="right">

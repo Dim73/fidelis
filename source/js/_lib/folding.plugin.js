@@ -31,6 +31,7 @@
 
 
 
+
             $self.is('.'+opt.openClass) && toggleC(true);
 
 
@@ -43,7 +44,8 @@
             function toggleC (flag) {
                 isOpened = flag || !isOpened;
                 isOpened && opt.closeOther && $(opt.closeOther).filter('.'+opt.openClass).trigger('close');
-                if ($inner.outerHeight() < openHeight) {
+                console.log($inner.outerHeight(), openHeight)
+                if ($inner.outerHeight() < optHeight) {
                     openHeight = $inner.outerHeight();
                 }
                 $self.toggleClass(opt.openClass, isOpened);

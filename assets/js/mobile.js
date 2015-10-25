@@ -148,6 +148,7 @@ var nAgt=navigator.userAgent; if(!jQuery.browser){jQuery.browser={};jQuery.brows
 
 
 
+
             $self.is('.'+opt.openClass) && toggleC(true);
 
 
@@ -160,7 +161,8 @@ var nAgt=navigator.userAgent; if(!jQuery.browser){jQuery.browser={};jQuery.brows
             function toggleC (flag) {
                 isOpened = flag || !isOpened;
                 isOpened && opt.closeOther && $(opt.closeOther).filter('.'+opt.openClass).trigger('close');
-                if ($inner.outerHeight() < openHeight) {
+                console.log($inner.outerHeight(), openHeight)
+                if ($inner.outerHeight() < optHeight) {
                     openHeight = $inner.outerHeight();
                 }
                 $self.toggleClass(opt.openClass, isOpened);
@@ -3638,7 +3640,7 @@ $(document).ready(function() {
         }, 100);
 
 
-        $('.pitem-specs__spoilers .folding, .goods-filter.folding').folding({});
+        $('.pitem-specs__spoilers .folding, .filter-pane__items .folding').folding();
         $('.content-text__side .folding').folding({openHeight: 500});
         $('.order-spoiler').folding({closeOther: '.order-spoiler'});
         $(".phone-mask").mask("+7 (999) 999-99-99");
@@ -3959,13 +3961,14 @@ function closePopup ($popup) {
 var ajxLoader  = (function() {
 
     return {
-        attachTo: function ($elm, posProc) {
+        attachTo: function ($elm, isFisxed) {
             if (!$elm) return false;
             this.attechedTo = $elm;
             var $self = $('.loader'),
                 $icon = $('.loader .loader__icon');
-            var pos = this.attechedTo.offset();
-            var posIcon = posProc;
+            /*var pos = this.attechedTo.offset();
+            var posIcon = posProc;*/
+            $self.toggleClass('fixed',isFisxed);
             this.attechedTo.prepend($self);
             this.attechedTo.addClass('ajx-loader');
         },
