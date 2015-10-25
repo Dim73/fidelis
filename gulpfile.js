@@ -100,13 +100,6 @@ gulp.src("./html/**/*.html")
     }));
 });
 
-var del = require('del');
-gulp.task('clean:html', function () {
-  return del([
-    './html/**/*.html'
-  ]);
-});
-
 var server = require('gulp-server-livereload');
 
 gulp.task('webserver', function() {

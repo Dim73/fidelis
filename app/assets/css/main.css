@@ -2730,8 +2730,6 @@ h1 {
 }
 .main-banner__slider {
   position: relative;
-}
-.main-banner__slider .slider-container {
   opacity: 0;
   -webkit-transition: opacity 0.3s ease 0s;
   -moz-transition: opacity 0.3s ease 0s;
@@ -2739,7 +2737,7 @@ h1 {
   -ms-transition: opacity 0.3s ease 0s;
   transition: opacity 0.3s ease 0s;
 }
-.main-banner__slider .slider-container.loaded {
+.main-banner__slider.loaded {
   opacity: 1;
 }
 .main-banner__slider .bx-controls-direction {

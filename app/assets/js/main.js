@@ -1,14 +1,4 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-/**
- * bxSlider v4.2.5
- * Copyright 2013-2015 Steven Wanderski
- * Written while drinking Belgian ales and listening to jazz
-
- * Licensed under MIT (http://opensource.org/licenses/MIT)
- */
-
-!function(a){var b={mode:"horizontal",slideSelector:"",infiniteLoop:!0,hideControlOnEnd:!1,speed:500,easing:null,slideMargin:0,startSlide:0,randomStart:!1,captions:!1,ticker:!1,tickerHover:!1,adaptiveHeight:!1,adaptiveHeightSpeed:500,video:!1,useCSS:!0,preloadImages:"visible",responsive:!0,slideZIndex:50,wrapperClass:"bx-wrapper",touchEnabled:!0,swipeThreshold:50,oneToOneTouch:!0,preventDefaultSwipeX:!0,preventDefaultSwipeY:!1,ariaLive:!0,ariaHidden:!0,keyboardEnabled:!1,pager:!0,pagerType:"full",pagerShortSeparator:" / ",pagerSelector:null,buildPager:null,pagerCustom:null,controls:!0,nextText:"Next",prevText:"Prev",nextSelector:null,prevSelector:null,autoControls:!1,startText:"Start",stopText:"Stop",autoControlsCombine:!1,autoControlsSelector:null,auto:!1,pause:4e3,autoStart:!0,autoDirection:"next",stopAutoOnClick:!1,autoHover:!1,autoDelay:0,autoSlideForOnePage:!1,minSlides:1,maxSlides:1,moveSlides:0,slideWidth:0,shrinkItems:!1,onSliderLoad:function(){return!0},onSlideBefore:function(){return!0},onSlideAfter:function(){return!0},onSlideNext:function(){return!0},onSlidePrev:function(){return!0},onSliderResize:function(){return!0}};a.fn.bxSlider=function(c){if(0===this.length)return this;if(this.length>1)return this.each(function(){a(this).bxSlider(c)}),this;var d={},e=this,f=a(window).width(),g=a(window).height();if(!a(e).data("bxSlider")){var h=function(){a(e).data("bxSlider")||(d.settings=a.extend({},b,c),d.settings.slideWidth=parseInt(d.settings.slideWidth),d.children=e.children(d.settings.slideSelector),d.children.length<d.settings.minSlides&&(d.settings.minSlides=d.children.length),d.children.length<d.settings.maxSlides&&(d.settings.maxSlides=d.children.length),d.settings.randomStart&&(d.settings.startSlide=Math.floor(Math.random()*d.children.length)),d.active={index:d.settings.startSlide},d.carousel=d.settings.minSlides>1||d.settings.maxSlides>1?!0:!1,d.carousel&&(d.settings.preloadImages="all"),d.minThreshold=d.settings.minSlides*d.settings.slideWidth+(d.settings.minSlides-1)*d.settings.slideMargin,d.maxThreshold=d.settings.maxSlides*d.settings.slideWidth+(d.settings.maxSlides-1)*d.settings.slideMargin,d.working=!1,d.controls={},d.interval=null,d.animProp="vertical"===d.settings.mode?"top":"left",d.usingCSS=d.settings.useCSS&&"fade"!==d.settings.mode&&function(){for(var a=document.createElement("div"),b=["WebkitPerspective","MozPerspective","OPerspective","msPerspective"],c=0;c<b.length;c++)if(void 0!==a.style[b[c]])return d.cssPrefix=b[c].replace("Perspective","").toLowerCase(),d.animProp="-"+d.cssPrefix+"-transform",!0;return!1}(),"vertical"===d.settings.mode&&(d.settings.maxSlides=d.settings.minSlides),e.data("origStyle",e.attr("style")),e.children(d.settings.slideSelector).each(function(){a(this).data("origStyle",a(this).attr("style"))}),j())},j=function(){var b=d.children.eq(d.settings.startSlide);e.wrap('<div class="'+d.settings.wrapperClass+'"><div class="bx-viewport"></div></div>'),d.viewport=e.parent(),d.settings.ariaLive&&!d.settings.ticker&&d.viewport.attr("aria-live","polite"),d.loader=a('<div class="bx-loading" />'),d.viewport.prepend(d.loader),e.css({width:"horizontal"===d.settings.mode?1e3*d.children.length+215+"%":"auto",position:"relative"}),d.usingCSS&&d.settings.easing?e.css("-"+d.cssPrefix+"-transition-timing-function",d.settings.easing):d.settings.easing||(d.settings.easing="swing"),d.viewport.css({width:"100%",overflow:"hidden",position:"relative"}),d.viewport.parent().css({maxWidth:n()}),d.settings.pager||d.settings.controls||d.viewport.parent().css({margin:"0 auto 0px"}),d.children.css({"float":"horizontal"===d.settings.mode?"left":"none",listStyle:"none",position:"relative"}),d.children.css("width",o()),"horizontal"===d.settings.mode&&d.settings.slideMargin>0&&d.children.css("marginRight",d.settings.slideMargin),"vertical"===d.settings.mode&&d.settings.slideMargin>0&&d.children.css("marginBottom",d.settings.slideMargin),"fade"===d.settings.mode&&(d.children.css({position:"absolute",zIndex:0,display:"none"}),d.children.eq(d.settings.startSlide).css({zIndex:d.settings.slideZIndex,display:"block"})),d.controls.el=a('<div class="bx-controls" />'),d.settings.captions&&y(),d.active.last=d.settings.startSlide===q()-1,d.settings.video&&e.fitVids(),("all"===d.settings.preloadImages||d.settings.ticker)&&(b=d.children),d.settings.ticker?d.settings.pager=!1:(d.settings.controls&&w(),d.settings.auto&&d.settings.autoControls&&x(),d.settings.pager&&v(),(d.settings.controls||d.settings.autoControls||d.settings.pager)&&d.viewport.after(d.controls.el)),k(b,l)},k=function(b,c){var d=b.find('img:not([src=""]), iframe').length,e=0;return 0===d?void c():void b.find('img:not([src=""]), iframe').each(function(){a(this).one("load error",function(){++e===d&&c()}).each(function(){this.complete&&a(this).load()})})},l=function(){if(d.settings.infiniteLoop&&"fade"!==d.settings.mode&&!d.settings.ticker){var b="vertical"===d.settings.mode?d.settings.minSlides:d.settings.maxSlides,c=d.children.slice(0,b).clone(!0).addClass("bx-clone"),f=d.children.slice(-b).clone(!0).addClass("bx-clone");d.settings.ariaHidden&&(c.attr("aria-hidden",!0),f.attr("aria-hidden",!0)),e.append(c).prepend(f)}d.loader.remove(),s(),"vertical"===d.settings.mode&&(d.settings.adaptiveHeight=!0),d.viewport.height(m()),e.redrawSlider(),d.settings.onSliderLoad.call(e,d.active.index),d.initialized=!0,d.settings.responsive&&a(window).bind("resize",S),d.settings.auto&&d.settings.autoStart&&(q()>1||d.settings.autoSlideForOnePage)&&I(),d.settings.ticker&&J(),d.settings.pager&&E(d.settings.startSlide),d.settings.controls&&H(),d.settings.touchEnabled&&!d.settings.ticker&&N(),d.settings.keyboardEnabled&&!d.settings.ticker&&a(document).keydown(M)},m=function(){var b=0,c=a();if("vertical"===d.settings.mode||d.settings.adaptiveHeight)if(d.carousel){var e=1===d.settings.moveSlides?d.active.index:d.active.index*r();for(c=d.children.eq(e),i=1;i<=d.settings.maxSlides-1;i++)c=e+i>=d.children.length?c.add(d.children.eq(i-1)):c.add(d.children.eq(e+i))}else c=d.children.eq(d.active.index);else c=d.children;return"vertical"===d.settings.mode?(c.each(function(c){b+=a(this).outerHeight()}),d.settings.slideMargin>0&&(b+=d.settings.slideMargin*(d.settings.minSlides-1))):b=Math.max.apply(Math,c.map(function(){return a(this).outerHeight(!1)}).get()),"border-box"===d.viewport.css("box-sizing")?b+=parseFloat(d.viewport.css("padding-top"))+parseFloat(d.viewport.css("padding-bottom"))+parseFloat(d.viewport.css("border-top-width"))+parseFloat(d.viewport.css("border-bottom-width")):"padding-box"===d.viewport.css("box-sizing")&&(b+=parseFloat(d.viewport.css("padding-top"))+parseFloat(d.viewport.css("padding-bottom"))),b},n=function(){var a="100%";return d.settings.slideWidth>0&&(a="horizontal"===d.settings.mode?d.settings.maxSlides*d.settings.slideWidth+(d.settings.maxSlides-1)*d.settings.slideMargin:d.settings.slideWidth),a},o=function(){var a=d.settings.slideWidth,b=d.viewport.width();if(0===d.settings.slideWidth||d.settings.slideWidth>b&&!d.carousel||"vertical"===d.settings.mode)a=b;else if(d.settings.maxSlides>1&&"horizontal"===d.settings.mode){if(b>d.maxThreshold)return a;b<d.minThreshold?a=(b-d.settings.slideMargin*(d.settings.minSlides-1))/d.settings.minSlides:d.settings.shrinkItems&&(a=Math.floor((b+d.settings.slideMargin)/Math.ceil((b+d.settings.slideMargin)/(a+d.settings.slideMargin))-d.settings.slideMargin))}return a},p=function(){var a=1,b=null;return"horizontal"===d.settings.mode&&d.settings.slideWidth>0?d.viewport.width()<d.minThreshold?a=d.settings.minSlides:d.viewport.width()>d.maxThreshold?a=d.settings.maxSlides:(b=d.children.first().width()+d.settings.slideMargin,a=Math.floor((d.viewport.width()+d.settings.slideMargin)/b)):"vertical"===d.settings.mode&&(a=d.settings.minSlides),a},q=function(){var a=0,b=0,c=0;if(d.settings.moveSlides>0)if(d.settings.infiniteLoop)a=Math.ceil(d.children.length/r());else for(;b<d.children.length;)++a,b=c+p(),c+=d.settings.moveSlides<=p()?d.settings.moveSlides:p();else a=Math.ceil(d.children.length/p());return a},r=function(){return d.settings.moveSlides>0&&d.settings.moveSlides<=p()?d.settings.moveSlides:p()},s=function(){var a,b,c;d.children.length>d.settings.maxSlides&&d.active.last&&!d.settings.infiniteLoop?"horizontal"===d.settings.mode?(b=d.children.last(),a=b.position(),t(-(a.left-(d.viewport.width()-b.outerWidth())),"reset",0)):"vertical"===d.settings.mode&&(c=d.children.length-d.settings.minSlides,a=d.children.eq(c).position(),t(-a.top,"reset",0)):(a=d.children.eq(d.active.index*r()).position(),d.active.index===q()-1&&(d.active.last=!0),void 0!==a&&("horizontal"===d.settings.mode?t(-a.left,"reset",0):"vertical"===d.settings.mode&&t(-a.top,"reset",0)))},t=function(b,c,f,g){var h,i;d.usingCSS?(i="vertical"===d.settings.mode?"translate3d(0, "+b+"px, 0)":"translate3d("+b+"px, 0, 0)",e.css("-"+d.cssPrefix+"-transition-duration",f/1e3+"s"),"slide"===c?(e.css(d.animProp,i),0!==f?e.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd",function(b){a(b.target).is(e)&&(e.unbind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd"),F())}):F()):"reset"===c?e.css(d.animProp,i):"ticker"===c&&(e.css("-"+d.cssPrefix+"-transition-timing-function","linear"),e.css(d.animProp,i),0!==f?e.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd",function(b){a(b.target).is(e)&&(e.unbind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd"),t(g.resetValue,"reset",0),K())}):(t(g.resetValue,"reset",0),K()))):(h={},h[d.animProp]=b,"slide"===c?e.animate(h,f,d.settings.easing,function(){F()}):"reset"===c?e.css(d.animProp,b):"ticker"===c&&e.animate(h,f,"linear",function(){t(g.resetValue,"reset",0),K()}))},u=function(){for(var b="",c="",e=q(),f=0;e>f;f++)c="",d.settings.buildPager&&a.isFunction(d.settings.buildPager)||d.settings.pagerCustom?(c=d.settings.buildPager(f),d.pagerEl.addClass("bx-custom-pager")):(c=f+1,d.pagerEl.addClass("bx-default-pager")),b+='<div class="bx-pager-item"><a href="" data-slide-index="'+f+'" class="bx-pager-link">'+c+"</a></div>";d.pagerEl.html(b)},v=function(){d.settings.pagerCustom?d.pagerEl=a(d.settings.pagerCustom):(d.pagerEl=a('<div class="bx-pager" />'),d.settings.pagerSelector?a(d.settings.pagerSelector).html(d.pagerEl):d.controls.el.addClass("bx-has-pager").append(d.pagerEl),u()),d.pagerEl.on("click touchend","a",D)},w=function(){d.controls.next=a('<a class="bx-next" href="">'+d.settings.nextText+"</a>"),d.controls.prev=a('<a class="bx-prev" href="">'+d.settings.prevText+"</a>"),d.controls.next.bind("click touchend",z),d.controls.prev.bind("click touchend",A),d.settings.nextSelector&&a(d.settings.nextSelector).append(d.controls.next),d.settings.prevSelector&&a(d.settings.prevSelector).append(d.controls.prev),d.settings.nextSelector||d.settings.prevSelector||(d.controls.directionEl=a('<div class="bx-controls-direction" />'),d.controls.directionEl.append(d.controls.prev).append(d.controls.next),d.controls.el.addClass("bx-has-controls-direction").append(d.controls.directionEl))},x=function(){d.controls.start=a('<div class="bx-controls-auto-item"><a class="bx-start" href="">'+d.settings.startText+"</a></div>"),d.controls.stop=a('<div class="bx-controls-auto-item"><a class="bx-stop" href="">'+d.settings.stopText+"</a></div>"),d.controls.autoEl=a('<div class="bx-controls-auto" />'),d.controls.autoEl.on("click",".bx-start",B),d.controls.autoEl.on("click",".bx-stop",C),d.settings.autoControlsCombine?d.controls.autoEl.append(d.controls.start):d.controls.autoEl.append(d.controls.start).append(d.controls.stop),d.settings.autoControlsSelector?a(d.settings.autoControlsSelector).html(d.controls.autoEl):d.controls.el.addClass("bx-has-controls-auto").append(d.controls.autoEl),G(d.settings.autoStart?"stop":"start")},y=function(){d.children.each(function(b){var c=a(this).find("img:first").attr("title");void 0!==c&&(""+c).length&&a(this).append('<div class="bx-caption"><span>'+c+"</span></div>")})},z=function(a){a.preventDefault(),d.controls.el.hasClass("disabled")||(d.settings.auto&&d.settings.stopAutoOnClick&&e.stopAuto(),e.goToNextSlide())},A=function(a){a.preventDefault(),d.controls.el.hasClass("disabled")||(d.settings.auto&&d.settings.stopAutoOnClick&&e.stopAuto(),e.goToPrevSlide())},B=function(a){e.startAuto(),a.preventDefault()},C=function(a){e.stopAuto(),a.preventDefault()},D=function(b){var c,f;b.preventDefault(),d.controls.el.hasClass("disabled")||(d.settings.auto&&d.settings.stopAutoOnClick&&e.stopAuto(),c=a(b.currentTarget),void 0!==c.attr("data-slide-index")&&(f=parseInt(c.attr("data-slide-index")),f!==d.active.index&&e.goToSlide(f)))},E=function(b){var c=d.children.length;return"short"===d.settings.pagerType?(d.settings.maxSlides>1&&(c=Math.ceil(d.children.length/d.settings.maxSlides)),void d.pagerEl.html(b+1+d.settings.pagerShortSeparator+c)):(d.pagerEl.find("a").removeClass("active"),void d.pagerEl.each(function(c,d){a(d).find("a").eq(b).addClass("active")}))},F=function(){if(d.settings.infiniteLoop){var a="";0===d.active.index?a=d.children.eq(0).position():d.active.index===q()-1&&d.carousel?a=d.children.eq((q()-1)*r()).position():d.active.index===d.children.length-1&&(a=d.children.eq(d.children.length-1).position()),a&&("horizontal"===d.settings.mode?t(-a.left,"reset",0):"vertical"===d.settings.mode&&t(-a.top,"reset",0))}d.working=!1,d.settings.onSlideAfter.call(e,d.children.eq(d.active.index),d.oldIndex,d.active.index)},G=function(a){d.settings.autoControlsCombine?d.controls.autoEl.html(d.controls[a]):(d.controls.autoEl.find("a").removeClass("active"),d.controls.autoEl.find("a:not(.bx-"+a+")").addClass("active"))},H=function(){1===q()?(d.controls.prev.addClass("disabled"),d.controls.next.addClass("disabled")):!d.settings.infiniteLoop&&d.settings.hideControlOnEnd&&(0===d.active.index?(d.controls.prev.addClass("disabled"),d.controls.next.removeClass("disabled")):d.active.index===q()-1?(d.controls.next.addClass("disabled"),d.controls.prev.removeClass("disabled")):(d.controls.prev.removeClass("disabled"),d.controls.next.removeClass("disabled")))},I=function(){if(d.settings.autoDelay>0){setTimeout(e.startAuto,d.settings.autoDelay)}else e.startAuto(),a(window).focus(function(){e.startAuto()}).blur(function(){e.stopAuto()});d.settings.autoHover&&e.hover(function(){d.interval&&(e.stopAuto(!0),d.autoPaused=!0)},function(){d.autoPaused&&(e.startAuto(!0),d.autoPaused=null)})},J=function(){var b,c,f,g,h,i,j,k,l=0;"next"===d.settings.autoDirection?e.append(d.children.clone().addClass("bx-clone")):(e.prepend(d.children.clone().addClass("bx-clone")),b=d.children.first().position(),l="horizontal"===d.settings.mode?-b.left:-b.top),t(l,"reset",0),d.settings.pager=!1,d.settings.controls=!1,d.settings.autoControls=!1,d.settings.tickerHover&&(d.usingCSS?(g="horizontal"===d.settings.mode?4:5,d.viewport.hover(function(){c=e.css("-"+d.cssPrefix+"-transform"),f=parseFloat(c.split(",")[g]),t(f,"reset",0)},function(){k=0,d.children.each(function(b){k+="horizontal"===d.settings.mode?a(this).outerWidth(!0):a(this).outerHeight(!0)}),h=d.settings.speed/k,i="horizontal"===d.settings.mode?"left":"top",j=h*(k-Math.abs(parseInt(f))),K(j)})):d.viewport.hover(function(){e.stop()},function(){k=0,d.children.each(function(b){k+="horizontal"===d.settings.mode?a(this).outerWidth(!0):a(this).outerHeight(!0)}),h=d.settings.speed/k,i="horizontal"===d.settings.mode?"left":"top",j=h*(k-Math.abs(parseInt(e.css(i)))),K(j)})),K()},K=function(a){var b,c,f,g=a?a:d.settings.speed,h={left:0,top:0},i={left:0,top:0};"next"===d.settings.autoDirection?h=e.find(".bx-clone").first().position():i=d.children.first().position(),b="horizontal"===d.settings.mode?-h.left:-h.top,c="horizontal"===d.settings.mode?-i.left:-i.top,f={resetValue:c},t(b,"ticker",g,f)},L=function(b){var c=a(window),d={top:c.scrollTop(),left:c.scrollLeft()},e=b.offset();return d.right=d.left+c.width(),d.bottom=d.top+c.height(),e.right=e.left+b.outerWidth(),e.bottom=e.top+b.outerHeight(),!(d.right<e.left||d.left>e.right||d.bottom<e.top||d.top>e.bottom)},M=function(a){var b=document.activeElement.tagName.toLowerCase(),c="input|textarea",d=new RegExp(b,["i"]),f=d.exec(c);if(null==f&&L(e)){if(39===a.keyCode)return z(a),!1;if(37===a.keyCode)return A(a),!1}},N=function(){d.touch={start:{x:0,y:0},end:{x:0,y:0}},d.viewport.bind("touchstart MSPointerDown pointerdown",O),d.viewport.on("click",".bxslider a",function(a){d.viewport.hasClass("click-disabled")&&(a.preventDefault(),d.viewport.removeClass("click-disabled"))})},O=function(a){if(d.controls.el.addClass("disabled"),d.working)a.preventDefault(),d.controls.el.removeClass("disabled");else{d.touch.originalPos=e.position();var b=a.originalEvent,c="undefined"!=typeof b.changedTouches?b.changedTouches:[b];d.touch.start.x=c[0].pageX,d.touch.start.y=c[0].pageY,d.viewport.get(0).setPointerCapture&&(d.pointerId=b.pointerId,d.viewport.get(0).setPointerCapture(d.pointerId)),d.viewport.bind("touchmove MSPointerMove pointermove",Q),d.viewport.bind("touchend MSPointerUp pointerup",R),d.viewport.bind("MSPointerCancel pointercancel",P)}},P=function(a){t(d.touch.originalPos.left,"reset",0),d.controls.el.removeClass("disabled"),d.viewport.unbind("MSPointerCancel pointercancel",P),d.viewport.unbind("touchmove MSPointerMove pointermove",Q),d.viewport.unbind("touchend MSPointerUp pointerup",R),d.viewport.get(0).releasePointerCapture&&d.viewport.get(0).releasePointerCapture(d.pointerId)},Q=function(a){var b=a.originalEvent,c="undefined"!=typeof b.changedTouches?b.changedTouches:[b],e=Math.abs(c[0].pageX-d.touch.start.x),f=Math.abs(c[0].pageY-d.touch.start.y),g=0,h=0;3*e>f&&d.settings.preventDefaultSwipeX?a.preventDefault():3*f>e&&d.settings.preventDefaultSwipeY&&a.preventDefault(),"fade"!==d.settings.mode&&d.settings.oneToOneTouch&&("horizontal"===d.settings.mode?(h=c[0].pageX-d.touch.start.x,g=d.touch.originalPos.left+h):(h=c[0].pageY-d.touch.start.y,g=d.touch.originalPos.top+h),t(g,"reset",0))},R=function(a){d.viewport.unbind("touchmove MSPointerMove pointermove",Q),d.controls.el.removeClass("disabled");var b=a.originalEvent,c="undefined"!=typeof b.changedTouches?b.changedTouches:[b],f=0,g=0;d.touch.end.x=c[0].pageX,d.touch.end.y=c[0].pageY,"fade"===d.settings.mode?(g=Math.abs(d.touch.start.x-d.touch.end.x),g>=d.settings.swipeThreshold&&(d.touch.start.x>d.touch.end.x?e.goToNextSlide():e.goToPrevSlide(),e.stopAuto())):("horizontal"===d.settings.mode?(g=d.touch.end.x-d.touch.start.x,f=d.touch.originalPos.left):(g=d.touch.end.y-d.touch.start.y,f=d.touch.originalPos.top),!d.settings.infiniteLoop&&(0===d.active.index&&g>0||d.active.last&&0>g)?t(f,"reset",200):Math.abs(g)>=d.settings.swipeThreshold?(0>g?e.goToNextSlide():e.goToPrevSlide(),e.stopAuto()):t(f,"reset",200)),d.viewport.unbind("touchend MSPointerUp pointerup",R),d.viewport.get(0).releasePointerCapture&&d.viewport.get(0).releasePointerCapture(d.pointerId)},S=function(b){if(d.initialized)if(d.working)window.setTimeout(S,10);else{var c=a(window).width(),h=a(window).height();(f!==c||g!==h)&&(f=c,g=h,e.redrawSlider(),d.settings.onSliderResize.call(e,d.active.index))}},T=function(a){var b=p();d.settings.ariaHidden&&!d.settings.ticker&&(d.children.attr("aria-hidden","true"),d.children.slice(a,a+b).attr("aria-hidden","false"))},U=function(a){return 0>a?d.settings.infiniteLoop?q()-1:d.active.index:a>=q()?d.settings.infiniteLoop?0:d.active.index:a};return e.goToSlide=function(b,c){var f,g,h,i,j=!0,k=0,l={left:0,top:0},n=null;if(d.oldIndex=d.active.index,d.active.index=U(b),!d.working&&d.active.index!==d.oldIndex){if(d.working=!0,j=d.settings.onSlideBefore.call(e,d.children.eq(d.active.index),d.oldIndex,d.active.index),"undefined"!=typeof j&&!j)return d.active.index=d.oldIndex,void(d.working=!1);"next"===c?d.settings.onSlideNext.call(e,d.children.eq(d.active.index),d.oldIndex,d.active.index)||(j=!1):"prev"===c&&(d.settings.onSlidePrev.call(e,d.children.eq(d.active.index),d.oldIndex,d.active.index)||(j=!1)),d.active.last=d.active.index>=q()-1,(d.settings.pager||d.settings.pagerCustom)&&E(d.active.index),d.settings.controls&&H(),"fade"===d.settings.mode?(d.settings.adaptiveHeight&&d.viewport.height()!==m()&&d.viewport.animate({height:m()},d.settings.adaptiveHeightSpeed),d.children.filter(":visible").fadeOut(d.settings.speed).css({zIndex:0}),d.children.eq(d.active.index).css("zIndex",d.settings.slideZIndex+1).fadeIn(d.settings.speed,function(){a(this).css("zIndex",d.settings.slideZIndex),F()})):(d.settings.adaptiveHeight&&d.viewport.height()!==m()&&d.viewport.animate({height:m()},d.settings.adaptiveHeightSpeed),!d.settings.infiniteLoop&&d.carousel&&d.active.last?"horizontal"===d.settings.mode?(n=d.children.eq(d.children.length-1),l=n.position(),k=d.viewport.width()-n.outerWidth()):(f=d.children.length-d.settings.minSlides,l=d.children.eq(f).position()):d.carousel&&d.active.last&&"prev"===c?(g=1===d.settings.moveSlides?d.settings.maxSlides-r():(q()-1)*r()-(d.children.length-d.settings.maxSlides),n=e.children(".bx-clone").eq(g),l=n.position()):"next"===c&&0===d.active.index?(l=e.find("> .bx-clone").eq(d.settings.maxSlides).position(),d.active.last=!1):b>=0&&(i=b*parseInt(r()),l=d.children.eq(i).position()),"undefined"!=typeof l?(h="horizontal"===d.settings.mode?-(l.left-k):-l.top,t(h,"slide",d.settings.speed)):d.working=!1),d.settings.ariaHidden&&T(d.active.index*r())}},e.goToNextSlide=function(){if(d.settings.infiniteLoop||!d.active.last){var a=parseInt(d.active.index)+1;e.goToSlide(a,"next")}},e.goToPrevSlide=function(){if(d.settings.infiniteLoop||0!==d.active.index){var a=parseInt(d.active.index)-1;e.goToSlide(a,"prev")}},e.startAuto=function(a){d.interval||(d.interval=setInterval(function(){"next"===d.settings.autoDirection?e.goToNextSlide():e.goToPrevSlide()},d.settings.pause),d.settings.autoControls&&a!==!0&&G("stop"))},e.stopAuto=function(a){d.interval&&(clearInterval(d.interval),d.interval=null,d.settings.autoControls&&a!==!0&&G("start"))},e.getCurrentSlide=function(){return d.active.index},e.getCurrentSlideElement=function(){return d.children.eq(d.active.index)},e.getSlideElement=function(a){return d.children.eq(a)},e.getSlideCount=function(){return d.children.length},e.isWorking=function(){return d.working},e.redrawSlider=function(){d.children.add(e.find(".bx-clone")).outerWidth(o()),d.viewport.css("height",m()),d.settings.ticker||s(),d.active.last&&(d.active.index=q()-1),d.active.index>=q()&&(d.active.last=!0),d.settings.pager&&!d.settings.pagerCustom&&(u(),E(d.active.index)),d.settings.ariaHidden&&T(d.active.index*r())},e.destroySlider=function(){d.initialized&&(d.initialized=!1,a(".bx-clone",this).remove(),d.children.each(function(){void 0!==a(this).data("origStyle")?a(this).attr("style",a(this).data("origStyle")):a(this).removeAttr("style")}),void 0!==a(this).data("origStyle")?this.attr("style",a(this).data("origStyle")):a(this).removeAttr("style"),a(this).unwrap().unwrap(),d.controls.el&&d.controls.el.remove(),d.controls.next&&d.controls.next.remove(),d.controls.prev&&d.controls.prev.remove(),d.pagerEl&&d.settings.controls&&!d.settings.pagerCustom&&d.pagerEl.remove(),a(".bx-caption",this).remove(),d.controls.autoEl&&d.controls.autoEl.remove(),clearInterval(d.interval),d.settings.responsive&&a(window).unbind("resize",S),d.settings.keyboardEnabled&&a(document).unbind("keydown",M),a(this).removeData("bxSlider"))},e.reloadSlider=function(b){void 0!==b&&(c=b),e.destroySlider(),h(),a(e).data("bxSlider",this)},h(),a(e).data("bxSlider",this),this}}}(jQuery);
-},{}],2:[function(require,module,exports){
 /*!
  * jQuery Mousewheel 3.1.13
  *
@@ -231,7 +221,7 @@
 
 }));
 
-},{}],3:[function(require,module,exports){
+},{}],2:[function(require,module,exports){
 /*!
  * jQuery Browser Plugin 0.0.8
  * https://github.com/gabceb/jquery-browser-plugin
@@ -417,7 +407,7 @@
   return window.jQBrowser;
 }));
 
-},{"jquery":4}],4:[function(require,module,exports){
+},{"jquery":3}],3:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v1.11.3
  * http://jquery.com/
@@ -10770,7 +10760,7 @@ return jQuery;
 
 }));
 
-},{}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 /*!
  * mustache.js - Logic-less {{mustache}} templates with JavaScript
  * http://github.com/janl/mustache.js
@@ -11399,10 +11389,989 @@ return jQuery;
 
 }));
 
-},{}],6:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
+/*! nanoScrollerJS - v0.8.7 - 2015
+* http://jamesflorentino.github.com/nanoScrollerJS/
+* Copyright (c) 2015 James Florentino; Licensed MIT */
+(function(factory) {
+  if (typeof define === 'function' && define.amd) {
+    return define(['jquery'], function($) {
+      return factory($, window, document);
+    });
+  } else if (typeof exports === 'object') {
+    return module.exports = factory(require('jquery'), window, document);
+  } else {
+    return factory(jQuery, window, document);
+  }
+})(function($, window, document) {
+  "use strict";
+  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, ENTER, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEENTER, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor;
+  defaults = {
+
+    /**
+      a classname for the pane element.
+      @property paneClass
+      @type String
+      @default 'nano-pane'
+     */
+    paneClass: 'nano-pane',
+
+    /**
+      a classname for the slider element.
+      @property sliderClass
+      @type String
+      @default 'nano-slider'
+     */
+    sliderClass: 'nano-slider',
+
+    /**
+      a classname for the content element.
+      @property contentClass
+      @type String
+      @default 'nano-content'
+     */
+    contentClass: 'nano-content',
+
+    /**
+      a setting to enable native scrolling in iOS devices.
+      @property iOSNativeScrolling
+      @type Boolean
+      @default false
+     */
+    iOSNativeScrolling: false,
+
+    /**
+      a setting to prevent the rest of the page being
+      scrolled when user scrolls the `.content` element.
+      @property preventPageScrolling
+      @type Boolean
+      @default false
+     */
+    preventPageScrolling: false,
+
+    /**
+      a setting to disable binding to the resize event.
+      @property disableResize
+      @type Boolean
+      @default false
+     */
+    disableResize: false,
+
+    /**
+      a setting to make the scrollbar always visible.
+      @property alwaysVisible
+      @type Boolean
+      @default false
+     */
+    alwaysVisible: false,
+
+    /**
+      a default timeout for the `flash()` method.
+      @property flashDelay
+      @type Number
+      @default 1500
+     */
+    flashDelay: 1500,
+
+    /**
+      a minimum height for the `.slider` element.
+      @property sliderMinHeight
+      @type Number
+      @default 20
+     */
+    sliderMinHeight: 20,
+
+    /**
+      a maximum height for the `.slider` element.
+      @property sliderMaxHeight
+      @type Number
+      @default null
+     */
+    sliderMaxHeight: null,
+
+    /**
+      an alternate document context.
+      @property documentContext
+      @type Document
+      @default null
+     */
+    documentContext: null,
+
+    /**
+      an alternate window context.
+      @property windowContext
+      @type Window
+      @default null
+     */
+    windowContext: null
+  };
+
+  /**
+    @property SCROLLBAR
+    @type String
+    @static
+    @final
+    @private
+   */
+  SCROLLBAR = 'scrollbar';
+
+  /**
+    @property SCROLL
+    @type String
+    @static
+    @final
+    @private
+   */
+  SCROLL = 'scroll';
+
+  /**
+    @property MOUSEDOWN
+    @type String
+    @final
+    @private
+   */
+  MOUSEDOWN = 'mousedown';
+
+  /**
+    @property MOUSEENTER
+    @type String
+    @final
+    @private
+   */
+  MOUSEENTER = 'mouseenter';
+
+  /**
+    @property MOUSEMOVE
+    @type String
+    @static
+    @final
+    @private
+   */
+  MOUSEMOVE = 'mousemove';
+
+  /**
+    @property MOUSEWHEEL
+    @type String
+    @final
+    @private
+   */
+  MOUSEWHEEL = 'mousewheel';
+
+  /**
+    @property MOUSEUP
+    @type String
+    @static
+    @final
+    @private
+   */
+  MOUSEUP = 'mouseup';
+
+  /**
+    @property RESIZE
+    @type String
+    @final
+    @private
+   */
+  RESIZE = 'resize';
+
+  /**
+    @property DRAG
+    @type String
+    @static
+    @final
+    @private
+   */
+  DRAG = 'drag';
+
+  /**
+    @property ENTER
+    @type String
+    @static
+    @final
+    @private
+   */
+  ENTER = 'enter';
+
+  /**
+    @property UP
+    @type String
+    @static
+    @final
+    @private
+   */
+  UP = 'up';
+
+  /**
+    @property PANEDOWN
+    @type String
+    @static
+    @final
+    @private
+   */
+  PANEDOWN = 'panedown';
+
+  /**
+    @property DOMSCROLL
+    @type String
+    @static
+    @final
+    @private
+   */
+  DOMSCROLL = 'DOMMouseScroll';
+
+  /**
+    @property DOWN
+    @type String
+    @static
+    @final
+    @private
+   */
+  DOWN = 'down';
+
+  /**
+    @property WHEEL
+    @type String
+    @static
+    @final
+    @private
+   */
+  WHEEL = 'wheel';
+
+  /**
+    @property KEYDOWN
+    @type String
+    @static
+    @final
+    @private
+   */
+  KEYDOWN = 'keydown';
+
+  /**
+    @property KEYUP
+    @type String
+    @static
+    @final
+    @private
+   */
+  KEYUP = 'keyup';
+
+  /**
+    @property TOUCHMOVE
+    @type String
+    @static
+    @final
+    @private
+   */
+  TOUCHMOVE = 'touchmove';
+
+  /**
+    @property BROWSER_IS_IE7
+    @type Boolean
+    @static
+    @final
+    @private
+   */
+  BROWSER_IS_IE7 = window.navigator.appName === 'Microsoft Internet Explorer' && /msie 7./i.test(window.navigator.appVersion) && window.ActiveXObject;
+
+  /**
+    @property BROWSER_SCROLLBAR_WIDTH
+    @type Number
+    @static
+    @default null
+    @private
+   */
+  BROWSER_SCROLLBAR_WIDTH = null;
+  rAF = window.requestAnimationFrame;
+  cAF = window.cancelAnimationFrame;
+  _elementStyle = document.createElement('div').style;
+  _vendor = (function() {
+    var i, transform, vendor, vendors, _i, _len;
+    vendors = ['t', 'webkitT', 'MozT', 'msT', 'OT'];
+    for (i = _i = 0, _len = vendors.length; _i < _len; i = ++_i) {
+      vendor = vendors[i];
+      transform = vendors[i] + 'ransform';
+      if (transform in _elementStyle) {
+        return vendors[i].substr(0, vendors[i].length - 1);
+      }
+    }
+    return false;
+  })();
+  _prefixStyle = function(style) {
+    if (_vendor === false) {
+      return false;
+    }
+    if (_vendor === '') {
+      return style;
+    }
+    return _vendor + style.charAt(0).toUpperCase() + style.substr(1);
+  };
+  transform = _prefixStyle('transform');
+  hasTransform = transform !== false;
+
+  /**
+    Returns browser's native scrollbar width
+    @method getBrowserScrollbarWidth
+    @return {Number} the scrollbar width in pixels
+    @static
+    @private
+   */
+  getBrowserScrollbarWidth = function() {
+    var outer, outerStyle, scrollbarWidth;
+    outer = document.createElement('div');
+    outerStyle = outer.style;
+    outerStyle.position = 'absolute';
+    outerStyle.width = '100px';
+    outerStyle.height = '100px';
+    outerStyle.overflow = SCROLL;
+    outerStyle.top = '-9999px';
+    document.body.appendChild(outer);
+    scrollbarWidth = outer.offsetWidth - outer.clientWidth;
+    document.body.removeChild(outer);
+    return scrollbarWidth;
+  };
+  isFFWithBuggyScrollbar = function() {
+    var isOSXFF, ua, version;
+    ua = window.navigator.userAgent;
+    isOSXFF = /(?=.+Mac OS X)(?=.+Firefox)/.test(ua);
+    if (!isOSXFF) {
+      return false;
+    }
+    version = /Firefox\/\d{2}\./.exec(ua);
+    if (version) {
+      version = version[0].replace(/\D+/g, '');
+    }
+    return isOSXFF && +version > 23;
+  };
+
+  /**
+    @class NanoScroll
+    @param element {HTMLElement|Node} the main element
+    @param options {Object} nanoScroller's options
+    @constructor
+   */
+  NanoScroll = (function() {
+    function NanoScroll(el, options) {
+      this.el = el;
+      this.options = options;
+      BROWSER_SCROLLBAR_WIDTH || (BROWSER_SCROLLBAR_WIDTH = getBrowserScrollbarWidth());
+      this.$el = $(this.el);
+      this.doc = $(this.options.documentContext || document);
+      this.win = $(this.options.windowContext || window);
+      this.body = this.doc.find('body');
+      this.$content = this.$el.children("." + this.options.contentClass);
+      this.$content.attr('tabindex', this.options.tabIndex || 0);
+      this.content = this.$content[0];
+      this.previousPosition = 0;
+      if (this.options.iOSNativeScrolling && (this.el.style.WebkitOverflowScrolling != null)) {
+        this.nativeScrolling();
+      } else {
+        this.generate();
+      }
+      this.createEvents();
+      this.addEvents();
+      this.reset();
+    }
+
+
+    /**
+      Prevents the rest of the page being scrolled
+      when user scrolls the `.nano-content` element.
+      @method preventScrolling
+      @param event {Event}
+      @param direction {String} Scroll direction (up or down)
+      @private
+     */
+
+    NanoScroll.prototype.preventScrolling = function(e, direction) {
+      if (!this.isActive) {
+        return;
+      }
+      if (e.type === DOMSCROLL) {
+        if (direction === DOWN && e.originalEvent.detail > 0 || direction === UP && e.originalEvent.detail < 0) {
+          e.preventDefault();
+        }
+      } else if (e.type === MOUSEWHEEL) {
+        if (!e.originalEvent || !e.originalEvent.wheelDelta) {
+          return;
+        }
+        if (direction === DOWN && e.originalEvent.wheelDelta < 0 || direction === UP && e.originalEvent.wheelDelta > 0) {
+          e.preventDefault();
+        }
+      }
+    };
+
+
+    /**
+      Enable iOS native scrolling
+      @method nativeScrolling
+      @private
+     */
+
+    NanoScroll.prototype.nativeScrolling = function() {
+      this.$content.css({
+        WebkitOverflowScrolling: 'touch'
+      });
+      this.iOSNativeScrolling = true;
+      this.isActive = true;
+    };
+
+
+    /**
+      Updates those nanoScroller properties that
+      are related to current scrollbar position.
+      @method updateScrollValues
+      @private
+     */
+
+    NanoScroll.prototype.updateScrollValues = function() {
+      var content, direction;
+      content = this.content;
+      this.maxScrollTop = content.scrollHeight - content.clientHeight;
+      this.prevScrollTop = this.contentScrollTop || 0;
+      this.contentScrollTop = content.scrollTop;
+      direction = this.contentScrollTop > this.previousPosition ? "down" : this.contentScrollTop < this.previousPosition ? "up" : "same";
+      this.previousPosition = this.contentScrollTop;
+      if (direction !== "same") {
+        this.$el.trigger('update', {
+          position: this.contentScrollTop,
+          maximum: this.maxScrollTop,
+          direction: direction
+        });
+      }
+      if (!this.iOSNativeScrolling) {
+        this.maxSliderTop = this.paneHeight - this.sliderHeight;
+        this.sliderTop = this.maxScrollTop === 0 ? 0 : this.contentScrollTop * this.maxSliderTop / this.maxScrollTop;
+      }
+    };
+
+
+    /**
+      Updates CSS styles for current scroll position.
+      Uses CSS 2d transfroms and `window.requestAnimationFrame` if available.
+      @method setOnScrollStyles
+      @private
+     */
+
+    NanoScroll.prototype.setOnScrollStyles = function() {
+      var cssValue;
+      if (hasTransform) {
+        cssValue = {};
+        cssValue[transform] = "translate(0, " + this.sliderTop + "px)";
+      } else {
+        cssValue = {
+          top: this.sliderTop
+        };
+      }
+      if (rAF) {
+        if (cAF && this.scrollRAF) {
+          cAF(this.scrollRAF);
+        }
+        this.scrollRAF = rAF((function(_this) {
+          return function() {
+            _this.scrollRAF = null;
+            return _this.slider.css(cssValue);
+          };
+        })(this));
+      } else {
+        this.slider.css(cssValue);
+      }
+    };
+
+
+    /**
+      Creates event related methods
+      @method createEvents
+      @private
+     */
+
+    NanoScroll.prototype.createEvents = function() {
+      this.events = {
+        down: (function(_this) {
+          return function(e) {
+            _this.isBeingDragged = true;
+            _this.offsetY = e.pageY - _this.slider.offset().top;
+            if (!_this.slider.is(e.target)) {
+              _this.offsetY = 0;
+            }
+            _this.pane.addClass('active');
+            _this.doc.bind(MOUSEMOVE, _this.events[DRAG]).bind(MOUSEUP, _this.events[UP]);
+            _this.body.bind(MOUSEENTER, _this.events[ENTER]);
+            return false;
+          };
+        })(this),
+        drag: (function(_this) {
+          return function(e) {
+            _this.sliderY = e.pageY - _this.$el.offset().top - _this.paneTop - (_this.offsetY || _this.sliderHeight * 0.5);
+            _this.scroll();
+            if (_this.contentScrollTop >= _this.maxScrollTop && _this.prevScrollTop !== _this.maxScrollTop) {
+              _this.$el.trigger('scrollend');
+            } else if (_this.contentScrollTop === 0 && _this.prevScrollTop !== 0) {
+              _this.$el.trigger('scrolltop');
+            }
+            return false;
+          };
+        })(this),
+        up: (function(_this) {
+          return function(e) {
+            _this.isBeingDragged = false;
+            _this.pane.removeClass('active');
+            _this.doc.unbind(MOUSEMOVE, _this.events[DRAG]).unbind(MOUSEUP, _this.events[UP]);
+            _this.body.unbind(MOUSEENTER, _this.events[ENTER]);
+            return false;
+          };
+        })(this),
+        resize: (function(_this) {
+          return function(e) {
+            _this.reset();
+          };
+        })(this),
+        panedown: (function(_this) {
+          return function(e) {
+            _this.sliderY = (e.offsetY || e.originalEvent.layerY) - (_this.sliderHeight * 0.5);
+            _this.scroll();
+            _this.events.down(e);
+            return false;
+          };
+        })(this),
+        scroll: (function(_this) {
+          return function(e) {
+            _this.updateScrollValues();
+            if (_this.isBeingDragged) {
+              return;
+            }
+            if (!_this.iOSNativeScrolling) {
+              _this.sliderY = _this.sliderTop;
+              _this.setOnScrollStyles();
+            }
+            if (e == null) {
+              return;
+            }
+            if (_this.contentScrollTop >= _this.maxScrollTop) {
+              if (_this.options.preventPageScrolling) {
+                _this.preventScrolling(e, DOWN);
+              }
+              if (_this.prevScrollTop !== _this.maxScrollTop) {
+                _this.$el.trigger('scrollend');
+              }
+            } else if (_this.contentScrollTop === 0) {
+              if (_this.options.preventPageScrolling) {
+                _this.preventScrolling(e, UP);
+              }
+              if (_this.prevScrollTop !== 0) {
+                _this.$el.trigger('scrolltop');
+              }
+            }
+          };
+        })(this),
+        wheel: (function(_this) {
+          return function(e) {
+            var delta;
+            if (e == null) {
+              return;
+            }
+            delta = e.delta || e.wheelDelta || (e.originalEvent && e.originalEvent.wheelDelta) || -e.detail || (e.originalEvent && -e.originalEvent.detail);
+            if (delta) {
+              _this.sliderY += -delta / 3;
+            }
+            _this.scroll();
+            return false;
+          };
+        })(this),
+        enter: (function(_this) {
+          return function(e) {
+            var _ref;
+            if (!_this.isBeingDragged) {
+              return;
+            }
+            if ((e.buttons || e.which) !== 1) {
+              return (_ref = _this.events)[UP].apply(_ref, arguments);
+            }
+          };
+        })(this)
+      };
+    };
+
+
+    /**
+      Adds event listeners with jQuery.
+      @method addEvents
+      @private
+     */
+
+    NanoScroll.prototype.addEvents = function() {
+      var events;
+      this.removeEvents();
+      events = this.events;
+      if (!this.options.disableResize) {
+        this.win.bind(RESIZE, events[RESIZE]);
+      }
+      if (!this.iOSNativeScrolling) {
+        this.slider.bind(MOUSEDOWN, events[DOWN]);
+        this.pane.bind(MOUSEDOWN, events[PANEDOWN]).bind("" + MOUSEWHEEL + " " + DOMSCROLL, events[WHEEL]);
+      }
+      this.$content.bind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]);
+    };
+
+
+    /**
+      Removes event listeners with jQuery.
+      @method removeEvents
+      @private
+     */
+
+    NanoScroll.prototype.removeEvents = function() {
+      var events;
+      events = this.events;
+      this.win.unbind(RESIZE, events[RESIZE]);
+      if (!this.iOSNativeScrolling) {
+        this.slider.unbind();
+        this.pane.unbind();
+      }
+      this.$content.unbind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]);
+    };
+
+
+    /**
+      Generates nanoScroller's scrollbar and elements for it.
+      @method generate
+      @chainable
+      @private
+     */
+
+    NanoScroll.prototype.generate = function() {
+      var contentClass, cssRule, currentPadding, options, pane, paneClass, sliderClass;
+      options = this.options;
+      paneClass = options.paneClass, sliderClass = options.sliderClass, contentClass = options.contentClass;
+      if (!(pane = this.$el.children("." + paneClass)).length && !pane.children("." + sliderClass).length) {
+        this.$el.append("<div class=\"" + paneClass + "\"><div class=\"" + sliderClass + "\" /></div>");
+      }
+      this.pane = this.$el.children("." + paneClass);
+      this.slider = this.pane.find("." + sliderClass);
+      if (BROWSER_SCROLLBAR_WIDTH === 0 && isFFWithBuggyScrollbar()) {
+        currentPadding = window.getComputedStyle(this.content, null).getPropertyValue('padding-right').replace(/[^0-9.]+/g, '');
+        cssRule = {
+          right: -14,
+          paddingRight: +currentPadding + 14
+        };
+      } else if (BROWSER_SCROLLBAR_WIDTH) {
+        cssRule = {
+          right: -BROWSER_SCROLLBAR_WIDTH
+        };
+        this.$el.addClass('has-scrollbar');
+      }
+      if (cssRule != null) {
+        this.$content.css(cssRule);
+      }
+      return this;
+    };
+
+
+    /**
+      @method restore
+      @private
+     */
+
+    NanoScroll.prototype.restore = function() {
+      this.stopped = false;
+      if (!this.iOSNativeScrolling) {
+        this.pane.show();
+      }
+      this.addEvents();
+    };
+
+
+    /**
+      Resets nanoScroller's scrollbar.
+      @method reset
+      @chainable
+      @example
+          $(".nano").nanoScroller();
+     */
+
+    NanoScroll.prototype.reset = function() {
+      var content, contentHeight, contentPosition, contentStyle, contentStyleOverflowY, paneBottom, paneHeight, paneOuterHeight, paneTop, parentMaxHeight, right, sliderHeight;
+      if (this.iOSNativeScrolling) {
+        this.contentHeight = this.content.scrollHeight;
+        return;
+      }
+      if (!this.$el.find("." + this.options.paneClass).length) {
+        this.generate().stop();
+      }
+      if (this.stopped) {
+        this.restore();
+      }
+      content = this.content;
+      contentStyle = content.style;
+      contentStyleOverflowY = contentStyle.overflowY;
+      if (BROWSER_IS_IE7) {
+        this.$content.css({
+          height: this.$content.height()
+        });
+      }
+      contentHeight = content.scrollHeight + BROWSER_SCROLLBAR_WIDTH;
+      parentMaxHeight = parseInt(this.$el.css("max-height"), 10);
+      if (parentMaxHeight > 0) {
+        this.$el.height("");
+        this.$el.height(content.scrollHeight > parentMaxHeight ? parentMaxHeight : content.scrollHeight);
+      }
+      paneHeight = this.pane.outerHeight(false);
+      paneTop = parseInt(this.pane.css('top'), 10);
+      paneBottom = parseInt(this.pane.css('bottom'), 10);
+      paneOuterHeight = paneHeight + paneTop + paneBottom;
+      sliderHeight = Math.round(paneOuterHeight / contentHeight * paneHeight);
+      if (sliderHeight < this.options.sliderMinHeight) {
+        sliderHeight = this.options.sliderMinHeight;
+      } else if ((this.options.sliderMaxHeight != null) && sliderHeight > this.options.sliderMaxHeight) {
+        sliderHeight = this.options.sliderMaxHeight;
+      }
+      if (contentStyleOverflowY === SCROLL && contentStyle.overflowX !== SCROLL) {
+        sliderHeight += BROWSER_SCROLLBAR_WIDTH;
+      }
+      this.maxSliderTop = paneOuterHeight - sliderHeight;
+      this.contentHeight = contentHeight;
+      this.paneHeight = paneHeight;
+      this.paneOuterHeight = paneOuterHeight;
+      this.sliderHeight = sliderHeight;
+      this.paneTop = paneTop;
+      this.slider.height(sliderHeight);
+      this.events.scroll();
+      this.pane.show();
+      this.isActive = true;
+      if ((content.scrollHeight === content.clientHeight) || (this.pane.outerHeight(true) >= content.scrollHeight && contentStyleOverflowY !== SCROLL)) {
+        this.pane.hide();
+        this.isActive = false;
+      } else if (this.el.clientHeight === content.scrollHeight && contentStyleOverflowY === SCROLL) {
+        this.slider.hide();
+      } else {
+        this.slider.show();
+      }
+      this.pane.css({
+        opacity: (this.options.alwaysVisible ? 1 : ''),
+        visibility: (this.options.alwaysVisible ? 'visible' : '')
+      });
+      contentPosition = this.$content.css('position');
+      if (contentPosition === 'static' || contentPosition === 'relative') {
+        right = parseInt(this.$content.css('right'), 10);
+        if (right) {
+          this.$content.css({
+            right: '',
+            marginRight: right
+          });
+        }
+      }
+      return this;
+    };
+
+
+    /**
+      @method scroll
+      @private
+      @example
+          $(".nano").nanoScroller({ scroll: 'top' });
+     */
+
+    NanoScroll.prototype.scroll = function() {
+      if (!this.isActive) {
+        return;
+      }
+      this.sliderY = Math.max(0, this.sliderY);
+      this.sliderY = Math.min(this.maxSliderTop, this.sliderY);
+      this.$content.scrollTop(this.maxScrollTop * this.sliderY / this.maxSliderTop);
+      if (!this.iOSNativeScrolling) {
+        this.updateScrollValues();
+        this.setOnScrollStyles();
+      }
+      return this;
+    };
+
+
+    /**
+      Scroll at the bottom with an offset value
+      @method scrollBottom
+      @param offsetY {Number}
+      @chainable
+      @example
+          $(".nano").nanoScroller({ scrollBottom: value });
+     */
+
+    NanoScroll.prototype.scrollBottom = function(offsetY) {
+      if (!this.isActive) {
+        return;
+      }
+      this.$content.scrollTop(this.contentHeight - this.$content.height() - offsetY).trigger(MOUSEWHEEL);
+      this.stop().restore();
+      return this;
+    };
+
+
+    /**
+      Scroll at the top with an offset value
+      @method scrollTop
+      @param offsetY {Number}
+      @chainable
+      @example
+          $(".nano").nanoScroller({ scrollTop: value });
+     */
+
+    NanoScroll.prototype.scrollTop = function(offsetY) {
+      if (!this.isActive) {
+        return;
+      }
+      this.$content.scrollTop(+offsetY).trigger(MOUSEWHEEL);
+      this.stop().restore();
+      return this;
+    };
+
+
+    /**
+      Scroll to an element
+      @method scrollTo
+      @param node {Node} A node to scroll to.
+      @chainable
+      @example
+          $(".nano").nanoScroller({ scrollTo: $('#a_node') });
+     */
+
+    NanoScroll.prototype.scrollTo = function(node) {
+      if (!this.isActive) {
+        return;
+      }
+      this.scrollTop(this.$el.find(node).get(0).offsetTop);
+      return this;
+    };
+
+
+    /**
+      To stop the operation.
+      This option will tell the plugin to disable all event bindings and hide the gadget scrollbar from the UI.
+      @method stop
+      @chainable
+      @example
+          $(".nano").nanoScroller({ stop: true });
+     */
+
+    NanoScroll.prototype.stop = function() {
+      if (cAF && this.scrollRAF) {
+        cAF(this.scrollRAF);
+        this.scrollRAF = null;
+      }
+      this.stopped = true;
+      this.removeEvents();
+      if (!this.iOSNativeScrolling) {
+        this.pane.hide();
+      }
+      return this;
+    };
+
+
+    /**
+      Destroys nanoScroller and restores browser's native scrollbar.
+      @method destroy
+      @chainable
+      @example
+          $(".nano").nanoScroller({ destroy: true });
+     */
+
+    NanoScroll.prototype.destroy = function() {
+      if (!this.stopped) {
+        this.stop();
+      }
+      if (!this.iOSNativeScrolling && this.pane.length) {
+        this.pane.remove();
+      }
+      if (BROWSER_IS_IE7) {
+        this.$content.height('');
+      }
+      this.$content.removeAttr('tabindex');
+      if (this.$el.hasClass('has-scrollbar')) {
+        this.$el.removeClass('has-scrollbar');
+        this.$content.css({
+          right: ''
+        });
+      }
+      return this;
+    };
+
+
+    /**
+      To flash the scrollbar gadget for an amount of time defined in plugin settings (defaults to 1,5s).
+      Useful if you want to show the user (e.g. on pageload) that there is more content waiting for him.
+      @method flash
+      @chainable
+      @example
+          $(".nano").nanoScroller({ flash: true });
+     */
+
+    NanoScroll.prototype.flash = function() {
+      if (this.iOSNativeScrolling) {
+        return;
+      }
+      if (!this.isActive) {
+        return;
+      }
+      this.reset();
+      this.pane.addClass('flashed');
+      setTimeout((function(_this) {
+        return function() {
+          _this.pane.removeClass('flashed');
+        };
+      })(this), this.options.flashDelay);
+      return this;
+    };
+
+    return NanoScroll;
+
+  })();
+  $.fn.nanoScroller = function(settings) {
+    return this.each(function() {
+      var options, scrollbar;
+      if (!(scrollbar = this.nanoscroller)) {
+        options = $.extend({}, defaults, settings);
+        this.nanoscroller = scrollbar = new NanoScroll(this, options);
+      }
+      if (settings && typeof settings === "object") {
+        $.extend(scrollbar.options, settings);
+        if (settings.scrollBottom != null) {
+          return scrollbar.scrollBottom(settings.scrollBottom);
+        }
+        if (settings.scrollTop != null) {
+          return scrollbar.scrollTop(settings.scrollTop);
+        }
+        if (settings.scrollTo) {
+          return scrollbar.scrollTo(settings.scrollTo);
+        }
+        if (settings.scroll === 'bottom') {
+          return scrollbar.scrollBottom(0);
+        }
+        if (settings.scroll === 'top') {
+          return scrollbar.scrollTop(0);
+        }
+        if (settings.scroll && settings.scroll instanceof $) {
+          return scrollbar.scrollTo(settings.scroll);
+        }
+        if (settings.stop) {
+          return scrollbar.stop();
+        }
+        if (settings.destroy) {
+          return scrollbar.destroy();
+        }
+        if (settings.flash) {
+          return scrollbar.flash();
+        }
+      }
+      return scrollbar.reset();
+    });
+  };
+  $.fn.nanoScroller.Constructor = NanoScroll;
+});
+
+//# sourceMappingURL=jquery.nanoscroller.js.map
+
+},{"jquery":3}],6:[function(require,module,exports){
 var Mustache = require('mustache');
 var $ = require('jquery');
 var ajxLoader = require('../lib/ajxLoader');
+require('nanoscroller');
 
     var ajxUrl = {};
 
@@ -12121,10 +13090,10 @@ var ajxLoader = require('../lib/ajxLoader');
 
 module.exports = Basket;
 
-},{"../lib/ajxLoader":8,"jquery":4,"mustache":5}],7:[function(require,module,exports){
+},{"../lib/ajxLoader":8,"jquery":3,"mustache":4,"nanoscroller":5}],7:[function(require,module,exports){
 var $ =  jQuery =  require('jquery');
-require('../../node_modules/bxslider/dist/jquery.bxslider.min');
-var sliderConstructor = require('./lib/constructor.bxslider');
+
+
 require('jquery-mousewheel')($);
 var Mustache = require('mustache');
 require('jquery.browser');
@@ -12137,11 +13106,14 @@ require('./vendor/tipped');
 require('./vendor/jquery.simplr.smoothscroll.min');
 require('./vendor/jquery.formstyler.min');
 
+require('./vendor/jquery.bxslider');
 require('./lib/folding.plugin');
 require('./lib/dropdown.plugin');
 require('./lib/subscribe');
 
 require('./main/call');
+var sliderConstructor = require('./lib/constructor.bxslider');
+
 var Basket = require('./components/basket');
 
     $(function(){
@@ -12437,7 +13409,7 @@ var Basket = require('./components/basket');
                     responsive: true,
                     pause: 5000,
                     onSliderLoad: function(currentIndex) {
-                        this.addClass('loaded');
+                        this.$self.addClass('loaded');
                         $('.main-banner .prlx-item').prlx();
                     },
                     onSlideAfter: function($item) {
@@ -12648,7 +13620,7 @@ function closePopup ($popup) {
     $(window).trigger('popupClosed', [$popup]);
 }
 
-},{"../../node_modules/bxslider/dist/jquery.bxslider.min":1,"./components/basket":6,"./lib/constructor.bxslider":9,"./lib/dropdown.plugin":10,"./lib/folding.plugin":11,"./lib/subscribe":12,"./main/call":13,"./main/prlx-banner.plugin":14,"./vendor/jquery.formstyler.min":15,"./vendor/jquery.maskedinput":16,"./vendor/jquery.simplr.smoothscroll.min":17,"./vendor/size.scroll":18,"./vendor/tipped":19,"jquery":4,"jquery-mousewheel":2,"jquery.browser":3,"mustache":5}],8:[function(require,module,exports){
+},{"./components/basket":6,"./lib/constructor.bxslider":9,"./lib/dropdown.plugin":10,"./lib/folding.plugin":11,"./lib/subscribe":12,"./main/call":13,"./main/prlx-banner.plugin":14,"./vendor/jquery.bxslider":15,"./vendor/jquery.formstyler.min":16,"./vendor/jquery.maskedinput":17,"./vendor/jquery.simplr.smoothscroll.min":18,"./vendor/size.scroll":19,"./vendor/tipped":20,"jquery":3,"jquery-mousewheel":1,"jquery.browser":2,"mustache":4}],8:[function(require,module,exports){
 var $ = require('jquery');
 
 var ajxLoader  =  (function() {
@@ -12676,79 +13648,87 @@ var ajxLoader  =  (function() {
 
 module.exports = ajxLoader;
 
-},{"jquery":4}],9:[function(require,module,exports){
-module.exports = function(sliders) {
-    var sliderConfig =
-    {
-        _options: {
-            minSlides: 0,
-            maxSlides: 1,
-            responsive: false,
-            infiniteLoop: true,
-            autoHover: true,
-            autoDelay: 0,
-            auto: false,
-            pause: 5000,
-            hideControlOnEnd: true,
-            pager: false,
-            slideMargin: 0,
-            autoStart: true,
-            stopAuto: false,
-            mode: 'fade'
-        },
-        _class: {
-            container: '.slider-container',
-            item: '.slider-item',
-            controls: ['.bx-prev', '.bx-next', '.bx-pager-link']
-        },
-        slidersArr: sliders
-    };
+},{"jquery":3}],9:[function(require,module,exports){
+
+var sc =
+    (function(bx) {
+        return function (sliders) {
+            jQuery.fn.bxSlider = bx;
+            var sliderConfig =
+            {
+                _options: {
+                    minSlides: 0,
+                    maxSlides: 1,
+                    responsive: false,
+                    infiniteLoop: true,
+                    autoHover: true,
+                    autoDelay: 0,
+                    auto: false,
+                    pause: 5000,
+                    hideControlOnEnd: true,
+                    pager: false,
+                    slideMargin: 0,
+                    autoStart: true,
+                    stopAuto: false,
+                    mode: 'fade'
+                },
+                _class: {
+                    container: '.slider-container',
+                    item: '.slider-item',
+                    controls: ['.bx-prev', '.bx-next', '.bx-pager-link']
+                },
+                slidersArr: sliders
+            };
 
 
-    var sliderInit = function() {
-        var opt,
-            configClass = sliderConfig._class,
-            configOpt = sliderConfig._options;
+            var sliderInit = function () {
+                var opt,
+                    configClass = sliderConfig._class,
+                    configOpt = sliderConfig._options;
 
-        jQuery.each(sliderConfig.slidersArr, function(ind,slider){
-            var self = slider;
-            var restartAuto;
-            var $selfSlider = (typeof self.sliderClass === 'object')?self.sliderClass:jQuery(self.sliderClass);
-            var checkLength = self.checkLength?self.checkLength:0;
-			$selfSlider.each(function(){
-                var $slider = jQuery(this);
-                if ($slider.find(configClass.item).length > checkLength) {
-                    self.options.$self = $slider;
-                    opt = jQuery.extend({},configOpt, self.options);
-                    var objSlider = $slider.find(configClass.container).bxSlider(opt);
-                    if (opt.auto) { //autoStart fix
-                        var allControls = configClass.controls.toString();
-                        function autoStart(e){
-                            clearTimeout(restartAuto);
-                            restartAuto = setTimeout(function(){
-                                objSlider.startAuto();
-                            },500);
-                            return false;
+                jQuery.each(sliderConfig.slidersArr, function (ind, slider) {
+                    var self = slider;
+                    var restartAuto;
+                    var $selfSlider = (typeof self.sliderClass === 'object') ? self.sliderClass : jQuery(self.sliderClass);
+                    var checkLength = self.checkLength ? self.checkLength : 0;
+                    $selfSlider.each(function () {
+                        var $slider = jQuery(this);
+                        if ($slider.find(configClass.item).length > checkLength) {
+                            self.options.$self = $slider;
+                            opt = jQuery.extend({}, configOpt, self.options);
+                            var objSlider = $slider.find(configClass.container).bxSlider(opt);
+                            if (opt.auto) { //autoStart fix
+                                var allControls = configClass.controls.toString();
+
+                                function autoStart(e) {
+                                    clearTimeout(restartAuto);
+                                    restartAuto = setTimeout(function () {
+                                        objSlider.startAuto();
+                                    }, 500);
+                                    return false;
+                                }
+
+                                $slider.on('click', allControls, function () {
+                                    autoStart(this);
+                                });
+                                if (!!opt.pagerCustom) {
+                                    jQuery(opt.pagerCustom).on('click', 'a', function (e) {
+                                        e.preventDefault();
+                                        autoStart(this);
+                                    });
+                                }
+                            }
+                        } else if (!!self.falseLength) {
+                            self.falseLength();
                         }
-                        $slider.on('click',allControls, function(){
-                            autoStart(this);
-                        });
-                        if (!!opt.pagerCustom) {
-                            jQuery(opt.pagerCustom).on('click','a',function(e){
-                                e.preventDefault();
-                                autoStart(this);
-                            });
-                        }
-                    }
-                } else if (!!self.falseLength) {
-                    self.falseLength();
-                }
-            });
-        })
-    };
-    return sliderInit();
-};
+                    });
+                })
+            };
+            return sliderInit();
+        }
+    })(jQuery.fn.bxSlider);
 
+module.exports = sc;
 },{}],10:[function(require,module,exports){
 (function($){
     'use strict';
@@ -13111,44 +14091,1469 @@ module.exports = function(sliders) {
     }
 })(jQuery);
 },{}],15:[function(require,module,exports){
-/* jQuery Form Styler v1.7.4 | (c) Dimox | https://github.com/Dimox/jQueryFormStyler */
-(function(b){"function"===typeof define&&define.amd?define(["jquery"],b):"object"===typeof exports?module.exports=b(require("jquery")):b(jQuery)})(function(b){function z(c,a){this.element=c;this.options=b.extend({},N,a);this.init()}function G(c){if(!b(c.target).parents().hasClass("jq-selectbox")&&"OPTION"!=c.target.nodeName&&b("div.jq-selectbox.opened").length){c=b("div.jq-selectbox.opened");var a=b("div.jq-selectbox__search input",c),f=b("div.jq-selectbox__dropdown",c);c.find("select").data("_"+
-h).options.onSelectClosed.call(c);a.length&&a.val("").keyup();f.hide().find("li.sel").addClass("selected");c.removeClass("focused opened dropup dropdown")}}var h="styler",N={wrapper:"form",idSuffix:"-styler",filePlaceholder:"\u0424\u0430\u0439\u043b \u043d\u0435 \u0432\u044b\u0431\u0440\u0430\u043d",fileBrowse:"\u041e\u0431\u0437\u043e\u0440...",fileNumber:"\u0412\u044b\u0431\u0440\u0430\u043d\u043e \u0444\u0430\u0439\u043b\u043e\u0432: %s",selectPlaceholder:"\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435...",
-selectSearch:!1,selectSearchLimit:10,selectSearchNotFound:"\u0421\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e",selectSearchPlaceholder:"\u041f\u043e\u0438\u0441\u043a...",selectVisibleOptions:0,singleSelectzIndex:"100",selectSmartPositioning:!0,onSelectOpened:function(){},onSelectClosed:function(){},onFormStyled:function(){}};z.prototype={init:function(){function c(){var b="",d="",c="",e="";void 0!==a.attr("id")&&""!==a.attr("id")&&
-(b=' id="'+a.attr("id")+f.idSuffix+'"');void 0!==a.attr("title")&&""!==a.attr("title")&&(d=' title="'+a.attr("title")+'"');void 0!==a.attr("class")&&""!==a.attr("class")&&(c=" "+a.attr("class"));var l=a.data(),t;for(t in l)""!==l[t]&&"_styler"!==t&&(e+=" data-"+t+'="'+l[t]+'"');this.id=b+e;this.title=d;this.classes=c}var a=b(this.element),f=this.options,y=navigator.userAgent.match(/(iPad|iPhone|iPod)/i)&&!navigator.userAgent.match(/(Windows\sPhone)/i)?!0:!1,h=navigator.userAgent.match(/Android/i)&&
-!navigator.userAgent.match(/(Windows\sPhone)/i)?!0:!1;if(a.is(":checkbox")){var z=function(){var f=new c,d=b("<div"+f.id+' class="jq-checkbox'+f.classes+'"'+f.title+'><div class="jq-checkbox__div"></div></div>');a.css({position:"absolute",zIndex:"-1",opacity:0,margin:0,padding:0}).after(d).prependTo(d);d.attr("unselectable","on").css({"-webkit-user-select":"none","-moz-user-select":"none","-ms-user-select":"none","-o-user-select":"none","user-select":"none",display:"inline-block",position:"relative",
-overflow:"hidden"});a.is(":checked")&&d.addClass("checked");a.is(":disabled")&&d.addClass("disabled");d.click(function(b){b.preventDefault();d.is(".disabled")||(a.is(":checked")?(a.prop("checked",!1),d.removeClass("checked")):(a.prop("checked",!0),d.addClass("checked")),a.focus().change())});a.closest("label").add('label[for="'+a.attr("id")+'"]').on("click.styler",function(a){b(a.target).is("a")||b(a.target).closest(d).length||(d.triggerHandler("click"),a.preventDefault())});a.on("change.styler",
-function(){a.is(":checked")?d.addClass("checked"):d.removeClass("checked")}).on("keydown.styler",function(a){32==a.which&&d.click()}).on("focus.styler",function(){d.is(".disabled")||d.addClass("focused")}).on("blur.styler",function(){d.removeClass("focused")})};z();a.on("refresh",function(){a.closest("label").add('label[for="'+a.attr("id")+'"]').off(".styler");a.off(".styler").parent().before(a).remove();z()})}else if(a.is(":radio")){var B=function(){var x=new c,d=b("<div"+x.id+' class="jq-radio'+
-x.classes+'"'+x.title+'><div class="jq-radio__div"></div></div>');a.css({position:"absolute",zIndex:"-1",opacity:0,margin:0,padding:0}).after(d).prependTo(d);d.attr("unselectable","on").css({"-webkit-user-select":"none","-moz-user-select":"none","-ms-user-select":"none","-o-user-select":"none","user-select":"none",display:"inline-block",position:"relative"});a.is(":checked")&&d.addClass("checked");a.is(":disabled")&&d.addClass("disabled");d.click(function(b){b.preventDefault();d.is(".disabled")||
-(d.closest(f.wrapper).find('input[name="'+a.attr("name")+'"]').prop("checked",!1).parent().removeClass("checked"),a.prop("checked",!0).parent().addClass("checked"),a.focus().change())});a.closest("label").add('label[for="'+a.attr("id")+'"]').on("click.styler",function(a){b(a.target).is("a")||b(a.target).closest(d).length||(d.triggerHandler("click"),a.preventDefault())});a.on("change.styler",function(){a.parent().addClass("checked")}).on("focus.styler",function(){d.is(".disabled")||d.addClass("focused")}).on("blur.styler",
-function(){d.removeClass("focused")})};B();a.on("refresh",function(){a.closest("label").add('label[for="'+a.attr("id")+'"]').off(".styler");a.off(".styler").parent().before(a).remove();B()})}else if(a.is(":file")){a.css({position:"absolute",top:0,right:0,width:"100%",height:"100%",opacity:0,margin:0,padding:0});var C=function(){var x=new c,d=a.data("placeholder");void 0===d&&(d=f.filePlaceholder);var A=a.data("browse");if(void 0===A||""===A)A=f.fileBrowse;var e=b("<div"+x.id+' class="jq-file'+x.classes+
-'"'+x.title+' style="display: inline-block; position: relative; overflow: hidden"></div>'),l=b('<div class="jq-file__name">'+d+"</div>").appendTo(e);b('<div class="jq-file__browse">'+A+"</div>").appendTo(e);a.after(e).appendTo(e);a.is(":disabled")&&e.addClass("disabled");a.on("change.styler",function(){var b=a.val();if(a.is("[multiple]")){var b="",c=a[0].files.length;0<c&&(b=a.data("number"),void 0===b&&(b=f.fileNumber),b=b.replace("%s",c))}l.text(b.replace(/.+[\\\/]/,""));""===b?(l.text(d),e.removeClass("changed")):
-e.addClass("changed")}).on("focus.styler",function(){e.addClass("focused")}).on("blur.styler",function(){e.removeClass("focused")}).on("click.styler",function(){e.removeClass("focused")})};C();a.on("refresh",function(){a.off(".styler").parent().before(a).remove();C()})}else if(a.is('input[type="number"]')){var D=function(){var c=b('<div class="jq-number"><div class="jq-number__spin minus"></div><div class="jq-number__spin plus"></div></div>');a.after(c).prependTo(c).wrap('<div class="jq-number__field"></div>');
-a.is(":disabled")&&c.addClass("disabled");var d,f,e,l=null,t=null;void 0!==a.attr("min")&&(d=a.attr("min"));void 0!==a.attr("max")&&(f=a.attr("max"));e=void 0!==a.attr("step")&&b.isNumeric(a.attr("step"))?Number(a.attr("step")):Number(1);var K=function(s){var c=a.val(),k;b.isNumeric(c)||(c=0,a.val("0"));s.is(".minus")?(k=parseInt(c,10)-e,0<e&&(k=Math.ceil(k/e)*e)):s.is(".plus")&&(k=parseInt(c,10)+e,0<e&&(k=Math.floor(k/e)*e));b.isNumeric(d)&&b.isNumeric(f)?k>=d&&k<=f&&a.val(k):b.isNumeric(d)&&!b.isNumeric(f)?
-k>=d&&a.val(k):!b.isNumeric(d)&&b.isNumeric(f)?k<=f&&a.val(k):a.val(k)};c.is(".disabled")||(c.on("mousedown","div.jq-number__spin",function(){var a=b(this);K(a);l=setTimeout(function(){t=setInterval(function(){K(a)},40)},350)}).on("mouseup mouseout","div.jq-number__spin",function(){clearTimeout(l);clearInterval(t)}),a.on("focus.styler",function(){c.addClass("focused")}).on("blur.styler",function(){c.removeClass("focused")}))};D();a.on("refresh",function(){a.off(".styler").closest(".jq-number").before(a).remove();
-D()})}else if(a.is("select")){var M=function(){function x(a){a.off("mousewheel DOMMouseScroll").on("mousewheel DOMMouseScroll",function(a){var c=null;"mousewheel"==a.type?c=-1*a.originalEvent.wheelDelta:"DOMMouseScroll"==a.type&&(c=40*a.originalEvent.detail);c&&(a.stopPropagation(),a.preventDefault(),b(this).scrollTop(c+b(this).scrollTop()))})}function d(){for(var a=0;a<l.length;a++){var b=l.eq(a),c="",d="",e=c="",u="",p="",v="",w="",g="";b.prop("selected")&&(d="selected sel");b.is(":disabled")&&
-(d="disabled");b.is(":selected:disabled")&&(d="selected sel disabled");void 0!==b.attr("id")&&""!==b.attr("id")&&(e=' id="'+b.attr("id")+f.idSuffix+'"');void 0!==b.attr("title")&&""!==l.attr("title")&&(u=' title="'+b.attr("title")+'"');void 0!==b.attr("class")&&(v=" "+b.attr("class"),g=' data-jqfs-class="'+b.attr("class")+'"');var h=b.data(),r;for(r in h)""!==h[r]&&(p+=" data-"+r+'="'+h[r]+'"');""!==d+v&&(c=' class="'+d+v+'"');c="<li"+g+p+c+u+e+">"+b.html()+"</li>";b.parent().is("optgroup")&&(void 0!==
-b.parent().attr("class")&&(w=" "+b.parent().attr("class")),c="<li"+g+p+' class="'+d+v+" option"+w+'"'+u+e+">"+b.html()+"</li>",b.is(":first-child")&&(c='<li class="optgroup'+w+'">'+b.parent().attr("label")+"</li>"+c));t+=c}}function z(){var e=new c,s="",H=a.data("placeholder"),k=a.data("search"),h=a.data("search-limit"),u=a.data("search-not-found"),p=a.data("search-placeholder"),v=a.data("z-index"),w=a.data("smart-positioning");void 0===H&&(H=f.selectPlaceholder);if(void 0===k||""===k)k=f.selectSearch;
-if(void 0===h||""===h)h=f.selectSearchLimit;if(void 0===u||""===u)u=f.selectSearchNotFound;void 0===p&&(p=f.selectSearchPlaceholder);if(void 0===v||""===v)v=f.singleSelectzIndex;if(void 0===w||""===w)w=f.selectSmartPositioning;var g=b("<div"+e.id+' class="jq-selectbox jqselect'+e.classes+'" style="display: inline-block; position: relative; z-index:'+v+'"><div class="jq-selectbox__select"'+e.title+' style="position: relative"><div class="jq-selectbox__select-text"></div><div class="jq-selectbox__trigger"><div class="jq-selectbox__trigger-arrow"></div></div></div></div>');
-a.css({margin:0,padding:0}).after(g).prependTo(g);var L=b("div.jq-selectbox__select",g),r=b("div.jq-selectbox__select-text",g),e=l.filter(":selected");d();k&&(s='<div class="jq-selectbox__search"><input type="search" autocomplete="off" placeholder="'+p+'"></div><div class="jq-selectbox__not-found">'+u+"</div>");var m=b('<div class="jq-selectbox__dropdown" style="position: absolute">'+s+'<ul style="position: relative; list-style: none; overflow: auto; overflow-x: hidden">'+t+"</ul></div>");g.append(m);
-var q=b("ul",m),n=b("li",m),E=b("input",m),A=b("div.jq-selectbox__not-found",m).hide();n.length<h&&E.parent().hide();""===a.val()?r.text(H).addClass("placeholder"):r.text(e.text());var F=0,B=0;n.each(function(){var a=b(this);a.css({display:"inline-block"});a.innerWidth()>F&&(F=a.innerWidth(),B=a.width());a.css({display:""})});r.is(".placeholder")&&r.width()>F?r.width(r.width()):(s=g.clone().appendTo("body").width("auto"),k=s.outerWidth(),s.remove(),k==g.outerWidth()&&r.width(B));F>g.width()&&m.width(F);
-""===l.first().text()&&""!==a.data("placeholder")&&n.first().hide();a.css({position:"absolute",left:0,top:0,width:"100%",height:"100%",opacity:0});var C=g.outerHeight(),I=E.outerHeight(),J=q.css("max-height"),s=n.filter(".selected");1>s.length&&n.first().addClass("selected sel");void 0===n.data("li-height")&&n.data("li-height",n.outerHeight());var D=m.css("top");"auto"==m.css("left")&&m.css({left:0});"auto"==m.css("top")&&m.css({top:C});m.hide();s.length&&(l.first().text()!=e.text()&&g.addClass("changed"),
-g.data("jqfs-class",s.data("jqfs-class")),g.addClass(s.data("jqfs-class")));if(a.is(":disabled"))return g.addClass("disabled"),!1;L.click(function(){b("div.jq-selectbox").filter(".opened").length&&f.onSelectClosed.call(b("div.jq-selectbox").filter(".opened"));a.focus();if(!y){var c=b(window),d=n.data("li-height"),e=g.offset().top,k=c.height()-C-(e-c.scrollTop()),p=a.data("visible-options");if(void 0===p||""===p)p=f.selectVisibleOptions;var s=5*d,h=d*p;0<p&&6>p&&(s=h);0===p&&(h="auto");var p=function(){m.height("auto").css({bottom:"auto",
-top:D});var a=function(){q.css("max-height",Math.floor((k-20-I)/d)*d)};a();q.css("max-height",h);"none"!=J&&q.css("max-height",J);k<m.outerHeight()+20&&a()},r=function(){m.height("auto").css({top:"auto",bottom:D});var a=function(){q.css("max-height",Math.floor((e-c.scrollTop()-20-I)/d)*d)};a();q.css("max-height",h);"none"!=J&&q.css("max-height",J);e-c.scrollTop()-20<m.outerHeight()+20&&a()};!0===w||1===w?k>s+I+20?(p(),g.removeClass("dropup").addClass("dropdown")):(r(),g.removeClass("dropdown").addClass("dropup")):
-(!1===w||0===w)&&k>s+I+20&&(p(),g.removeClass("dropup").addClass("dropdown"));g.offset().left+m.outerWidth()>c.width()&&m.css({left:"auto",right:0});b("div.jqselect").css({zIndex:v-1}).removeClass("opened");g.css({zIndex:v});m.is(":hidden")?(b("div.jq-selectbox__dropdown:visible").hide(),m.show(),g.addClass("opened focused"),f.onSelectOpened.call(g)):(m.hide(),g.removeClass("opened dropup dropdown"),b("div.jq-selectbox").filter(".opened").length&&f.onSelectClosed.call(g));E.length&&(E.val("").keyup(),
-A.hide(),E.keyup(function(){var c=b(this).val();n.each(function(){b(this).html().match(RegExp(".*?"+c+".*?","i"))?b(this).show():b(this).hide()});""===l.first().text()&&""!==a.data("placeholder")&&n.first().hide();1>n.filter(":visible").length?A.show():A.hide()}));n.filter(".selected").length&&(""===a.val()?q.scrollTop(0):(0!==q.innerHeight()/d%2&&(d/=2),q.scrollTop(q.scrollTop()+n.filter(".selected").position().top-q.innerHeight()/2+d)));x(q)}});n.hover(function(){b(this).siblings().removeClass("selected")});
-n.filter(".selected").text();n.filter(":not(.disabled):not(.optgroup)").click(function(){a.focus();var c=b(this),d=c.text();if(!c.is(".selected")){var e=c.index(),e=e-c.prevAll(".optgroup").length;c.addClass("selected sel").siblings().removeClass("selected sel");l.prop("selected",!1).eq(e).prop("selected",!0);r.text(d);g.data("jqfs-class")&&g.removeClass(g.data("jqfs-class"));g.data("jqfs-class",c.data("jqfs-class"));g.addClass(c.data("jqfs-class"));a.change()}m.hide();g.removeClass("opened dropup dropdown");
-f.onSelectClosed.call(g)});m.mouseout(function(){b("li.sel",m).addClass("selected")});a.on("change.styler",function(){r.text(l.filter(":selected").text()).removeClass("placeholder");n.removeClass("selected sel").not(".optgroup").eq(a[0].selectedIndex).addClass("selected sel");l.first().text()!=n.filter(".selected").text()?g.addClass("changed"):g.removeClass("changed")}).on("focus.styler",function(){g.addClass("focused");b("div.jqselect").not(".focused").removeClass("opened dropup dropdown").find("div.jq-selectbox__dropdown").hide()}).on("blur.styler",
-function(){g.removeClass("focused")}).on("keydown.styler keyup.styler",function(b){var c=n.data("li-height");""===a.val()?r.text(H).addClass("placeholder"):r.text(l.filter(":selected").text());n.removeClass("selected sel").not(".optgroup").eq(a[0].selectedIndex).addClass("selected sel");if(38==b.which||37==b.which||33==b.which||36==b.which)""===a.val()?q.scrollTop(0):q.scrollTop(q.scrollTop()+n.filter(".selected").position().top);40!=b.which&&39!=b.which&&34!=b.which&&35!=b.which||q.scrollTop(q.scrollTop()+
-n.filter(".selected").position().top-q.innerHeight()+c);13==b.which&&(b.preventDefault(),m.hide(),g.removeClass("opened dropup dropdown"),f.onSelectClosed.call(g))}).on("keydown.styler",function(a){32==a.which&&(a.preventDefault(),L.click())});G.registered||(b(document).on("click",G),G.registered=!0)}function e(){var e=new c,f=b("<div"+e.id+' class="jq-select-multiple jqselect'+e.classes+'"'+e.title+' style="display: inline-block; position: relative"></div>');a.css({margin:0,padding:0}).after(f);
-d();f.append("<ul>"+t+"</ul>");var h=b("ul",f).css({position:"relative","overflow-x":"hidden","-webkit-overflow-scrolling":"touch"}),k=b("li",f).attr("unselectable","on"),e=a.attr("size"),y=h.outerHeight(),u=k.outerHeight();void 0!==e&&0<e?h.css({height:u*e}):h.css({height:4*u});y>f.height()&&(h.css("overflowY","scroll"),x(h),k.filter(".selected").length&&h.scrollTop(h.scrollTop()+k.filter(".selected").position().top));a.prependTo(f).css({position:"absolute",left:0,top:0,width:"100%",height:"100%",
-opacity:0});if(a.is(":disabled"))f.addClass("disabled"),l.each(function(){b(this).is(":selected")&&k.eq(b(this).index()).addClass("selected")});else if(k.filter(":not(.disabled):not(.optgroup)").click(function(c){a.focus();var d=b(this);c.ctrlKey||c.metaKey||d.addClass("selected");c.shiftKey||d.addClass("first");c.ctrlKey||(c.metaKey||c.shiftKey)||d.siblings().removeClass("selected first");if(c.ctrlKey||c.metaKey)d.is(".selected")?d.removeClass("selected first"):d.addClass("selected first"),d.siblings().removeClass("first");
-if(c.shiftKey){var e=!1,f=!1;d.siblings().removeClass("selected").siblings(".first").addClass("selected");d.prevAll().each(function(){b(this).is(".first")&&(e=!0)});d.nextAll().each(function(){b(this).is(".first")&&(f=!0)});e&&d.prevAll().each(function(){if(b(this).is(".selected"))return!1;b(this).not(".disabled, .optgroup").addClass("selected")});f&&d.nextAll().each(function(){if(b(this).is(".selected"))return!1;b(this).not(".disabled, .optgroup").addClass("selected")});1==k.filter(".selected").length&&
-d.addClass("first")}l.prop("selected",!1);k.filter(".selected").each(function(){var a=b(this),c=a.index();a.is(".option")&&(c-=a.prevAll(".optgroup").length);l.eq(c).prop("selected",!0)});a.change()}),l.each(function(a){b(this).data("optionIndex",a)}),a.on("change.styler",function(){k.removeClass("selected");var a=[];l.filter(":selected").each(function(){a.push(b(this).data("optionIndex"))});k.not(".optgroup").filter(function(c){return-1<b.inArray(c,a)}).addClass("selected")}).on("focus.styler",function(){f.addClass("focused")}).on("blur.styler",
-function(){f.removeClass("focused")}),y>f.height())a.on("keydown.styler",function(a){38!=a.which&&37!=a.which&&33!=a.which||h.scrollTop(h.scrollTop()+k.filter(".selected").position().top-u);40!=a.which&&39!=a.which&&34!=a.which||h.scrollTop(h.scrollTop()+k.filter(".selected:last").position().top-h.innerHeight()+2*u)})}var l=b("option",a),t="";a.is("[multiple]")?h||y||e():z()};M();a.on("refresh",function(){a.off(".styler").parent().before(a).remove();M()})}else if(a.is(":reset"))a.on("click",function(){setTimeout(function(){a.closest(f.wrapper).find("input, select").trigger("refresh")},
-1)})},destroy:function(){var c=b(this.element);c.is(":checkbox")||c.is(":radio")?(c.removeData("_"+h).off(".styler refresh").removeAttr("style").parent().before(c).remove(),c.closest("label").add('label[for="'+c.attr("id")+'"]').off(".styler")):c.is('input[type="number"]')?c.removeData("_"+h).off(".styler refresh").closest(".jq-number").before(c).remove():(c.is(":file")||c.is("select"))&&c.removeData("_"+h).off(".styler refresh").removeAttr("style").parent().before(c).remove()}};b.fn[h]=function(c){var a=
-arguments;if(void 0===c||"object"===typeof c)return this.each(function(){b.data(this,"_"+h)||b.data(this,"_"+h,new z(this,c))}).promise().done(function(){var a=b(this[0]).data("_"+h);a&&a.options.onFormStyled.call()}),this;if("string"===typeof c&&"_"!==c[0]&&"init"!==c){var f;this.each(function(){var y=b.data(this,"_"+h);y instanceof z&&"function"===typeof y[c]&&(f=y[c].apply(y,Array.prototype.slice.call(a,1)))});return void 0!==f?f:this}};G.registered=!1});
-},{"jquery":4}],16:[function(require,module,exports){
+/**
+ * BxSlider v4.1.2 - Fully loaded, responsive content slider
+ * http://bxslider.com
+ *
+ * Copyright 2014, Steven Wanderski - http://stevenwanderski.com - http://bxcreative.com
+ * Written while drinking Belgian ales and listening to jazz
+ *
+ * Released under the MIT license - http://opensource.org/licenses/MIT
+ */
+
+;(function($){
+
+    var plugin = {};
+
+    var defaults = {
+
+        // GENERAL
+        mode: 'horizontal',
+        slideSelector: '',
+        infiniteLoop: true,
+        hideControlOnEnd: false,
+        speed: 500,
+        easing: null,
+        slideMargin: 0,
+        startSlide: 0,
+        randomStart: false,
+        captions: false,
+        ticker: false,
+        tickerHover: false,
+        adaptiveHeight: false,
+        adaptiveHeightSpeed: 500,
+        video: false,
+        useCSS: true,
+        preloadImages: 'visible',
+        responsive: true,
+        slideZIndex: 50,
+        wrapperClass: 'bx-wrapper',
+
+        // TOUCH
+        touchEnabled: true,
+        swipeThreshold: 50,
+        oneToOneTouch: true,
+        preventDefaultSwipeX: true,
+        preventDefaultSwipeY: false,
+
+        // PAGER
+        pager: true,
+        pagerType: 'full',
+        pagerShortSeparator: ' / ',
+        pagerSelector: null,
+        buildPager: null,
+        pagerCustom: null,
+
+        // CONTROLS
+        controls: true,
+        nextText: 'Next',
+        prevText: 'Prev',
+        nextSelector: null,
+        prevSelector: null,
+        autoControls: false,
+        startText: 'Start',
+        stopText: 'Stop',
+        autoControlsCombine: false,
+        autoControlsSelector: null,
+
+        // AUTO
+        auto: false,
+        pause: 4000,
+        autoStart: true,
+        autoDirection: 'next',
+        autoHover: false,
+        autoDelay: 0,
+        autoSlideForOnePage: false,
+
+        // CAROUSEL
+        minSlides: 1,
+        maxSlides: 1,
+        moveSlides: 0,
+        slideWidth: 0,
+
+        // CALLBACKS
+        onSliderLoad: function() {},
+        onSlideBefore: function() {},
+        onSlideAfter: function() {},
+        onSlideNext: function() {},
+        onSlidePrev: function() {},
+        onSliderResize: function() {}
+    }
+
+    $.fn.bxSlider = function(options){
+
+        if(this.length == 0) return this;
+
+
+        // support mutltiple elements
+        if(this.length > 1){
+            this.each(function(){$(this).bxSlider(options)});
+            return this;
+        }
+
+        // create a namespace to be used throughout the plugin
+        var slider = {};
+        // set a reference to our slider element
+        var el = this;
+        plugin.el = this;
+
+        /**
+         * Makes slideshow responsive
+         */
+        // first get the original window dimens (thanks alot IE)
+        var windowWidth = $(window).width();
+        var windowHeight = $(window).height();
+
+
+
+        /**
+         * ===================================================================================
+         * = PRIVATE FUNCTIONS
+         * ===================================================================================
+         */
+
+        /**
+         * Initializes namespace settings to be used throughout plugin
+         */
+        var init = function(){
+            // merge user-supplied options with the defaults
+
+            slider.settings = $.extend({}, defaults, options);
+            // parse slideWidth setting
+            slider.settings.slideWidth = parseInt(slider.settings.slideWidth);
+            // store the original children
+            slider.children = el.children(slider.settings.slideSelector);
+            if (slider.children.length === 1) {
+                slider.settings.auto = slider.settings.controls = slider.settings.pager = false;
+            }
+            // check if actual number of slides is less than minSlides / maxSlides
+            if(slider.children.length < slider.settings.minSlides) slider.settings.minSlides = slider.children.length;
+            if(slider.children.length < slider.settings.maxSlides) slider.settings.maxSlides = slider.children.length;
+            // if random start, set the startSlide setting to random number
+            if(slider.settings.randomStart) slider.settings.startSlide = Math.floor(Math.random() * slider.children.length);
+            // store active slide information
+            slider.active = { index: slider.settings.startSlide }
+            // store if the slider is in carousel mode (displaying / moving multiple slides)
+            slider.carousel = slider.settings.minSlides > 1 || slider.settings.maxSlides > 1;
+
+            // if carousel, force preloadImages = 'all'
+            if(slider.carousel) slider.settings.preloadImages = 'all';
+            // calculate the min / max width thresholds based on min / max number of slides
+            // used to setup and update carousel slides dimensions
+            slider.minThreshold = (slider.settings.minSlides * slider.settings.slideWidth) + ((slider.settings.minSlides - 1) * slider.settings.slideMargin);
+            slider.maxThreshold = (slider.settings.maxSlides * slider.settings.slideWidth) + ((slider.settings.maxSlides - 1) * slider.settings.slideMargin);
+            // store the current state of the slider (if currently animating, working is true)
+            slider.working = false;
+            // initialize the controls object
+            slider.controls = {};
+            // initialize an auto interval
+            slider.interval = null;
+            // determine which property to use for transitions
+            slider.animProp = slider.settings.mode == 'vertical' ? 'top' : 'left';
+            // determine if hardware acceleration can be used
+            slider.usingCSS = slider.settings.useCSS && slider.settings.mode != 'fade' && (function(){
+                    // create our test div element
+                    var div = document.createElement('div');
+                    // css transition properties
+                    var props = ['WebkitPerspective', 'MozPerspective', 'OPerspective', 'msPerspective'];
+                    // test for each property
+                    for(var i in props){
+                        if(div.style[props[i]] !== undefined){
+                            slider.cssPrefix = props[i].replace('Perspective', '').toLowerCase();
+                            slider.animProp = '-' + slider.cssPrefix + '-transform';
+                            return true;
+                        }
+                    }
+                    return false;
+                }());
+            // if vertical mode always make maxSlides and minSlides equal
+            if(slider.settings.mode == 'vertical') slider.settings.maxSlides = slider.settings.minSlides;
+            // save original style data
+            el.data("origStyle", el.attr("style"));
+            el.children(slider.settings.slideSelector).each(function() {
+                $(this).data("origStyle", $(this).attr("style"));
+            });
+            el.data("plugin","bxslider");
+            // perform all DOM / CSS modifications
+            setup();
+        }
+
+        /**
+         * Performs all DOM and CSS modifications
+         */
+        var setup = function(){
+            // wrap el in a wrapper
+            el.wrap('<div class="' + slider.settings.wrapperClass + '"><div class="bx-viewport"></div></div>');
+            // store a namspace reference to .bx-viewport
+            slider.viewport = el.parent();
+            // add a loading div to display while images are loading
+            slider.loader = $('<div class="bx-loading" />');
+            slider.viewport.prepend(slider.loader);
+            // set el to a massive width, to hold any needed slides
+            // also strip any margin and padding from el
+            el.css({
+                width: slider.settings.mode == 'horizontal' ? (slider.children.length * 100 + 215) + '%' : 'auto',
+                position: 'relative'
+            });
+            // if using CSS, add the easing property
+            if(slider.usingCSS && slider.settings.easing){
+                el.css('-' + slider.cssPrefix + '-transition-timing-function', slider.settings.easing);
+                // if not using CSS and no easing value was supplied, use the default JS animation easing (swing)
+            }else if(!slider.settings.easing){
+                slider.settings.easing = 'swing';
+            }
+            var slidesShowing = getNumberSlidesShowing();
+            // make modifications to the viewport (.bx-viewport)
+            slider.viewport.css({
+                width: '100%',
+                overflow: 'hidden',
+                position: 'relative'
+            });
+            slider.viewport.parent().css({
+                maxWidth: getViewportMaxWidth()
+            });
+            // make modification to the wrapper (.bx-wrapper)
+            if(!slider.settings.pager) {
+                slider.viewport.parent().css({
+                    margin: '0 auto 0px'
+                });
+            }
+            // apply css to all slider children
+            slider.children.css({
+                'float': slider.settings.mode == 'horizontal' ? 'left' : 'none',
+                listStyle: 'none',
+                position: 'relative'
+            });
+            // apply the calculated width after the float is applied to prevent scrollbar interference
+            slider.children.css('width', getSlideWidth());
+            // if slideMargin is supplied, add the css
+            if(slider.settings.mode == 'horizontal' && slider.settings.slideMargin > 0) slider.children.css('marginRight', slider.settings.slideMargin);
+            if(slider.settings.mode == 'vertical' && slider.settings.slideMargin > 0) slider.children.css('marginBottom', slider.settings.slideMargin);
+            // if "fade" mode, add positioning and z-index CSS
+            if(slider.settings.mode == 'fade'){
+                slider.children.css({
+                    position: 'absolute',
+                    zIndex: 0,
+                    display: 'none'
+                });
+                // prepare the z-index on the showing element
+                slider.children.eq(slider.settings.startSlide).css({zIndex: slider.settings.slideZIndex, display: 'block'});
+            }
+            // create an element to contain all slider controls (pager, start / stop, etc)
+            slider.controls.el = $('<div class="bx-controls" />');
+            // if captions are requested, add them
+            if(slider.settings.captions) appendCaptions();
+            // check if startSlide is last slide
+            slider.active.last = slider.settings.startSlide == getPagerQty() - 1;
+            // if video is true, set up the fitVids plugin
+            if(slider.settings.video) el.fitVids();
+            // set the default preload selector (visible)
+            var preloadSelector = slider.children.eq(slider.settings.startSlide);
+            if (slider.settings.preloadImages == "all") preloadSelector = slider.children;
+            // only check for control addition if not in "ticker" mode
+            if(!slider.settings.ticker){
+                // if pager is requested, add it
+                if(slider.settings.pager) appendPager();
+                // if controls are requested, add them
+                if(slider.settings.controls) appendControls();
+                // if auto is true, and auto controls are requested, add them
+                if(slider.settings.auto && slider.settings.autoControls) appendControlsAuto();
+                // if any control option is requested, add the controls wrapper
+                if(slider.settings.controls || slider.settings.autoControls || slider.settings.pager) slider.viewport.after(slider.controls.el);
+                // if ticker mode, do not allow a pager
+            }else{
+                slider.settings.pager = false;
+            }
+            // preload all images, then perform final DOM / CSS modifications that depend on images being loaded
+            loadElements(preloadSelector, start);
+        }
+
+        var loadElements = function(selector, callback){
+            var total = selector.find('img, iframe').length;
+            if (total == 0){
+                callback();
+                return;
+            }
+            var count = 0;
+            selector.find('img, iframe').each(function(){
+                $(this).one('load', function() {
+                    if(++count == total) callback();
+                }).each(function() {
+                    if(this.complete) $(this).load();
+                });
+            });
+        }
+
+        /**
+         * Start the slider
+         */
+        var start = function(){
+            // if infinite loop, prepare additional slides
+            if(slider.settings.infiniteLoop && slider.settings.mode != 'fade' && !slider.settings.ticker){
+                var slice = slider.settings.mode == 'vertical' ? slider.settings.minSlides : slider.settings.maxSlides;
+                var sliceAppend = slider.children.slice(0, slice).clone().addClass('bx-clone');
+                var slicePrepend = slider.children.slice(-slice).clone().addClass('bx-clone');
+                el.append(sliceAppend).prepend(slicePrepend);
+            }
+            // remove the loading DOM element
+            slider.loader.remove();
+            // set the left / top position of "el"
+            setSlidePosition();
+            // if "vertical" mode, always use adaptiveHeight to prevent odd behavior
+            if (slider.settings.mode == 'vertical') slider.settings.adaptiveHeight = true;
+            // set the viewport height
+            slider.viewport.height(getViewportHeight());
+            // make sure everything is positioned just right (same as a window resize)
+            el.redrawSlider();
+
+            // onSliderLoad callback
+            slider.settings.onSliderLoad(slider.active.index);
+            // slider has been fully initialized
+            slider.initialized = true;
+            // bind the resize call to the window
+            if (slider.settings.responsive) $(window).bind('resize', resizeWindow);
+            // if auto is true and has more than 1 page, start the show
+            if (slider.settings.auto && slider.settings.autoStart && (getPagerQty() > 1 || slider.settings.autoSlideForOnePage)) initAuto();
+            // if ticker is true, start the ticker
+            if (slider.settings.ticker) initTicker();
+            // if pager is requested, make the appropriate pager link active
+            if (slider.settings.pager) updatePagerActive(slider.settings.startSlide);
+            // check for any updates to the controls (like hideControlOnEnd updates)
+            if (slider.settings.controls) updateDirectionControls();
+            // if touchEnabled is true, setup the touch events
+            if (slider.settings.touchEnabled && !slider.settings.ticker) initTouch();
+        }
+
+        /**
+         * Returns the calculated height of the viewport, used to determine either adaptiveHeight or the maxHeight value
+         */
+        var getViewportHeight = function(){
+            var height = 0;
+            // first determine which children (slides) should be used in our height calculation
+            var children = $();
+            // if mode is not "vertical" and adaptiveHeight is false, include all children
+            if(slider.settings.mode != 'vertical' && !slider.settings.adaptiveHeight){
+                children = slider.children;
+            }else{
+                // if not carousel, return the single active child
+                if(!slider.carousel){
+                    children = slider.children.eq(slider.active.index);
+                    // if carousel, return a slice of children
+                }else{
+                    // get the individual slide index
+                    var currentIndex = slider.settings.moveSlides == 1 ? slider.active.index : slider.active.index * getMoveBy();
+                    // add the current slide to the children
+                    children = slider.children.eq(currentIndex);
+                    // cycle through the remaining "showing" slides
+                    for (i = 1; i <= slider.settings.maxSlides - 1; i++){
+                        // if looped back to the start
+                        if(currentIndex + i >= slider.children.length){
+                            children = children.add(slider.children.eq(i - 1));
+                        }else{
+                            children = children.add(slider.children.eq(currentIndex + i));
+                        }
+                    }
+                }
+            }
+            // if "vertical" mode, calculate the sum of the heights of the children
+            if(slider.settings.mode == 'vertical'){
+                children.each(function(index) {
+                    height += $(this).outerHeight();
+                });
+                // add user-supplied margins
+                if(slider.settings.slideMargin > 0){
+                    height += slider.settings.slideMargin * (slider.settings.minSlides - 1);
+                }
+                // if not "vertical" mode, calculate the max height of the children
+            }else{
+                height = Math.max.apply(Math, children.map(function(){
+                    return $(this).outerHeight(false);
+                }).get());
+            }
+
+            if(slider.viewport.css('box-sizing') == 'border-box'){
+                height +=	parseFloat(slider.viewport.css('padding-top')) + parseFloat(slider.viewport.css('padding-bottom')) +
+                    parseFloat(slider.viewport.css('border-top-width')) + parseFloat(slider.viewport.css('border-bottom-width'));
+            }else if(slider.viewport.css('box-sizing') == 'padding-box'){
+                height +=	parseFloat(slider.viewport.css('padding-top')) + parseFloat(slider.viewport.css('padding-bottom'));
+            }
+
+            return height;
+        }
+
+        /**
+         * Returns the calculated width to be used for the outer wrapper / viewport
+         */
+        var getViewportMaxWidth = function(){
+            var width = '100%';
+            if(slider.settings.slideWidth > 0){
+                if(slider.settings.mode == 'horizontal'){
+                    width = (slider.settings.maxSlides * slider.settings.slideWidth) + ((slider.settings.maxSlides - 1) * slider.settings.slideMargin);
+                }else{
+                    width = slider.settings.slideWidth;
+                }
+            }
+            return width;
+        }
+
+        /**
+         * Returns the calculated width to be applied to each slide
+         */
+        var getSlideWidth = function(){
+            // start with any user-supplied slide width
+            var newElWidth = slider.settings.slideWidth;
+            // get the current viewport width
+            var wrapWidth = slider.viewport.width();
+            // if slide width was not supplied, or is larger than the viewport use the viewport width
+            if(slider.settings.slideWidth == 0 ||
+                (slider.settings.slideWidth > wrapWidth && !slider.carousel) ||
+                slider.settings.mode == 'vertical'){
+                newElWidth = wrapWidth;
+                // if carousel, use the thresholds to determine the width
+            }else if(slider.settings.maxSlides > 1 && slider.settings.mode == 'horizontal'){
+                if(wrapWidth > slider.maxThreshold){
+                    // newElWidth = (wrapWidth - (slider.settings.slideMargin * (slider.settings.maxSlides - 1))) / slider.settings.maxSlides;
+                }else if(wrapWidth < slider.minThreshold){
+                    newElWidth = (wrapWidth - (slider.settings.slideMargin * (slider.settings.minSlides - 1))) / slider.settings.minSlides;
+                }
+            }
+            return newElWidth;
+        }
+
+        /**
+         * Returns the number of slides currently visible in the viewport (includes partially visible slides)
+         */
+        var getNumberSlidesShowing = function(){
+            var slidesShowing = 1;
+            if(slider.settings.mode == 'horizontal' && slider.settings.slideWidth > 0){
+                // if viewport is smaller than minThreshold, return minSlides
+                if(slider.viewport.width() < slider.minThreshold){
+                    slidesShowing = slider.settings.minSlides;
+                    // if viewport is larger than minThreshold, return maxSlides
+                }else if(slider.viewport.width() > slider.maxThreshold){
+                    slidesShowing = slider.settings.maxSlides;
+                    // if viewport is between min / max thresholds, divide viewport width by first child width
+                }else{
+                    var childWidth = slider.children.first().width() + slider.settings.slideMargin;
+                    slidesShowing = Math.floor((slider.viewport.width() +
+                        slider.settings.slideMargin) / childWidth);
+                }
+                // if "vertical" mode, slides showing will always be minSlides
+            }else if(slider.settings.mode == 'vertical'){
+                slidesShowing = slider.settings.minSlides;
+            }
+            return slidesShowing;
+        }
+
+        /**
+         * Returns the number of pages (one full viewport of slides is one "page")
+         */
+        var getPagerQty = function(){
+            var pagerQty = 0;
+            // if moveSlides is specified by the user
+            if(slider.settings.moveSlides > 0){
+                if(slider.settings.infiniteLoop){
+                    pagerQty = Math.ceil(slider.children.length / getMoveBy());
+                }else{
+                    // use a while loop to determine pages
+                    var breakPoint = 0;
+                    var counter = 0
+                    // when breakpoint goes above children length, counter is the number of pages
+                    while (breakPoint < slider.children.length){
+                        ++pagerQty;
+                        breakPoint = counter + getNumberSlidesShowing();
+                        counter += slider.settings.moveSlides <= getNumberSlidesShowing() ? slider.settings.moveSlides : getNumberSlidesShowing();
+                    }
+                }
+                // if moveSlides is 0 (auto) divide children length by sides showing, then round up
+            }else{
+                pagerQty = Math.ceil(slider.children.length / getNumberSlidesShowing());
+            }
+            return pagerQty;
+        }
+
+        /**
+         * Returns the number of indivual slides by which to shift the slider
+         */
+        var getMoveBy = function(){
+            // if moveSlides was set by the user and moveSlides is less than number of slides showing
+            if(slider.settings.moveSlides > 0 && slider.settings.moveSlides <= getNumberSlidesShowing()){
+                return slider.settings.moveSlides;
+            }
+            // if moveSlides is 0 (auto)
+            return getNumberSlidesShowing();
+        }
+
+        /**
+         * Sets the slider's (el) left or top position
+         */
+        var setSlidePosition = function(){
+            // if last slide, not infinite loop, and number of children is larger than specified maxSlides
+            if(slider.children.length > slider.settings.maxSlides && slider.active.last && !slider.settings.infiniteLoop){
+                if (slider.settings.mode == 'horizontal'){
+                    // get the last child's position
+                    var lastChild = slider.children.last();
+                    var position = lastChild.position();
+                    // set the left position
+                    setPositionProperty(-(position.left - (slider.viewport.width() - lastChild.outerWidth())), 'reset', 0);
+                }else if(slider.settings.mode == 'vertical'){
+                    // get the last showing index's position
+                    var lastShowingIndex = slider.children.length - slider.settings.minSlides;
+                    var position = slider.children.eq(lastShowingIndex).position();
+                    // set the top position
+                    setPositionProperty(-position.top, 'reset', 0);
+                }
+                // if not last slide
+            }else{
+                // get the position of the first showing slide
+                var position = slider.children.eq(slider.active.index * getMoveBy()).position();
+                // check for last slide
+                if (slider.active.index == getPagerQty() - 1) slider.active.last = true;
+                // set the repective position
+                if (position != undefined){
+                    if (slider.settings.mode == 'horizontal') setPositionProperty(-position.left, 'reset', 0);
+                    else if (slider.settings.mode == 'vertical') setPositionProperty(-position.top, 'reset', 0);
+                }
+            }
+        }
+
+        /**
+         * Sets the el's animating property position (which in turn will sometimes animate el).
+         * If using CSS, sets the transform property. If not using CSS, sets the top / left property.
+         *
+         * @param value (int)
+         *  - the animating property's value
+         *
+         * @param type (string) 'slider', 'reset', 'ticker'
+         *  - the type of instance for which the function is being
+         *
+         * @param duration (int)
+         *  - the amount of time (in ms) the transition should occupy
+         *
+         * @param params (array) optional
+         *  - an optional parameter containing any variables that need to be passed in
+         */
+        var setPositionProperty = function(value, type, duration, params){
+            // use CSS transform
+            if(slider.usingCSS){
+                // determine the translate3d value
+                var propValue = slider.settings.mode == 'vertical' ? 'translate3d(0, ' + value + 'px, 0)' : 'translate3d(' + value + 'px, 0, 0)';
+                // add the CSS transition-duration
+                el.css('-' + slider.cssPrefix + '-transition-duration', duration / 1000 + 's');
+                if(type == 'slide'){
+                    // set the property value
+                    el.css(slider.animProp, propValue);
+                    // bind a callback method - executes when CSS transition completes
+                    el.bind('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(){
+                        // unbind the callback
+                        el.unbind('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd');
+                        updateAfterSlideTransition();
+                    });
+                }else if(type == 'reset'){
+                    el.css(slider.animProp, propValue);
+                }else if(type == 'ticker'){
+                    // make the transition use 'linear'
+                    el.css('-' + slider.cssPrefix + '-transition-timing-function', 'linear');
+                    el.css(slider.animProp, propValue);
+                    // bind a callback method - executes when CSS transition completes
+                    el.bind('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(){
+                        // unbind the callback
+                        el.unbind('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd');
+                        // reset the position
+                        setPositionProperty(params['resetValue'], 'reset', 0);
+                        // start the loop again
+                        tickerLoop();
+                    });
+                }
+                // use JS animate
+            }else{
+                var animateObj = {};
+                animateObj[slider.animProp] = value;
+                if(type == 'slide'){
+                    el.animate(animateObj, duration, slider.settings.easing, function(){
+                        updateAfterSlideTransition();
+                    });
+                }else if(type == 'reset'){
+                    el.css(slider.animProp, value)
+                }else if(type == 'ticker'){
+                    el.animate(animateObj, speed, 'linear', function(){
+                        setPositionProperty(params['resetValue'], 'reset', 0);
+                        // run the recursive loop after animation
+                        tickerLoop();
+                    });
+                }
+            }
+        }
+
+        /**
+         * Populates the pager with proper amount of pages
+         */
+        var populatePager = function(){
+            var pagerHtml = '';
+            var pagerQty = getPagerQty();
+            // loop through each pager item
+            for(var i=0; i < pagerQty; i++){
+                var linkContent = '';
+                // if a buildPager function is supplied, use it to get pager link value, else use index + 1
+                if(slider.settings.buildPager && $.isFunction(slider.settings.buildPager)){
+                    linkContent = slider.settings.buildPager(i);
+                    slider.pagerEl.addClass('bx-custom-pager');
+                }else{
+                    linkContent = i + 1;
+                    slider.pagerEl.addClass('bx-default-pager');
+                }
+                // var linkContent = slider.settings.buildPager && $.isFunction(slider.settings.buildPager) ? slider.settings.buildPager(i) : i + 1;
+                // add the markup to the string
+                pagerHtml += '<div class="bx-pager-item"><a href="" data-slide-index="' + i + '" class="bx-pager-link">' + linkContent + '</a></div>';
+            };
+            // populate the pager element with pager links
+            slider.pagerEl.html(pagerHtml);
+        }
+
+        /**
+         * Appends the pager to the controls element
+         */
+        var appendPager = function(){
+            if(!slider.settings.pagerCustom){
+                // create the pager DOM element
+                slider.pagerEl = $('<div class="bx-pager" />');
+                // if a pager selector was supplied, populate it with the pager
+                if(slider.settings.pagerSelector){
+                    $(slider.settings.pagerSelector).html(slider.pagerEl);
+                    // if no pager selector was supplied, add it after the wrapper
+                }else{
+                    slider.controls.el.addClass('bx-has-pager').append(slider.pagerEl);
+                }
+                // populate the pager
+                populatePager();
+            }else{
+                slider.pagerEl = $(slider.settings.pagerCustom);
+            }
+            // assign the pager click binding
+            slider.pagerEl.on('click', 'a', clickPagerBind);
+        }
+
+        /**
+         * Appends prev / next controls to the controls element
+         */
+        var appendControls = function(){
+            slider.controls.next = $('<a class="bx-next" href="">' + slider.settings.nextText + '</a>');
+            slider.controls.prev = $('<a class="bx-prev" href="">' + slider.settings.prevText + '</a>');
+            // bind click actions to the controls
+            slider.controls.next.bind('click', clickNextBind);
+            slider.controls.prev.bind('click', clickPrevBind);
+            // if nextSlector was supplied, populate it
+            if(slider.settings.nextSelector){
+                $(slider.settings.nextSelector).append(slider.controls.next);
+            }
+            // if prevSlector was supplied, populate it
+            if(slider.settings.prevSelector){
+                $(slider.settings.prevSelector).append(slider.controls.prev);
+            }
+            // if no custom selectors were supplied
+            if(!slider.settings.nextSelector && !slider.settings.prevSelector){
+                // add the controls to the DOM
+                slider.controls.directionEl = $('<div class="bx-controls-direction" />');
+                // add the control elements to the directionEl
+                slider.controls.directionEl.append(slider.controls.prev).append(slider.controls.next);
+                // slider.viewport.append(slider.controls.directionEl);
+                slider.controls.el.addClass('bx-has-controls-direction').append(slider.controls.directionEl);
+            }
+        }
+
+        /**
+         * Appends start / stop auto controls to the controls element
+         */
+        var appendControlsAuto = function(){
+            slider.controls.start = $('<div class="bx-controls-auto-item"><a class="bx-start" href="">' + slider.settings.startText + '</a></div>');
+            slider.controls.stop = $('<div class="bx-controls-auto-item"><a class="bx-stop" href="">' + slider.settings.stopText + '</a></div>');
+            // add the controls to the DOM
+            slider.controls.autoEl = $('<div class="bx-controls-auto" />');
+            // bind click actions to the controls
+            slider.controls.autoEl.on('click', '.bx-start', clickStartBind);
+            slider.controls.autoEl.on('click', '.bx-stop', clickStopBind);
+            // if autoControlsCombine, insert only the "start" control
+            if(slider.settings.autoControlsCombine){
+                slider.controls.autoEl.append(slider.controls.start);
+                // if autoControlsCombine is false, insert both controls
+            }else{
+                slider.controls.autoEl.append(slider.controls.start).append(slider.controls.stop);
+            }
+            // if auto controls selector was supplied, populate it with the controls
+            if(slider.settings.autoControlsSelector){
+                $(slider.settings.autoControlsSelector).html(slider.controls.autoEl);
+                // if auto controls selector was not supplied, add it after the wrapper
+            }else{
+                slider.controls.el.addClass('bx-has-controls-auto').append(slider.controls.autoEl);
+            }
+            // update the auto controls
+            updateAutoControls(slider.settings.autoStart ? 'stop' : 'start');
+        }
+
+        /**
+         * Appends image captions to the DOM
+         */
+        var appendCaptions = function(){
+            // cycle through each child
+            slider.children.each(function(index){
+                // get the image title attribute
+                var title = $(this).find('img:first').attr('title');
+                // append the caption
+                if (title != undefined && ('' + title).length) {
+                    $(this).append('<div class="bx-caption"><span>' + title + '</span></div>');
+                }
+            });
+        }
+
+        /**
+         * Click next binding
+         *
+         * @param e (event)
+         *  - DOM event object
+         */
+        var clickNextBind = function(e){
+            // if auto show is running, stop it
+            if (slider.settings.auto) el.stopAuto();
+            el.goToNextSlide();
+            e.preventDefault();
+        }
+
+        /**
+         * Click prev binding
+         *
+         * @param e (event)
+         *  - DOM event object
+         */
+        var clickPrevBind = function(e){
+            // if auto show is running, stop it
+            if (slider.settings.auto) el.stopAuto();
+            el.goToPrevSlide();
+            e.preventDefault();
+        }
+
+        /**
+         * Click start binding
+         *
+         * @param e (event)
+         *  - DOM event object
+         */
+        var clickStartBind = function(e){
+            el.startAuto();
+            e.preventDefault();
+        }
+
+        /**
+         * Click stop binding
+         *
+         * @param e (event)
+         *  - DOM event object
+         */
+        var clickStopBind = function(e){
+            el.stopAuto();
+            e.preventDefault();
+        }
+
+        /**
+         * Click pager binding
+         *
+         * @param e (event)
+         *  - DOM event object
+         */
+        var clickPagerBind = function(e){
+            // if auto show is running, stop it
+            if (slider.settings.auto) el.stopAuto();
+            var pagerLink = $(e.currentTarget);
+            if(pagerLink.attr('data-slide-index') !== undefined){
+                var pagerIndex = parseInt(pagerLink.attr('data-slide-index'));
+                // if clicked pager link is not active, continue with the goToSlide call
+                if(pagerIndex != slider.active.index) el.goToSlide(pagerIndex);
+                e.preventDefault();
+            }
+        }
+
+        /**
+         * Updates the pager links with an active class
+         *
+         * @param slideIndex (int)
+         *  - index of slide to make active
+         */
+        var updatePagerActive = function(slideIndex){
+            // if "short" pager type
+            var len = slider.children.length; // nb of children
+            if(slider.settings.pagerType == 'short'){
+                if(slider.settings.maxSlides > 1) {
+                    len = Math.ceil(slider.children.length/slider.settings.maxSlides);
+                }
+                slider.pagerEl.html( (slideIndex + 1) + slider.settings.pagerShortSeparator + len);
+                return;
+            }
+            // remove all pager active classes
+            slider.pagerEl.find('a').removeClass('active');
+            // apply the active class for all pagers
+            slider.pagerEl.each(function(i, el) { $(el).find('a').eq(slideIndex).addClass('active'); });
+        }
+
+        /**
+         * Performs needed actions after a slide transition
+         */
+        var updateAfterSlideTransition = function(){
+            // if infinte loop is true
+            if(slider.settings.infiniteLoop){
+                var position = '';
+                // first slide
+                if(slider.active.index == 0){
+                    // set the new position
+                    position = slider.children.eq(0).position();
+                    // carousel, last slide
+                }else if(slider.active.index == getPagerQty() - 1 && slider.carousel){
+                    position = slider.children.eq((getPagerQty() - 1) * getMoveBy()).position();
+                    // last slide
+                }else if(slider.active.index == slider.children.length - 1){
+                    position = slider.children.eq(slider.children.length - 1).position();
+                }
+                if(position){
+                    if (slider.settings.mode == 'horizontal') { setPositionProperty(-position.left, 'reset', 0); }
+                    else if (slider.settings.mode == 'vertical') { setPositionProperty(-position.top, 'reset', 0); }
+                }
+            }
+            // declare that the transition is complete
+            slider.working = false;
+            // onSlideAfter callback
+            slider.settings.onSlideAfter(slider.children.eq(slider.active.index), slider.oldIndex, slider.active.index);
+        }
+
+        /**
+         * Updates the auto controls state (either active, or combined switch)
+         *
+         * @param state (string) "start", "stop"
+         *  - the new state of the auto show
+         */
+        var updateAutoControls = function(state){
+            // if autoControlsCombine is true, replace the current control with the new state
+            if(slider.settings.autoControlsCombine){
+                slider.controls.autoEl.html(slider.controls[state]);
+                // if autoControlsCombine is false, apply the "active" class to the appropriate control
+            }else{
+                slider.controls.autoEl.find('a').removeClass('active');
+                slider.controls.autoEl.find('a:not(.bx-' + state + ')').addClass('active');
+            }
+        }
+
+        /**
+         * Updates the direction controls (checks if either should be hidden)
+         */
+        var updateDirectionControls = function(){
+            if(getPagerQty() == 1){
+                slider.controls.prev.addClass('disabled');
+                slider.controls.next.addClass('disabled');
+            }else if(!slider.settings.infiniteLoop && slider.settings.hideControlOnEnd){
+                // if first slide
+                if (slider.active.index == 0){
+                    slider.controls.prev.addClass('disabled');
+                    slider.controls.next.removeClass('disabled');
+                    // if last slide
+                }else if(slider.active.index == getPagerQty() - 1){
+                    slider.controls.next.addClass('disabled');
+                    slider.controls.prev.removeClass('disabled');
+                    // if any slide in the middle
+                }else{
+                    slider.controls.prev.removeClass('disabled');
+                    slider.controls.next.removeClass('disabled');
+                }
+            }
+        }
+
+        /**
+         * Initialzes the auto process
+         */
+        var initAuto = function(){
+            // if autoDelay was supplied, launch the auto show using a setTimeout() call
+            if(slider.settings.autoDelay > 0){
+                var timeout = setTimeout(el.startAuto, slider.settings.autoDelay);
+                // if autoDelay was not supplied, start the auto show normally
+            }else{
+                el.startAuto();
+            }
+            // if autoHover is requested
+            if(slider.settings.autoHover){
+                // on el hover
+                el.hover(function(){
+                    // if the auto show is currently playing (has an active interval)
+                    if(slider.interval){
+                        // stop the auto show and pass true agument which will prevent control update
+                        el.stopAuto(true);
+                        // create a new autoPaused value which will be used by the relative "mouseout" event
+                        slider.autoPaused = true;
+                    }
+                }, function(){
+                    // if the autoPaused value was created be the prior "mouseover" event
+                    if(slider.autoPaused){
+                        // start the auto show and pass true agument which will prevent control update
+                        el.startAuto(true);
+                        // reset the autoPaused value
+                        slider.autoPaused = null;
+                    }
+                });
+            }
+        }
+
+        /**
+         * Initialzes the ticker process
+         */
+        var initTicker = function(){
+            var startPosition = 0;
+            // if autoDirection is "next", append a clone of the entire slider
+            if(slider.settings.autoDirection == 'next'){
+                el.append(slider.children.clone().addClass('bx-clone'));
+                // if autoDirection is "prev", prepend a clone of the entire slider, and set the left position
+            }else{
+                el.prepend(slider.children.clone().addClass('bx-clone'));
+                var position = slider.children.first().position();
+                startPosition = slider.settings.mode == 'horizontal' ? -position.left : -position.top;
+            }
+            setPositionProperty(startPosition, 'reset', 0);
+            // do not allow controls in ticker mode
+            slider.settings.pager = false;
+            slider.settings.controls = false;
+            slider.settings.autoControls = false;
+            // if autoHover is requested
+            if(slider.settings.tickerHover && !slider.usingCSS){
+                // on el hover
+                slider.viewport.hover(function(){
+                    el.stop();
+                }, function(){
+                    // calculate the total width of children (used to calculate the speed ratio)
+                    var totalDimens = 0;
+                    slider.children.each(function(index){
+                        totalDimens += slider.settings.mode == 'horizontal' ? $(this).outerWidth(true) : $(this).outerHeight(true);
+                    });
+                    // calculate the speed ratio (used to determine the new speed to finish the paused animation)
+                    var ratio = slider.settings.speed / totalDimens;
+                    // determine which property to use
+                    var property = slider.settings.mode == 'horizontal' ? 'left' : 'top';
+                    // calculate the new speed
+                    var newSpeed = ratio * (totalDimens - (Math.abs(parseInt(el.css(property)))));
+                    tickerLoop(newSpeed);
+                });
+            }
+            // start the ticker loop
+            tickerLoop();
+        }
+
+        /**
+         * Runs a continuous loop, news ticker-style
+         */
+        var tickerLoop = function(resumeSpeed){
+            speed = resumeSpeed ? resumeSpeed : slider.settings.speed;
+            var position = {left: 0, top: 0};
+            var reset = {left: 0, top: 0};
+            // if "next" animate left position to last child, then reset left to 0
+            if(slider.settings.autoDirection == 'next'){
+                position = el.find('.bx-clone').first().position();
+                // if "prev" animate left position to 0, then reset left to first non-clone child
+            }else{
+                reset = slider.children.first().position();
+            }
+            var animateProperty = slider.settings.mode == 'horizontal' ? -position.left : -position.top;
+            var resetValue = slider.settings.mode == 'horizontal' ? -reset.left : -reset.top;
+            var params = {resetValue: resetValue};
+            setPositionProperty(animateProperty, 'ticker', speed, params);
+        }
+
+        /**
+         * Initializes touch events
+         */
+        var initTouch = function(){
+            // initialize object to contain all touch values
+            slider.touch = {
+                start: {x: 0, y: 0},
+                end: {x: 0, y: 0}
+            }
+            slider.viewport.bind('touchstart', onTouchStart);
+        }
+
+        /**
+         * Event handler for "touchstart"
+         *
+         * @param e (event)
+         *  - DOM event object
+         */
+        var onTouchStart = function(e){
+            if(slider.working){
+                e.preventDefault();
+            }else{
+                // record the original position when touch starts
+                slider.touch.originalPos = el.position();
+                var orig = e.originalEvent;
+                // record the starting touch x, y coordinates
+                slider.touch.start.x = orig.changedTouches[0].pageX;
+                slider.touch.start.y = orig.changedTouches[0].pageY;
+                // bind a "touchmove" event to the viewport
+                slider.viewport.bind('touchmove', onTouchMove);
+                // bind a "touchend" event to the viewport
+                slider.viewport.bind('touchend', onTouchEnd);
+            }
+        }
+
+        /**
+         * Event handler for "touchmove"
+         *
+         * @param e (event)
+         *  - DOM event object
+         */
+        var onTouchMove = function(e){
+            var orig = e.originalEvent;
+            // if scrolling on y axis, do not prevent default
+            var xMovement = Math.abs(orig.changedTouches[0].pageX - slider.touch.start.x);
+            var yMovement = Math.abs(orig.changedTouches[0].pageY - slider.touch.start.y);
+            // x axis swipe
+            if((xMovement * 3) > yMovement && slider.settings.preventDefaultSwipeX){
+                e.preventDefault();
+                // y axis swipe
+            }else if((yMovement * 3) > xMovement && slider.settings.preventDefaultSwipeY){
+                e.preventDefault();
+            }
+            if(slider.settings.mode != 'fade' && slider.settings.oneToOneTouch){
+                var value = 0;
+                // if horizontal, drag along x axis
+                if(slider.settings.mode == 'horizontal'){
+                    var change = orig.changedTouches[0].pageX - slider.touch.start.x;
+                    value = slider.touch.originalPos.left + change;
+                    // if vertical, drag along y axis
+                }else{
+                    var change = orig.changedTouches[0].pageY - slider.touch.start.y;
+                    value = slider.touch.originalPos.top + change;
+                }
+                setPositionProperty(value, 'reset', 0);
+            }
+        }
+
+        /**
+         * Event handler for "touchend"
+         *
+         * @param e (event)
+         *  - DOM event object
+         */
+        var onTouchEnd = function(e){
+            slider.viewport.unbind('touchmove', onTouchMove);
+            var orig = e.originalEvent;
+            var value = 0;
+            // record end x, y positions
+            slider.touch.end.x = orig.changedTouches[0].pageX;
+            slider.touch.end.y = orig.changedTouches[0].pageY;
+            // if fade mode, check if absolute x distance clears the threshold
+            if(slider.settings.mode == 'fade'){
+                var distance = Math.abs(slider.touch.start.x - slider.touch.end.x);
+                if(distance >= slider.settings.swipeThreshold){
+                    slider.touch.start.x > slider.touch.end.x ? el.goToNextSlide() : el.goToPrevSlide();
+                    el.stopAuto();
+                }
+                // not fade mode
+            }else{
+                var distance = 0;
+                // calculate distance and el's animate property
+                if(slider.settings.mode == 'horizontal'){
+                    distance = slider.touch.end.x - slider.touch.start.x;
+                    value = slider.touch.originalPos.left;
+                }else{
+                    distance = slider.touch.end.y - slider.touch.start.y;
+                    value = slider.touch.originalPos.top;
+                }
+                // if not infinite loop and first / last slide, do not attempt a slide transition
+                if(!slider.settings.infiniteLoop && ((slider.active.index == 0 && distance > 0) || (slider.active.last && distance < 0))){
+                    setPositionProperty(value, 'reset', 200);
+                }else{
+                    // check if distance clears threshold
+                    if(Math.abs(distance) >= slider.settings.swipeThreshold){
+                        distance < 0 ? el.goToNextSlide() : el.goToPrevSlide();
+                        el.stopAuto();
+                    }else{
+                        // el.animate(property, 200);
+                        setPositionProperty(value, 'reset', 200);
+                    }
+                }
+            }
+            slider.viewport.unbind('touchend', onTouchEnd);
+        }
+
+        /**
+         * Window resize event callback
+         */
+        var resizeWindow = function(e){
+            // don't do anything if slider isn't initialized.
+            if(!slider.initialized) return;
+            // get the new window dimens (again, thank you IE)
+            var windowWidthNew = $(window).width();
+            var windowHeightNew = $(window).height();
+            // make sure that it is a true window resize
+            // *we must check this because our dinosaur friend IE fires a window resize event when certain DOM elements
+            // are resized. Can you just die already?*
+            if(windowWidth != windowWidthNew || windowHeight != windowHeightNew){
+                // set the new window dimens
+                windowWidth = windowWidthNew;
+                windowHeight = windowHeightNew;
+                // update all dynamic elements
+                el.redrawSlider();
+                // Call user resize handler
+                slider.settings.onSliderResize.call(el, slider.active.index);
+            }
+        }
+
+        /**
+         * ===================================================================================
+         * = PUBLIC FUNCTIONS
+         * ===================================================================================
+         */
+
+        /**
+         * Performs slide transition to the specified slide
+         *
+         * @param slideIndex (int)
+         *  - the destination slide's index (zero-based)
+         *
+         * @param direction (string)
+         *  - INTERNAL USE ONLY - the direction of travel ("prev" / "next")
+         */
+        el.goToSlide = function(slideIndex, direction){
+            // if plugin is currently in motion, ignore request
+            if(/*slider.working ||*/ slider.active.index == slideIndex) return;
+            // declare that plugin is in motion
+            slider.working = true;
+            // store the old index
+            slider.oldIndex = slider.active.index;
+            // if slideIndex is less than zero, set active index to last child (this happens during infinite loop)
+            if(slideIndex < 0){
+                slider.active.index = getPagerQty() - 1;
+                // if slideIndex is greater than children length, set active index to 0 (this happens during infinite loop)
+            }else if(slideIndex >= getPagerQty()){
+                slider.active.index = 0;
+                // set active index to requested slide
+            }else{
+                slider.active.index = slideIndex;
+            }
+            // onSlideBefore, onSlideNext, onSlidePrev callbacks
+            slider.settings.onSlideBefore(slider.children.eq(slider.active.index), slider.oldIndex, slider.active.index);
+            if(direction == 'next'){
+                slider.settings.onSlideNext(slider.children.eq(slider.active.index), slider.oldIndex, slider.active.index);
+            }else if(direction == 'prev'){
+                slider.settings.onSlidePrev(slider.children.eq(slider.active.index), slider.oldIndex, slider.active.index);
+            }
+            // check if last slide
+            slider.active.last = slider.active.index >= getPagerQty() - 1;
+            // update the pager with active class
+            if(slider.settings.pager) updatePagerActive(slider.active.index);
+            // // check for direction control update
+            if(slider.settings.controls) updateDirectionControls();
+            // if slider is set to mode: "fade"
+            if(slider.settings.mode == 'fade'){
+                // if adaptiveHeight is true and next height is different from current height, animate to the new height
+                if(slider.settings.adaptiveHeight && slider.viewport.height() != getViewportHeight()){
+                    slider.viewport.animate({height: getViewportHeight()}, slider.settings.adaptiveHeightSpeed);
+                }
+                // fade out the visible child and reset its z-index value
+                slider.children.filter(':visible').fadeOut(slider.settings.speed).css({zIndex: 0});
+                // fade in the newly requested slide
+                slider.children.eq(slider.active.index).css('zIndex', slider.settings.slideZIndex+1).fadeIn(slider.settings.speed, function(){
+                    $(this).css('zIndex', slider.settings.slideZIndex);
+                    updateAfterSlideTransition();
+                });
+                // slider mode is not "fade"
+            }else{
+                // if adaptiveHeight is true and next height is different from current height, animate to the new height
+                if(slider.settings.adaptiveHeight && slider.viewport.height() != getViewportHeight()){
+                    slider.viewport.animate({height: getViewportHeight()}, slider.settings.adaptiveHeightSpeed);
+                }
+                var moveBy = 0;
+                var position = {left: 0, top: 0};
+                // if carousel and not infinite loop
+                if(!slider.settings.infiniteLoop && slider.carousel && slider.active.last){
+                    if(slider.settings.mode == 'horizontal'){
+                        // get the last child position
+                        var lastChild = slider.children.eq(slider.children.length - 1);
+                        position = lastChild.position();
+                        // calculate the position of the last slide
+                        moveBy = slider.viewport.width() - lastChild.outerWidth();
+                    }else{
+                        // get last showing index position
+                        var lastShowingIndex = slider.children.length - slider.settings.minSlides;
+                        position = slider.children.eq(lastShowingIndex).position();
+                    }
+                    // horizontal carousel, going previous while on first slide (infiniteLoop mode)
+                }else if(slider.carousel && slider.active.last && direction == 'prev'){
+                    // get the last child position
+                    var eq = slider.settings.moveSlides == 1 ? slider.settings.maxSlides - getMoveBy() : ((getPagerQty() - 1) * getMoveBy()) - (slider.children.length - slider.settings.maxSlides);
+                    var lastChild = el.children('.bx-clone').eq(eq);
+                    position = lastChild.position();
+                    // if infinite loop and "Next" is clicked on the last slide
+                }else if(direction == 'next' && slider.active.index == 0){
+                    // get the last clone position
+                    position = el.find('> .bx-clone').eq(slider.settings.maxSlides).position();
+                    slider.active.last = false;
+                    // normal non-zero requests
+                }else if(slideIndex >= 0){
+                    var requestEl = slideIndex * getMoveBy();
+                    position = slider.children.eq(requestEl).position();
+                }
+
+                /* If the position doesn't exist
+                 * (e.g. if you destroy the slider on a next click),
+                 * it doesn't throw an error.
+                 */
+                if ("undefined" !== typeof(position)) {
+                    var value = slider.settings.mode == 'horizontal' ? -(position.left - moveBy) : -position.top;
+                    // plugin values to be animated
+                    setPositionProperty(value, 'slide', slider.settings.speed);
+                }
+            }
+        }
+
+        /**
+         * Transitions to the next slide in the show
+         */
+        el.goToNextSlide = function(){
+            // if infiniteLoop is false and last page is showing, disregard call
+            if (!slider.settings.infiniteLoop && slider.active.last) return;
+            var pagerIndex = parseInt(slider.active.index) + 1;
+            el.goToSlide(pagerIndex, 'next');
+        }
+
+        /**
+         * Transitions to the prev slide in the show
+         */
+        el.goToPrevSlide = function(){
+            // if infiniteLoop is false and last page is showing, disregard call
+            if (!slider.settings.infiniteLoop && slider.active.index == 0) return;
+            var pagerIndex = parseInt(slider.active.index) - 1;
+            el.goToSlide(pagerIndex, 'prev');
+        }
+
+        /**
+         * Starts the auto show
+         *
+         * @param preventControlUpdate (boolean)
+         *  - if true, auto controls state will not be updated
+         */
+        el.startAuto = function(preventControlUpdate){
+            // if an interval already exists, disregard call
+            if(slider.interval) return;
+            // create an interval
+            slider.interval = setInterval(function(){
+                slider.settings.autoDirection == 'next' ? el.goToNextSlide() : el.goToPrevSlide();
+            }, slider.settings.pause);
+            // if auto controls are displayed and preventControlUpdate is not true
+            if (slider.settings.autoControls && preventControlUpdate != true) updateAutoControls('stop');
+        }
+        /**
+         * Update auto pause
+         *  @param pause (boolean)
+         *  - new value of pause
+         */
+
+        el.updatePause = function(pause){
+            slider.settings.pause = pause;
+        };
+
+        /**
+         * Stops the auto show
+         *
+         * @param preventControlUpdate (boolean)
+         *  - if true, auto controls state will not be updated
+         */
+        el.stopAuto = function(preventControlUpdate){
+            // if no interval exists, disregard call
+            if(!slider.interval) return;
+            // clear the interval
+            clearInterval(slider.interval);
+            slider.interval = null;
+            // if auto controls are displayed and preventControlUpdate is not true
+            if (slider.settings.autoControls && preventControlUpdate != true) updateAutoControls('start');
+        }
+
+        /**
+         * Returns current slide index (zero-based)
+         */
+        el.getCurrentSlide = function(){
+            return slider.active.index;
+        }
+
+        /**
+         * Returns current slide element
+         */
+        el.getCurrentSlideElement = function(){
+            return slider.children.eq(slider.active.index);
+        }
+
+        /**
+         * Returns number of slides in show
+         */
+        el.getSlideCount = function(){
+            return slider.children.length;
+        }
+
+        /**
+         * Update all dynamic slider elements
+         */
+        el.redrawSlider = function(){
+            // resize all children in ratio to new screen size
+            slider.children.add(el.find('.bx-clone')).width(getSlideWidth());
+            // adjust the height
+            slider.viewport.css('height', getViewportHeight());
+            // update the slide position
+            if(!slider.settings.ticker) setSlidePosition();
+            // if active.last was true before the screen resize, we want
+            // to keep it last no matter what screen size we end on
+            if (slider.active.last) slider.active.index = getPagerQty() - 1;
+            // if the active index (page) no longer exists due to the resize, simply set the index as last
+            if (slider.active.index >= getPagerQty()) slider.active.last = true;
+            // if a pager is being displayed and a custom pager is not being used, update it
+            if(slider.settings.pager && !slider.settings.pagerCustom){
+                populatePager();
+                updatePagerActive(slider.active.index);
+            }
+        }
+
+        /**
+         * Destroy the current instance of the slider (revert everything back to original state)
+         */
+        el.destroySlider = function(){
+            // don't do anything if slider has already been destroyed
+            if(!slider.initialized) return;
+            slider.initialized = false;
+            $('.bx-clone', this).remove();
+            slider.children.each(function() {
+                $(this).data("origStyle") != undefined ? $(this).attr("style", $(this).data("origStyle")) : $(this).removeAttr('style');
+            });
+            $(this).data("origStyle") != undefined ? this.attr("style", $(this).data("origStyle")) : $(this).removeAttr('style');
+            $(this).unwrap().unwrap();
+            if(slider.controls.el) slider.controls.el.remove();
+            if(slider.controls.next) slider.controls.next.remove();
+            if(slider.controls.prev) slider.controls.prev.remove();
+            if(slider.pagerEl && slider.settings.controls) slider.pagerEl.remove();
+            $('.bx-caption', this).remove();
+            if(slider.controls.autoEl) slider.controls.autoEl.remove();
+            clearInterval(slider.interval);
+            if(slider.settings.responsive) $(window).unbind('resize', resizeWindow);
+        }
+
+        /**
+         * Reload the slider (revert all DOM changes, and re-initialize)
+         */
+        el.reloadSlider = function(settings){
+            if (settings != undefined) options = settings;
+            el.destroySlider();
+            init();
+        }
+
+        init();
+
+        // returns the current jQuery object
+        return this;
+    }
+
+})(jQuery);
+
+var sliderConstructor = function(sliders) {
+    var sliderConfig =
+    {
+        _options: {
+            minSlides: 0,
+            maxSlides: 1,
+            responsive: false,
+            infiniteLoop: true,
+            autoHover: true,
+            autoDelay: 0,
+            auto: false,
+            pause: 5000,
+            hideControlOnEnd: true,
+            pager: false,
+            slideMargin: 0,
+            autoStart: true,
+            stopAuto: false,
+            mode: 'fade'
+        },
+        _class: {
+            container: '.slider-container',
+            item: '.slider-item',
+            controls: ['.bx-prev', '.bx-next', '.bx-pager-link']
+        },
+        slidersArr: sliders
+    };
+
+
+    var sliderInit = function() {
+        var opt,
+            configClass = sliderConfig._class,
+            configOpt = sliderConfig._options;
+
+        jQuery.each(sliderConfig.slidersArr, function(ind,slider){
+            var self = slider;
+            var restartAuto;
+            var $selfSlider = (typeof self.sliderClass === 'object')?self.sliderClass:jQuery(self.sliderClass);
+            var checkLength = self.checkLength?self.checkLength:0;
+            $selfSlider.each(function(){
+                var $slider = jQuery(this);
+                if ($slider.find(configClass.item).length > checkLength) {
+                    self.options.$self = $slider;
+                    opt = jQuery.extend({},configOpt, self.options);
+                    var objSlider = $slider.find(configClass.container).bxSlider(opt);
+                    if (opt.auto) { //autoStart fix
+                        var allControls = configClass.controls.toString();
+                        function autoStart(e){
+                            clearTimeout(restartAuto);
+                            restartAuto = setTimeout(function(){
+                                objSlider.startAuto();
+                            },500);
+                            return false;
+                        }
+                        $slider.on('click',allControls, function(){
+                            autoStart(this);
+                        });
+                        if (!!opt.pagerCustom) {
+                            jQuery(opt.pagerCustom).on('click','a',function(e){
+                                e.preventDefault();
+                                autoStart(this);
+                            });
+                        }
+                    }
+                } else if (!!self.falseLength) {
+                    self.falseLength();
+                }
+            });
+        })
+    };
+    return sliderInit();
+};
+},{}],16:[function(require,module,exports){
+/* jQuery Form Styler v1.5.3.2 | (c) Dimox | https://github.com/Dimox/jQueryFormStyler */
+(function(c){c.fn.styler=function(E){var e=c.extend({wrapper:"form",idSuffix:"-styler",filePlaceholder:"\u0424\u0430\u0439\u043b \u043d\u0435 \u0432\u044b\u0431\u0440\u0430\u043d",fileBrowse:"\u041e\u0431\u0437\u043e\u0440...",selectSearch:!0,selectSearchLimit:10,selectSearchNotFound:"\u0421\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e",selectSearchPlaceholder:"\u041f\u043e\u0438\u0441\u043a...",selectVisibleOptions:0,singleSelectzIndex:"100",
+    selectSmartPositioning:!0,onSelectOpened:function(){},onSelectClosed:function(){},onFormStyled:function(){}},E);return this.each(function(){function w(){var c="",m="",b="",u="";void 0!==a.attr("id")&&""!==a.attr("id")&&(c=' id="'+a.attr("id")+e.idSuffix+'"');void 0!==a.attr("title")&&""!==a.attr("title")&&(m=' title="'+a.attr("title")+'"');void 0!==a.attr("class")&&""!==a.attr("class")&&(b=" "+a.attr("class"));for(var t=a.data(),f=0;f<t.length;f++)""!==t[f]&&(u+=" data-"+f+'="'+t[f]+'"');this.id=
+    c+u;this.title=m;this.classes=b}var a=c(this);if(a.is(":checkbox"))a.each(function(){if(1>a.parent("div.jq-checkbox").length){var e=function(){var e=new w,b=c("<div"+e.id+' class="jq-checkbox'+e.classes+'"'+e.title+'><div class="jq-checkbox__div"></div></div>');a.css({position:"absolute",zIndex:"-1",opacity:0,margin:0,padding:0}).after(b).prependTo(b);b.attr("unselectable","on").css({"-webkit-user-select":"none","-moz-user-select":"none","-ms-user-select":"none","-o-user-select":"none","user-select":"none",
+    display:"inline-block",position:"relative",overflow:"hidden"});a.is(":checked")&&b.addClass("checked");a.is(":disabled")&&b.addClass("disabled");b.on("click.styler",function(){b.is(".disabled")||(a.is(":checked")?(a.prop("checked",!1),b.removeClass("checked")):(a.prop("checked",!0),b.addClass("checked")),a.change());return!1});a.closest("label").add('label[for="'+a.attr("id")+'"]').click(function(a){b.click();a.preventDefault()});a.on("change.styler",function(){a.is(":checked")?b.addClass("checked"):
+    b.removeClass("checked")}).on("keydown.styler",function(a){32==a.which&&b.click()}).on("focus.styler",function(){b.is(".disabled")||b.addClass("focused")}).on("blur.styler",function(){b.removeClass("focused")})};e();a.on("refresh",function(){a.off(".styler").parent().before(a).remove();e()})}});else if(a.is(":radio"))a.each(function(){if(1>a.parent("div.jq-radio").length){var g=function(){var m=new w,b=c("<div"+m.id+' class="jq-radio'+m.classes+'"'+m.title+'><div class="jq-radio__div"></div></div>');
+    a.css({position:"absolute",zIndex:"-1",opacity:0,margin:0,padding:0}).after(b).prependTo(b);b.attr("unselectable","on").css({"-webkit-user-select":"none","-moz-user-select":"none","-ms-user-select":"none","-o-user-select":"none","user-select":"none",display:"inline-block",position:"relative"});a.is(":checked")&&b.addClass("checked");a.is(":disabled")&&b.addClass("disabled");b.on("click.styler",function(){b.is(".disabled")||(b.closest(e.wrapper).find('input[name="'+a.attr("name")+'"]').prop("checked",
+        !1).parent().removeClass("checked"),a.prop("checked",!0).parent().addClass("checked"),a.change());return!1});a.closest("label").add('label[for="'+a.attr("id")+'"]').click(function(a){b.click();a.preventDefault()});a.on("change.styler",function(){a.parent().addClass("checked")}).on("focus.styler",function(){b.is(".disabled")||b.addClass("focused")}).on("blur.styler",function(){b.removeClass("focused")})};g();a.on("refresh",function(){a.off(".styler").parent().before(a).remove();g()})}});else if(a.is(":file"))a.css({position:"absolute",
+    top:0,right:0,width:"100%",height:"100%",opacity:0,margin:0,padding:0}).each(function(){if(1>a.parent("div.jq-file").length){var g=function(){var m=new w,b=c("<div"+m.id+' class="jq-file'+m.classes+'"'+m.title+' style="display: inline-block; position: relative; overflow: hidden"></div>'),g=c('<div class="jq-file__name">'+e.filePlaceholder+"</div>").appendTo(b);c('<div class="jq-file__browse">'+e.fileBrowse+"</div>").appendTo(b);a.after(b);b.append(a);a.is(":disabled")&&b.addClass("disabled");a.on("change.styler",
+    function(){var c=a.val();if(a.is("[multiple]"))for(var c="",f=a[0].files,m=0;m<f.length;m++)c+=(0<m?", ":"")+f[m].name;g.text(c.replace(/.+[\\\/]/,""));""===c?(g.text(e.filePlaceholder),b.removeClass("changed")):b.addClass("changed")}).on("focus.styler",function(){b.addClass("focused")}).on("blur.styler",function(){b.removeClass("focused")}).on("click.styler",function(){b.removeClass("focused")})};g();a.on("refresh",function(){a.off(".styler").parent().before(a).remove();g()})}});else if(a.is("select"))a.each(function(){if(1>
+    a.parent("div.jqselect").length){var g=function(){function m(a){a.off("mousewheel DOMMouseScroll").on("mousewheel DOMMouseScroll",function(a){var b=null;"mousewheel"==a.type?b=-1*a.originalEvent.wheelDelta:"DOMMouseScroll"==a.type&&(b=40*a.originalEvent.detail);b&&(a.stopPropagation(),a.preventDefault(),c(this).scrollTop(b+c(this).scrollTop()))})}function b(){i=0;for(len=f.length;i<len;i++){var a="",c="",b=a="",e="",m="";f.eq(i).prop("selected")&&(c="selected sel");f.eq(i).is(":disabled")&&(c="disabled");
+    f.eq(i).is(":selected:disabled")&&(c="selected sel disabled");void 0!==f.eq(i).attr("class")&&(b=" "+f.eq(i).attr("class"),m=' data-jqfs-class="'+f.eq(i).attr("class")+'"');var k=f.eq(i).data(),l;for(l in k)""!==k[l]&&(a+=" data-"+l+'="'+k[l]+'"');a="<li"+m+a+' class="'+c+b+'">'+f.eq(i).text()+"</li>";f.eq(i).parent().is("optgroup")&&(void 0!==f.eq(i).parent().attr("class")&&(e=" "+f.eq(i).parent().attr("class")),a="<li"+m+' class="'+c+b+" option"+e+'">'+f.eq(i).text()+"</li>",f.eq(i).is(":first-child")&&
+    (a='<li class="optgroup'+e+'">'+f.eq(i).parent().attr("label")+"</li>"+a));x+=a}}function g(){var s=new w,d=c("<div"+s.id+' class="jq-selectbox jqselect'+s.classes+'" style="display: inline-block; position: relative; z-index:'+e.singleSelectzIndex+'"><div class="jq-selectbox__select"'+s.title+' style="position: relative"><div class="jq-selectbox__select-text"></div><div class="jq-selectbox__trigger"><div class="jq-selectbox__trigger-arrow"></div></div></div></div>');a.css({margin:0,padding:0}).after(d).prependTo(d);
+    var s=c("div.jq-selectbox__select",d),q=c("div.jq-selectbox__select-text",d),n=f.filter(":selected");n.length?q.html(n.text()):q.html(f.first().text());b();var p="";e.selectSearch&&(p='<div class="jq-selectbox__search"><input type="search" autocomplete="off" placeholder="'+e.selectSearchPlaceholder+'"></div><div class="jq-selectbox__not-found">'+e.selectSearchNotFound+"</div>");var k=c('<div class="jq-selectbox__dropdown" style="position: absolute">'+p+'<ul style="position: relative; list-style: none; overflow: auto; overflow-x: hidden">'+
+        x+"</ul></div>");d.append(k);var l=c("ul",k),h=c("li",k),r=c("input",k),y=c("div.jq-selectbox__not-found",k).hide();h.length<e.selectSearchLimit&&r.parent().hide();var v=0,B=0;h.each(function(){var a=c(this);a.css({display:"inline-block","white-space":"nowrap"});a.innerWidth()>v&&(v=a.innerWidth(),B=a.width());a.css({display:"block"})});var p=d.clone().appendTo("body").width("auto"),t=p.width();p.remove();t==d.width()&&(q.width(B),v+=d.find("div.jq-selectbox__trigger").width());v>d.width()&&k.width(v);
+    a.css({position:"absolute",left:0,top:0,width:"100%",height:"100%",opacity:0});var u=d.outerHeight(),A=r.outerHeight(),z=l.css("max-height"),p=h.filter(".selected");1>p.length&&h.first().addClass("selected sel");void 0===h.data("li-height")&&h.data("li-height",h.outerHeight());var C=k.css("top");"auto"==k.css("left")&&k.css({left:0});"auto"==k.css("top")&&k.css({top:u});k.hide();p.length&&(f.first().text()!=n.text()&&d.addClass("changed"),d.data("jqfs-class",p.data("jqfs-class")),d.addClass(p.data("jqfs-class")));
+    if(a.is(":disabled"))return d.addClass("disabled"),!1;s.click(function(){a.focus();c("div.jq-selectbox").filter(".opened").length&&e.onSelectClosed.call(c("div.jq-selectbox").filter(".opened"));if(!navigator.userAgent.match(/(iPad|iPhone|iPod)/g)){var b=h.data("li-height");if(e.selectSmartPositioning){var f=c(window),q=d.offset().top,n=f.height()-u-(q-f.scrollTop()),g=e.selectVisibleOptions,s=5*b,p=b*g;0<g&&6>g&&(s=p);0===g&&(p="auto");n>s+A+20?(k.height("auto").css({bottom:"auto",top:C}),g=function(){l.css("max-height",
+        Math.floor((n-20-A)/b)*b)},g(),l.css("max-height",p),"none"!=z&&l.css("max-height",z),n<k.outerHeight()+20&&g()):(k.height("auto").css({top:"auto",bottom:C}),g=function(){l.css("max-height",Math.floor((q-f.scrollTop()-20-A)/b)*b)},g(),l.css("max-height",p),"none"!=z&&l.css("max-height",z),q-f.scrollTop()-20<k.outerHeight()+20&&g())}c("div.jqselect").css({zIndex:e.singleSelectzIndex-1}).removeClass("opened");d.css({zIndex:e.singleSelectzIndex});k.is(":hidden")?(c("div.jq-selectbox__dropdown:visible").hide(),
+        k.show(),d.addClass("opened focused"),e.onSelectOpened.call(d)):(k.hide(),d.removeClass("opened"),c("div.jq-selectbox").filter(".opened").length&&e.onSelectClosed.call(d));h.filter(".selected").length&&(0!==l.innerHeight()/b%2&&(b/=2),l.scrollTop(l.scrollTop()+h.filter(".selected").position().top-l.innerHeight()/2+b));r.length&&(r.val("").keyup(),y.hide(),r.keyup(function(){var a=c(this).val();h.each(function(){c(this).html().match(RegExp(".*?"+a+".*?","i"))?c(this).show():c(this).hide()});1>h.filter(":visible").length?
+        y.show():y.hide()}));m(l);return!1}});h.hover(function(){c(this).siblings().removeClass("selected")});var D=h.filter(".selected").text();h.filter(".selected").text();h.filter(":not(.disabled):not(.optgroup)").click(function(){var b=c(this),l=b.text();if(D!=l){var h=b.index(),h=h-b.prevAll(".optgroup").length;b.addClass("selected sel").siblings().removeClass("selected sel");f.prop("selected",!1).eq(h).prop("selected",!0);D=l;q.html(l);d.data("jqfs-class")&&d.removeClass(d.data("jqfs-class"));d.data("jqfs-class",
+        b.data("jqfs-class"));d.addClass(b.data("jqfs-class"));a.change()}r.length&&(r.val("").keyup(),y.hide());k.hide();d.removeClass("opened");e.onSelectClosed.call(d)});k.mouseout(function(){c("li.sel",k).addClass("selected")});a.on("change.styler",function(){q.html(f.filter(":selected").text());h.removeClass("selected sel").not(".optgroup").eq(a[0].selectedIndex).addClass("selected sel");f.first().text()!=h.filter(".selected").text()?d.addClass("changed"):d.removeClass("changed")}).on("focus.styler",
+        function(){d.addClass("focused");c("div.jqselect").removeClass("opened")}).on("blur.styler",function(){d.removeClass("focused")}).on("keydown.styler keyup.styler",function(b){var c=h.data("li-height");q.html(f.filter(":selected").text());h.removeClass("selected sel").not(".optgroup").eq(a[0].selectedIndex).addClass("selected sel");38!=b.which&&37!=b.which&&33!=b.which&&36!=b.which||l.scrollTop(l.scrollTop()+h.filter(".selected").position().top);40!=b.which&&39!=b.which&&34!=b.which&&35!=b.which||
+        l.scrollTop(l.scrollTop()+h.filter(".selected").position().top-l.innerHeight()+c);32==b.which&&b.preventDefault();13==b.which&&(b.preventDefault(),k.hide())});c(document).on("click",function(a){c(a.target).parents().hasClass("jq-selectbox")||"OPTION"==a.target.nodeName||(c("div.jq-selectbox").filter(".opened").length&&e.onSelectClosed.call(c("div.jq-selectbox").filter(".opened")),r.length&&r.val("").keyup(),k.hide().find("li.sel").addClass("selected"),d.removeClass("focused opened"))})}function t(){var e=
+    new w,d=c("<div"+e.id+' class="jq-select-multiple jqselect'+e.classes+'"'+e.title+' style="display: inline-block; position: relative"></div>');a.css({margin:0,padding:0}).after(d);b();d.append("<ul>"+x+"</ul>");var g=c("ul",d).css({position:"relative","overflow-x":"hidden","-webkit-overflow-scrolling":"touch"}),n=c("li",d).attr("unselectable","on").css({"-webkit-user-select":"none","-moz-user-select":"none","-ms-user-select":"none","-o-user-select":"none","user-select":"none","white-space":"nowrap"}),
+    e=a.attr("size"),p=g.outerHeight(),k=n.outerHeight();void 0!==e&&0<e?g.css({height:k*e}):g.css({height:4*k});p>d.height()&&(g.css("overflowY","scroll"),m(g),n.filter(".selected").length&&g.scrollTop(g.scrollTop()+n.filter(".selected").position().top));a.prependTo(d).css({position:"absolute",left:0,top:0,width:"100%",height:"100%",opacity:0});if(a.is(":disabled"))d.addClass("disabled"),f.each(function(){c(this).is(":selected")&&n.eq(c(this).index()).addClass("selected")});else if(n.filter(":not(.disabled):not(.optgroup)").click(function(b){a.trigger("focus.styler");
+        d.removeClass("focused");var h=c(this);b.ctrlKey||b.metaKey||h.addClass("selected");b.shiftKey||h.addClass("first");b.ctrlKey||(b.metaKey||b.shiftKey)||h.siblings().removeClass("selected first");if(b.ctrlKey||b.metaKey)h.is(".selected")?h.removeClass("selected first"):h.addClass("selected first"),h.siblings().removeClass("first");if(b.shiftKey){var e=!1,g=!1;h.siblings().removeClass("selected").siblings(".first").addClass("selected");h.prevAll().each(function(){c(this).is(".first")&&(e=!0)});h.nextAll().each(function(){c(this).is(".first")&&
+        (g=!0)});e&&h.prevAll().each(function(){if(c(this).is(".selected"))return!1;c(this).not(".disabled, .optgroup").addClass("selected")});g&&h.nextAll().each(function(){if(c(this).is(".selected"))return!1;c(this).not(".disabled, .optgroup").addClass("selected")});1==n.filter(".selected").length&&h.addClass("first")}f.prop("selected",!1);n.filter(".selected").each(function(){var a=c(this),b=a.index();a.is(".option")&&(b-=a.prevAll(".optgroup").length);f.eq(b).prop("selected",!0)});a.trigger("change.styler")}),
+        f.each(function(a){c(this).data("optionIndex",a)}),a.on("change.styler",function(){n.removeClass("selected");var a=[];f.filter(":selected").each(function(){a.push(c(this).data("optionIndex"))});n.not(".optgroup").filter(function(b){return-1<c.inArray(b,a)}).addClass("selected")}).on("focus.styler",function(){d.addClass("focused")}).on("blur.styler",function(){d.removeClass("focused")}),p>d.height())a.on("keydown.styler",function(a){38!=a.which&&37!=a.which&&33!=a.which||g.scrollTop(g.scrollTop()+
+    n.filter(".selected").position().top-k);40!=a.which&&39!=a.which&&34!=a.which||g.scrollTop(g.scrollTop()+n.filter(".selected:last").position().top-g.innerHeight()+2*k)})}var f=c("option",a),x="";a.is("[multiple]")?t():g()};g();a.on("refresh",function(){a.off(".styler").parent().before(a).remove();g()})}});else if(a.is(":reset"))a.on("click",function(){setTimeout(function(){a.closest(e.wrapper).find("input, select").trigger("refresh")},1)})}).promise().done(function(){e.onFormStyled.call()})}})(jQuery);
+},{}],17:[function(require,module,exports){
 (function (factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
@@ -13598,11 +16003,11 @@ $.fn.extend({
 });
 }));
 
-},{"jquery":4}],17:[function(require,module,exports){
+},{"jquery":3}],18:[function(require,module,exports){
 /* jquery.simplr.smoothscroll version 1.0.1 copyright (c) 2012 https://github.com/simov/simplr-smoothscroll licensed under MIT */
 !function(e){"use strict";e.srSmoothscroll=function(t){var n=e.extend({step:55,speed:400,ease:"swing",target:e("body"),container:e(window)},t||{}),o=n.container,r=0,i=n.step,s=o.height(),a=!1,c="body"==n.target.selector?-1!==navigator.userAgent.indexOf("AppleWebKit")?n.target:e("html"):o;n.target.mousewheel(function(e,t){return a=!0,r=0>t?r+s>=n.target.outerHeight(!0)?r:r+=i:0>=r?0:r-=i,c.stop().animate({scrollTop:r},n.speed,n.ease,function(){a=!1}),!1}),o.on("resize",function(){s=o.height()}).on("scroll",function(){a||(r=o.scrollTop())})}}(jQuery);
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 /*
  * CustomSelect - jQuery plugin for stylize select
  * author: Shashenko Andrei
@@ -14082,7 +16487,7 @@ $.fn.extend({
             });
     }
 })(jQuery);
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 /*!
  * Tipped - A Complete Javascript Tooltip Solution - v4.2.8
  * (c) 2012-2015 Nick Stakenburg

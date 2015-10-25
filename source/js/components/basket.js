@@ -1,6 +1,7 @@
 var Mustache = require('mustache');
 var $ = require('jquery');
 var ajxLoader = require('../lib/ajxLoader');
+require('nanoscroller');
 
     var ajxUrl = {};
 

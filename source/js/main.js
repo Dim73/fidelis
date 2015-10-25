@@ -1,6 +1,6 @@
 var $ =  jQuery =  require('jquery');
-require('../../node_modules/bxslider/dist/jquery.bxslider.min');
-var sliderConstructor = require('./lib/constructor.bxslider');
+
+
 require('jquery-mousewheel')($);
 var Mustache = require('mustache');
 require('jquery.browser');
@@ -13,11 +13,14 @@ require('./vendor/tipped');
 require('./vendor/jquery.simplr.smoothscroll.min');
 require('./vendor/jquery.formstyler.min');
 
+require('./vendor/jquery.bxslider');
 require('./lib/folding.plugin');
 require('./lib/dropdown.plugin');
 require('./lib/subscribe');
 
 require('./main/call');
+var sliderConstructor = require('./lib/constructor.bxslider');
+
 var Basket = require('./components/basket');
 
     $(function(){
@@ -313,7 +316,7 @@ var Basket = require('./components/basket');
                     responsive: true,
                     pause: 5000,
                     onSliderLoad: function(currentIndex) {
-                        this.addClass('loaded');
+                        this.$self.addClass('loaded');
                         $('.main-banner .prlx-item').prlx();
                     },
                     onSlideAfter: function($item) {

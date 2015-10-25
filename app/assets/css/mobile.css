@@ -4735,7 +4735,7 @@ h1 {
 .order-complete .order__inner {
   padding-top: 30px;
   padding-bottom: 50px;
-  width: 650px;
+  width: 100%;
 }
 .order-complete .order__inner:before {
   display: none;
@@ -4780,7 +4780,6 @@ h1 {
 .delivery-form .row .inputtext,
 .delivery-form .row textarea {
   width: 100%;
-  font-size: 14px;
   border: 1px solid #444444;
 }
 .delivery-form .error .inputtext,
@@ -4848,6 +4847,9 @@ h1 {
 }
 .delivery-form .select_delivery {
   height: 58px;
+}
+.delivery-form .error .select_delivery {
+  border-color: #e30c19;
 }
 .delivery-form select {
   font-size: 14px;
