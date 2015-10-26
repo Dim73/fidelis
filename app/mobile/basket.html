@@ -196,7 +196,7 @@
                 <div class="delivery-form__fieldset">
                   <div class="div-2">
                     <div class="row">
-                      <input id="s-name" name="name" type="text" placeholder="ваше имя*" class="inputtext require">
+                      <input id="s-name" name="name" type="text" placeholder="ваше имя *" class="inputtext require">
                     </div>
                     <div class="row">
                       <input id="s-lastname" name="family" type="text" placeholder="ФАМИЛИЯ " class="inputtext">
@@ -204,18 +204,18 @@
                   </div>
                   <div class="div-2">
                     <div class="row">
-                      <input id="s-phone" name="phone" type="text" placeholder="+7 (___) ___-__-__" class="inputtext require phone-mask">
+                      <input id="s-phone" name="phone" type="text" placeholder="+7 (___) ___-__-__ *" class="inputtext require phone-mask">
                     </div>
                     <div class="row">
-                      <input id="s-email" name="email" type="email" placeholder="E-MAIL* " class="inputtext require">
+                      <input id="s-email" name="email" type="email" placeholder="E-MAIL" class="inputtext require">
                     </div>
                   </div>
                   <div class="row">
                     <div class="select_delivery">
                       <select id="s-paytype" name="paytype" class="no-styler select_delivery-start">
                         <option value="">ВАРИАНТЫ ОПЛАТЫ</option>
-                        <option value="">Наличными либо картой при получении</option>
-                        <option value="">Картой Visa/Mastercard на сайте</option>
+                        <option value="nal">Наличными либо картой при получении</option>
+                        <option value="card">Картой Visa/Mastercard на сайте</option>
                       </select>
                     </div>
                   </div>
@@ -233,7 +233,6 @@
                     <div class="row">
                       <div class="select_delivery">
                         <select id="s-region" name="region" class="no-styler require post-select">
-                          <option value="">Регион</option>
                           <option value="">Выберите регион</option>
                           <option value="53">Адыгея респ.</option>
                           <option value="54">Алтай респ.</option>

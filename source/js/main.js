@@ -28,10 +28,10 @@ var Basket = require('./components/basket');
             $("html").addClass("ie");
         }
 
-        setTimeout(function() {
+         setTimeout(function() {
             $('select, input[type=checkbox]').not('.no-styler').styler({selectSearch:false});
-        }, 100);
 
+         }, 100);
 
         $('.select_size, .select_size-order ').CustomSelect({visRows:4});
         $('.select-scroll').CustomSelect({visRows:8});

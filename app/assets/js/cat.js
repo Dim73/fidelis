@@ -11672,11 +11672,10 @@ var AppUtils = { //вспомогашки
         viewInit: function() {
             var self = this;
             this.view = {};
-            this.view.checkoxFilters = $('.block .list input[type=checkbox], .square_sizes .squaresize');
+            this.view.checkoxFilters = $('.block .list input[type=checkbox], .square_sizes input.squaresize');
 
             this.view.checkoxFilters.each(function(){
                 var $item = $(this);
-                console.log($item);
                 var filterName = $item.data('filter');
                 filterName && self.addFilterName(filterName);
                 self.addNameCheckbox({type: filterName,value: parseInt($item.data('value')), label: $item.closest('label').text()});
@@ -11685,7 +11684,9 @@ var AppUtils = { //вспомогашки
                 }
             });
 
-            this.view.checkoxFilters.on('change', function(event){
+            console.log(this.view.checkoxFilters);
+
+            this.view.checkoxFilters.bind('change', function(event){
                 var $item = $(this);
                 self.updateActiveCheckbox({type: $item.data('filter'),value: $item.data('value'), checked: $item.is(':checked'), label: $item.closest('label').text()});
             });
