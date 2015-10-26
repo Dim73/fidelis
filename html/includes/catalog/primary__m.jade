@@ -1,169 +1,213 @@
 - var bannerClass = 'main-banner_catalog'
 include ../layouts/main-banner
 .content.wrap
+  .filter-pane
+    .filter-pane__title
+      i.icon.icon-filter
+      |             ФИЛЬТР
+      span.icon-close
+    .filter-pane__inner
+      .filter-pane__choosen
+        .filter-pane__choosen-title
+          | ВЫ ВЫБРАЛИ:
+        #itemsfilterresult.filter-pane__choosen-list
+          .filter_item(data-filter='collection', data-value='30') Graziella
+          .filter_item(data-filter='collection', data-value='30') Graziella
+          .filter_item(data-filter='collection', data-value='30') Graziella
+          .filter_item(data-filter='collection', data-value='30') Graziella
+          .filter_item(data-filter='collection', data-value='30') Graziella
+      .filter-pane__items
+        .block.folding.category-section-block
+          .rheader.folding__title
+            a(href='#')
+              | Бренд
+          .folding__wrap
+            .folding__inner
+              .list
+                ul#ftypes(data-seltype='single')
+                  li
+                    a.selected(data-filter='type', data-value='19', href='/cat/type/19.html') Аксессуары
+                  li
+                    a.back(data-filter='type', data-value='11', href='/cat/type/11.html') Браслеты
+                  li
+                    a.back(data-filter='type', data-value='12', href='/cat/type/12.html') Броши
+                  li
+                    a.back(data-filter='type', data-value='15', href='/cat/type/15.html') Бусы
+                  li
+                    a.back(data-filter='type', data-value='6', href='/cat/type/6.html') Колье
+                  li
+                    a.back(data-filter='type', data-value='13', href='/cat/type/13.html') Кольца
+                  li
+                    a.back(data-filter='type', data-value='10', href='/cat/type/10.html') Подвески
+                  li
+                    a.back(data-filter='type', data-value='2', href='/cat/type/2.html') Серьги
+                  li
+                    a.back(data-filter='type', data-value='14', href='/cat/type/14.html') Цепи
+        .block.folding
+          .rheader.folding__title
+            a(href='#')
+              | Тип изделия
+          .folding__wrap
+            .folding__inner
+              .list
+                ul#fcollection(data-seltype='single')
+                  li.disabled(style='')
+                    label
+                      input(type='checkbox', data-filter='collection', data-value='30', disabled='', checked='')
+                      | Graziella
+                  li(style='')
+                    label
+                      input(type='checkbox', data-filter='collection', data-value='27', checked='')
+                      | Dea
+                      |                                         (Италия)
+                  li
+                    label
+                      input(type='checkbox', data-filter='collection', data-value='23')
+                      | Graziella (Италия)
+                  li
+                    label
+                      input(type='checkbox', data-filter='collection', data-value='13')
+                      | Graziella
+                      |                                         Золото
+                  li(style='')
+                    label
+                      input(type='checkbox', data-filter='collection', data-value='15')
+                      | Базовая
+                  li(style='')
+                    label
+                      input(type='checkbox', data-filter='collection', data-value='21')
+                      | Глиттеринг
+                  li(style='')
+                    label
+                      input(type='checkbox', data-filter='collection', data-value='31')
+                      | Жемчужная
+                  li(style='')
+                    label
+                      input(type='checkbox', data-filter='collection', data-value='20')
+                      | Кавальери
+                  li(style='')
+                    label
+                      input(type='checkbox', data-filter='collection', data-value='18')
+                      | Макраме
+                  li(style='')
+                    label
+                      input(type='checkbox', data-filter='collection', data-value='19')
+                      | Микро-Фьюжн
+                  li(style='')
+                    label
+                      input(type='checkbox', data-filter='collection', data-value='17')
+                      | Мужская
+                  li(style='')
+                    label
+                      input(type='checkbox', data-filter='collection', data-value='36')
+                      | Перламутровая
+                      |                                         мозаика
+                  li(style='')
+                    label
+                      input(type='checkbox', data-filter='collection', data-value='25')
+                      | Полудрагоценные
+                      |                                         камни
+                  li(style='')
+                    label
+                      input(type='checkbox', data-filter='collection', data-value='26')
+                      | Природные
+                      |                                         камни
+                  li(style='')
+                    label
+                      input(type='checkbox', data-filter='collection', data-value='35')
+                      | реплика
+                      |                                         "Диор"
+                  li(style='')
+                    label
+                      input(type='checkbox', data-filter='collection', data-value='11')
+                      | Сеточка
+                  li(style='')
+                    label
+                      input(type='checkbox', data-filter='collection', data-value='28')
+                      | Фианитовая
+                  li(style='')
+                    label
+                      input(type='checkbox', data-filter='collection', data-value='22')
+                      | Филигрань
+                  li(style='')
+                    label
+                      input(type='checkbox', data-filter='collection', data-value='24')
+                      | Фэшн
+                      |                                         (Италия)
+                  li(style='')
+                    label
+                      input(type='checkbox', data-filter='collection', data-value='12')
+                      | Цветная
+        .block.folding
+          .rheader.folding__title
+            a(href='#')
+              | размер
+          .folding__wrap
+            .folding__inner
+              ul#fsizes.square_sizes
+                li
+                  label
+                    input.squaresize(data-filter='size', data-value='0', value='Б.Р.', type='checkbox')
+                    span Б.Р.
+                li
+                  label
+                    input.squaresize(data-filter='size', data-value='14', value='14', type='checkbox')
+                    span   14
+                li
+                  label
+                    input.squaresize(data-filter='size', data-value='15', value='15', type='checkbox')
+                    span  15
+                li
+                  label
+                    input.squaresize(data-filter='size', data-value='15.5', value='15.5', type='checkbox')
+                    span  15.5
+                li
+                  label
+                    input.squaresize(data-filter='size', data-value='16', value='16', type='checkbox')
+                    span  16
+                li
+                  label
+                    input.squaresize(data-filter='size', data-value='16.5', value='16.5', type='checkbox')
+                    span  16.5
+                li
+                  label
+                    input.squaresize(data-filter='size', data-value='17', value='17', type='checkbox')
+                    span  17
+                li
+                  label
+                    input.squaresize(data-filter='size', data-value='17.5', value='17.5', type='checkbox')
+                    span 17.5
+                li
+                  label
+                    input.squaresize(data-filter='size', data-value='18', value='18', type='checkbox')
+                    span  18
+                li
+                  label
+                    input.squaresize(data-filter='size', data-value='18.5', value='18.5', type='checkbox')
+                    span 18.5
+                li
+                  label
+                    input.squaresize(data-filter='size', data-value='19', value='19', type='checkbox')
+                    span  19
+                li
+                  label
+                    input.squaresize(data-filter='size', data-value='19.5', value='19.5', type='checkbox')
+                    span  19.5
+                li
+                  label
+                    input.squaresize(data-filter='size', data-value='20', value='20', type='checkbox')
+                    span  20
+
   .catalogue
     input(type='hidden', name='extra', value='')
     .category-section-block
       input(type='hidden', data-filter='brand', data-value='7')
     .container
       .left
-        .goods-filter.folding
-          .goods-filter__title.folding__title
-            i.icon.icon-filter
-            |                         ФИЛЬТР
-          .folding__wrap
-            .folding__inner
-              .goods-filter__list
-                label.goods-filter__item.btn-select(for='good-brand')
-                  | БРЕНД
-                  select#good-brand.no-styler(name='brand', multiple='')
-                    option(value='10', data-filter='brand', data-value='10') 1One
-                    option(value='9', data-filter='brand', data-value='9', style='display: none;') Breuning
-                    option(value='16', data-filter='brand', data-value='16') Brumani
-                    option(value='15', data-filter='brand', data-value='15') Cesare Paciotti
-                    option(value='8', data-filter='brand', data-value='8') Dea
-                    option(value='12', data-filter='brand', data-value='12') Eugenio Campos
-                    option(value='7', data-filter='brand', data-value='7') Graziella
-                    option(value='14', data-filter='brand', data-value='14') Jessica
-                    option(value='13', data-filter='brand', data-value='13', style='display: none;') Orele
-                label.goods-filter__item.btn-select(for='good-type')
-                  | ТИП ИЗДЕЛИЯ
-                  select#good-type.no-styler(name='type', multiple='')
-                    option(value='11', data-filter='type', data-value='11') Браслеты
-                    option(value='12', data-filter='type', data-value='12', style='display: none;') Броши
-                    option(value='15', data-filter='type', data-value='15', style='display: none;') Бусы
-                    option(value='6', data-filter='type', data-value='6', style='display: none;') Колье
-                    option(value='13', data-filter='type', data-value='13', style='display: none;') Кольца
-                    option(value='10', data-filter='type', data-value='10', style='display: none;') Подвески и кулоны
-                    option(value='2', data-filter='type', data-value='2', style='display: none;') Серьги
-                    option(value='14', data-filter='type', data-value='14', style='display: none;') Цепи
-                label.goods-filter__item.btn-select(for='good-style')
-                  | СТИЛЬ
-                  select#good-style.no-styler(name='style', multiple='')
-                    option(value='5', data-filter='style', data-value='5') Вечерний (evening)
-                    option(value='13', data-filter='style', data-value='13') Гламурный (fashion)
-                    option(value='11', data-filter='style', data-value='11') Деловой (business)
-                    option(value='3', data-filter='style', data-value='3') Классический (classic)
-                    option(value='6', data-filter='style', data-value='6') Повседневный (casual)
-                    option(value='4', data-filter='style', data-value='4') Романтический (romantic)
-                label.goods-filter__item.btn-select(for='good-collection')
-                  | КОЛЛЕКЦИЯ
-                  select#good-collection.no-styler(name='collection', multiple='')
-                    option(value='15', data-filter='collection', data-value='15') Без вставок
-                    option(value='40', data-filter='collection', data-value='40', style='display: none;') В стиле диор
-                    option(value='24', data-filter='collection', data-value='24') В тренде
-                    option(value='13', data-filter='collection', data-value='13') Жемчужная
-                    option(value='17', data-filter='collection', data-value='17') Мужская
-                    option(value='25', data-filter='collection', data-value='25', style='display: none;') Натуральные камни
-                    option(value='36', data-filter='collection', data-value='36', style='display: none;') Перламутровая мозаика
-                    option(value='42', data-filter='collection', data-value='42') Премиум
-                    option(value='12', data-filter='collection', data-value='12') Разноцветная
-                    option(value='18', data-filter='collection', data-value='18') Фантазия
-                    option(value='28', data-filter='collection', data-value='28') Фианитовая
-                label.goods-filter__item.btn-select(for='good-metal')
-                  | МЕТАЛЛ
-                  select#good-metal.no-styler(name='metal', multiple='')
-                    option(value='3', data-filter='metal', data-value='3') Золото
-                    option(value='1', data-filter='metal', data-value='1') Серебро
-                    option(value='4', data-filter='metal', data-value='4') Сталь
-                label.goods-filter__item.btn-select(for='good-surface')
-                  | ПОКРЫТИЕ
-                  select#good-surface.no-styler(name='surface', multiple='')
-                    option(value='8', data-filter='surface', data-value='8') Защитное покрытие
-                    option(value='2', data-filter='surface', data-value='2') Позолота
-                    option(value='1', data-filter='surface', data-value='1') Родирование
-                    option(value='3', data-filter='surface', data-value='3') Рутенирование
-                    option(value='7', data-filter='surface', data-value='7') Чернение
-                    option(value='4', data-filter='surface', data-value='4') Эмаль
-                label.goods-filter__item.btn-select(for='good-insert')
-                  | ВСТАВКА
-                  select#good-insert.no-styler(name='insert', multiple='')
-                    option(value='31', data-filter='insert', data-value='31', style='display: none;') Авантюрин
-                    option(value='49', data-filter='insert', data-value='49') Агат
-                    option(value='48', data-filter='insert', data-value='48', style='display: none;') Александрит
-                    option(value='28', data-filter='insert', data-value='28', style='display: none;') Аметист
-                    option(value='9', data-filter='insert', data-value='9', style='display: none;') Бирюза
-                    option(value='23', data-filter='insert', data-value='23') Бриллиант
-                    option(value='64', data-filter='insert', data-value='64', style='display: none;') Глиттеринг
-                    option(value='22', data-filter='insert', data-value='22', style='display: none;') Горный хрусталь
-                    option(value='21', data-filter='insert', data-value='21', style='display: none;') Гранат
-                    option(value='2', data-filter='insert', data-value='2') Жемчуг
-                    option(value='36', data-filter='insert', data-value='36', style='display: none;') Зеленый агат
-                    option(value='67', data-filter='insert', data-value='67', style='display: none;') Изумруд
-                    option(value='47', data-filter='insert', data-value='47') Каучук
-                    option(value='46', data-filter='insert', data-value='46') Кварц
-                    option(value='55', data-filter='insert', data-value='55') Керамика
-                    option(value='16', data-filter='insert', data-value='16') Кожа
-                    option(value='7', data-filter='insert', data-value='7', style='display: none;') Коралл
-                    option(value='4', data-filter='insert', data-value='4') Кошачий глаз
-                    option(value='10', data-filter='insert', data-value='10') Кристалл swarovski
-                    option(value='56', data-filter='insert', data-value='56', style='display: none;') Лейкосапфир
-                    option(value='20', data-filter='insert', data-value='20', style='display: none;') Мистический кварц
-                    option(value='65', data-filter='insert', data-value='65', style='display: none;') Морская ракушка
-                    option(value='8', data-filter='insert', data-value='8') Оникс
-                    option(value='40', data-filter='insert', data-value='40', style='display: none;') Опал
-                    option(value='60', data-filter='insert', data-value='60', style='display: none;') Перидот
-                    option(value='38', data-filter='insert', data-value='38') Перламутр
-                    option(value='43', data-filter='insert', data-value='43', style='display: none;') Родолит
-                    option(value='58', data-filter='insert', data-value='58', style='display: none;') Рубин
-                    option(value='30', data-filter='insert', data-value='30', style='display: none;') Сапфир
-                    option(value='63', data-filter='insert', data-value='63', style='display: none;') Синтетический жемчуг
-                    option(value='45', data-filter='insert', data-value='45', style='display: none;') Синтетический камень
-                    option(value='53', data-filter='insert', data-value='53', style='display: none;') Синтетический рубин
-                    option(value='15', data-filter='insert', data-value='15') Сталь
-                    option(value='59', data-filter='insert', data-value='59') Текстиль
-                    option(value='66', data-filter='insert', data-value='66', style='display: none;') Тигровый глаз
-                    option(value='39', data-filter='insert', data-value='39') Ткань
-                    option(value='29', data-filter='insert', data-value='29') Топаз
-                    option(value='52', data-filter='insert', data-value='52', style='display: none;') Топаз лондон блю
-                    option(value='61', data-filter='insert', data-value='61') Турмалин
-                    option(value='1', data-filter='insert', data-value='1') Фианиты
-                    option(value='50', data-filter='insert', data-value='50', style='display: none;') Фианиты signity
-                    option(value='62', data-filter='insert', data-value='62', style='display: none;') Халцедон
-                    option(value='41', data-filter='insert', data-value='41', style='display: none;') Хризолит
-                    option(value='37', data-filter='insert', data-value='37') Цирконий
-                    option(value='42', data-filter='insert', data-value='42', style='display: none;') Цитрин
-                    option(value='24', data-filter='insert', data-value='24') Ювелирная смола
-                    option(value='11', data-filter='insert', data-value='11') Ювелирное стекло
-                label.goods-filter__item.btn-select(for='good-size')
-                  | РАЗМЕР
-                  select#good-size.no-styler(name='size', multiple='')
-                    option(data-filter='size', value='Б.Р.') Б.Р.
-                    option(data-filter='size', value='16.0') 16.0
-                    option(data-filter='size', value='16.5') 16.5
-                    option(data-filter='size', value='17.0') 17.0
-                    option(data-filter='size', value='17.5') 17.5
-                    option(data-filter='size', value='18.0') 18.0
-                    option(data-filter='size', value='18.5') 18.5
-                    option(data-filter='size', value='19.0') 19.0
-                    option(data-filter='size', value='20.0') 20.0
-                    option(data-filter='size', value='20.5') 20.5
-                    option(data-filter='size', value='21.0') 21.0
-                    option(data-filter='size', value='21.5') 21.5
-                    option(data-filter='size', value='22.0') 22.0
-                    option(data-filter='size', value='23.0') 23.0
-                // <div class="goods-fsilter__price">
-                // <input data-max="429400" id="maxcost" type="hidden">
-                // <input data-min="170" id="mincost" type="hidden">
-                // <label for="price-from">От</label>
-                // <input id="price-from" type="number" class="inputtext" min="0" placeholder="170">
-                // <label for="price-to">до</label>
-                // <input id="price-to" type="number" class="inputtext" min="0" placeholder="429400">
-                // <span class="rub"><span>руб</span></span>
-                // </div>
-              .goods-filter__choosen
-                .goods-filter__choosen-title
-                  | ВЫ ВЫБРАЛИ:
-                #itemsfilterresult.goods-filter__choosen-list
-                  .filter_item(data-filter='collection', data-value='30') Graziella
-                  .filter_item(data-filter='collection', data-value='30') Graziella
-                  .filter_item(data-filter='collection', data-value='30') Graziella
-                  .filter_item(data-filter='collection', data-value='30') Graziella
-                  .filter_item(data-filter='collection', data-value='30') Graziella
-                a.btn.btn_black.js-apply-filter(href='#')
-                  | ПРИМЕНИТЬ
-              .js-close-filter
-                a.icon.icon-x(href='#')
+        .goods-filter.goods-filter__title.folding__title
+          i.icon.icon-filter
+          |                     ФИЛЬТР
+
       .right
         .line-filter
           .itemsfilter

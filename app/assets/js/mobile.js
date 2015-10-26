@@ -12877,6 +12877,7 @@ require('./lib/subscribe');
 
 require('./mobile/changeTown');
 require('./mobile/main-nav');
+var sliderConstructor = require('./lib/constructor.bxslider');
 var Basket = require('./components/basket');
 
     $(function(){
@@ -12902,7 +12903,7 @@ var Basket = require('./components/basket');
         }
 
 
-        $('.pitem-specs__spoilers .folding, .goods-filter.folding').folding({});
+        $('.pitem-specs__spoilers .folding, .filter-pane__items .folding').folding();
         $('.content-text__side .folding').folding({openHeight: 500});
         $('.order-spoiler').folding({closeOther: '.order-spoiler'});
         $(".phone-mask").mask("+7 (999) 999-99-99");
@@ -13017,7 +13018,7 @@ var Basket = require('./components/basket');
                     auto: false,
                     onSliderLoad: function(currentIndex) {
 
-                        this.addClass('loaded');
+                        this.$self.addClass('loaded');
                     },
                     onSlideAfter: function($item) {
 
@@ -13220,7 +13221,7 @@ function closePopup ($popup) {
 }
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./components/basket":5,"./lib/dropdown.plugin":10,"./lib/folding.plugin":11,"./lib/subscribe":12,"./mobile/changeTown":13,"./mobile/main-nav":14,"./vendor/jquery.bxslider":15,"./vendor/jquery.formstyler.min":16,"./vendor/jquery.maskedinput":17,"./vendor/size.scroll":18,"jquery":2,"jquery.browser":1,"mustache":3}],7:[function(require,module,exports){
+},{"./components/basket":5,"./lib/constructor.bxslider":10,"./lib/dropdown.plugin":11,"./lib/folding.plugin":12,"./lib/subscribe":13,"./mobile/changeTown":14,"./mobile/main-nav":15,"./vendor/jquery.bxslider":16,"./vendor/jquery.formstyler.min":17,"./vendor/jquery.maskedinput":18,"./vendor/size.scroll":19,"jquery":2,"jquery.browser":1,"mustache":3}],7:[function(require,module,exports){
 module.exports = (function(){
   var _const =  {};
 
@@ -13268,6 +13269,87 @@ var ajxLoader  =  (function() {
 module.exports = ajxLoader;
 
 },{"jquery":2}],10:[function(require,module,exports){
+
+var sc =
+    (function(bx) {
+        return function (sliders) {
+            jQuery.fn.bxSlider = bx;
+            var sliderConfig =
+            {
+                _options: {
+                    minSlides: 0,
+                    maxSlides: 1,
+                    responsive: false,
+                    infiniteLoop: true,
+                    autoHover: true,
+                    autoDelay: 0,
+                    auto: false,
+                    pause: 5000,
+                    hideControlOnEnd: true,
+                    pager: false,
+                    slideMargin: 0,
+                    autoStart: true,
+                    stopAuto: false,
+                    mode: 'fade'
+                },
+                _class: {
+                    container: '.slider-container',
+                    item: '.slider-item',
+                    controls: ['.bx-prev', '.bx-next', '.bx-pager-link']
+                },
+                slidersArr: sliders
+            };
+
+
+            var sliderInit = function () {
+                var opt,
+                    configClass = sliderConfig._class,
+                    configOpt = sliderConfig._options;
+
+                jQuery.each(sliderConfig.slidersArr, function (ind, slider) {
+                    var self = slider;
+                    var restartAuto;
+                    var $selfSlider = (typeof self.sliderClass === 'object') ? self.sliderClass : jQuery(self.sliderClass);
+                    var checkLength = self.checkLength ? self.checkLength : 0;
+                    $selfSlider.each(function () {
+                        var $slider = jQuery(this);
+                        if ($slider.find(configClass.item).length > checkLength) {
+                            self.options.$self = $slider;
+                            opt = jQuery.extend({}, configOpt, self.options);
+                            var objSlider = $slider.find(configClass.container).bxSlider(opt);
+                            if (opt.auto) { //autoStart fix
+                                var allControls = configClass.controls.toString();
+
+                                function autoStart(e) {
+                                    clearTimeout(restartAuto);
+                                    restartAuto = setTimeout(function () {
+                                        objSlider.startAuto();
+                                    }, 500);
+                                    return false;
+                                }
+
+                                $slider.on('click', allControls, function () {
+                                    autoStart(this);
+                                });
+                                if (!!opt.pagerCustom) {
+                                    jQuery(opt.pagerCustom).on('click', 'a', function (e) {
+                                        e.preventDefault();
+                                        autoStart(this);
+                                    });
+                                }
+                            }
+                        } else if (!!self.falseLength) {
+                            self.falseLength();
+                        }
+                    });
+                })
+            };
+            return sliderInit();
+        }
+    })(jQuery.fn.bxSlider);
+
+module.exports = sc;
+},{}],11:[function(require,module,exports){
 (function($){
     'use strict';
 
@@ -13354,16 +13436,16 @@ module.exports = ajxLoader;
         })
     }
 })(jQuery);
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 (function($){
     'use strict';
 
     $.fn.folding = function(options){
         var def = {
-                openHeight: 99999,
-                openClass: 'opened',
-                closeOther: ''
-            };
+            openHeight: 99999,
+            openClass: 'opened',
+            closeOther: ''
+        };
 
         var opt = $.extend({}, def, options || {}),
             pluginPrefix = '.folding';
@@ -13388,6 +13470,7 @@ module.exports = ajxLoader;
 
 
 
+
             $self.is('.'+opt.openClass) && toggleC(true);
 
 
@@ -13400,7 +13483,8 @@ module.exports = ajxLoader;
             function toggleC (flag) {
                 isOpened = flag || !isOpened;
                 isOpened && opt.closeOther && $(opt.closeOther).filter('.'+opt.openClass).trigger('close');
-                if ($inner.outerHeight() < openHeight) {
+                console.log($inner.outerHeight(), openHeight)
+                if ($inner.outerHeight() < optHeight) {
                     openHeight = $inner.outerHeight();
                 }
                 $self.toggleClass(opt.openClass, isOpened);
@@ -13424,7 +13508,7 @@ module.exports = ajxLoader;
         })
     }
 })(jQuery);
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 (function($) {
 	$.fn.subscribe = function(opt) {
 		var opt = $.extend({
@@ -13495,7 +13579,7 @@ module.exports = ajxLoader;
 		});
 	};
 })(jQuery);
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 $(function(){
 
     var $adrs_holder = $('.header .address-info__holder'),
@@ -13601,7 +13685,7 @@ $(function(){
     });
 
 });
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 (function($) {
 
     $(function(){
@@ -13658,7 +13742,7 @@ $(function(){
         }
     });
 })(jQuery);
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /**
  * BxSlider v4.1.2 - Fully loaded, responsive content slider
  * http://bxslider.com
@@ -15091,7 +15175,7 @@ var sliderConstructor = function(sliders) {
     };
     return sliderInit();
 };
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 /* jQuery Form Styler v1.5.3.2 | (c) Dimox | https://github.com/Dimox/jQueryFormStyler */
 (function(c){c.fn.styler=function(E){var e=c.extend({wrapper:"form",idSuffix:"-styler",filePlaceholder:"\u0424\u0430\u0439\u043b \u043d\u0435 \u0432\u044b\u0431\u0440\u0430\u043d",fileBrowse:"\u041e\u0431\u0437\u043e\u0440...",selectSearch:!0,selectSearchLimit:10,selectSearchNotFound:"\u0421\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e",selectSearchPlaceholder:"\u041f\u043e\u0438\u0441\u043a...",selectVisibleOptions:0,singleSelectzIndex:"100",
     selectSmartPositioning:!0,onSelectOpened:function(){},onSelectClosed:function(){},onFormStyled:function(){}},E);return this.each(function(){function w(){var c="",m="",b="",u="";void 0!==a.attr("id")&&""!==a.attr("id")&&(c=' id="'+a.attr("id")+e.idSuffix+'"');void 0!==a.attr("title")&&""!==a.attr("title")&&(m=' title="'+a.attr("title")+'"');void 0!==a.attr("class")&&""!==a.attr("class")&&(b=" "+a.attr("class"));for(var t=a.data(),f=0;f<t.length;f++)""!==t[f]&&(u+=" data-"+f+'="'+t[f]+'"');this.id=
@@ -15122,7 +15206,7 @@ var sliderConstructor = function(sliders) {
     f.each(function(a){c(this).data("optionIndex",a)}),a.on("change.styler",function(){n.removeClass("selected");var a=[];f.filter(":selected").each(function(){a.push(c(this).data("optionIndex"))});n.not(".optgroup").filter(function(b){return-1<c.inArray(b,a)}).addClass("selected")}).on("focus.styler",function(){d.addClass("focused")}).on("blur.styler",function(){d.removeClass("focused")}),p>d.height())a.on("keydown.styler",function(a){38!=a.which&&37!=a.which&&33!=a.which||g.scrollTop(g.scrollTop()+
     n.filter(".selected").position().top-k);40!=a.which&&39!=a.which&&34!=a.which||g.scrollTop(g.scrollTop()+n.filter(".selected:last").position().top-g.innerHeight()+2*k)})}var f=c("option",a),x="";a.is("[multiple]")?t():g()};g();a.on("refresh",function(){a.off(".styler").parent().before(a).remove();g()})}});else if(a.is(":reset"))a.on("click",function(){setTimeout(function(){a.closest(e.wrapper).find("input, select").trigger("refresh")},1)})}).promise().done(function(){e.onFormStyled.call()})}})(jQuery);
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 (function (factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
@@ -15572,7 +15656,7 @@ $.fn.extend({
 });
 }));
 
-},{"jquery":2}],18:[function(require,module,exports){
+},{"jquery":2}],19:[function(require,module,exports){
 /*
  * CustomSelect - jQuery plugin for stylize select
  * author: Shashenko Andrei

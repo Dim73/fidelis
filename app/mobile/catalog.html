@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Grazzela</title>
     <script type="text/javascript" src="../assets/js/mobile.js"></script>
-    <script type="text/javascript" src="../assets/js/mobile/cat.js"></script>
+    <script type="text/javascript" src="../assets/js/cat_mobile.js"></script>
     <link rel="stylesheet" href="../assets/css/jquery-ui-1.10.3.custom.css">
     <link rel="stylesheet" href="../assets/css/mobile.css">
     <meta name="HandheldFriendly" content="True">
@@ -184,6 +184,235 @@
         </div>
       </div>
       <div class="content wrap">
+        <div class="filter-pane">
+          <div class="filter-pane__title"><i class="icon icon-filter"></i>            ФИЛЬТР<span class="icon-close"></span></div>
+          <div class="filter-pane__inner">
+            <div class="filter-pane__choosen">
+              <div class="filter-pane__choosen-title">ВЫ ВЫБРАЛИ:</div>
+              <div id="itemsfilterresult" class="filter-pane__choosen-list">
+                <div data-filter="collection" data-value="30" class="filter_item">Graziella</div>
+                <div data-filter="collection" data-value="30" class="filter_item">Graziella</div>
+                <div data-filter="collection" data-value="30" class="filter_item">Graziella</div>
+                <div data-filter="collection" data-value="30" class="filter_item">Graziella</div>
+                <div data-filter="collection" data-value="30" class="filter_item">Graziella</div>
+              </div>
+            </div>
+            <div class="filter-pane__items">
+              <div class="block folding category-section-block">
+                <div class="rheader folding__title"><a href="#">Бренд</a></div>
+                <div class="folding__wrap">
+                  <div class="folding__inner">
+                    <div class="list">
+                      <ul id="ftypes" data-seltype="single">
+                        <li><a data-filter="type" data-value="19" href="/cat/type/19.html" class="selected">Аксессуары</a></li>
+                        <li><a data-filter="type" data-value="11" href="/cat/type/11.html" class="back">Браслеты</a></li>
+                        <li><a data-filter="type" data-value="12" href="/cat/type/12.html" class="back">Броши</a></li>
+                        <li><a data-filter="type" data-value="15" href="/cat/type/15.html" class="back">Бусы</a></li>
+                        <li><a data-filter="type" data-value="6" href="/cat/type/6.html" class="back">Колье</a></li>
+                        <li><a data-filter="type" data-value="13" href="/cat/type/13.html" class="back">Кольца</a></li>
+                        <li><a data-filter="type" data-value="10" href="/cat/type/10.html" class="back">Подвески</a></li>
+                        <li><a data-filter="type" data-value="2" href="/cat/type/2.html" class="back">Серьги</a></li>
+                        <li><a data-filter="type" data-value="14" href="/cat/type/14.html" class="back">Цепи</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="block folding">
+                <div class="rheader folding__title"><a href="#">Тип изделия</a></div>
+                <div class="folding__wrap">
+                  <div class="folding__inner">
+                    <div class="list">
+                      <ul id="fcollection" data-seltype="single">
+                        <li style="" class="disabled">
+                          <label>
+                            <input type="checkbox" data-filter="collection" data-value="30" disabled="" checked="">Graziella
+                          </label>
+                        </li>
+                        <li style="">
+                          <label>
+                            <input type="checkbox" data-filter="collection" data-value="27" checked="">Dea
+                                                                    (Италия)
+                          </label>
+                        </li>
+                        <li>
+                          <label>
+                            <input type="checkbox" data-filter="collection" data-value="23">Graziella (Италия)
+                          </label>
+                        </li>
+                        <li>
+                          <label>
+                            <input type="checkbox" data-filter="collection" data-value="13">Graziella
+                                                                    Золото
+                          </label>
+                        </li>
+                        <li style="">
+                          <label>
+                            <input type="checkbox" data-filter="collection" data-value="15">Базовая
+                          </label>
+                        </li>
+                        <li style="">
+                          <label>
+                            <input type="checkbox" data-filter="collection" data-value="21">Глиттеринг
+                          </label>
+                        </li>
+                        <li style="">
+                          <label>
+                            <input type="checkbox" data-filter="collection" data-value="31">Жемчужная
+                          </label>
+                        </li>
+                        <li style="">
+                          <label>
+                            <input type="checkbox" data-filter="collection" data-value="20">Кавальери
+                          </label>
+                        </li>
+                        <li style="">
+                          <label>
+                            <input type="checkbox" data-filter="collection" data-value="18">Макраме
+                          </label>
+                        </li>
+                        <li style="">
+                          <label>
+                            <input type="checkbox" data-filter="collection" data-value="19">Микро-Фьюжн
+                          </label>
+                        </li>
+                        <li style="">
+                          <label>
+                            <input type="checkbox" data-filter="collection" data-value="17">Мужская
+                          </label>
+                        </li>
+                        <li style="">
+                          <label>
+                            <input type="checkbox" data-filter="collection" data-value="36">Перламутровая
+                                                                    мозаика
+                          </label>
+                        </li>
+                        <li style="">
+                          <label>
+                            <input type="checkbox" data-filter="collection" data-value="25">Полудрагоценные
+                                                                    камни
+                          </label>
+                        </li>
+                        <li style="">
+                          <label>
+                            <input type="checkbox" data-filter="collection" data-value="26">Природные
+                                                                    камни
+                          </label>
+                        </li>
+                        <li style="">
+                          <label>
+                            <input type="checkbox" data-filter="collection" data-value="35">реплика
+                                                                    "Диор"
+                          </label>
+                        </li>
+                        <li style="">
+                          <label>
+                            <input type="checkbox" data-filter="collection" data-value="11">Сеточка
+                          </label>
+                        </li>
+                        <li style="">
+                          <label>
+                            <input type="checkbox" data-filter="collection" data-value="28">Фианитовая
+                          </label>
+                        </li>
+                        <li style="">
+                          <label>
+                            <input type="checkbox" data-filter="collection" data-value="22">Филигрань
+                          </label>
+                        </li>
+                        <li style="">
+                          <label>
+                            <input type="checkbox" data-filter="collection" data-value="24">Фэшн
+                                                                    (Италия)
+                          </label>
+                        </li>
+                        <li style="">
+                          <label>
+                            <input type="checkbox" data-filter="collection" data-value="12">Цветная
+                          </label>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="block folding">
+                <div class="rheader folding__title"><a href="#">размер</a></div>
+                <div class="folding__wrap">
+                  <div class="folding__inner">
+                    <ul id="fsizes" class="square_sizes">
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="0" value="Б.Р." type="checkbox" class="squaresize"><span>Б.Р.</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="14" value="14" type="checkbox" class="squaresize"><span>  14</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="15" value="15" type="checkbox" class="squaresize"><span> 15</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="15.5" value="15.5" type="checkbox" class="squaresize"><span> 15.5</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="16" value="16" type="checkbox" class="squaresize"><span> 16</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="16.5" value="16.5" type="checkbox" class="squaresize"><span> 16.5</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="17" value="17" type="checkbox" class="squaresize"><span> 17</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="17.5" value="17.5" type="checkbox" class="squaresize"><span>17.5</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="18" value="18" type="checkbox" class="squaresize"><span> 18</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="18.5" value="18.5" type="checkbox" class="squaresize"><span>18.5</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="19" value="19" type="checkbox" class="squaresize"><span> 19</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="19.5" value="19.5" type="checkbox" class="squaresize"><span> 19.5</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="20" value="20" type="checkbox" class="squaresize"><span> 20</span>
+                        </label>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="catalogue">
           <input type="hidden" name="extra" value="">
           <div class="category-section-block">
@@ -191,171 +420,7 @@
           </div>
           <div class="container">
             <div class="left">
-              <div class="goods-filter folding">
-                <div class="goods-filter__title folding__title"><i class="icon icon-filter"></i>                        ФИЛЬТР</div>
-                <div class="folding__wrap">
-                  <div class="folding__inner">
-                    <div class="goods-filter__list">
-                      <label for="good-brand" class="goods-filter__item btn-select">БРЕНД
-                        <select id="good-brand" name="brand" multiple="" class="no-styler">
-                          <option value="10" data-filter="brand" data-value="10">1One</option>
-                          <option value="9" data-filter="brand" data-value="9" style="display: none;">Breuning</option>
-                          <option value="16" data-filter="brand" data-value="16">Brumani</option>
-                          <option value="15" data-filter="brand" data-value="15">Cesare Paciotti</option>
-                          <option value="8" data-filter="brand" data-value="8">Dea</option>
-                          <option value="12" data-filter="brand" data-value="12">Eugenio Campos</option>
-                          <option value="7" data-filter="brand" data-value="7">Graziella</option>
-                          <option value="14" data-filter="brand" data-value="14">Jessica</option>
-                          <option value="13" data-filter="brand" data-value="13" style="display: none;">Orele</option>
-                        </select>
-                      </label>
-                      <label for="good-type" class="goods-filter__item btn-select">ТИП ИЗДЕЛИЯ
-                        <select id="good-type" name="type" multiple="" class="no-styler">
-                          <option value="11" data-filter="type" data-value="11">Браслеты</option>
-                          <option value="12" data-filter="type" data-value="12" style="display: none;">Броши</option>
-                          <option value="15" data-filter="type" data-value="15" style="display: none;">Бусы</option>
-                          <option value="6" data-filter="type" data-value="6" style="display: none;">Колье</option>
-                          <option value="13" data-filter="type" data-value="13" style="display: none;">Кольца</option>
-                          <option value="10" data-filter="type" data-value="10" style="display: none;">Подвески и кулоны</option>
-                          <option value="2" data-filter="type" data-value="2" style="display: none;">Серьги</option>
-                          <option value="14" data-filter="type" data-value="14" style="display: none;">Цепи</option>
-                        </select>
-                      </label>
-                      <label for="good-style" class="goods-filter__item btn-select">СТИЛЬ
-                        <select id="good-style" name="style" multiple="" class="no-styler">
-                          <option value="5" data-filter="style" data-value="5">Вечерний (evening)</option>
-                          <option value="13" data-filter="style" data-value="13">Гламурный (fashion)</option>
-                          <option value="11" data-filter="style" data-value="11">Деловой (business)</option>
-                          <option value="3" data-filter="style" data-value="3">Классический (classic)</option>
-                          <option value="6" data-filter="style" data-value="6">Повседневный (casual)</option>
-                          <option value="4" data-filter="style" data-value="4">Романтический (romantic)</option>
-                        </select>
-                      </label>
-                      <label for="good-collection" class="goods-filter__item btn-select">КОЛЛЕКЦИЯ
-                        <select id="good-collection" name="collection" multiple="" class="no-styler">
-                          <option value="15" data-filter="collection" data-value="15">Без вставок</option>
-                          <option value="40" data-filter="collection" data-value="40" style="display: none;">В стиле диор</option>
-                          <option value="24" data-filter="collection" data-value="24">В тренде</option>
-                          <option value="13" data-filter="collection" data-value="13">Жемчужная</option>
-                          <option value="17" data-filter="collection" data-value="17">Мужская</option>
-                          <option value="25" data-filter="collection" data-value="25" style="display: none;">Натуральные камни</option>
-                          <option value="36" data-filter="collection" data-value="36" style="display: none;">Перламутровая мозаика</option>
-                          <option value="42" data-filter="collection" data-value="42">Премиум</option>
-                          <option value="12" data-filter="collection" data-value="12">Разноцветная</option>
-                          <option value="18" data-filter="collection" data-value="18">Фантазия</option>
-                          <option value="28" data-filter="collection" data-value="28">Фианитовая</option>
-                        </select>
-                      </label>
-                      <label for="good-metal" class="goods-filter__item btn-select">МЕТАЛЛ
-                        <select id="good-metal" name="metal" multiple="" class="no-styler">
-                          <option value="3" data-filter="metal" data-value="3">Золото</option>
-                          <option value="1" data-filter="metal" data-value="1">Серебро</option>
-                          <option value="4" data-filter="metal" data-value="4">Сталь</option>
-                        </select>
-                      </label>
-                      <label for="good-surface" class="goods-filter__item btn-select">ПОКРЫТИЕ
-                        <select id="good-surface" name="surface" multiple="" class="no-styler">
-                          <option value="8" data-filter="surface" data-value="8">Защитное покрытие</option>
-                          <option value="2" data-filter="surface" data-value="2">Позолота</option>
-                          <option value="1" data-filter="surface" data-value="1">Родирование</option>
-                          <option value="3" data-filter="surface" data-value="3">Рутенирование</option>
-                          <option value="7" data-filter="surface" data-value="7">Чернение</option>
-                          <option value="4" data-filter="surface" data-value="4">Эмаль</option>
-                        </select>
-                      </label>
-                      <label for="good-insert" class="goods-filter__item btn-select">ВСТАВКА
-                        <select id="good-insert" name="insert" multiple="" class="no-styler">
-                          <option value="31" data-filter="insert" data-value="31" style="display: none;">Авантюрин</option>
-                          <option value="49" data-filter="insert" data-value="49">Агат</option>
-                          <option value="48" data-filter="insert" data-value="48" style="display: none;">Александрит</option>
-                          <option value="28" data-filter="insert" data-value="28" style="display: none;">Аметист</option>
-                          <option value="9" data-filter="insert" data-value="9" style="display: none;">Бирюза</option>
-                          <option value="23" data-filter="insert" data-value="23">Бриллиант</option>
-                          <option value="64" data-filter="insert" data-value="64" style="display: none;">Глиттеринг</option>
-                          <option value="22" data-filter="insert" data-value="22" style="display: none;">Горный хрусталь</option>
-                          <option value="21" data-filter="insert" data-value="21" style="display: none;">Гранат</option>
-                          <option value="2" data-filter="insert" data-value="2">Жемчуг</option>
-                          <option value="36" data-filter="insert" data-value="36" style="display: none;">Зеленый агат</option>
-                          <option value="67" data-filter="insert" data-value="67" style="display: none;">Изумруд</option>
-                          <option value="47" data-filter="insert" data-value="47">Каучук</option>
-                          <option value="46" data-filter="insert" data-value="46">Кварц</option>
-                          <option value="55" data-filter="insert" data-value="55">Керамика</option>
-                          <option value="16" data-filter="insert" data-value="16">Кожа</option>
-                          <option value="7" data-filter="insert" data-value="7" style="display: none;">Коралл</option>
-                          <option value="4" data-filter="insert" data-value="4">Кошачий глаз</option>
-                          <option value="10" data-filter="insert" data-value="10">Кристалл swarovski</option>
-                          <option value="56" data-filter="insert" data-value="56" style="display: none;">Лейкосапфир</option>
-                          <option value="20" data-filter="insert" data-value="20" style="display: none;">Мистический кварц</option>
-                          <option value="65" data-filter="insert" data-value="65" style="display: none;">Морская ракушка</option>
-                          <option value="8" data-filter="insert" data-value="8">Оникс</option>
-                          <option value="40" data-filter="insert" data-value="40" style="display: none;">Опал</option>
-                          <option value="60" data-filter="insert" data-value="60" style="display: none;">Перидот</option>
-                          <option value="38" data-filter="insert" data-value="38">Перламутр</option>
-                          <option value="43" data-filter="insert" data-value="43" style="display: none;">Родолит</option>
-                          <option value="58" data-filter="insert" data-value="58" style="display: none;">Рубин</option>
-                          <option value="30" data-filter="insert" data-value="30" style="display: none;">Сапфир</option>
-                          <option value="63" data-filter="insert" data-value="63" style="display: none;">Синтетический жемчуг</option>
-                          <option value="45" data-filter="insert" data-value="45" style="display: none;">Синтетический камень</option>
-                          <option value="53" data-filter="insert" data-value="53" style="display: none;">Синтетический рубин</option>
-                          <option value="15" data-filter="insert" data-value="15">Сталь</option>
-                          <option value="59" data-filter="insert" data-value="59">Текстиль</option>
-                          <option value="66" data-filter="insert" data-value="66" style="display: none;">Тигровый глаз</option>
-                          <option value="39" data-filter="insert" data-value="39">Ткань</option>
-                          <option value="29" data-filter="insert" data-value="29">Топаз</option>
-                          <option value="52" data-filter="insert" data-value="52" style="display: none;">Топаз лондон блю</option>
-                          <option value="61" data-filter="insert" data-value="61">Турмалин</option>
-                          <option value="1" data-filter="insert" data-value="1">Фианиты</option>
-                          <option value="50" data-filter="insert" data-value="50" style="display: none;">Фианиты signity</option>
-                          <option value="62" data-filter="insert" data-value="62" style="display: none;">Халцедон</option>
-                          <option value="41" data-filter="insert" data-value="41" style="display: none;">Хризолит</option>
-                          <option value="37" data-filter="insert" data-value="37">Цирконий</option>
-                          <option value="42" data-filter="insert" data-value="42" style="display: none;">Цитрин</option>
-                          <option value="24" data-filter="insert" data-value="24">Ювелирная смола</option>
-                          <option value="11" data-filter="insert" data-value="11">Ювелирное стекло</option>
-                        </select>
-                      </label>
-                      <label for="good-size" class="goods-filter__item btn-select">РАЗМЕР
-                        <select id="good-size" name="size" multiple="" class="no-styler">
-                          <option data-filter="size" value="Б.Р.">Б.Р.</option>
-                          <option data-filter="size" value="16.0">16.0</option>
-                          <option data-filter="size" value="16.5">16.5</option>
-                          <option data-filter="size" value="17.0">17.0</option>
-                          <option data-filter="size" value="17.5">17.5</option>
-                          <option data-filter="size" value="18.0">18.0</option>
-                          <option data-filter="size" value="18.5">18.5</option>
-                          <option data-filter="size" value="19.0">19.0</option>
-                          <option data-filter="size" value="20.0">20.0</option>
-                          <option data-filter="size" value="20.5">20.5</option>
-                          <option data-filter="size" value="21.0">21.0</option>
-                          <option data-filter="size" value="21.5">21.5</option>
-                          <option data-filter="size" value="22.0">22.0</option>
-                          <option data-filter="size" value="23.0">23.0</option>
-                        </select>
-                      </label>
-                      <!-- <div class="goods-fsilter__price">-->
-                      <!-- <input data-max="429400" id="maxcost" type="hidden">-->
-                      <!-- <input data-min="170" id="mincost" type="hidden">-->
-                      <!-- <label for="price-from">От</label>-->
-                      <!-- <input id="price-from" type="number" class="inputtext" min="0" placeholder="170">-->
-                      <!-- <label for="price-to">до</label>-->
-                      <!-- <input id="price-to" type="number" class="inputtext" min="0" placeholder="429400">-->
-                      <!-- <span class="rub"><span>руб</span></span>-->
-                      <!-- </div>-->
-                    </div>
-                    <div class="goods-filter__choosen">
-                      <div class="goods-filter__choosen-title">ВЫ ВЫБРАЛИ:</div>
-                      <div id="itemsfilterresult" class="goods-filter__choosen-list">
-                        <div data-filter="collection" data-value="30" class="filter_item">Graziella</div>
-                        <div data-filter="collection" data-value="30" class="filter_item">Graziella</div>
-                        <div data-filter="collection" data-value="30" class="filter_item">Graziella</div>
-                        <div data-filter="collection" data-value="30" class="filter_item">Graziella</div>
-                        <div data-filter="collection" data-value="30" class="filter_item">Graziella</div>
-                      </div><a href="#" class="btn btn_black js-apply-filter">ПРИМЕНИТЬ</a>
-                    </div>
-                    <div class="js-close-filter"><a href="#" class="icon icon-x"></a></div>
-                  </div>
-                </div>
-              </div>
+              <div class="goods-filter goods-filter__title folding__title"><i class="icon icon-filter"></i>                    ФИЛЬТР</div>
             </div>
             <div class="right">
               <div class="line-filter">
@@ -381,7 +446,7 @@
                 <div class="pageswitch"><a href="#" class="arrow arrow-prev icon-drop icon-drop__left"></a><a href="/cat/type/13/1.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13" class="active">1</a><a href="/cat/type/13/2.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13">2</a><a href="/cat/type/13/2.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13">3</a><a href="/cat/type/13/2.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13">4</a><span>. . .</span><a href="/cat/type/13/5.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13">224</a><a href="#" class="arrow arrow-next icon-drop icon-drop__right"></a></div>
               </div>
               <div class="itemlist itemlist_catalog">
-                <div data-item="{id: 87000,sizes: [{26: 22000},{27: 33333}]}" class="item js-item-data">
+                <div data-item="{id: 19635,sizes: [{26: 22000},{27: 33333}]}" class="item js-item-data">
                   <div class="item-inner"><span class="info-lbl"><span>30%</span></span>
                     <div class="item-preview"><a href="javascript:void(0)" onclick="$(this).toggleClass('added')" class="favorite-link icon"></a>
                       <div class="item-preview__slider">
@@ -394,10 +459,10 @@
                     <div class="description"><a href="item.html">Кольцо от Graziella, модель Geometrie11, желтое золото, эмальжелтое золото, эмаль</a></div>
                     <div class="old-cost"><span class="dec">старая цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
                     <div class="cost"><span class="dec">Цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
-                    <div class="buttons"><a href="#" data-item="87000" class="btn js-buy">Купить</a></div>
+                    <div class="buttons"><a href="#" data-item="19635" class="btn js-buy">Купить</a></div>
                   </div>
                 </div>
-                <div data-item="{id: 60247,sizes: [{21: 22222},{22: 33333}]}" class="item js-item-data">
+                <div data-item="{id: 86228,sizes: [{21: 22222},{22: 33333}]}" class="item js-item-data">
                   <div class="item-inner"><span class="info-lbl"><span>30%</span></span>
                     <div class="item-preview"><a href="javascript:void(0)" onclick="$(this).toggleClass('added')" class="favorite-link icon"></a>
                       <div class="item-preview__slider">
@@ -408,10 +473,10 @@
                     </div>
                     <div class="description"><a href="item.html">Кольцо от Graziella, модель Geometrie11, желтое золото, эмальжелтое золото, эмаль</a></div>
                     <div class="cost"><span class="dec">Цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
-                    <div class="buttons"><a href="#" data-item="60247" class="btn js-buy">Купить</a></div>
+                    <div class="buttons"><a href="#" data-item="86228" class="btn js-buy">Купить</a></div>
                   </div>
                 </div>
-                <div data-item="{id: 4474,sizes: []}" class="item js-item-data">
+                <div data-item="{id: 39065,sizes: []}" class="item js-item-data">
                   <div class="item-inner"><span class="info-lbl info-lbl__orange"><span>Новинка</span></span>
                     <div class="item-preview"><a href="javascript:void(0)" onclick="$(this).toggleClass('added')" class="favorite-link icon"></a>
                       <div class="item-preview__slider">
@@ -425,10 +490,10 @@
                     <div class="description"><a href="item.html">Кольцо от Graziella, модель Geometrie11, желтое золото, эмальжелтое золото, эмаль</a></div>
                     <div class="old-cost"><span class="dec">старая цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
                     <div class="cost"><span class="dec">Цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
-                    <div class="buttons"><a href="#" data-item="4474" class="btn js-buy">Купить</a></div>
+                    <div class="buttons"><a href="#" data-item="39065" class="btn js-buy">Купить</a></div>
                   </div>
                 </div>
-                <div data-item="{id: 67953,sizes: []}" class="item js-item-data">
+                <div data-item="{id: 40987,sizes: []}" class="item js-item-data">
                   <div class="item-inner"><span class="info-lbl"><span>30%</span></span>
                     <div class="item-preview"><a href="javascript:void(0)" onclick="$(this).toggleClass('added')" class="favorite-link icon"></a>
                       <div class="item-preview__slider">
@@ -440,10 +505,10 @@
                     <div class="description"><a href="item.html">Кольцо от Graziella, модель Geometrie11, желтое золото, эмальжелтое золото, эмаль</a></div>
                     <div class="old-cost"><span class="dec">старая цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
                     <div class="cost"><span class="dec">Цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
-                    <div class="buttons"><a href="#" data-item="67953" class="btn js-buy">Купить</a></div>
+                    <div class="buttons"><a href="#" data-item="40987" class="btn js-buy">Купить</a></div>
                   </div>
                 </div>
-                <div data-item="{id: 87510,sizes: []}" class="item js-item-data">
+                <div data-item="{id: 59642,sizes: []}" class="item js-item-data">
                   <div class="item-inner"><span class="info-lbl"><span>30%</span></span>
                     <div class="item-preview"><a href="javascript:void(0)" onclick="$(this).toggleClass('added')" class="favorite-link icon"></a>
                       <div class="item-preview__slider">
@@ -455,10 +520,10 @@
                     <div class="description"><a href="item.html">Кольцо от Graziella, модель Geometrie11, желтое золото, эмальжелтое золото, эмаль</a></div>
                     <div class="old-cost"><span class="dec">старая цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
                     <div class="cost"><span class="dec">Цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
-                    <div class="buttons"><a href="#" data-item="87510" class="btn js-buy">Купить</a></div>
+                    <div class="buttons"><a href="#" data-item="59642" class="btn js-buy">Купить</a></div>
                   </div>
                 </div>
-                <div data-item="{id: 73740,sizes: []}" class="item js-item-data">
+                <div data-item="{id: 50221,sizes: []}" class="item js-item-data">
                   <div class="item-inner"><span class="info-lbl"><span>30%</span></span>
                     <div class="item-preview"><a href="javascript:void(0)" onclick="$(this).toggleClass('added')" class="favorite-link icon"></a>
                       <div class="item-preview__slider">
@@ -470,10 +535,10 @@
                     <div class="description"><a href="item.html">Кольцо от Graziella, модель Geometrie11, желтое золото, эмальжелтое золото, эмаль</a></div>
                     <div class="old-cost"><span class="dec">старая цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
                     <div class="cost"><span class="dec">Цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
-                    <div class="buttons"><a href="#" data-item="73740" class="btn js-buy">Купить</a></div>
+                    <div class="buttons"><a href="#" data-item="50221" class="btn js-buy">Купить</a></div>
                   </div>
                 </div>
-                <div data-item="{id: 68550,sizes: []}" class="item js-item-data">
+                <div data-item="{id: 81693,sizes: []}" class="item js-item-data">
                   <div class="item-inner"><span class="info-lbl"><span>30%</span></span>
                     <div class="item-preview"><a href="javascript:void(0)" onclick="$(this).toggleClass('added')" class="favorite-link icon"></a>
                       <div class="item-preview__slider">
@@ -485,26 +550,10 @@
                     <div class="description"><a href="item.html">Кольцо от Graziella, модель Geometrie11, желтое золото, эмальжелтое золото, эмаль</a></div>
                     <div class="old-cost"><span class="dec">старая цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
                     <div class="cost"><span class="dec">Цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
-                    <div class="buttons"><a href="#" data-item="68550" class="btn js-buy">Купить</a></div>
+                    <div class="buttons"><a href="#" data-item="81693" class="btn js-buy">Купить</a></div>
                   </div>
                 </div>
-                <div data-item="{id: 8835,sizes: []}" class="item js-item-data">
-                  <div class="item-inner"><span class="info-lbl"><span>30%</span></span>
-                    <div class="item-preview"><a href="javascript:void(0)" onclick="$(this).toggleClass('added')" class="favorite-link icon"></a>
-                      <div class="item-preview__slider">
-                        <div class="slider-contaniner">
-                          <div class="slider-item"><a href="#"><img src="../assets/images/tmp/item1.jpg" alt=""/></a></div>
-                          <div class="slider-item"><a href="#"><img src="../assets/images/tmp/item2.jpg" alt=""/></a></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="description"><a href="item.html">Кольцо от Graziella, модель Geometrie11, желтое золото, эмальжелтое золото, эмаль</a></div>
-                    <div class="old-cost"><span class="dec">старая цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
-                    <div class="cost"><span class="dec">Цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
-                    <div class="buttons"><a href="#" data-item="8835" class="btn js-buy">Купить</a></div>
-                  </div>
-                </div>
-                <div data-item="{id: 58124,sizes: []}" class="item js-item-data">
+                <div data-item="{id: 81145,sizes: []}" class="item js-item-data">
                   <div class="item-inner"><span class="info-lbl"><span>30%</span></span>
                     <div class="item-preview"><a href="javascript:void(0)" onclick="$(this).toggleClass('added')" class="favorite-link icon"></a>
                       <div class="item-preview__slider">
@@ -517,7 +566,23 @@
                     <div class="description"><a href="item.html">Кольцо от Graziella, модель Geometrie11, желтое золото, эмальжелтое золото, эмаль</a></div>
                     <div class="old-cost"><span class="dec">старая цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
                     <div class="cost"><span class="dec">Цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
-                    <div class="buttons"><a href="#" data-item="58124" class="btn js-buy">Купить</a></div>
+                    <div class="buttons"><a href="#" data-item="81145" class="btn js-buy">Купить</a></div>
+                  </div>
+                </div>
+                <div data-item="{id: 52260,sizes: []}" class="item js-item-data">
+                  <div class="item-inner"><span class="info-lbl"><span>30%</span></span>
+                    <div class="item-preview"><a href="javascript:void(0)" onclick="$(this).toggleClass('added')" class="favorite-link icon"></a>
+                      <div class="item-preview__slider">
+                        <div class="slider-contaniner">
+                          <div class="slider-item"><a href="#"><img src="../assets/images/tmp/item1.jpg" alt=""/></a></div>
+                          <div class="slider-item"><a href="#"><img src="../assets/images/tmp/item2.jpg" alt=""/></a></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="description"><a href="item.html">Кольцо от Graziella, модель Geometrie11, желтое золото, эмальжелтое золото, эмаль</a></div>
+                    <div class="old-cost"><span class="dec">старая цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
+                    <div class="cost"><span class="dec">Цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
+                    <div class="buttons"><a href="#" data-item="52260" class="btn js-buy">Купить</a></div>
                   </div>
                 </div>
               </div>

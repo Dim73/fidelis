@@ -13,6 +13,7 @@ require('./lib/subscribe');
 
 require('./mobile/changeTown');
 require('./mobile/main-nav');
+var sliderConstructor = require('./lib/constructor.bxslider');
 var Basket = require('./components/basket');
 
     $(function(){
@@ -38,7 +39,7 @@ var Basket = require('./components/basket');
         }
 
 
-        $('.pitem-specs__spoilers .folding, .goods-filter.folding').folding({});
+        $('.pitem-specs__spoilers .folding, .filter-pane__items .folding').folding();
         $('.content-text__side .folding').folding({openHeight: 500});
         $('.order-spoiler').folding({closeOther: '.order-spoiler'});
         $(".phone-mask").mask("+7 (999) 999-99-99");
@@ -153,7 +154,7 @@ var Basket = require('./components/basket');
                     auto: false,
                     onSliderLoad: function(currentIndex) {
 
-                        this.addClass('loaded');
+                        this.$self.addClass('loaded');
                     },
                     onSlideAfter: function($item) {
 
