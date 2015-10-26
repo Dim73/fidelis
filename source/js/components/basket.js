@@ -6,7 +6,7 @@ require('nanoscroller');
     var ajxUrl = {};
 
     var ENV_CONST = window.location.host && (/^[^\:]+\:[\d]+/.test(window.location.host))?'dev':'prod';
-
+    var RESTYPE_CONST = ENV_CONST?'get':'post';
     function addUrl (name, urls) {
         if(ENV_CONST == 'dev') {
             ajxUrl[name] = '../../source/back/' + urls[0];
@@ -145,8 +145,6 @@ require('nanoscroller');
         },
         _linkItem: function(e) {
             var self = e.data;
-
-            console.log(IS_MOBILE);
             if ($(this).closest('.basket_order').length && !IS_MOBILE) {
                 e.preventDefault();
                 self.basket.modalItem(self);
@@ -200,7 +198,7 @@ require('nanoscroller');
             $.ajax({
                 url: ajxUrl.addItem,
                 cache: false,
-                type: 'post',
+                type: ENV_CONST?'get':'post',
                 dataType: 'json',
                 data: {data: data}, // data.id, data.count, data.size
                 success: function(resp,status,xhr){
@@ -218,7 +216,7 @@ require('nanoscroller');
             $.ajax({
                 url: ajxUrl.removeItem,
                 cache: false,
-                type: 'post',
+                type: ENV_CONST?'get':'post',
                 dataType: 'json',
                 data: {id: item.id}, // data.id, data.count, data.size
                 success: function(data,status,xhr){
@@ -281,7 +279,7 @@ require('nanoscroller');
             $.ajax({
                 url: ajxUrl.getItem,
                 cache: false,
-                type: 'get',
+                type: ENV_CONST?'get':'get',
                 dataType: 'json',
                 data: {id : id},
                 success: function(data,status,xhr){
@@ -360,7 +358,7 @@ require('nanoscroller');
             $.ajax({
                 url: ajxUrl.modalItem,
                 cache: false,
-                type: 'post',
+                type: ENV_CONST?'get':'post',
                 dataType: 'html',
                 data: {id: item.id},
                 success: function(data,status,xhr){
@@ -563,7 +561,7 @@ require('nanoscroller');
             $.ajax({
                 url: ajxUrl.delivInfo,
                 cache: false,
-                type: 'post',
+                type: ENV_CONST?'get':'post',
                 dataType: 'json',
                 data: {type: self.dType, destination: dest || ''},
                 success: function(data,status,xhr){
@@ -591,7 +589,7 @@ require('nanoscroller');
             $.ajax({
                 url: ajxUrl.town,
                 cache: false,
-                type: 'post',
+                type: ENV_CONST?'get':'post',
                 dataType: 'html',
                 data: {region: region},
                 success: function(data,status,xhr){
@@ -638,7 +636,7 @@ require('nanoscroller');
                 $.ajax({
                     url: ajxUrl.delivSubmit,
                     cache: false,
-                    type: 'post',
+                    type: ENV_CONST?'get':'post',
                     dataType: 'json',
                     data: {data: self.$form.serialize()},
                     success: function(data,status,xhr){

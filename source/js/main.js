@@ -1,10 +1,11 @@
-var $ =  jQuery =  require('jquery');
 
-
+global.jQuery = $ =  require("jquery");
 require('jquery-mousewheel')($);
 var Mustache = require('mustache');
 require('jquery.browser');
 require('./main/prlx-banner.plugin');
+require('./main/menuImg.plugin');
+require('./main/main-menu');
 
 require('./vendor/jquery.maskedinput');
 require('./vendor/size.scroll');
@@ -19,6 +20,7 @@ require('./lib/dropdown.plugin');
 require('./lib/subscribe');
 
 require('./main/call');
+require('./main/changeTown');
 var sliderConstructor = require('./lib/constructor.bxslider');
 
 var Basket = require('./components/basket');
@@ -32,7 +34,6 @@ var Basket = require('./components/basket');
             $('select, input[type=checkbox]').not('.no-styler').styler({selectSearch:false});
 
          }, 100);
-
         $('.select_size, .select_size-order ').CustomSelect({visRows:4});
         $('.select-scroll').CustomSelect({visRows:8});
         $('.pitem-specs__spoilers .folding').folding({openHeight: 163, closeOther: '.pitem-specs__spoilers .spoiler-item'});
@@ -503,10 +504,6 @@ var Basket = require('./components/basket');
         //banner prlx
         $('.seo-main').prlx();
     })
-
-
-
-
 
 function smoothScrollInit () {
     var platform = navigator.platform.toLowerCase();

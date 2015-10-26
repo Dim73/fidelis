@@ -1,23 +1,18 @@
-var $ =  jQuery =  require('jquery');
-require('../../node_modules/bxslider/dist/jquery.bxslider.min');
-var sliderConstructor = require('./lib/constructor.bxslider');
-require('jquery-mousewheel')($);
+global.jQuery = $ =  require("jquery");
 var Mustache = require('mustache');
 require('jquery.browser');
-require('./main/prlx-banner.plugin');
 
 require('./vendor/jquery.maskedinput');
 require('./vendor/size.scroll');
-require('./vendor/tipped');
-
-require('./vendor/jquery.simplr.smoothscroll.min');
 require('./vendor/jquery.formstyler.min');
 
+require('./vendor/jquery.bxslider');
 require('./lib/folding.plugin');
 require('./lib/dropdown.plugin');
 require('./lib/subscribe');
 
-require('./main/call');
+require('./mobile/changeTown');
+require('./mobile/main-nav');
 var Basket = require('./components/basket');
 
     $(function(){
@@ -41,10 +36,6 @@ var Basket = require('./components/basket');
             $(window).bind('orientationchange', setViewPort);
             setViewPort();
         }
-
-        setTimeout(function() {
-          //  $('select, input[type=checkbox]').not('.no-styler').styler({selectSearch:false});
-        }, 100);
 
 
         $('.pitem-specs__spoilers .folding, .goods-filter.folding').folding({});

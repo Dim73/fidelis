@@ -1,10 +1,6 @@
-//var $ = require('jquery');
-require('./vendor/jquery-ui');
-require('./vendor/jquery-ui-slider-pips.min');
-require('nanoscroller');
 var ajxLoader = require('./lib/ajxLoader');
 
-var AppUtils = { //вспомогашки
+    var AppUtils = { //вспомогашки
         hasClass: function(el, cls) {
             return el.className && new RegExp("(\\s|^)" + cls + "(\\s|$)").test(el.className);
         },
@@ -31,8 +27,7 @@ var AppUtils = { //вспомогашки
     };
 
     var goodsUrl = '';
-    var ENV_CONST = window.location.host && (/^[^\:]+\:[\d]+/.test(window.location.host))?'dev':'prod';
-    if(ENV_CONST) {
+    if(window.location.host && (/\:300/.test(window.location.host))) {
         goodsUrl = '../../source/back/catalogue.json?';
     } else {
         goodsUrl = '/ajax/catalogue.html?';
@@ -63,7 +58,7 @@ var AppUtils = { //вспомогашки
             this.state[this.filterName] = data;
         },
         view: function() {
-            var $activeLink = $('.category-section-block .list .selected');
+            var $activeLink = $('.category-section-block input');
             this.setName($activeLink.data('filter'));
             this.updateState($activeLink.data('value'));
 
@@ -111,7 +106,6 @@ var AppUtils = { //вспомогашки
             this.controller = controller;
             this.state = {};
             this.filterName = 'OtherFilter';
-
             var otherVal = $('#other').val();
             this.state[this.filterName] = otherVal?otherVal:null;
         },
@@ -142,13 +136,13 @@ var AppUtils = { //вспомогашки
             this.lockChange = false;
         },
         getState: function() {
-          return  this.state;
+            return  this.state;
         },
         getStateRaw: function() {
-            if (!this.state[this.filterName] || this.state[this.filterName].join() === this.defaultRange.join()) return;
-            var rawObj = {};
-            rawObj[this.filterName] = [{'0':'от '+this.state[this.filterName][0]+' до '+this.state[this.filterName][1]}];
-            return rawObj;
+            //if (!this.state[this.filterName] || this.state[this.filterName].join() === this.defaultRange.join()) return;
+            //var rawObj = {};
+            //rawObj[this.filterName] = [{'0':'от '+this.state[this.filterName][0]+' до '+this.state[this.filterName][1]}];
+            //return rawObj;
         },
         returnState: function(state) {
             var isFinded = false;
@@ -161,17 +155,29 @@ var AppUtils = { //вспомогашки
             if (!isFinded) {
                 this.state[this.filterName] = this.defaultRange;
             }
+            //console.log(this.state);
         },
         isName: function(name) {
-          return  this.filterName === name;
+            return  this.filterName === name;
         },
         updateState: function(data) {
-            this.state[this.filterName] = data;
-            this.controller.updateFilters();
+            if (data == null) return;
+            var newData = data;
+            console.log(newData, this.state[this.filterName]);
+            if (this.state[this.filterName])
+            try {
+                newData[0] = newData[0] == "" ? this.state[this.filterName][0] : newData[0];
+                newData[1] = newData[1] == "" ? this.state[this.filterName][1] : newData[1];
+            } catch (e) {
+                console.log(e);
+            }
+            this.state[this.filterName] = newData;
+            console.log(this.state[this.filterName]);
+            //this.controller.updateFilters();
         },
         removeFilter: function(data) {
             this.state = {};
-            this.render();
+            //this.render();
         },
         resolveConflict: function(priceRange) { //проверка и исправление на - текущая выборка цены выходит за границы новых доступных цен
             var currentRange = this.state[this.filterName];
@@ -192,41 +198,39 @@ var AppUtils = { //вспомогашки
             this.lockChange = flag;
         },
         isLock: function() {
-          return this.lockChange;
+            return this.lockChange;
         },
         getRangeData: function() {
             return this.controller.getFilterRenderData(this.filterName);
         },
         viewInit: function() {
+            var self = this;
             this.view = {};
-            this.view.priceFilter = $("#price-slider");
+            this.view.$min = $('#price-from');
+            this.view.$max = $('#price-to');
             this.defaultRange = [$('#mincost').data('min'), $('#maxcost').data('max')];
-            this.view.priceFilter
-                .slider({
-                    min: this.defaultRange[0],
-                    max: this.defaultRange[1],
-                    range: true,
-                    values: [this.defaultRange[0], this.defaultRange[1]],
-                    change: function( event, ui ) {
-                    },
-                    slide: function( event, ui ) {
-                        $('#mincost').val(ui.values[0]);
-                        $('#maxcost').val(ui.values[1]);
-                    }
-                }).slider("float");
+            self.updateState([$('#mincost').data('min'), $('#maxcost').data('max')]);
+            this.view.$min.on('blur',function(){
+                self.updateState([+self.view.$min.val(), +self.view.$max.val()]);
+            });
 
-            this.view.priceFilter.on( "slidechange", function( event, ui ) {
-                if (!this.isLock()) {
-                    this.updateState([ui.values[0],ui.values[1]]);
-                }
-            }.bind(this));
+            this.view.$max.on('blur',function(){
+                self.updateState([+self.view.$min.val(), +self.view.$max.val()]);
+            });
         },
         render: function() {
             var priceData = this.getRangeData();
             var currentValue = this.resolveConflict(priceData);
+            this.updateState(priceData);
             this.setLock(true);
-            (priceData && priceData instanceof Array)
-                && this.view.priceFilter.slider("option","values",[currentValue[0],currentValue[1]]).slider("option", "min", priceData[0]).slider("option", "max", priceData[1]).slider("pips").slider("float");
+            if (priceData && priceData instanceof Array)
+            {
+                this.view.$min.attr('placeholder', priceData[0]);
+                this.view.$max.attr('placeholder', priceData[1]);
+
+                !!this.view.$min.val() && this.view.$min.val(priceData[0]);
+                !!this.view.$max.val() && this.view.$min.val(priceData[1]);
+            }
             this.setLock(false);
         }
     };
@@ -264,7 +268,7 @@ var AppUtils = { //вспомогашки
             for (var fName in state) {
                 if (this.filterName.indexOf(fName) > -1) {
                     state[fName].forEach(function(item){
-                       this.addActiveCheckbox({type: fName, value: item, label : this.getNameCheckbox({fName: fName, value : item})});
+                        this.addActiveCheckbox({type: fName, value: item, label : this.getNameCheckbox({fName: fName, value : item})});
                     }.bind(this));
                 }
             }
@@ -301,13 +305,12 @@ var AppUtils = { //вспомогашки
             }
             return lbl;
         },
-        updateActiveCheckbox: function(data, isInit) {
-            if (data.checked) {
-                this.addActiveCheckbox(data);
-            } else {
-                this.removeActiveCheckbox(data);
-            }
-            !isInit && this.controller.updateFilters();
+        updateActiveCheckbox: function(data, name) {
+            this.activeCheckboxes[name] = [];
+            data.forEach(function(item){
+                this.addActiveCheckbox(item);
+            }.bind(this));
+            //!isInit && this.controller.updateFilters();
         },
         addActiveCheckbox: function(data) {
             if (!this.activeCheckboxes[data.type]) {
@@ -333,57 +336,60 @@ var AppUtils = { //вспомогашки
             return this.controller.getFilterRenderData(this.filterName)
         },
         getActiveCheckboxes: function() {
-          return this.getState();
+            return this.getState();
         },
         viewInit: function() {
             var self = this;
             this.view = {};
-            this.view.checkoxFilters = $('.block .list input[type=checkbox], .square_sizes input.squaresize');
+            this.view.checkoxFilters = $('.goods-filter__item option');
+            this.view.$select = $('.goods-filter__item select');
 
             this.view.checkoxFilters.each(function(){
                 var $item = $(this);
                 var filterName = $item.data('filter');
                 filterName && self.addFilterName(filterName);
-                self.addNameCheckbox({type: filterName,value: parseInt($item.data('value')), label: $item.closest('label').text()});
-                if ($item.is(':checked') && !$item.is(':disabled')) {
-                    self.updateActiveCheckbox({type: $item.data('filter'),value: parseInt($item.data('value')), checked: $item.is(':checked'), label: $item.closest('label').text()}, true);
+                self.addNameCheckbox({type: filterName,value: parseInt($item.val()), label: $item.text()});
+                if ($item[0].selected && !$item.is(':disabled')) {
+                    self.addActiveCheckbox({type: $item.data('filter'),value: parseInt($item.val()), checked: $item[0].selected, label: $item.text()}, true);
                 }
             });
 
-            this.view.checkoxFilters.bind('change', function(event){
-                var $item = $(this);
-                self.updateActiveCheckbox({type: $item.data('filter'),value: $item.data('value'), checked: $item.is(':checked'), label: $item.closest('label').text()});
+            this.view.$select.on('change', function(event){
+                var $select = $(this);
+                var data = [];
+                $select.find('option').each(function(){
+                    var $item = $(this);
+                    $item[0].selected && data.push({type: $item.data('filter'),value: $item.val(), label: $item.text()});
+                });
+                self.updateActiveCheckbox(data, $select.prop('name'));
+                self.controller.render();
+                self.controller.updateFilters();
             });
         },
         render: function() { //рендер доступных чекбоксов
-            var $li;
             var filtersData = this.getAvailableCheckboxes();
 
             for (var filter in filtersData) {
                 this.view.checkoxFilters.filter('[data-filter=' + filter + ']').each(function () {
                     var $item = $(this);
-                    $li = $item.closest('li');
                     //console.log(filtersData[filter].indexOf("" + $item.data('value')));
                     //console.log(filtersData[filter], typeof $item.data('value'), filtersData[filter].indexOf($item.data('value')));
-                    if (filtersData[filter].indexOf($item.data('value')) > -1) {
-                        $li.show();
+                    if (filtersData[filter].indexOf(filter == 'size'?$item.val():+$item.val()) > -1) {
+                        $item.removeProp('disabled');
                     } else {
-                        $li.hide();
+                        $item.prop('disabled','disabled');
                     }
                 });
             }
-            $('.block .nano-scroll').nanoScroller();
-            $('.block.folding').trigger('update');
         },
         renderCheckboxes: function() { //рендер состояния чекбоксов
             var activeCheckboxes = this.getActiveCheckboxes();
-            this.view.checkoxFilters.not(':disabled').prop('checked',false);
+            this.view.checkoxFilters.not(':disabled').prop('selected',false);
             for (var fName in activeCheckboxes) {
                 activeCheckboxes[fName].forEach(function(val){
-                    this.view.checkoxFilters.filter('[data-filter='+fName+'][data-value="'+val+'"]').prop('checked',true);
+                    this.view.checkoxFilters.filter('[data-filter='+fName+'][value="'+val+'"]').prop('selected',true);
                 }.bind(this));
             }
-            this.view.checkoxFilters.trigger('refresh');
         }
     };
 
@@ -400,7 +406,7 @@ var AppUtils = { //вспомогашки
         addComponent: function(component) {
             /*if (component instanceof Object) {
 
-            }*/
+             }*/
             this.components.push(component);
             component.init(this);
         },
@@ -417,19 +423,21 @@ var AppUtils = { //вспомогашки
             this.manager.getMessage(type);
         },
         getMessage: function(type, data) {
-          switch (type) {
-              case 'newData' :
-                  this.responseData = data.filters;
-                  this.renderComponents();
-                  this.render();
-                  break;
-          }
+            switch (type) {
+                case 'newData' :
+                    this.responseData = data.filters;
+                    this.renderComponents();
+                    this.render();
+                    break;
+            }
         },
         getState: function() {
             var stateArr = [];
-            this.components.forEach(function(component){
-                stateArr.push(component.getState());
+            stateArr = this.components.map(function(component){
+                //console.log(component, component.getState());
+                return component.getState() || null;
             });
+
             return AppUtils.concatObj(stateArr);
         },
         returnState: function(state) {
@@ -456,10 +464,24 @@ var AppUtils = { //вспомогашки
             }
         },
         view: function() {
+            var self = this;
             this.viewFilters.init(this);
+            this.$apply = $('.js-apply-filter');
+            this.$close = $('.js-close-filter');
+            this.$self = $('.goods-filter.folding');
+            this.$apply.on('click',function(e){
+                e.preventDefault();
+                console.log(self.getState());
+                self.sendMessage('filtersChange');
+            });
+            this.$close.on('click',function(e){
+                e.preventDefault();
+                self.$self.trigger('close');
+            })
         },
         render: function() {//рендер FiltersView
             this.viewFilters.render();
+            this.$self.trigger('update');
         },
         getViewData: function() {
             var viewData = [];
@@ -492,6 +514,7 @@ var AppUtils = { //вспомогашки
         view: function() {
             this.self = document.getElementById('itemsfilterresult');
             this.$self = $(this.self);
+            this.$title = $('.goods-filter__choosen-title');
             this.linkClass = 'filter_item';
             this.tpl  = '<div class="'+this.linkClass+'" data-filter="{type}" data-value="{value}">{lbl}</div>';
 
@@ -511,7 +534,6 @@ var AppUtils = { //вспомогашки
             var filters = this.controller.getViewData(),//{filterName: [{value:label},...],filterName: [...]}
                 filtersHtml = '';
 
-            //console.log(filters);
             for (var filter in filters) {
                 filters[filter].forEach(function(values){
                     for (var value in values) {
@@ -520,6 +542,7 @@ var AppUtils = { //вспомогашки
                 }.bind(this));
 
             }
+            this.$title.toggle(!!filtersHtml);
             this.$self.html(filtersHtml);
         }
     };
@@ -547,16 +570,16 @@ var AppUtils = { //вспомогашки
                         this.setState({type: fName, value: state[fName]}, false);
                         isFinded = true;
                     }
-                   /* if (!isFinded) {
-                        this.setState({type: fName, value: this.defaultValue[fName]});
-                    }*/
+                    /* if (!isFinded) {
+                     this.setState({type: fName, value: this.defaultValue[fName]});
+                     }*/
                 }
             } else {
                 for (fName in this.defaultValue) {
                     this.setState({type: fName, value: this.defaultValue[fName]});
                 }
             }
-            console.log(this.state);
+            //console.log(this.state);
             this.renderSelect();
         },
         sendMessage: function(type) {
@@ -575,8 +598,8 @@ var AppUtils = { //вспомогашки
             if (!this.defaultValue[data.type]){
                 this.defaultValue[data.type] = data.value;
             }
-            console.log(this.defaultValue);
             this.setViewMode(data);
+            this.lastSelect =
             isUpdate && this.sendMessage('filtersChange');
         },
         setViewMode: function(data) {
@@ -590,7 +613,7 @@ var AppUtils = { //вспомогашки
             var self = this;
             this.view = {};
             this.view.pager = $('.pageswitch');
-            this.view.select = $('.itemsfilter__item select');
+            this.view.select = $('.itemsfilter .btn-select select');
             this.view.select.each(function(){
                 var $select = $(this);
                 self.setState({type: $select.data('type'), value: $select.val()});
@@ -598,6 +621,7 @@ var AppUtils = { //вспомогашки
             this.view.select.on('change', function(){
                 var $select = $(this);
                 self.setState({type: $select.data('type'), value: $select.val()}, true);
+                self.renderSelect();
             });
         },
         render: function() {
@@ -613,9 +637,13 @@ var AppUtils = { //вспомогашки
             var data = this.getState();
             for (var sName in data) {
                 //console.log(data[sName], sName);
-                this.view.select.filter('[data-type='+sName+']').val(data[sName]);
+                var thisSelect = this.view.select.filter('[data-type='+sName+']');
+                thisSelect
+                    .val(data[sName])
+                    .prev().find('.select-value').text(thisSelect.find('option:selected').text());
             }
-            this.view.select.trigger('refresh');
+            //this.view.select.trigger('refresh');
+
         }
     };
 
@@ -630,7 +658,7 @@ var AppUtils = { //вспомогашки
             this.view.item = $('.item', this.view.container);
         },
         getPage: function() {
-          return this.manager.getPage();
+            return this.manager.getPage();
         },
         getGoods: function() {
             return this.manager.getGoods();
@@ -673,7 +701,7 @@ var AppUtils = { //вспомогашки
                 history.pushState( {stateData:getActiveComponentsState() }, documentTitle, '?' + getParam());
             },
             onpopstate: function(e) {
-                console.log(firstPopState);
+                //console.log(firstPopState);
                 if (/*!e.state && */firstPopState) { //safari & old chrome fix
                     return false;
                 }
@@ -685,22 +713,24 @@ var AppUtils = { //вспомогашки
                 if (!history.state) {
                     isBlankState = true;
                 }
-                (timeCapsule && timeCapsule instanceof Function) && timeCapsule(history.state?history.state.stateData:undefined);
+                (timeCapsule && timeCapsule instanceof Function) && timeCapsule(history.state?history.state.stateData:{});
             }
         };
 
         function timeCapsule(state) {
+            //console.info(state);
             catalogComponents.forEach(function(component){
                 component.returnState(state);
             });
-               getMessage('filtersChange', {back: true});
+            getMessage('filtersChange', {back: true});
         }
 
         function getActiveComponentsState() {
             var stateArr = [];
-            catalogComponents.forEach(function(component){
-                stateArr.push(component.getState()); //{filterName: [val,val,...], filterName: ...}
+            stateArr = catalogComponents.map(function(component){
+                return component.getState() || null;  //{filterName: [val,val,...], filterName: ...}
             });
+            //console.log(stateArr);
             return AppUtils.concatObj(stateArr);
         }
 
@@ -718,7 +748,7 @@ var AppUtils = { //вспомогашки
             } catch(e) {
 
             }
-           // historyState.isReturn();
+            // historyState.isReturn();
         }
 
         function setViewMode(type) {
@@ -756,10 +786,10 @@ var AppUtils = { //вспомогашки
 
         function getParam() {
             paramToPost = '';
-           /* if (isBlankState) {
-                isBlankState = false;
-                return paramToPost;
-            }*/
+            /* if (isBlankState) {
+             isBlankState = false;
+             return paramToPost;
+             }*/
             firstPopState = false;
             addToParam(getActiveComponentsState());
             addToParam({actpage: pageToView});
@@ -771,24 +801,24 @@ var AppUtils = { //вспомогашки
                 currentXhr.abort();
             }
             currentXhr = $.ajax(goodsUrl + getParam(), {///ajax/catalogue.html?  '../../source/back/catalogue.html?'
-                    cache: false,
-                    type: 'get',
-                    dataType: 'json',
-                    beforeSend: function (xhr, setting) {
-                        ajxLoader.attachTo($GoodsBlock);
-                    },
-                    success: function (data, status, xhr) {
-                        lastData = data;
-                        callback(data);
-                    },
-                    complete: function (xhr, status) {
-                        currentXhr = null;
-                        ajxLoader._detach();
-                    },
-                    error: function (xhr, status) {
-                        console.log(xhr);
-                        console.log(status);
-                    }
+                cache: false,
+                type: 'get',
+                dataType: 'json',
+                beforeSend: function (xhr, setting) {
+                    ajxLoader.attachTo($GoodsBlock);
+                },
+                success: function (data, status, xhr) {
+                    lastData = data;
+                    callback(data);
+                },
+                complete: function (xhr, status) {
+                    currentXhr = null;
+                    ajxLoader._detach();
+                },
+                error: function (xhr, status) {
+                    console.log(xhr);
+                    console.log(status);
+                }
             });
         }
 
@@ -858,10 +888,9 @@ var AppUtils = { //вспомогашки
     })();
 
     $(function(){
-
-
         Filters.init(CatalogManager, FiltersView);
-        Filters.addComponent(PriceFilter);
+
+       // Filters.addComponent(PriceFilter);
         Filters.addComponent(CheckboxFilter);
         Filters.addComponent(popularFilter);
         Filters.addComponent(IdentifySection);
@@ -870,4 +899,4 @@ var AppUtils = { //вспомогашки
         ShowOptions.init(CatalogManager);
         Goods.init(CatalogManager);
         CatalogManager.init(Goods, [Filters, ShowOptions]);
-    });
+    })

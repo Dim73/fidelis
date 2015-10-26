@@ -10352,991 +10352,9 @@ return jQuery;
 }));
 
 },{}],2:[function(require,module,exports){
-/*! nanoScrollerJS - v0.8.7 - 2015
-* http://jamesflorentino.github.com/nanoScrollerJS/
-* Copyright (c) 2015 James Florentino; Licensed MIT */
-(function(factory) {
-  if (typeof define === 'function' && define.amd) {
-    return define(['jquery'], function($) {
-      return factory($, window, document);
-    });
-  } else if (typeof exports === 'object') {
-    return module.exports = factory(require('jquery'), window, document);
-  } else {
-    return factory(jQuery, window, document);
-  }
-})(function($, window, document) {
-  "use strict";
-  var BROWSER_IS_IE7, BROWSER_SCROLLBAR_WIDTH, DOMSCROLL, DOWN, DRAG, ENTER, KEYDOWN, KEYUP, MOUSEDOWN, MOUSEENTER, MOUSEMOVE, MOUSEUP, MOUSEWHEEL, NanoScroll, PANEDOWN, RESIZE, SCROLL, SCROLLBAR, TOUCHMOVE, UP, WHEEL, cAF, defaults, getBrowserScrollbarWidth, hasTransform, isFFWithBuggyScrollbar, rAF, transform, _elementStyle, _prefixStyle, _vendor;
-  defaults = {
-
-    /**
-      a classname for the pane element.
-      @property paneClass
-      @type String
-      @default 'nano-pane'
-     */
-    paneClass: 'nano-pane',
-
-    /**
-      a classname for the slider element.
-      @property sliderClass
-      @type String
-      @default 'nano-slider'
-     */
-    sliderClass: 'nano-slider',
-
-    /**
-      a classname for the content element.
-      @property contentClass
-      @type String
-      @default 'nano-content'
-     */
-    contentClass: 'nano-content',
-
-    /**
-      a setting to enable native scrolling in iOS devices.
-      @property iOSNativeScrolling
-      @type Boolean
-      @default false
-     */
-    iOSNativeScrolling: false,
-
-    /**
-      a setting to prevent the rest of the page being
-      scrolled when user scrolls the `.content` element.
-      @property preventPageScrolling
-      @type Boolean
-      @default false
-     */
-    preventPageScrolling: false,
-
-    /**
-      a setting to disable binding to the resize event.
-      @property disableResize
-      @type Boolean
-      @default false
-     */
-    disableResize: false,
-
-    /**
-      a setting to make the scrollbar always visible.
-      @property alwaysVisible
-      @type Boolean
-      @default false
-     */
-    alwaysVisible: false,
-
-    /**
-      a default timeout for the `flash()` method.
-      @property flashDelay
-      @type Number
-      @default 1500
-     */
-    flashDelay: 1500,
-
-    /**
-      a minimum height for the `.slider` element.
-      @property sliderMinHeight
-      @type Number
-      @default 20
-     */
-    sliderMinHeight: 20,
-
-    /**
-      a maximum height for the `.slider` element.
-      @property sliderMaxHeight
-      @type Number
-      @default null
-     */
-    sliderMaxHeight: null,
-
-    /**
-      an alternate document context.
-      @property documentContext
-      @type Document
-      @default null
-     */
-    documentContext: null,
-
-    /**
-      an alternate window context.
-      @property windowContext
-      @type Window
-      @default null
-     */
-    windowContext: null
-  };
-
-  /**
-    @property SCROLLBAR
-    @type String
-    @static
-    @final
-    @private
-   */
-  SCROLLBAR = 'scrollbar';
-
-  /**
-    @property SCROLL
-    @type String
-    @static
-    @final
-    @private
-   */
-  SCROLL = 'scroll';
-
-  /**
-    @property MOUSEDOWN
-    @type String
-    @final
-    @private
-   */
-  MOUSEDOWN = 'mousedown';
-
-  /**
-    @property MOUSEENTER
-    @type String
-    @final
-    @private
-   */
-  MOUSEENTER = 'mouseenter';
-
-  /**
-    @property MOUSEMOVE
-    @type String
-    @static
-    @final
-    @private
-   */
-  MOUSEMOVE = 'mousemove';
-
-  /**
-    @property MOUSEWHEEL
-    @type String
-    @final
-    @private
-   */
-  MOUSEWHEEL = 'mousewheel';
-
-  /**
-    @property MOUSEUP
-    @type String
-    @static
-    @final
-    @private
-   */
-  MOUSEUP = 'mouseup';
-
-  /**
-    @property RESIZE
-    @type String
-    @final
-    @private
-   */
-  RESIZE = 'resize';
-
-  /**
-    @property DRAG
-    @type String
-    @static
-    @final
-    @private
-   */
-  DRAG = 'drag';
-
-  /**
-    @property ENTER
-    @type String
-    @static
-    @final
-    @private
-   */
-  ENTER = 'enter';
-
-  /**
-    @property UP
-    @type String
-    @static
-    @final
-    @private
-   */
-  UP = 'up';
-
-  /**
-    @property PANEDOWN
-    @type String
-    @static
-    @final
-    @private
-   */
-  PANEDOWN = 'panedown';
-
-  /**
-    @property DOMSCROLL
-    @type String
-    @static
-    @final
-    @private
-   */
-  DOMSCROLL = 'DOMMouseScroll';
-
-  /**
-    @property DOWN
-    @type String
-    @static
-    @final
-    @private
-   */
-  DOWN = 'down';
-
-  /**
-    @property WHEEL
-    @type String
-    @static
-    @final
-    @private
-   */
-  WHEEL = 'wheel';
-
-  /**
-    @property KEYDOWN
-    @type String
-    @static
-    @final
-    @private
-   */
-  KEYDOWN = 'keydown';
-
-  /**
-    @property KEYUP
-    @type String
-    @static
-    @final
-    @private
-   */
-  KEYUP = 'keyup';
-
-  /**
-    @property TOUCHMOVE
-    @type String
-    @static
-    @final
-    @private
-   */
-  TOUCHMOVE = 'touchmove';
-
-  /**
-    @property BROWSER_IS_IE7
-    @type Boolean
-    @static
-    @final
-    @private
-   */
-  BROWSER_IS_IE7 = window.navigator.appName === 'Microsoft Internet Explorer' && /msie 7./i.test(window.navigator.appVersion) && window.ActiveXObject;
-
-  /**
-    @property BROWSER_SCROLLBAR_WIDTH
-    @type Number
-    @static
-    @default null
-    @private
-   */
-  BROWSER_SCROLLBAR_WIDTH = null;
-  rAF = window.requestAnimationFrame;
-  cAF = window.cancelAnimationFrame;
-  _elementStyle = document.createElement('div').style;
-  _vendor = (function() {
-    var i, transform, vendor, vendors, _i, _len;
-    vendors = ['t', 'webkitT', 'MozT', 'msT', 'OT'];
-    for (i = _i = 0, _len = vendors.length; _i < _len; i = ++_i) {
-      vendor = vendors[i];
-      transform = vendors[i] + 'ransform';
-      if (transform in _elementStyle) {
-        return vendors[i].substr(0, vendors[i].length - 1);
-      }
-    }
-    return false;
-  })();
-  _prefixStyle = function(style) {
-    if (_vendor === false) {
-      return false;
-    }
-    if (_vendor === '') {
-      return style;
-    }
-    return _vendor + style.charAt(0).toUpperCase() + style.substr(1);
-  };
-  transform = _prefixStyle('transform');
-  hasTransform = transform !== false;
-
-  /**
-    Returns browser's native scrollbar width
-    @method getBrowserScrollbarWidth
-    @return {Number} the scrollbar width in pixels
-    @static
-    @private
-   */
-  getBrowserScrollbarWidth = function() {
-    var outer, outerStyle, scrollbarWidth;
-    outer = document.createElement('div');
-    outerStyle = outer.style;
-    outerStyle.position = 'absolute';
-    outerStyle.width = '100px';
-    outerStyle.height = '100px';
-    outerStyle.overflow = SCROLL;
-    outerStyle.top = '-9999px';
-    document.body.appendChild(outer);
-    scrollbarWidth = outer.offsetWidth - outer.clientWidth;
-    document.body.removeChild(outer);
-    return scrollbarWidth;
-  };
-  isFFWithBuggyScrollbar = function() {
-    var isOSXFF, ua, version;
-    ua = window.navigator.userAgent;
-    isOSXFF = /(?=.+Mac OS X)(?=.+Firefox)/.test(ua);
-    if (!isOSXFF) {
-      return false;
-    }
-    version = /Firefox\/\d{2}\./.exec(ua);
-    if (version) {
-      version = version[0].replace(/\D+/g, '');
-    }
-    return isOSXFF && +version > 23;
-  };
-
-  /**
-    @class NanoScroll
-    @param element {HTMLElement|Node} the main element
-    @param options {Object} nanoScroller's options
-    @constructor
-   */
-  NanoScroll = (function() {
-    function NanoScroll(el, options) {
-      this.el = el;
-      this.options = options;
-      BROWSER_SCROLLBAR_WIDTH || (BROWSER_SCROLLBAR_WIDTH = getBrowserScrollbarWidth());
-      this.$el = $(this.el);
-      this.doc = $(this.options.documentContext || document);
-      this.win = $(this.options.windowContext || window);
-      this.body = this.doc.find('body');
-      this.$content = this.$el.children("." + this.options.contentClass);
-      this.$content.attr('tabindex', this.options.tabIndex || 0);
-      this.content = this.$content[0];
-      this.previousPosition = 0;
-      if (this.options.iOSNativeScrolling && (this.el.style.WebkitOverflowScrolling != null)) {
-        this.nativeScrolling();
-      } else {
-        this.generate();
-      }
-      this.createEvents();
-      this.addEvents();
-      this.reset();
-    }
-
-
-    /**
-      Prevents the rest of the page being scrolled
-      when user scrolls the `.nano-content` element.
-      @method preventScrolling
-      @param event {Event}
-      @param direction {String} Scroll direction (up or down)
-      @private
-     */
-
-    NanoScroll.prototype.preventScrolling = function(e, direction) {
-      if (!this.isActive) {
-        return;
-      }
-      if (e.type === DOMSCROLL) {
-        if (direction === DOWN && e.originalEvent.detail > 0 || direction === UP && e.originalEvent.detail < 0) {
-          e.preventDefault();
-        }
-      } else if (e.type === MOUSEWHEEL) {
-        if (!e.originalEvent || !e.originalEvent.wheelDelta) {
-          return;
-        }
-        if (direction === DOWN && e.originalEvent.wheelDelta < 0 || direction === UP && e.originalEvent.wheelDelta > 0) {
-          e.preventDefault();
-        }
-      }
-    };
-
-
-    /**
-      Enable iOS native scrolling
-      @method nativeScrolling
-      @private
-     */
-
-    NanoScroll.prototype.nativeScrolling = function() {
-      this.$content.css({
-        WebkitOverflowScrolling: 'touch'
-      });
-      this.iOSNativeScrolling = true;
-      this.isActive = true;
-    };
-
-
-    /**
-      Updates those nanoScroller properties that
-      are related to current scrollbar position.
-      @method updateScrollValues
-      @private
-     */
-
-    NanoScroll.prototype.updateScrollValues = function() {
-      var content, direction;
-      content = this.content;
-      this.maxScrollTop = content.scrollHeight - content.clientHeight;
-      this.prevScrollTop = this.contentScrollTop || 0;
-      this.contentScrollTop = content.scrollTop;
-      direction = this.contentScrollTop > this.previousPosition ? "down" : this.contentScrollTop < this.previousPosition ? "up" : "same";
-      this.previousPosition = this.contentScrollTop;
-      if (direction !== "same") {
-        this.$el.trigger('update', {
-          position: this.contentScrollTop,
-          maximum: this.maxScrollTop,
-          direction: direction
-        });
-      }
-      if (!this.iOSNativeScrolling) {
-        this.maxSliderTop = this.paneHeight - this.sliderHeight;
-        this.sliderTop = this.maxScrollTop === 0 ? 0 : this.contentScrollTop * this.maxSliderTop / this.maxScrollTop;
-      }
-    };
-
-
-    /**
-      Updates CSS styles for current scroll position.
-      Uses CSS 2d transfroms and `window.requestAnimationFrame` if available.
-      @method setOnScrollStyles
-      @private
-     */
-
-    NanoScroll.prototype.setOnScrollStyles = function() {
-      var cssValue;
-      if (hasTransform) {
-        cssValue = {};
-        cssValue[transform] = "translate(0, " + this.sliderTop + "px)";
-      } else {
-        cssValue = {
-          top: this.sliderTop
-        };
-      }
-      if (rAF) {
-        if (cAF && this.scrollRAF) {
-          cAF(this.scrollRAF);
-        }
-        this.scrollRAF = rAF((function(_this) {
-          return function() {
-            _this.scrollRAF = null;
-            return _this.slider.css(cssValue);
-          };
-        })(this));
-      } else {
-        this.slider.css(cssValue);
-      }
-    };
-
-
-    /**
-      Creates event related methods
-      @method createEvents
-      @private
-     */
-
-    NanoScroll.prototype.createEvents = function() {
-      this.events = {
-        down: (function(_this) {
-          return function(e) {
-            _this.isBeingDragged = true;
-            _this.offsetY = e.pageY - _this.slider.offset().top;
-            if (!_this.slider.is(e.target)) {
-              _this.offsetY = 0;
-            }
-            _this.pane.addClass('active');
-            _this.doc.bind(MOUSEMOVE, _this.events[DRAG]).bind(MOUSEUP, _this.events[UP]);
-            _this.body.bind(MOUSEENTER, _this.events[ENTER]);
-            return false;
-          };
-        })(this),
-        drag: (function(_this) {
-          return function(e) {
-            _this.sliderY = e.pageY - _this.$el.offset().top - _this.paneTop - (_this.offsetY || _this.sliderHeight * 0.5);
-            _this.scroll();
-            if (_this.contentScrollTop >= _this.maxScrollTop && _this.prevScrollTop !== _this.maxScrollTop) {
-              _this.$el.trigger('scrollend');
-            } else if (_this.contentScrollTop === 0 && _this.prevScrollTop !== 0) {
-              _this.$el.trigger('scrolltop');
-            }
-            return false;
-          };
-        })(this),
-        up: (function(_this) {
-          return function(e) {
-            _this.isBeingDragged = false;
-            _this.pane.removeClass('active');
-            _this.doc.unbind(MOUSEMOVE, _this.events[DRAG]).unbind(MOUSEUP, _this.events[UP]);
-            _this.body.unbind(MOUSEENTER, _this.events[ENTER]);
-            return false;
-          };
-        })(this),
-        resize: (function(_this) {
-          return function(e) {
-            _this.reset();
-          };
-        })(this),
-        panedown: (function(_this) {
-          return function(e) {
-            _this.sliderY = (e.offsetY || e.originalEvent.layerY) - (_this.sliderHeight * 0.5);
-            _this.scroll();
-            _this.events.down(e);
-            return false;
-          };
-        })(this),
-        scroll: (function(_this) {
-          return function(e) {
-            _this.updateScrollValues();
-            if (_this.isBeingDragged) {
-              return;
-            }
-            if (!_this.iOSNativeScrolling) {
-              _this.sliderY = _this.sliderTop;
-              _this.setOnScrollStyles();
-            }
-            if (e == null) {
-              return;
-            }
-            if (_this.contentScrollTop >= _this.maxScrollTop) {
-              if (_this.options.preventPageScrolling) {
-                _this.preventScrolling(e, DOWN);
-              }
-              if (_this.prevScrollTop !== _this.maxScrollTop) {
-                _this.$el.trigger('scrollend');
-              }
-            } else if (_this.contentScrollTop === 0) {
-              if (_this.options.preventPageScrolling) {
-                _this.preventScrolling(e, UP);
-              }
-              if (_this.prevScrollTop !== 0) {
-                _this.$el.trigger('scrolltop');
-              }
-            }
-          };
-        })(this),
-        wheel: (function(_this) {
-          return function(e) {
-            var delta;
-            if (e == null) {
-              return;
-            }
-            delta = e.delta || e.wheelDelta || (e.originalEvent && e.originalEvent.wheelDelta) || -e.detail || (e.originalEvent && -e.originalEvent.detail);
-            if (delta) {
-              _this.sliderY += -delta / 3;
-            }
-            _this.scroll();
-            return false;
-          };
-        })(this),
-        enter: (function(_this) {
-          return function(e) {
-            var _ref;
-            if (!_this.isBeingDragged) {
-              return;
-            }
-            if ((e.buttons || e.which) !== 1) {
-              return (_ref = _this.events)[UP].apply(_ref, arguments);
-            }
-          };
-        })(this)
-      };
-    };
-
-
-    /**
-      Adds event listeners with jQuery.
-      @method addEvents
-      @private
-     */
-
-    NanoScroll.prototype.addEvents = function() {
-      var events;
-      this.removeEvents();
-      events = this.events;
-      if (!this.options.disableResize) {
-        this.win.bind(RESIZE, events[RESIZE]);
-      }
-      if (!this.iOSNativeScrolling) {
-        this.slider.bind(MOUSEDOWN, events[DOWN]);
-        this.pane.bind(MOUSEDOWN, events[PANEDOWN]).bind("" + MOUSEWHEEL + " " + DOMSCROLL, events[WHEEL]);
-      }
-      this.$content.bind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]);
-    };
-
-
-    /**
-      Removes event listeners with jQuery.
-      @method removeEvents
-      @private
-     */
-
-    NanoScroll.prototype.removeEvents = function() {
-      var events;
-      events = this.events;
-      this.win.unbind(RESIZE, events[RESIZE]);
-      if (!this.iOSNativeScrolling) {
-        this.slider.unbind();
-        this.pane.unbind();
-      }
-      this.$content.unbind("" + SCROLL + " " + MOUSEWHEEL + " " + DOMSCROLL + " " + TOUCHMOVE, events[SCROLL]);
-    };
-
-
-    /**
-      Generates nanoScroller's scrollbar and elements for it.
-      @method generate
-      @chainable
-      @private
-     */
-
-    NanoScroll.prototype.generate = function() {
-      var contentClass, cssRule, currentPadding, options, pane, paneClass, sliderClass;
-      options = this.options;
-      paneClass = options.paneClass, sliderClass = options.sliderClass, contentClass = options.contentClass;
-      if (!(pane = this.$el.children("." + paneClass)).length && !pane.children("." + sliderClass).length) {
-        this.$el.append("<div class=\"" + paneClass + "\"><div class=\"" + sliderClass + "\" /></div>");
-      }
-      this.pane = this.$el.children("." + paneClass);
-      this.slider = this.pane.find("." + sliderClass);
-      if (BROWSER_SCROLLBAR_WIDTH === 0 && isFFWithBuggyScrollbar()) {
-        currentPadding = window.getComputedStyle(this.content, null).getPropertyValue('padding-right').replace(/[^0-9.]+/g, '');
-        cssRule = {
-          right: -14,
-          paddingRight: +currentPadding + 14
-        };
-      } else if (BROWSER_SCROLLBAR_WIDTH) {
-        cssRule = {
-          right: -BROWSER_SCROLLBAR_WIDTH
-        };
-        this.$el.addClass('has-scrollbar');
-      }
-      if (cssRule != null) {
-        this.$content.css(cssRule);
-      }
-      return this;
-    };
-
-
-    /**
-      @method restore
-      @private
-     */
-
-    NanoScroll.prototype.restore = function() {
-      this.stopped = false;
-      if (!this.iOSNativeScrolling) {
-        this.pane.show();
-      }
-      this.addEvents();
-    };
-
-
-    /**
-      Resets nanoScroller's scrollbar.
-      @method reset
-      @chainable
-      @example
-          $(".nano").nanoScroller();
-     */
-
-    NanoScroll.prototype.reset = function() {
-      var content, contentHeight, contentPosition, contentStyle, contentStyleOverflowY, paneBottom, paneHeight, paneOuterHeight, paneTop, parentMaxHeight, right, sliderHeight;
-      if (this.iOSNativeScrolling) {
-        this.contentHeight = this.content.scrollHeight;
-        return;
-      }
-      if (!this.$el.find("." + this.options.paneClass).length) {
-        this.generate().stop();
-      }
-      if (this.stopped) {
-        this.restore();
-      }
-      content = this.content;
-      contentStyle = content.style;
-      contentStyleOverflowY = contentStyle.overflowY;
-      if (BROWSER_IS_IE7) {
-        this.$content.css({
-          height: this.$content.height()
-        });
-      }
-      contentHeight = content.scrollHeight + BROWSER_SCROLLBAR_WIDTH;
-      parentMaxHeight = parseInt(this.$el.css("max-height"), 10);
-      if (parentMaxHeight > 0) {
-        this.$el.height("");
-        this.$el.height(content.scrollHeight > parentMaxHeight ? parentMaxHeight : content.scrollHeight);
-      }
-      paneHeight = this.pane.outerHeight(false);
-      paneTop = parseInt(this.pane.css('top'), 10);
-      paneBottom = parseInt(this.pane.css('bottom'), 10);
-      paneOuterHeight = paneHeight + paneTop + paneBottom;
-      sliderHeight = Math.round(paneOuterHeight / contentHeight * paneHeight);
-      if (sliderHeight < this.options.sliderMinHeight) {
-        sliderHeight = this.options.sliderMinHeight;
-      } else if ((this.options.sliderMaxHeight != null) && sliderHeight > this.options.sliderMaxHeight) {
-        sliderHeight = this.options.sliderMaxHeight;
-      }
-      if (contentStyleOverflowY === SCROLL && contentStyle.overflowX !== SCROLL) {
-        sliderHeight += BROWSER_SCROLLBAR_WIDTH;
-      }
-      this.maxSliderTop = paneOuterHeight - sliderHeight;
-      this.contentHeight = contentHeight;
-      this.paneHeight = paneHeight;
-      this.paneOuterHeight = paneOuterHeight;
-      this.sliderHeight = sliderHeight;
-      this.paneTop = paneTop;
-      this.slider.height(sliderHeight);
-      this.events.scroll();
-      this.pane.show();
-      this.isActive = true;
-      if ((content.scrollHeight === content.clientHeight) || (this.pane.outerHeight(true) >= content.scrollHeight && contentStyleOverflowY !== SCROLL)) {
-        this.pane.hide();
-        this.isActive = false;
-      } else if (this.el.clientHeight === content.scrollHeight && contentStyleOverflowY === SCROLL) {
-        this.slider.hide();
-      } else {
-        this.slider.show();
-      }
-      this.pane.css({
-        opacity: (this.options.alwaysVisible ? 1 : ''),
-        visibility: (this.options.alwaysVisible ? 'visible' : '')
-      });
-      contentPosition = this.$content.css('position');
-      if (contentPosition === 'static' || contentPosition === 'relative') {
-        right = parseInt(this.$content.css('right'), 10);
-        if (right) {
-          this.$content.css({
-            right: '',
-            marginRight: right
-          });
-        }
-      }
-      return this;
-    };
-
-
-    /**
-      @method scroll
-      @private
-      @example
-          $(".nano").nanoScroller({ scroll: 'top' });
-     */
-
-    NanoScroll.prototype.scroll = function() {
-      if (!this.isActive) {
-        return;
-      }
-      this.sliderY = Math.max(0, this.sliderY);
-      this.sliderY = Math.min(this.maxSliderTop, this.sliderY);
-      this.$content.scrollTop(this.maxScrollTop * this.sliderY / this.maxSliderTop);
-      if (!this.iOSNativeScrolling) {
-        this.updateScrollValues();
-        this.setOnScrollStyles();
-      }
-      return this;
-    };
-
-
-    /**
-      Scroll at the bottom with an offset value
-      @method scrollBottom
-      @param offsetY {Number}
-      @chainable
-      @example
-          $(".nano").nanoScroller({ scrollBottom: value });
-     */
-
-    NanoScroll.prototype.scrollBottom = function(offsetY) {
-      if (!this.isActive) {
-        return;
-      }
-      this.$content.scrollTop(this.contentHeight - this.$content.height() - offsetY).trigger(MOUSEWHEEL);
-      this.stop().restore();
-      return this;
-    };
-
-
-    /**
-      Scroll at the top with an offset value
-      @method scrollTop
-      @param offsetY {Number}
-      @chainable
-      @example
-          $(".nano").nanoScroller({ scrollTop: value });
-     */
-
-    NanoScroll.prototype.scrollTop = function(offsetY) {
-      if (!this.isActive) {
-        return;
-      }
-      this.$content.scrollTop(+offsetY).trigger(MOUSEWHEEL);
-      this.stop().restore();
-      return this;
-    };
-
-
-    /**
-      Scroll to an element
-      @method scrollTo
-      @param node {Node} A node to scroll to.
-      @chainable
-      @example
-          $(".nano").nanoScroller({ scrollTo: $('#a_node') });
-     */
-
-    NanoScroll.prototype.scrollTo = function(node) {
-      if (!this.isActive) {
-        return;
-      }
-      this.scrollTop(this.$el.find(node).get(0).offsetTop);
-      return this;
-    };
-
-
-    /**
-      To stop the operation.
-      This option will tell the plugin to disable all event bindings and hide the gadget scrollbar from the UI.
-      @method stop
-      @chainable
-      @example
-          $(".nano").nanoScroller({ stop: true });
-     */
-
-    NanoScroll.prototype.stop = function() {
-      if (cAF && this.scrollRAF) {
-        cAF(this.scrollRAF);
-        this.scrollRAF = null;
-      }
-      this.stopped = true;
-      this.removeEvents();
-      if (!this.iOSNativeScrolling) {
-        this.pane.hide();
-      }
-      return this;
-    };
-
-
-    /**
-      Destroys nanoScroller and restores browser's native scrollbar.
-      @method destroy
-      @chainable
-      @example
-          $(".nano").nanoScroller({ destroy: true });
-     */
-
-    NanoScroll.prototype.destroy = function() {
-      if (!this.stopped) {
-        this.stop();
-      }
-      if (!this.iOSNativeScrolling && this.pane.length) {
-        this.pane.remove();
-      }
-      if (BROWSER_IS_IE7) {
-        this.$content.height('');
-      }
-      this.$content.removeAttr('tabindex');
-      if (this.$el.hasClass('has-scrollbar')) {
-        this.$el.removeClass('has-scrollbar');
-        this.$content.css({
-          right: ''
-        });
-      }
-      return this;
-    };
-
-
-    /**
-      To flash the scrollbar gadget for an amount of time defined in plugin settings (defaults to 1,5s).
-      Useful if you want to show the user (e.g. on pageload) that there is more content waiting for him.
-      @method flash
-      @chainable
-      @example
-          $(".nano").nanoScroller({ flash: true });
-     */
-
-    NanoScroll.prototype.flash = function() {
-      if (this.iOSNativeScrolling) {
-        return;
-      }
-      if (!this.isActive) {
-        return;
-      }
-      this.reset();
-      this.pane.addClass('flashed');
-      setTimeout((function(_this) {
-        return function() {
-          _this.pane.removeClass('flashed');
-        };
-      })(this), this.options.flashDelay);
-      return this;
-    };
-
-    return NanoScroll;
-
-  })();
-  $.fn.nanoScroller = function(settings) {
-    return this.each(function() {
-      var options, scrollbar;
-      if (!(scrollbar = this.nanoscroller)) {
-        options = $.extend({}, defaults, settings);
-        this.nanoscroller = scrollbar = new NanoScroll(this, options);
-      }
-      if (settings && typeof settings === "object") {
-        $.extend(scrollbar.options, settings);
-        if (settings.scrollBottom != null) {
-          return scrollbar.scrollBottom(settings.scrollBottom);
-        }
-        if (settings.scrollTop != null) {
-          return scrollbar.scrollTop(settings.scrollTop);
-        }
-        if (settings.scrollTo) {
-          return scrollbar.scrollTo(settings.scrollTo);
-        }
-        if (settings.scroll === 'bottom') {
-          return scrollbar.scrollBottom(0);
-        }
-        if (settings.scroll === 'top') {
-          return scrollbar.scrollTop(0);
-        }
-        if (settings.scroll && settings.scroll instanceof $) {
-          return scrollbar.scrollTo(settings.scroll);
-        }
-        if (settings.stop) {
-          return scrollbar.stop();
-        }
-        if (settings.destroy) {
-          return scrollbar.destroy();
-        }
-        if (settings.flash) {
-          return scrollbar.flash();
-        }
-      }
-      return scrollbar.reset();
-    });
-  };
-  $.fn.nanoScroller.Constructor = NanoScroll;
-});
-
-//# sourceMappingURL=jquery.nanoscroller.js.map
-
-},{"jquery":1}],3:[function(require,module,exports){
-//var $ = require('jquery');
-require('./vendor/jquery-ui');
-require('./vendor/jquery-ui-slider-pips.min');
-require('nanoscroller');
 var ajxLoader = require('./lib/ajxLoader');
 
-var AppUtils = { //вспомогашки
+    var AppUtils = { //вспомогашки
         hasClass: function(el, cls) {
             return el.className && new RegExp("(\\s|^)" + cls + "(\\s|$)").test(el.className);
         },
@@ -11363,8 +10381,7 @@ var AppUtils = { //вспомогашки
     };
 
     var goodsUrl = '';
-    var ENV_CONST = window.location.host && (/^[^\:]+\:[\d]+/.test(window.location.host))?'dev':'prod';
-    if(ENV_CONST) {
+    if(window.location.host && (/\:300/.test(window.location.host))) {
         goodsUrl = '../../source/back/catalogue.json?';
     } else {
         goodsUrl = '/ajax/catalogue.html?';
@@ -11395,7 +10412,7 @@ var AppUtils = { //вспомогашки
             this.state[this.filterName] = data;
         },
         view: function() {
-            var $activeLink = $('.category-section-block .list .selected');
+            var $activeLink = $('.category-section-block input');
             this.setName($activeLink.data('filter'));
             this.updateState($activeLink.data('value'));
 
@@ -11443,7 +10460,6 @@ var AppUtils = { //вспомогашки
             this.controller = controller;
             this.state = {};
             this.filterName = 'OtherFilter';
-
             var otherVal = $('#other').val();
             this.state[this.filterName] = otherVal?otherVal:null;
         },
@@ -11474,13 +10490,13 @@ var AppUtils = { //вспомогашки
             this.lockChange = false;
         },
         getState: function() {
-          return  this.state;
+            return  this.state;
         },
         getStateRaw: function() {
-            if (!this.state[this.filterName] || this.state[this.filterName].join() === this.defaultRange.join()) return;
-            var rawObj = {};
-            rawObj[this.filterName] = [{'0':'от '+this.state[this.filterName][0]+' до '+this.state[this.filterName][1]}];
-            return rawObj;
+            //if (!this.state[this.filterName] || this.state[this.filterName].join() === this.defaultRange.join()) return;
+            //var rawObj = {};
+            //rawObj[this.filterName] = [{'0':'от '+this.state[this.filterName][0]+' до '+this.state[this.filterName][1]}];
+            //return rawObj;
         },
         returnState: function(state) {
             var isFinded = false;
@@ -11493,17 +10509,29 @@ var AppUtils = { //вспомогашки
             if (!isFinded) {
                 this.state[this.filterName] = this.defaultRange;
             }
+            //console.log(this.state);
         },
         isName: function(name) {
-          return  this.filterName === name;
+            return  this.filterName === name;
         },
         updateState: function(data) {
-            this.state[this.filterName] = data;
-            this.controller.updateFilters();
+            if (data == null) return;
+            var newData = data;
+            console.log(newData, this.state[this.filterName]);
+            if (this.state[this.filterName])
+            try {
+                newData[0] = newData[0] == "" ? this.state[this.filterName][0] : newData[0];
+                newData[1] = newData[1] == "" ? this.state[this.filterName][1] : newData[1];
+            } catch (e) {
+                console.log(e);
+            }
+            this.state[this.filterName] = newData;
+            console.log(this.state[this.filterName]);
+            //this.controller.updateFilters();
         },
         removeFilter: function(data) {
             this.state = {};
-            this.render();
+            //this.render();
         },
         resolveConflict: function(priceRange) { //проверка и исправление на - текущая выборка цены выходит за границы новых доступных цен
             var currentRange = this.state[this.filterName];
@@ -11524,41 +10552,39 @@ var AppUtils = { //вспомогашки
             this.lockChange = flag;
         },
         isLock: function() {
-          return this.lockChange;
+            return this.lockChange;
         },
         getRangeData: function() {
             return this.controller.getFilterRenderData(this.filterName);
         },
         viewInit: function() {
+            var self = this;
             this.view = {};
-            this.view.priceFilter = $("#price-slider");
+            this.view.$min = $('#price-from');
+            this.view.$max = $('#price-to');
             this.defaultRange = [$('#mincost').data('min'), $('#maxcost').data('max')];
-            this.view.priceFilter
-                .slider({
-                    min: this.defaultRange[0],
-                    max: this.defaultRange[1],
-                    range: true,
-                    values: [this.defaultRange[0], this.defaultRange[1]],
-                    change: function( event, ui ) {
-                    },
-                    slide: function( event, ui ) {
-                        $('#mincost').val(ui.values[0]);
-                        $('#maxcost').val(ui.values[1]);
-                    }
-                }).slider("float");
+            self.updateState([$('#mincost').data('min'), $('#maxcost').data('max')]);
+            this.view.$min.on('blur',function(){
+                self.updateState([+self.view.$min.val(), +self.view.$max.val()]);
+            });
 
-            this.view.priceFilter.on( "slidechange", function( event, ui ) {
-                if (!this.isLock()) {
-                    this.updateState([ui.values[0],ui.values[1]]);
-                }
-            }.bind(this));
+            this.view.$max.on('blur',function(){
+                self.updateState([+self.view.$min.val(), +self.view.$max.val()]);
+            });
         },
         render: function() {
             var priceData = this.getRangeData();
             var currentValue = this.resolveConflict(priceData);
+            this.updateState(priceData);
             this.setLock(true);
-            (priceData && priceData instanceof Array)
-                && this.view.priceFilter.slider("option","values",[currentValue[0],currentValue[1]]).slider("option", "min", priceData[0]).slider("option", "max", priceData[1]).slider("pips").slider("float");
+            if (priceData && priceData instanceof Array)
+            {
+                this.view.$min.attr('placeholder', priceData[0]);
+                this.view.$max.attr('placeholder', priceData[1]);
+
+                !!this.view.$min.val() && this.view.$min.val(priceData[0]);
+                !!this.view.$max.val() && this.view.$min.val(priceData[1]);
+            }
             this.setLock(false);
         }
     };
@@ -11596,7 +10622,7 @@ var AppUtils = { //вспомогашки
             for (var fName in state) {
                 if (this.filterName.indexOf(fName) > -1) {
                     state[fName].forEach(function(item){
-                       this.addActiveCheckbox({type: fName, value: item, label : this.getNameCheckbox({fName: fName, value : item})});
+                        this.addActiveCheckbox({type: fName, value: item, label : this.getNameCheckbox({fName: fName, value : item})});
                     }.bind(this));
                 }
             }
@@ -11633,13 +10659,12 @@ var AppUtils = { //вспомогашки
             }
             return lbl;
         },
-        updateActiveCheckbox: function(data, isInit) {
-            if (data.checked) {
-                this.addActiveCheckbox(data);
-            } else {
-                this.removeActiveCheckbox(data);
-            }
-            !isInit && this.controller.updateFilters();
+        updateActiveCheckbox: function(data, name) {
+            this.activeCheckboxes[name] = [];
+            data.forEach(function(item){
+                this.addActiveCheckbox(item);
+            }.bind(this));
+            //!isInit && this.controller.updateFilters();
         },
         addActiveCheckbox: function(data) {
             if (!this.activeCheckboxes[data.type]) {
@@ -11665,57 +10690,60 @@ var AppUtils = { //вспомогашки
             return this.controller.getFilterRenderData(this.filterName)
         },
         getActiveCheckboxes: function() {
-          return this.getState();
+            return this.getState();
         },
         viewInit: function() {
             var self = this;
             this.view = {};
-            this.view.checkoxFilters = $('.block .list input[type=checkbox], .square_sizes input.squaresize');
+            this.view.checkoxFilters = $('.goods-filter__item option');
+            this.view.$select = $('.goods-filter__item select');
 
             this.view.checkoxFilters.each(function(){
                 var $item = $(this);
                 var filterName = $item.data('filter');
                 filterName && self.addFilterName(filterName);
-                self.addNameCheckbox({type: filterName,value: parseInt($item.data('value')), label: $item.closest('label').text()});
-                if ($item.is(':checked') && !$item.is(':disabled')) {
-                    self.updateActiveCheckbox({type: $item.data('filter'),value: parseInt($item.data('value')), checked: $item.is(':checked'), label: $item.closest('label').text()}, true);
+                self.addNameCheckbox({type: filterName,value: parseInt($item.val()), label: $item.text()});
+                if ($item[0].selected && !$item.is(':disabled')) {
+                    self.addActiveCheckbox({type: $item.data('filter'),value: parseInt($item.val()), checked: $item[0].selected, label: $item.text()}, true);
                 }
             });
 
-            this.view.checkoxFilters.bind('change', function(event){
-                var $item = $(this);
-                self.updateActiveCheckbox({type: $item.data('filter'),value: $item.data('value'), checked: $item.is(':checked'), label: $item.closest('label').text()});
+            this.view.$select.on('change', function(event){
+                var $select = $(this);
+                var data = [];
+                $select.find('option').each(function(){
+                    var $item = $(this);
+                    $item[0].selected && data.push({type: $item.data('filter'),value: $item.val(), label: $item.text()});
+                });
+                self.updateActiveCheckbox(data, $select.prop('name'));
+                self.controller.render();
+                self.controller.updateFilters();
             });
         },
         render: function() { //рендер доступных чекбоксов
-            var $li;
             var filtersData = this.getAvailableCheckboxes();
 
             for (var filter in filtersData) {
                 this.view.checkoxFilters.filter('[data-filter=' + filter + ']').each(function () {
                     var $item = $(this);
-                    $li = $item.closest('li');
                     //console.log(filtersData[filter].indexOf("" + $item.data('value')));
                     //console.log(filtersData[filter], typeof $item.data('value'), filtersData[filter].indexOf($item.data('value')));
-                    if (filtersData[filter].indexOf($item.data('value')) > -1) {
-                        $li.show();
+                    if (filtersData[filter].indexOf(filter == 'size'?$item.val():+$item.val()) > -1) {
+                        $item.removeProp('disabled');
                     } else {
-                        $li.hide();
+                        $item.prop('disabled','disabled');
                     }
                 });
             }
-            $('.block .nano-scroll').nanoScroller();
-            $('.block.folding').trigger('update');
         },
         renderCheckboxes: function() { //рендер состояния чекбоксов
             var activeCheckboxes = this.getActiveCheckboxes();
-            this.view.checkoxFilters.not(':disabled').prop('checked',false);
+            this.view.checkoxFilters.not(':disabled').prop('selected',false);
             for (var fName in activeCheckboxes) {
                 activeCheckboxes[fName].forEach(function(val){
-                    this.view.checkoxFilters.filter('[data-filter='+fName+'][data-value="'+val+'"]').prop('checked',true);
+                    this.view.checkoxFilters.filter('[data-filter='+fName+'][value="'+val+'"]').prop('selected',true);
                 }.bind(this));
             }
-            this.view.checkoxFilters.trigger('refresh');
         }
     };
 
@@ -11732,7 +10760,7 @@ var AppUtils = { //вспомогашки
         addComponent: function(component) {
             /*if (component instanceof Object) {
 
-            }*/
+             }*/
             this.components.push(component);
             component.init(this);
         },
@@ -11749,19 +10777,21 @@ var AppUtils = { //вспомогашки
             this.manager.getMessage(type);
         },
         getMessage: function(type, data) {
-          switch (type) {
-              case 'newData' :
-                  this.responseData = data.filters;
-                  this.renderComponents();
-                  this.render();
-                  break;
-          }
+            switch (type) {
+                case 'newData' :
+                    this.responseData = data.filters;
+                    this.renderComponents();
+                    this.render();
+                    break;
+            }
         },
         getState: function() {
             var stateArr = [];
-            this.components.forEach(function(component){
-                stateArr.push(component.getState());
+            stateArr = this.components.map(function(component){
+                //console.log(component, component.getState());
+                return component.getState() || null;
             });
+
             return AppUtils.concatObj(stateArr);
         },
         returnState: function(state) {
@@ -11788,10 +10818,24 @@ var AppUtils = { //вспомогашки
             }
         },
         view: function() {
+            var self = this;
             this.viewFilters.init(this);
+            this.$apply = $('.js-apply-filter');
+            this.$close = $('.js-close-filter');
+            this.$self = $('.goods-filter.folding');
+            this.$apply.on('click',function(e){
+                e.preventDefault();
+                console.log(self.getState());
+                self.sendMessage('filtersChange');
+            });
+            this.$close.on('click',function(e){
+                e.preventDefault();
+                self.$self.trigger('close');
+            })
         },
         render: function() {//рендер FiltersView
             this.viewFilters.render();
+            this.$self.trigger('update');
         },
         getViewData: function() {
             var viewData = [];
@@ -11824,6 +10868,7 @@ var AppUtils = { //вспомогашки
         view: function() {
             this.self = document.getElementById('itemsfilterresult');
             this.$self = $(this.self);
+            this.$title = $('.goods-filter__choosen-title');
             this.linkClass = 'filter_item';
             this.tpl  = '<div class="'+this.linkClass+'" data-filter="{type}" data-value="{value}">{lbl}</div>';
 
@@ -11843,7 +10888,6 @@ var AppUtils = { //вспомогашки
             var filters = this.controller.getViewData(),//{filterName: [{value:label},...],filterName: [...]}
                 filtersHtml = '';
 
-            //console.log(filters);
             for (var filter in filters) {
                 filters[filter].forEach(function(values){
                     for (var value in values) {
@@ -11852,6 +10896,7 @@ var AppUtils = { //вспомогашки
                 }.bind(this));
 
             }
+            this.$title.toggle(!!filtersHtml);
             this.$self.html(filtersHtml);
         }
     };
@@ -11879,16 +10924,16 @@ var AppUtils = { //вспомогашки
                         this.setState({type: fName, value: state[fName]}, false);
                         isFinded = true;
                     }
-                   /* if (!isFinded) {
-                        this.setState({type: fName, value: this.defaultValue[fName]});
-                    }*/
+                    /* if (!isFinded) {
+                     this.setState({type: fName, value: this.defaultValue[fName]});
+                     }*/
                 }
             } else {
                 for (fName in this.defaultValue) {
                     this.setState({type: fName, value: this.defaultValue[fName]});
                 }
             }
-            console.log(this.state);
+            //console.log(this.state);
             this.renderSelect();
         },
         sendMessage: function(type) {
@@ -11907,8 +10952,8 @@ var AppUtils = { //вспомогашки
             if (!this.defaultValue[data.type]){
                 this.defaultValue[data.type] = data.value;
             }
-            console.log(this.defaultValue);
             this.setViewMode(data);
+            this.lastSelect =
             isUpdate && this.sendMessage('filtersChange');
         },
         setViewMode: function(data) {
@@ -11922,7 +10967,7 @@ var AppUtils = { //вспомогашки
             var self = this;
             this.view = {};
             this.view.pager = $('.pageswitch');
-            this.view.select = $('.itemsfilter__item select');
+            this.view.select = $('.itemsfilter .btn-select select');
             this.view.select.each(function(){
                 var $select = $(this);
                 self.setState({type: $select.data('type'), value: $select.val()});
@@ -11930,6 +10975,7 @@ var AppUtils = { //вспомогашки
             this.view.select.on('change', function(){
                 var $select = $(this);
                 self.setState({type: $select.data('type'), value: $select.val()}, true);
+                self.renderSelect();
             });
         },
         render: function() {
@@ -11945,9 +10991,13 @@ var AppUtils = { //вспомогашки
             var data = this.getState();
             for (var sName in data) {
                 //console.log(data[sName], sName);
-                this.view.select.filter('[data-type='+sName+']').val(data[sName]);
+                var thisSelect = this.view.select.filter('[data-type='+sName+']');
+                thisSelect
+                    .val(data[sName])
+                    .prev().find('.select-value').text(thisSelect.find('option:selected').text());
             }
-            this.view.select.trigger('refresh');
+            //this.view.select.trigger('refresh');
+
         }
     };
 
@@ -11962,7 +11012,7 @@ var AppUtils = { //вспомогашки
             this.view.item = $('.item', this.view.container);
         },
         getPage: function() {
-          return this.manager.getPage();
+            return this.manager.getPage();
         },
         getGoods: function() {
             return this.manager.getGoods();
@@ -12005,7 +11055,7 @@ var AppUtils = { //вспомогашки
                 history.pushState( {stateData:getActiveComponentsState() }, documentTitle, '?' + getParam());
             },
             onpopstate: function(e) {
-                console.log(firstPopState);
+                //console.log(firstPopState);
                 if (/*!e.state && */firstPopState) { //safari & old chrome fix
                     return false;
                 }
@@ -12017,22 +11067,24 @@ var AppUtils = { //вспомогашки
                 if (!history.state) {
                     isBlankState = true;
                 }
-                (timeCapsule && timeCapsule instanceof Function) && timeCapsule(history.state?history.state.stateData:undefined);
+                (timeCapsule && timeCapsule instanceof Function) && timeCapsule(history.state?history.state.stateData:{});
             }
         };
 
         function timeCapsule(state) {
+            //console.info(state);
             catalogComponents.forEach(function(component){
                 component.returnState(state);
             });
-               getMessage('filtersChange', {back: true});
+            getMessage('filtersChange', {back: true});
         }
 
         function getActiveComponentsState() {
             var stateArr = [];
-            catalogComponents.forEach(function(component){
-                stateArr.push(component.getState()); //{filterName: [val,val,...], filterName: ...}
+            stateArr = catalogComponents.map(function(component){
+                return component.getState() || null;  //{filterName: [val,val,...], filterName: ...}
             });
+            //console.log(stateArr);
             return AppUtils.concatObj(stateArr);
         }
 
@@ -12050,7 +11102,7 @@ var AppUtils = { //вспомогашки
             } catch(e) {
 
             }
-           // historyState.isReturn();
+            // historyState.isReturn();
         }
 
         function setViewMode(type) {
@@ -12088,10 +11140,10 @@ var AppUtils = { //вспомогашки
 
         function getParam() {
             paramToPost = '';
-           /* if (isBlankState) {
-                isBlankState = false;
-                return paramToPost;
-            }*/
+            /* if (isBlankState) {
+             isBlankState = false;
+             return paramToPost;
+             }*/
             firstPopState = false;
             addToParam(getActiveComponentsState());
             addToParam({actpage: pageToView});
@@ -12103,24 +11155,24 @@ var AppUtils = { //вспомогашки
                 currentXhr.abort();
             }
             currentXhr = $.ajax(goodsUrl + getParam(), {///ajax/catalogue.html?  '../../source/back/catalogue.html?'
-                    cache: false,
-                    type: 'get',
-                    dataType: 'json',
-                    beforeSend: function (xhr, setting) {
-                        ajxLoader.attachTo($GoodsBlock);
-                    },
-                    success: function (data, status, xhr) {
-                        lastData = data;
-                        callback(data);
-                    },
-                    complete: function (xhr, status) {
-                        currentXhr = null;
-                        ajxLoader._detach();
-                    },
-                    error: function (xhr, status) {
-                        console.log(xhr);
-                        console.log(status);
-                    }
+                cache: false,
+                type: 'get',
+                dataType: 'json',
+                beforeSend: function (xhr, setting) {
+                    ajxLoader.attachTo($GoodsBlock);
+                },
+                success: function (data, status, xhr) {
+                    lastData = data;
+                    callback(data);
+                },
+                complete: function (xhr, status) {
+                    currentXhr = null;
+                    ajxLoader._detach();
+                },
+                error: function (xhr, status) {
+                    console.log(xhr);
+                    console.log(status);
+                }
             });
         }
 
@@ -12190,10 +11242,9 @@ var AppUtils = { //вспомогашки
     })();
 
     $(function(){
-
-
         Filters.init(CatalogManager, FiltersView);
-        Filters.addComponent(PriceFilter);
+
+       // Filters.addComponent(PriceFilter);
         Filters.addComponent(CheckboxFilter);
         Filters.addComponent(popularFilter);
         Filters.addComponent(IdentifySection);
@@ -12202,9 +11253,9 @@ var AppUtils = { //вспомогашки
         ShowOptions.init(CatalogManager);
         Goods.init(CatalogManager);
         CatalogManager.init(Goods, [Filters, ShowOptions]);
-    });
+    })
 
-},{"./lib/ajxLoader":4,"./vendor/jquery-ui":6,"./vendor/jquery-ui-slider-pips.min":5,"nanoscroller":2}],4:[function(require,module,exports){
+},{"./lib/ajxLoader":3}],3:[function(require,module,exports){
 var $ = require('jquery');
 
 var ajxLoader  =  (function() {
@@ -12232,2415 +11283,4 @@ var ajxLoader  =  (function() {
 
 module.exports = ajxLoader;
 
-},{"jquery":1}],5:[function(require,module,exports){
-
-// PIPS
-
-(function($) {
-
-    "use strict";
-
-    var extensionMethods = {
-
-        pips: function( settings ) {
-
-            var slider = this, i, j, p, collection = "",
-                mousedownHandlers,
-                min = slider._valueMin(),
-                max = slider._valueMax(),
-                value = slider._value(),
-                values = slider._values(),
-                pips = ( max - min ) / slider.options.step,
-                $handles = slider.element.find(".ui-slider-handle"),
-                $pips;
-
-            var options = {
-
-                first: "label",
-                // "label", "pip", false
-
-                last: "label",
-                // "label", "pip", false
-
-                rest: "pip",
-                // "label", "pip", false
-
-                labels: false,
-                // [array], { first: "string", rest: [array], last: "string" }, false
-
-                prefix: "",
-                // "", string
-
-                suffix: "",
-                // "", string
-
-                step: ( pips > 100 ) ? Math.floor( pips * 0.05 ) : 1,
-                // number
-
-                formatLabel: function(value) {
-                    return this.prefix + value + this.suffix;
-                }
-                // function
-                // must return a value to display in the pip labels
-
-            };
-
-            if ( $.type( settings ) === "object" || $.type( settings ) === "undefined"  ) {
-                $.extend( options, settings );
-            } else {
-                if ( settings === "destroy" ) {
-                    destroy();
-                }
-                return;
-            }
-
-
-            // we don't want the step ever to be a floating point.
-            slider.options.pipStep = Math.round( options.step );
-
-            // get rid of all pips that might already exist.
-            slider.element
-                .off( ".selectPip" )
-                .addClass("ui-slider-pips")
-                .find(".ui-slider-pip")
-                .remove();
-
-            // small object with functions for marking pips as selected.
-
-            var selectPip = {
-
-                single: function(value) {
-
-                    this.resetClasses();
-
-                    $pips
-                        .filter(".ui-slider-pip-" + this.classLabel(value) )
-                        .addClass("ui-slider-pip-selected");
-
-                    if ( slider.options.range ) {
-
-                        $pips.each(function(k,v) {
-
-                            var pipVal = $(v).children(".ui-slider-label").data("value");
-
-                            if (( slider.options.range === "min" && pipVal < value ) ||
-                                ( slider.options.range === "max" && pipVal > value )) {
-
-                                $(v).addClass("ui-slider-pip-inrange");
-
-                            }
-
-                        });
-
-                    }
-
-                },
-
-                range: function(values) {
-
-                    this.resetClasses();
-
-                    for( i = 0; i < values.length; i++ ) {
-
-                        $pips
-                            .filter(".ui-slider-pip-" + this.classLabel(values[i]) )
-                            .addClass("ui-slider-pip-selected-" + (i+1) );
-
-                    }
-
-                    if ( slider.options.range ) {
-
-                        $pips.each(function(k,v) {
-
-                            var pipVal = $(v).children(".ui-slider-label").data("value");
-
-                            if( pipVal > values[0] && pipVal < values[1] ) {
-
-                                $(v).addClass("ui-slider-pip-inrange");
-
-                            }
-
-                        });
-
-                    }
-
-                },
-
-                classLabel: function(value) {
-
-                    return value.toString().replace(".","-");
-
-                },
-
-                resetClasses: function() {
-
-                    var regex = /(^|\s*)(ui-slider-pip-selected|ui-slider-pip-inrange)(-{1,2}\d+|\s|$)/gi;
-
-                    $pips.removeClass( function (index, css) {
-                        return ( css.match(regex) || [] ).join(" ");
-                    });
-
-                }
-
-            };
-
-            function getClosestHandle( val ) {
-
-                var h, k,
-                    sliderVals,
-                    comparedVals,
-                    closestVal,
-                    tempHandles = [],
-                    closestHandle = 0;
-
-                if( values && values.length ) {
-
-                    // get the current values of the slider handles
-                    sliderVals = slider.element.slider("values");
-
-                    // find the offset value from the `val` for each
-                    // handle, and store it in a new array
-                    comparedVals = $.map( sliderVals, function(v) {
-                        return Math.abs( v - val );
-                    });
-
-                    // figure out the closest handles to the value
-                    closestVal = Math.min.apply( Math, comparedVals );
-
-                    // If a comparedVal is the closestVal, then
-                    // set the value accordingly, and set the closest handle.
-                    for( h = 0; h < comparedVals.length; h++ ) {
-                        if( comparedVals[h] === closestVal ) {
-                            tempHandles.push(h);
-                        }
-                    }
-
-                    // set the closest handle to the first handle in array,
-                    // just incase we have no _lastChangedValue to compare to.
-                    closestHandle = tempHandles[0];
-
-                    // now we want to find out if any of the closest handles were
-                    // the last changed handle, if so we specify that handle to change
-                    for( k = 0; k < tempHandles.length; k++ ) {
-                        if( slider._lastChangedValue === tempHandles[k] ) {
-                            closestHandle = tempHandles[k];
-                        }
-                    }
-
-                    if ( slider.options.range && tempHandles.length === 2 ) {
-
-                        if ( val > sliderVals[1] ) {
-
-                            closestHandle = tempHandles[1];
-
-                        } else if ( val < sliderVals[0] ) {
-
-                            closestHandle = tempHandles[0];
-
-                        }
-
-                    }
-
-                }
-
-                return closestHandle;
-
-            }
-
-            function destroy() {
-
-                slider.element
-                    .off(".selectPip")
-                    .on("mousedown.slider", slider.element.data("mousedown-original") )
-                    .removeClass("ui-slider-pips")
-                    .find(".ui-slider-pip")
-                    .remove();
-
-            }
-
-            // when we click on a label, we want to make sure the
-            // slider's handle actually goes to that label!
-            // so we check all the handles and see which one is closest
-            // to the label we clicked. If 2 handles are equidistant then
-            // we move both of them. We also want to trigger focus on the
-            // handle.
-
-            // without this method the label is just treated like a part
-            // of the slider and there's no accuracy in the selected value
-
-            function labelClick( label ) {
-
-                if (slider.option("disabled")) {
-                    return;
-                }
-
-                var val = $(label).data("value"),
-                    indexToChange = getClosestHandle( val );
-
-                if ( values && values.length ) {
-
-                    slider.element.slider("values", indexToChange, val );
-
-                } else {
-
-                    slider.element.slider("value", val );
-
-                }
-
-                slider._lastChangedValue = indexToChange;
-
-            }
-
-            // method for creating a pip. We loop this for creating all
-            // the pips.
-
-            function createPip( which ) {
-
-                var label,
-                    percent,
-                    number = which,
-                    classes = "ui-slider-pip",
-                    css = "";
-
-                if ( "first" === which ) { number = 0; }
-                else if ( "last" === which ) { number = pips; }
-
-                // labelValue is the actual value of the pip based on the min/step
-                var labelValue = min + ( slider.options.step * number );
-
-                // classLabel replaces any decimals with hyphens
-                var classLabel = labelValue.toString().replace(".","-");
-
-                // We need to set the human-readable label to either the
-                // corresponding element in the array, or the appropriate
-                // item in the object... or an empty string.
-
-                if( $.type(options.labels) === "array" ) {
-                    label = options.labels[number] || "";
-                }
-
-                else if( $.type( options.labels ) === "object" ) {
-
-                    // set first label
-                    if( "first" === which ) {
-                        label = options.labels.first || "";
-                    }
-
-                    // set last label
-                    else if( "last" === which ) {
-                        label = options.labels.last || "";
-                    }
-
-                    // set other labels, but our index should start at -1
-                    // because of the first pip.
-                    else if( $.type( options.labels.rest ) === "array" ) {
-                        label = options.labels.rest[ number - 1 ] || "";
-                    }
-
-                    // urrggh, the options must be f**ked, just show nothing.
-                    else {
-                        label = labelValue;
-                    }
-                }
-
-                else {
-
-                    label = labelValue;
-
-                }
-
-
-
-                // First Pip on the Slider
-                if ( "first" === which ) {
-
-                    percent = "0%";
-
-                    classes += " ui-slider-pip-first";
-                    classes += ( "label" === options.first ) ? " ui-slider-pip-label" : "";
-                    classes += ( false === options.first ) ? " ui-slider-pip-hide" : "";
-
-                    // Last Pip on the Slider
-                } else if ( "last" === which ) {
-
-                    percent = "100%";
-
-                    classes += " ui-slider-pip-last";
-                    classes += ( "label" === options.last ) ? " ui-slider-pip-label" : "";
-                    classes += ( false === options.last ) ? " ui-slider-pip-hide" : "";
-
-                    // All other Pips
-                } else {
-
-                    percent = ((100/pips) * which).toFixed(4) + "%";
-
-                    classes += ( "label" === options.rest ) ? " ui-slider-pip-label" : "";
-                    classes += ( false === options.rest ) ? " ui-slider-pip-hide" : "";
-
-                }
-
-                classes += " ui-slider-pip-" + classLabel;
-
-
-                // add classes for the initial-selected values.
-                if ( values && values.length ) {
-
-                    for( i = 0; i < values.length; i++ ) {
-
-                        if ( labelValue === values[i] ) {
-
-                            classes += " ui-slider-pip-initial-" + (i+1);
-                            classes += " ui-slider-pip-selected-" + (i+1);
-
-                        }
-
-                    }
-
-                    if ( slider.options.range ) {
-
-                        if( labelValue > values[0] &&
-                            labelValue < values[1] ) {
-
-                            classes += " ui-slider-pip-inrange";
-
-                        }
-
-                    }
-
-                } else {
-
-                    if ( labelValue === value ) {
-
-                        classes += " ui-slider-pip-initial";
-                        classes += " ui-slider-pip-selected";
-
-                    }
-
-                    if ( slider.options.range ) {
-
-                        if (( slider.options.range === "min" && labelValue < value ) ||
-                            ( slider.options.range === "max" && labelValue > value )) {
-
-                            classes += " ui-slider-pip-inrange";
-
-                        }
-
-                    }
-
-                }
-
-
-
-                css = ( slider.options.orientation === "horizontal" ) ?
-                "left: "+ percent :
-                "bottom: "+ percent;
-
-
-                // add this current pip to the collection
-                return  "<span class=\""+classes+"\" style=\""+css+"\">"+
-                    "<span class=\"ui-slider-line\"></span>"+
-                    "<span class=\"ui-slider-label\" data-value=\""+labelValue+"\">"+ options.formatLabel(label) +"</span>"+
-                    "</span>";
-
-            }
-
-            // create our first pip
-            collection += createPip("first");
-
-            // for every stop in the slider; we create a pip.
-            for( p = 1; p < pips; p++ ) {
-                if( p % slider.options.pipStep === 0 ) {
-                    collection += createPip( p );
-                }
-            }
-
-            // create our last pip
-            collection += createPip("last");
-
-            // append the collection of pips.
-            slider.element.append( collection );
-
-            // store the pips for setting classes later.
-            $pips = slider.element.find(".ui-slider-pip");
-
-
-
-            // store the mousedown handlers for later, just in case we reset
-            // the slider, the handler would be lost!
-
-            if ( $._data( slider.element.get(0), "events").mousedown &&
-                $._data( slider.element.get(0), "events").mousedown.length ) {
-
-                mousedownHandlers = $._data( slider.element.get(0), "events").mousedown;
-
-            } else {
-
-                mousedownHandlers = slider.element.data("mousedown-handlers");
-
-            }
-
-            slider.element.data("mousedown-handlers", mousedownHandlers.slice() );
-
-            // loop through all the mousedown handlers on the slider,
-            // and store the original namespaced (.slider) event handler so
-            // we can trigger it later.
-            for( j = 0; j < mousedownHandlers.length; j++ ) {
-                if( mousedownHandlers[j].namespace === "slider" ) {
-                    slider.element.data("mousedown-original", mousedownHandlers[j].handler );
-                }
-            }
-
-            // unbind the mousedown.slider event, because it interferes with
-            // the labelClick() method (stops smooth animation), and decide
-            // if we want to trigger the original event based on which element
-            // was clicked.
-            slider.element
-                .off("mousedown.slider")
-                .on("mousedown.selectPip", function(e) {
-
-                    var $target = $(e.target),
-                        closest = getClosestHandle( $target.data("value") ),
-                        $handle = $handles.eq( closest );
-
-                    $handle.addClass("ui-state-active");
-
-                    if( $target.is(".ui-slider-label") ) {
-
-                        labelClick( $target );
-
-                        slider.element
-                            .one("mouseup.selectPip", function() {
-
-                                $handle
-                                    .removeClass("ui-state-active")
-                                    .focus();
-
-                            });
-
-                    } else {
-
-                        var originalMousedown = slider.element.data("mousedown-original");
-                        originalMousedown(e);
-
-                    }
-
-                });
-
-
-
-
-            slider.element.on( "slide.selectPip slidechange.selectPip", function(e,ui) {
-
-                var $slider = $(this),
-                    value = $slider.slider("value"),
-                    values = $slider.slider("values");
-
-                if ( ui ) {
-
-                    value = ui.value;
-                    values = ui.values;
-
-                }
-
-                if ( values && values.length ) {
-
-                    selectPip.range( values );
-
-                } else {
-
-                    selectPip.single( value );
-
-                }
-
-            });
-
-
-
-
-        },
-
-
-
-
-
-
-
-
-// FLOATS
-
-        float: function( settings ) {
-
-            var i,
-                slider = this,
-                min = slider._valueMin(),
-                max = slider._valueMax(),
-                value = slider._value(),
-                values = slider._values(),
-                tipValues = [],
-                $handles = slider.element.find(".ui-slider-handle");
-
-            var options = {
-
-                handle: true,
-                // false
-
-                pips: false,
-                // true
-
-                labels: false,
-                // [array], { first: "string", rest: [array], last: "string" }, false
-
-                prefix: "",
-                // "", string
-
-                suffix: "",
-                // "", string
-
-                event: "slidechange slide",
-                // "slidechange", "slide", "slidechange slide"
-
-                formatLabel: function(value) {
-                    return this.prefix + value + this.suffix;
-                }
-                // function
-                // must return a value to display in the floats
-
-            };
-
-            if ( $.type( settings ) === "object" || $.type( settings ) === "undefined"  ) {
-                $.extend( options, settings );
-            } else {
-                if ( settings === "destroy" ) {
-                    destroy();
-                }
-                return;
-            }
-
-
-
-
-            if ( value < min ) {
-                value = min;
-            }
-
-            if ( value > max ) {
-                value = max;
-            }
-
-            if ( values && values.length ) {
-
-                for( i = 0; i < values.length; i++ ) {
-
-                    if ( values[i] < min ) {
-                        values[i] = min;
-                    }
-
-                    if ( values[i] > max ) {
-                        values[i] = max;
-                    }
-
-                }
-
-            }
-
-            // add a class for the CSS
-            slider.element
-                .addClass("ui-slider-float")
-                .find(".ui-slider-tip, .ui-slider-tip-label")
-                .remove();
-
-
-
-            function destroy() {
-
-                slider.element
-                    .off(".sliderFloat")
-                    .removeClass("ui-slider-float")
-                    .find(".ui-slider-tip, .ui-slider-tip-label")
-                    .remove();
-
-            }
-
-
-            function getPipLabels( values ) {
-
-                // when checking the array we need to divide
-                // by the step option, so we store those values here.
-
-                var vals = [],
-                    steppedVals = $.map( values, function(v) {
-                        return Math.ceil(( v - min ) / slider.options.step);
-                    });
-
-                // now we just get the values we need to return
-                // by looping through the values array and assigning the
-                // label if it exists.
-
-                if( $.type( options.labels ) === "array" ) {
-
-                    for( i = 0; i < values.length; i++ ) {
-
-                        vals[i] = options.labels[ steppedVals[i] ] || values[i];
-
-                    }
-
-                }
-
-                else if( $.type( options.labels ) === "object" ) {
-
-                    for( i = 0; i < values.length; i++ ) {
-
-                        if( values[i] === min ) {
-                            vals[i] = options.labels.first || min;
-                        }
-
-                        else if( values[i] === max ) {
-                            vals[i] = options.labels.last || max;
-                        }
-
-                        else if( $.type( options.labels.rest ) === "array" ) {
-                            vals[i] = options.labels.rest[ steppedVals[i] - 1 ] || values[i];
-                        }
-
-                        else {
-                            vals[i] = values[i];
-                        }
-
-                    }
-
-                }
-
-                else {
-
-                    for( i = 0; i < values.length; i++ ) {
-
-                        vals[i] = values[i];
-
-                    }
-
-                }
-
-                return vals;
-
-            }
-
-            // apply handle tip if settings allows.
-            if ( options.handle ) {
-
-                // We need to set the human-readable label to either the
-                // corresponding element in the array, or the appropriate
-                // item in the object... or an empty string.
-
-                tipValues = ( values && values.length ) ?
-                    getPipLabels( values ) :
-                    getPipLabels( [ value ] );
-
-                for( i = 0; i < tipValues.length; i++ ) {
-
-                    $handles
-                        .eq( i )
-                        .append( $("<span class=\"ui-slider-tip\">"+ options.formatLabel(tipValues[i]) +"</span>") );
-
-                }
-
-            }
-
-            if ( options.pips ) {
-
-                // if this slider also has pip-labels, we make those into tips, too.
-                slider.element.find(".ui-slider-label").each(function(k,v) {
-
-                    var $this = $(v),
-                        val = [ $this.data("value") ],
-                        label,
-                        $tip;
-
-
-                    label = options.formatLabel( getPipLabels( val )[0] );
-
-                    // create a tip element
-                    $tip =
-                        $("<span class=\"ui-slider-tip-label\">" + label + "</span>")
-                            .insertAfter( $this );
-
-                });
-
-            }
-
-            // check that the event option is actually valid against our
-            // own list of the slider's events.
-            if ( options.event !== "slide" &&
-                options.event !== "slidechange" &&
-                options.event !== "slide slidechange" &&
-                options.event !== "slidechange slide" ) {
-
-                options.event = "slidechange slide";
-
-            }
-
-            // when slider changes, update handle tip label.
-            slider.element
-                .off(".sliderFloat")
-                .on( options.event + ".sliderFloat", function( e, ui ) {
-
-                    var uiValue = ( $.type( ui.value ) === "array" ) ? ui.value : [ ui.value ],
-                        val = options.formatLabel( getPipLabels( uiValue )[0] );
-
-                    $(ui.handle)
-                        .find(".ui-slider-tip")
-                        .html( val );
-
-                });
-
-        }
-
-    };
-
-    $.extend(true, $.ui.slider.prototype, extensionMethods);
-
-})(jQuery);
-},{}],6:[function(require,module,exports){
-/*! jQuery UI - v1.10.4 - 2015-10-24
-* http://jqueryui.com
-* Includes: jquery.ui.core.js, jquery.ui.widget.js, jquery.ui.mouse.js, jquery.ui.slider.js
-* Copyright 2015 jQuery Foundation and other contributors; Licensed MIT */
-
-(function( $, undefined ) {
-
-var uuid = 0,
-	runiqueId = /^ui-id-\d+$/;
-// $.ui might exist from components with no dependencies, e.g., $.ui.position
-$.ui = $.ui || {};
-
-$.extend( $.ui, {
-	version: "1.10.4",
-
-	keyCode: {
-		BACKSPACE: 8,
-		COMMA: 188,
-		DELETE: 46,
-		DOWN: 40,
-		END: 35,
-		ENTER: 13,
-		ESCAPE: 27,
-		HOME: 36,
-		LEFT: 37,
-		NUMPAD_ADD: 107,
-		NUMPAD_DECIMAL: 110,
-		NUMPAD_DIVIDE: 111,
-		NUMPAD_ENTER: 108,
-		NUMPAD_MULTIPLY: 106,
-		NUMPAD_SUBTRACT: 109,
-		PAGE_DOWN: 34,
-		PAGE_UP: 33,
-		PERIOD: 190,
-		RIGHT: 39,
-		SPACE: 32,
-		TAB: 9,
-		UP: 38
-	}
-});
-
-// plugins
-$.fn.extend({
-	focus: (function( orig ) {
-		return function( delay, fn ) {
-			return typeof delay === "number" ?
-				this.each(function() {
-					var elem = this;
-					setTimeout(function() {
-						$( elem ).focus();
-						if ( fn ) {
-							fn.call( elem );
-						}
-					}, delay );
-				}) :
-				orig.apply( this, arguments );
-		};
-	})( $.fn.focus ),
-
-	scrollParent: function() {
-		var scrollParent;
-		if (($.ui.ie && (/(static|relative)/).test(this.css("position"))) || (/absolute/).test(this.css("position"))) {
-			scrollParent = this.parents().filter(function() {
-				return (/(relative|absolute|fixed)/).test($.css(this,"position")) && (/(auto|scroll)/).test($.css(this,"overflow")+$.css(this,"overflow-y")+$.css(this,"overflow-x"));
-			}).eq(0);
-		} else {
-			scrollParent = this.parents().filter(function() {
-				return (/(auto|scroll)/).test($.css(this,"overflow")+$.css(this,"overflow-y")+$.css(this,"overflow-x"));
-			}).eq(0);
-		}
-
-		return (/fixed/).test(this.css("position")) || !scrollParent.length ? $(document) : scrollParent;
-	},
-
-	zIndex: function( zIndex ) {
-		if ( zIndex !== undefined ) {
-			return this.css( "zIndex", zIndex );
-		}
-
-		if ( this.length ) {
-			var elem = $( this[ 0 ] ), position, value;
-			while ( elem.length && elem[ 0 ] !== document ) {
-				// Ignore z-index if position is set to a value where z-index is ignored by the browser
-				// This makes behavior of this function consistent across browsers
-				// WebKit always returns auto if the element is positioned
-				position = elem.css( "position" );
-				if ( position === "absolute" || position === "relative" || position === "fixed" ) {
-					// IE returns 0 when zIndex is not specified
-					// other browsers return a string
-					// we ignore the case of nested elements with an explicit value of 0
-					// <div style="z-index: -10;"><div style="z-index: 0;"></div></div>
-					value = parseInt( elem.css( "zIndex" ), 10 );
-					if ( !isNaN( value ) && value !== 0 ) {
-						return value;
-					}
-				}
-				elem = elem.parent();
-			}
-		}
-
-		return 0;
-	},
-
-	uniqueId: function() {
-		return this.each(function() {
-			if ( !this.id ) {
-				this.id = "ui-id-" + (++uuid);
-			}
-		});
-	},
-
-	removeUniqueId: function() {
-		return this.each(function() {
-			if ( runiqueId.test( this.id ) ) {
-				$( this ).removeAttr( "id" );
-			}
-		});
-	}
-});
-
-// selectors
-function focusable( element, isTabIndexNotNaN ) {
-	var map, mapName, img,
-		nodeName = element.nodeName.toLowerCase();
-	if ( "area" === nodeName ) {
-		map = element.parentNode;
-		mapName = map.name;
-		if ( !element.href || !mapName || map.nodeName.toLowerCase() !== "map" ) {
-			return false;
-		}
-		img = $( "img[usemap=#" + mapName + "]" )[0];
-		return !!img && visible( img );
-	}
-	return ( /input|select|textarea|button|object/.test( nodeName ) ?
-		!element.disabled :
-		"a" === nodeName ?
-			element.href || isTabIndexNotNaN :
-			isTabIndexNotNaN) &&
-		// the element and all of its ancestors must be visible
-		visible( element );
-}
-
-function visible( element ) {
-	return $.expr.filters.visible( element ) &&
-		!$( element ).parents().addBack().filter(function() {
-			return $.css( this, "visibility" ) === "hidden";
-		}).length;
-}
-
-$.extend( $.expr[ ":" ], {
-	data: $.expr.createPseudo ?
-		$.expr.createPseudo(function( dataName ) {
-			return function( elem ) {
-				return !!$.data( elem, dataName );
-			};
-		}) :
-		// support: jQuery <1.8
-		function( elem, i, match ) {
-			return !!$.data( elem, match[ 3 ] );
-		},
-
-	focusable: function( element ) {
-		return focusable( element, !isNaN( $.attr( element, "tabindex" ) ) );
-	},
-
-	tabbable: function( element ) {
-		var tabIndex = $.attr( element, "tabindex" ),
-			isTabIndexNaN = isNaN( tabIndex );
-		return ( isTabIndexNaN || tabIndex >= 0 ) && focusable( element, !isTabIndexNaN );
-	}
-});
-
-// support: jQuery <1.8
-if ( !$( "<a>" ).outerWidth( 1 ).jquery ) {
-	$.each( [ "Width", "Height" ], function( i, name ) {
-		var side = name === "Width" ? [ "Left", "Right" ] : [ "Top", "Bottom" ],
-			type = name.toLowerCase(),
-			orig = {
-				innerWidth: $.fn.innerWidth,
-				innerHeight: $.fn.innerHeight,
-				outerWidth: $.fn.outerWidth,
-				outerHeight: $.fn.outerHeight
-			};
-
-		function reduce( elem, size, border, margin ) {
-			$.each( side, function() {
-				size -= parseFloat( $.css( elem, "padding" + this ) ) || 0;
-				if ( border ) {
-					size -= parseFloat( $.css( elem, "border" + this + "Width" ) ) || 0;
-				}
-				if ( margin ) {
-					size -= parseFloat( $.css( elem, "margin" + this ) ) || 0;
-				}
-			});
-			return size;
-		}
-
-		$.fn[ "inner" + name ] = function( size ) {
-			if ( size === undefined ) {
-				return orig[ "inner" + name ].call( this );
-			}
-
-			return this.each(function() {
-				$( this ).css( type, reduce( this, size ) + "px" );
-			});
-		};
-
-		$.fn[ "outer" + name] = function( size, margin ) {
-			if ( typeof size !== "number" ) {
-				return orig[ "outer" + name ].call( this, size );
-			}
-
-			return this.each(function() {
-				$( this).css( type, reduce( this, size, true, margin ) + "px" );
-			});
-		};
-	});
-}
-
-// support: jQuery <1.8
-if ( !$.fn.addBack ) {
-	$.fn.addBack = function( selector ) {
-		return this.add( selector == null ?
-			this.prevObject : this.prevObject.filter( selector )
-		);
-	};
-}
-
-// support: jQuery 1.6.1, 1.6.2 (http://bugs.jquery.com/ticket/9413)
-if ( $( "<a>" ).data( "a-b", "a" ).removeData( "a-b" ).data( "a-b" ) ) {
-	$.fn.removeData = (function( removeData ) {
-		return function( key ) {
-			if ( arguments.length ) {
-				return removeData.call( this, $.camelCase( key ) );
-			} else {
-				return removeData.call( this );
-			}
-		};
-	})( $.fn.removeData );
-}
-
-
-
-
-
-// deprecated
-$.ui.ie = !!/msie [\w.]+/.exec( navigator.userAgent.toLowerCase() );
-
-$.support.selectstart = "onselectstart" in document.createElement( "div" );
-$.fn.extend({
-	disableSelection: function() {
-		return this.bind( ( $.support.selectstart ? "selectstart" : "mousedown" ) +
-			".ui-disableSelection", function( event ) {
-				event.preventDefault();
-			});
-	},
-
-	enableSelection: function() {
-		return this.unbind( ".ui-disableSelection" );
-	}
-});
-
-$.extend( $.ui, {
-	// $.ui.plugin is deprecated. Use $.widget() extensions instead.
-	plugin: {
-		add: function( module, option, set ) {
-			var i,
-				proto = $.ui[ module ].prototype;
-			for ( i in set ) {
-				proto.plugins[ i ] = proto.plugins[ i ] || [];
-				proto.plugins[ i ].push( [ option, set[ i ] ] );
-			}
-		},
-		call: function( instance, name, args ) {
-			var i,
-				set = instance.plugins[ name ];
-			if ( !set || !instance.element[ 0 ].parentNode || instance.element[ 0 ].parentNode.nodeType === 11 ) {
-				return;
-			}
-
-			for ( i = 0; i < set.length; i++ ) {
-				if ( instance.options[ set[ i ][ 0 ] ] ) {
-					set[ i ][ 1 ].apply( instance.element, args );
-				}
-			}
-		}
-	},
-
-	// only used by resizable
-	hasScroll: function( el, a ) {
-
-		//If overflow is hidden, the element might have extra content, but the user wants to hide it
-		if ( $( el ).css( "overflow" ) === "hidden") {
-			return false;
-		}
-
-		var scroll = ( a && a === "left" ) ? "scrollLeft" : "scrollTop",
-			has = false;
-
-		if ( el[ scroll ] > 0 ) {
-			return true;
-		}
-
-		// TODO: determine which cases actually cause this to happen
-		// if the element doesn't have the scroll set, see if it's possible to
-		// set the scroll
-		el[ scroll ] = 1;
-		has = ( el[ scroll ] > 0 );
-		el[ scroll ] = 0;
-		return has;
-	}
-});
-
-})( jQuery );
-(function( $, undefined ) {
-
-var uuid = 0,
-	slice = Array.prototype.slice,
-	_cleanData = $.cleanData;
-$.cleanData = function( elems ) {
-	for ( var i = 0, elem; (elem = elems[i]) != null; i++ ) {
-		try {
-			$( elem ).triggerHandler( "remove" );
-		// http://bugs.jquery.com/ticket/8235
-		} catch( e ) {}
-	}
-	_cleanData( elems );
-};
-
-$.widget = function( name, base, prototype ) {
-	var fullName, existingConstructor, constructor, basePrototype,
-		// proxiedPrototype allows the provided prototype to remain unmodified
-		// so that it can be used as a mixin for multiple widgets (#8876)
-		proxiedPrototype = {},
-		namespace = name.split( "." )[ 0 ];
-
-	name = name.split( "." )[ 1 ];
-	fullName = namespace + "-" + name;
-
-	if ( !prototype ) {
-		prototype = base;
-		base = $.Widget;
-	}
-
-	// create selector for plugin
-	$.expr[ ":" ][ fullName.toLowerCase() ] = function( elem ) {
-		return !!$.data( elem, fullName );
-	};
-
-	$[ namespace ] = $[ namespace ] || {};
-	existingConstructor = $[ namespace ][ name ];
-	constructor = $[ namespace ][ name ] = function( options, element ) {
-		// allow instantiation without "new" keyword
-		if ( !this._createWidget ) {
-			return new constructor( options, element );
-		}
-
-		// allow instantiation without initializing for simple inheritance
-		// must use "new" keyword (the code above always passes args)
-		if ( arguments.length ) {
-			this._createWidget( options, element );
-		}
-	};
-	// extend with the existing constructor to carry over any static properties
-	$.extend( constructor, existingConstructor, {
-		version: prototype.version,
-		// copy the object used to create the prototype in case we need to
-		// redefine the widget later
-		_proto: $.extend( {}, prototype ),
-		// track widgets that inherit from this widget in case this widget is
-		// redefined after a widget inherits from it
-		_childConstructors: []
-	});
-
-	basePrototype = new base();
-	// we need to make the options hash a property directly on the new instance
-	// otherwise we'll modify the options hash on the prototype that we're
-	// inheriting from
-	basePrototype.options = $.widget.extend( {}, basePrototype.options );
-	$.each( prototype, function( prop, value ) {
-		if ( !$.isFunction( value ) ) {
-			proxiedPrototype[ prop ] = value;
-			return;
-		}
-		proxiedPrototype[ prop ] = (function() {
-			var _super = function() {
-					return base.prototype[ prop ].apply( this, arguments );
-				},
-				_superApply = function( args ) {
-					return base.prototype[ prop ].apply( this, args );
-				};
-			return function() {
-				var __super = this._super,
-					__superApply = this._superApply,
-					returnValue;
-
-				this._super = _super;
-				this._superApply = _superApply;
-
-				returnValue = value.apply( this, arguments );
-
-				this._super = __super;
-				this._superApply = __superApply;
-
-				return returnValue;
-			};
-		})();
-	});
-	constructor.prototype = $.widget.extend( basePrototype, {
-		// TODO: remove support for widgetEventPrefix
-		// always use the name + a colon as the prefix, e.g., draggable:start
-		// don't prefix for widgets that aren't DOM-based
-		widgetEventPrefix: existingConstructor ? (basePrototype.widgetEventPrefix || name) : name
-	}, proxiedPrototype, {
-		constructor: constructor,
-		namespace: namespace,
-		widgetName: name,
-		widgetFullName: fullName
-	});
-
-	// If this widget is being redefined then we need to find all widgets that
-	// are inheriting from it and redefine all of them so that they inherit from
-	// the new version of this widget. We're essentially trying to replace one
-	// level in the prototype chain.
-	if ( existingConstructor ) {
-		$.each( existingConstructor._childConstructors, function( i, child ) {
-			var childPrototype = child.prototype;
-
-			// redefine the child widget using the same prototype that was
-			// originally used, but inherit from the new version of the base
-			$.widget( childPrototype.namespace + "." + childPrototype.widgetName, constructor, child._proto );
-		});
-		// remove the list of existing child constructors from the old constructor
-		// so the old child constructors can be garbage collected
-		delete existingConstructor._childConstructors;
-	} else {
-		base._childConstructors.push( constructor );
-	}
-
-	$.widget.bridge( name, constructor );
-};
-
-$.widget.extend = function( target ) {
-	var input = slice.call( arguments, 1 ),
-		inputIndex = 0,
-		inputLength = input.length,
-		key,
-		value;
-	for ( ; inputIndex < inputLength; inputIndex++ ) {
-		for ( key in input[ inputIndex ] ) {
-			value = input[ inputIndex ][ key ];
-			if ( input[ inputIndex ].hasOwnProperty( key ) && value !== undefined ) {
-				// Clone objects
-				if ( $.isPlainObject( value ) ) {
-					target[ key ] = $.isPlainObject( target[ key ] ) ?
-						$.widget.extend( {}, target[ key ], value ) :
-						// Don't extend strings, arrays, etc. with objects
-						$.widget.extend( {}, value );
-				// Copy everything else by reference
-				} else {
-					target[ key ] = value;
-				}
-			}
-		}
-	}
-	return target;
-};
-
-$.widget.bridge = function( name, object ) {
-	var fullName = object.prototype.widgetFullName || name;
-	$.fn[ name ] = function( options ) {
-		var isMethodCall = typeof options === "string",
-			args = slice.call( arguments, 1 ),
-			returnValue = this;
-
-		// allow multiple hashes to be passed on init
-		options = !isMethodCall && args.length ?
-			$.widget.extend.apply( null, [ options ].concat(args) ) :
-			options;
-
-		if ( isMethodCall ) {
-			this.each(function() {
-				var methodValue,
-					instance = $.data( this, fullName );
-				if ( !instance ) {
-					return $.error( "cannot call methods on " + name + " prior to initialization; " +
-						"attempted to call method '" + options + "'" );
-				}
-				if ( !$.isFunction( instance[options] ) || options.charAt( 0 ) === "_" ) {
-					return $.error( "no such method '" + options + "' for " + name + " widget instance" );
-				}
-				methodValue = instance[ options ].apply( instance, args );
-				if ( methodValue !== instance && methodValue !== undefined ) {
-					returnValue = methodValue && methodValue.jquery ?
-						returnValue.pushStack( methodValue.get() ) :
-						methodValue;
-					return false;
-				}
-			});
-		} else {
-			this.each(function() {
-				var instance = $.data( this, fullName );
-				if ( instance ) {
-					instance.option( options || {} )._init();
-				} else {
-					$.data( this, fullName, new object( options, this ) );
-				}
-			});
-		}
-
-		return returnValue;
-	};
-};
-
-$.Widget = function( /* options, element */ ) {};
-$.Widget._childConstructors = [];
-
-$.Widget.prototype = {
-	widgetName: "widget",
-	widgetEventPrefix: "",
-	defaultElement: "<div>",
-	options: {
-		disabled: false,
-
-		// callbacks
-		create: null
-	},
-	_createWidget: function( options, element ) {
-		element = $( element || this.defaultElement || this )[ 0 ];
-		this.element = $( element );
-		this.uuid = uuid++;
-		this.eventNamespace = "." + this.widgetName + this.uuid;
-		this.options = $.widget.extend( {},
-			this.options,
-			this._getCreateOptions(),
-			options );
-
-		this.bindings = $();
-		this.hoverable = $();
-		this.focusable = $();
-
-		if ( element !== this ) {
-			$.data( element, this.widgetFullName, this );
-			this._on( true, this.element, {
-				remove: function( event ) {
-					if ( event.target === element ) {
-						this.destroy();
-					}
-				}
-			});
-			this.document = $( element.style ?
-				// element within the document
-				element.ownerDocument :
-				// element is window or document
-				element.document || element );
-			this.window = $( this.document[0].defaultView || this.document[0].parentWindow );
-		}
-
-		this._create();
-		this._trigger( "create", null, this._getCreateEventData() );
-		this._init();
-	},
-	_getCreateOptions: $.noop,
-	_getCreateEventData: $.noop,
-	_create: $.noop,
-	_init: $.noop,
-
-	destroy: function() {
-		this._destroy();
-		// we can probably remove the unbind calls in 2.0
-		// all event bindings should go through this._on()
-		this.element
-			.unbind( this.eventNamespace )
-			// 1.9 BC for #7810
-			// TODO remove dual storage
-			.removeData( this.widgetName )
-			.removeData( this.widgetFullName )
-			// support: jquery <1.6.3
-			// http://bugs.jquery.com/ticket/9413
-			.removeData( $.camelCase( this.widgetFullName ) );
-		this.widget()
-			.unbind( this.eventNamespace )
-			.removeAttr( "aria-disabled" )
-			.removeClass(
-				this.widgetFullName + "-disabled " +
-				"ui-state-disabled" );
-
-		// clean up events and states
-		this.bindings.unbind( this.eventNamespace );
-		this.hoverable.removeClass( "ui-state-hover" );
-		this.focusable.removeClass( "ui-state-focus" );
-	},
-	_destroy: $.noop,
-
-	widget: function() {
-		return this.element;
-	},
-
-	option: function( key, value ) {
-		var options = key,
-			parts,
-			curOption,
-			i;
-
-		if ( arguments.length === 0 ) {
-			// don't return a reference to the internal hash
-			return $.widget.extend( {}, this.options );
-		}
-
-		if ( typeof key === "string" ) {
-			// handle nested keys, e.g., "foo.bar" => { foo: { bar: ___ } }
-			options = {};
-			parts = key.split( "." );
-			key = parts.shift();
-			if ( parts.length ) {
-				curOption = options[ key ] = $.widget.extend( {}, this.options[ key ] );
-				for ( i = 0; i < parts.length - 1; i++ ) {
-					curOption[ parts[ i ] ] = curOption[ parts[ i ] ] || {};
-					curOption = curOption[ parts[ i ] ];
-				}
-				key = parts.pop();
-				if ( arguments.length === 1 ) {
-					return curOption[ key ] === undefined ? null : curOption[ key ];
-				}
-				curOption[ key ] = value;
-			} else {
-				if ( arguments.length === 1 ) {
-					return this.options[ key ] === undefined ? null : this.options[ key ];
-				}
-				options[ key ] = value;
-			}
-		}
-
-		this._setOptions( options );
-
-		return this;
-	},
-	_setOptions: function( options ) {
-		var key;
-
-		for ( key in options ) {
-			this._setOption( key, options[ key ] );
-		}
-
-		return this;
-	},
-	_setOption: function( key, value ) {
-		this.options[ key ] = value;
-
-		if ( key === "disabled" ) {
-			this.widget()
-				.toggleClass( this.widgetFullName + "-disabled ui-state-disabled", !!value )
-				.attr( "aria-disabled", value );
-			this.hoverable.removeClass( "ui-state-hover" );
-			this.focusable.removeClass( "ui-state-focus" );
-		}
-
-		return this;
-	},
-
-	enable: function() {
-		return this._setOption( "disabled", false );
-	},
-	disable: function() {
-		return this._setOption( "disabled", true );
-	},
-
-	_on: function( suppressDisabledCheck, element, handlers ) {
-		var delegateElement,
-			instance = this;
-
-		// no suppressDisabledCheck flag, shuffle arguments
-		if ( typeof suppressDisabledCheck !== "boolean" ) {
-			handlers = element;
-			element = suppressDisabledCheck;
-			suppressDisabledCheck = false;
-		}
-
-		// no element argument, shuffle and use this.element
-		if ( !handlers ) {
-			handlers = element;
-			element = this.element;
-			delegateElement = this.widget();
-		} else {
-			// accept selectors, DOM elements
-			element = delegateElement = $( element );
-			this.bindings = this.bindings.add( element );
-		}
-
-		$.each( handlers, function( event, handler ) {
-			function handlerProxy() {
-				// allow widgets to customize the disabled handling
-				// - disabled as an array instead of boolean
-				// - disabled class as method for disabling individual parts
-				if ( !suppressDisabledCheck &&
-						( instance.options.disabled === true ||
-							$( this ).hasClass( "ui-state-disabled" ) ) ) {
-					return;
-				}
-				return ( typeof handler === "string" ? instance[ handler ] : handler )
-					.apply( instance, arguments );
-			}
-
-			// copy the guid so direct unbinding works
-			if ( typeof handler !== "string" ) {
-				handlerProxy.guid = handler.guid =
-					handler.guid || handlerProxy.guid || $.guid++;
-			}
-
-			var match = event.match( /^(\w+)\s*(.*)$/ ),
-				eventName = match[1] + instance.eventNamespace,
-				selector = match[2];
-			if ( selector ) {
-				delegateElement.delegate( selector, eventName, handlerProxy );
-			} else {
-				element.bind( eventName, handlerProxy );
-			}
-		});
-	},
-
-	_off: function( element, eventName ) {
-		eventName = (eventName || "").split( " " ).join( this.eventNamespace + " " ) + this.eventNamespace;
-		element.unbind( eventName ).undelegate( eventName );
-	},
-
-	_delay: function( handler, delay ) {
-		function handlerProxy() {
-			return ( typeof handler === "string" ? instance[ handler ] : handler )
-				.apply( instance, arguments );
-		}
-		var instance = this;
-		return setTimeout( handlerProxy, delay || 0 );
-	},
-
-	_hoverable: function( element ) {
-		this.hoverable = this.hoverable.add( element );
-		this._on( element, {
-			mouseenter: function( event ) {
-				$( event.currentTarget ).addClass( "ui-state-hover" );
-			},
-			mouseleave: function( event ) {
-				$( event.currentTarget ).removeClass( "ui-state-hover" );
-			}
-		});
-	},
-
-	_focusable: function( element ) {
-		this.focusable = this.focusable.add( element );
-		this._on( element, {
-			focusin: function( event ) {
-				$( event.currentTarget ).addClass( "ui-state-focus" );
-			},
-			focusout: function( event ) {
-				$( event.currentTarget ).removeClass( "ui-state-focus" );
-			}
-		});
-	},
-
-	_trigger: function( type, event, data ) {
-		var prop, orig,
-			callback = this.options[ type ];
-
-		data = data || {};
-		event = $.Event( event );
-		event.type = ( type === this.widgetEventPrefix ?
-			type :
-			this.widgetEventPrefix + type ).toLowerCase();
-		// the original event may come from any element
-		// so we need to reset the target on the new event
-		event.target = this.element[ 0 ];
-
-		// copy original event properties over to the new event
-		orig = event.originalEvent;
-		if ( orig ) {
-			for ( prop in orig ) {
-				if ( !( prop in event ) ) {
-					event[ prop ] = orig[ prop ];
-				}
-			}
-		}
-
-		this.element.trigger( event, data );
-		return !( $.isFunction( callback ) &&
-			callback.apply( this.element[0], [ event ].concat( data ) ) === false ||
-			event.isDefaultPrevented() );
-	}
-};
-
-$.each( { show: "fadeIn", hide: "fadeOut" }, function( method, defaultEffect ) {
-	$.Widget.prototype[ "_" + method ] = function( element, options, callback ) {
-		if ( typeof options === "string" ) {
-			options = { effect: options };
-		}
-		var hasOptions,
-			effectName = !options ?
-				method :
-				options === true || typeof options === "number" ?
-					defaultEffect :
-					options.effect || defaultEffect;
-		options = options || {};
-		if ( typeof options === "number" ) {
-			options = { duration: options };
-		}
-		hasOptions = !$.isEmptyObject( options );
-		options.complete = callback;
-		if ( options.delay ) {
-			element.delay( options.delay );
-		}
-		if ( hasOptions && $.effects && $.effects.effect[ effectName ] ) {
-			element[ method ]( options );
-		} else if ( effectName !== method && element[ effectName ] ) {
-			element[ effectName ]( options.duration, options.easing, callback );
-		} else {
-			element.queue(function( next ) {
-				$( this )[ method ]();
-				if ( callback ) {
-					callback.call( element[ 0 ] );
-				}
-				next();
-			});
-		}
-	};
-});
-
-})( jQuery );
-(function( $, undefined ) {
-
-var mouseHandled = false;
-$( document ).mouseup( function() {
-	mouseHandled = false;
-});
-
-$.widget("ui.mouse", {
-	version: "1.10.4",
-	options: {
-		cancel: "input,textarea,button,select,option",
-		distance: 1,
-		delay: 0
-	},
-	_mouseInit: function() {
-		var that = this;
-
-		this.element
-			.bind("mousedown."+this.widgetName, function(event) {
-				return that._mouseDown(event);
-			})
-			.bind("click."+this.widgetName, function(event) {
-				if (true === $.data(event.target, that.widgetName + ".preventClickEvent")) {
-					$.removeData(event.target, that.widgetName + ".preventClickEvent");
-					event.stopImmediatePropagation();
-					return false;
-				}
-			});
-
-		this.started = false;
-	},
-
-	// TODO: make sure destroying one instance of mouse doesn't mess with
-	// other instances of mouse
-	_mouseDestroy: function() {
-		this.element.unbind("."+this.widgetName);
-		if ( this._mouseMoveDelegate ) {
-			$(document)
-				.unbind("mousemove."+this.widgetName, this._mouseMoveDelegate)
-				.unbind("mouseup."+this.widgetName, this._mouseUpDelegate);
-		}
-	},
-
-	_mouseDown: function(event) {
-		// don't let more than one widget handle mouseStart
-		if( mouseHandled ) { return; }
-
-		// we may have missed mouseup (out of window)
-		(this._mouseStarted && this._mouseUp(event));
-
-		this._mouseDownEvent = event;
-
-		var that = this,
-			btnIsLeft = (event.which === 1),
-			// event.target.nodeName works around a bug in IE 8 with
-			// disabled inputs (#7620)
-			elIsCancel = (typeof this.options.cancel === "string" && event.target.nodeName ? $(event.target).closest(this.options.cancel).length : false);
-		if (!btnIsLeft || elIsCancel || !this._mouseCapture(event)) {
-			return true;
-		}
-
-		this.mouseDelayMet = !this.options.delay;
-		if (!this.mouseDelayMet) {
-			this._mouseDelayTimer = setTimeout(function() {
-				that.mouseDelayMet = true;
-			}, this.options.delay);
-		}
-
-		if (this._mouseDistanceMet(event) && this._mouseDelayMet(event)) {
-			this._mouseStarted = (this._mouseStart(event) !== false);
-			if (!this._mouseStarted) {
-				event.preventDefault();
-				return true;
-			}
-		}
-
-		// Click event may never have fired (Gecko & Opera)
-		if (true === $.data(event.target, this.widgetName + ".preventClickEvent")) {
-			$.removeData(event.target, this.widgetName + ".preventClickEvent");
-		}
-
-		// these delegates are required to keep context
-		this._mouseMoveDelegate = function(event) {
-			return that._mouseMove(event);
-		};
-		this._mouseUpDelegate = function(event) {
-			return that._mouseUp(event);
-		};
-		$(document)
-			.bind("mousemove."+this.widgetName, this._mouseMoveDelegate)
-			.bind("mouseup."+this.widgetName, this._mouseUpDelegate);
-
-		event.preventDefault();
-
-		mouseHandled = true;
-		return true;
-	},
-
-	_mouseMove: function(event) {
-		// IE mouseup check - mouseup happened when mouse was out of window
-		if ($.ui.ie && ( !document.documentMode || document.documentMode < 9 ) && !event.button) {
-			return this._mouseUp(event);
-		}
-
-		if (this._mouseStarted) {
-			this._mouseDrag(event);
-			return event.preventDefault();
-		}
-
-		if (this._mouseDistanceMet(event) && this._mouseDelayMet(event)) {
-			this._mouseStarted =
-				(this._mouseStart(this._mouseDownEvent, event) !== false);
-			(this._mouseStarted ? this._mouseDrag(event) : this._mouseUp(event));
-		}
-
-		return !this._mouseStarted;
-	},
-
-	_mouseUp: function(event) {
-		$(document)
-			.unbind("mousemove."+this.widgetName, this._mouseMoveDelegate)
-			.unbind("mouseup."+this.widgetName, this._mouseUpDelegate);
-
-		if (this._mouseStarted) {
-			this._mouseStarted = false;
-
-			if (event.target === this._mouseDownEvent.target) {
-				$.data(event.target, this.widgetName + ".preventClickEvent", true);
-			}
-
-			this._mouseStop(event);
-		}
-
-		return false;
-	},
-
-	_mouseDistanceMet: function(event) {
-		return (Math.max(
-				Math.abs(this._mouseDownEvent.pageX - event.pageX),
-				Math.abs(this._mouseDownEvent.pageY - event.pageY)
-			) >= this.options.distance
-		);
-	},
-
-	_mouseDelayMet: function(/* event */) {
-		return this.mouseDelayMet;
-	},
-
-	// These are placeholder methods, to be overriden by extending plugin
-	_mouseStart: function(/* event */) {},
-	_mouseDrag: function(/* event */) {},
-	_mouseStop: function(/* event */) {},
-	_mouseCapture: function(/* event */) { return true; }
-});
-
-})(jQuery);
-(function( $, undefined ) {
-
-// number of pages in a slider
-// (how many times can you page up/down to go through the whole range)
-var numPages = 5;
-
-$.widget( "ui.slider", $.ui.mouse, {
-	version: "1.10.4",
-	widgetEventPrefix: "slide",
-
-	options: {
-		animate: false,
-		distance: 0,
-		max: 100,
-		min: 0,
-		orientation: "horizontal",
-		range: false,
-		step: 1,
-		value: 0,
-		values: null,
-
-		// callbacks
-		change: null,
-		slide: null,
-		start: null,
-		stop: null
-	},
-
-	_create: function() {
-		this._keySliding = false;
-		this._mouseSliding = false;
-		this._animateOff = true;
-		this._handleIndex = null;
-		this._detectOrientation();
-		this._mouseInit();
-
-		this.element
-			.addClass( "ui-slider" +
-				" ui-slider-" + this.orientation +
-				" ui-widget" +
-				" ui-widget-content" +
-				" ui-corner-all");
-
-		this._refresh();
-		this._setOption( "disabled", this.options.disabled );
-
-		this._animateOff = false;
-	},
-
-	_refresh: function() {
-		this._createRange();
-		this._createHandles();
-		this._setupEvents();
-		this._refreshValue();
-	},
-
-	_createHandles: function() {
-		var i, handleCount,
-			options = this.options,
-			existingHandles = this.element.find( ".ui-slider-handle" ).addClass( "ui-state-default ui-corner-all" ),
-			handle = "<a class='ui-slider-handle ui-state-default ui-corner-all' href='#'></a>",
-			handles = [];
-
-		handleCount = ( options.values && options.values.length ) || 1;
-
-		if ( existingHandles.length > handleCount ) {
-			existingHandles.slice( handleCount ).remove();
-			existingHandles = existingHandles.slice( 0, handleCount );
-		}
-
-		for ( i = existingHandles.length; i < handleCount; i++ ) {
-			handles.push( handle );
-		}
-
-		this.handles = existingHandles.add( $( handles.join( "" ) ).appendTo( this.element ) );
-
-		this.handle = this.handles.eq( 0 );
-
-		this.handles.each(function( i ) {
-			$( this ).data( "ui-slider-handle-index", i );
-		});
-	},
-
-	_createRange: function() {
-		var options = this.options,
-			classes = "";
-
-		if ( options.range ) {
-			if ( options.range === true ) {
-				if ( !options.values ) {
-					options.values = [ this._valueMin(), this._valueMin() ];
-				} else if ( options.values.length && options.values.length !== 2 ) {
-					options.values = [ options.values[0], options.values[0] ];
-				} else if ( $.isArray( options.values ) ) {
-					options.values = options.values.slice(0);
-				}
-			}
-
-			if ( !this.range || !this.range.length ) {
-				this.range = $( "<div></div>" )
-					.appendTo( this.element );
-
-				classes = "ui-slider-range" +
-				// note: this isn't the most fittingly semantic framework class for this element,
-				// but worked best visually with a variety of themes
-				" ui-widget-header ui-corner-all";
-			} else {
-				this.range.removeClass( "ui-slider-range-min ui-slider-range-max" )
-					// Handle range switching from true to min/max
-					.css({
-						"left": "",
-						"bottom": ""
-					});
-			}
-
-			this.range.addClass( classes +
-				( ( options.range === "min" || options.range === "max" ) ? " ui-slider-range-" + options.range : "" ) );
-		} else {
-			if ( this.range ) {
-				this.range.remove();
-			}
-			this.range = null;
-		}
-	},
-
-	_setupEvents: function() {
-		var elements = this.handles.add( this.range ).filter( "a" );
-		this._off( elements );
-		this._on( elements, this._handleEvents );
-		this._hoverable( elements );
-		this._focusable( elements );
-	},
-
-	_destroy: function() {
-		this.handles.remove();
-		if ( this.range ) {
-			this.range.remove();
-		}
-
-		this.element
-			.removeClass( "ui-slider" +
-				" ui-slider-horizontal" +
-				" ui-slider-vertical" +
-				" ui-widget" +
-				" ui-widget-content" +
-				" ui-corner-all" );
-
-		this._mouseDestroy();
-	},
-
-	_mouseCapture: function( event ) {
-		var position, normValue, distance, closestHandle, index, allowed, offset, mouseOverHandle,
-			that = this,
-			o = this.options;
-
-		if ( o.disabled ) {
-			return false;
-		}
-
-		this.elementSize = {
-			width: this.element.outerWidth(),
-			height: this.element.outerHeight()
-		};
-		this.elementOffset = this.element.offset();
-
-		position = { x: event.pageX, y: event.pageY };
-		normValue = this._normValueFromMouse( position );
-		distance = this._valueMax() - this._valueMin() + 1;
-		this.handles.each(function( i ) {
-			var thisDistance = Math.abs( normValue - that.values(i) );
-			if (( distance > thisDistance ) ||
-				( distance === thisDistance &&
-					(i === that._lastChangedValue || that.values(i) === o.min ))) {
-				distance = thisDistance;
-				closestHandle = $( this );
-				index = i;
-			}
-		});
-
-		allowed = this._start( event, index );
-		if ( allowed === false ) {
-			return false;
-		}
-		this._mouseSliding = true;
-
-		this._handleIndex = index;
-
-		closestHandle
-			.addClass( "ui-state-active" )
-			.focus();
-
-		offset = closestHandle.offset();
-		mouseOverHandle = !$( event.target ).parents().addBack().is( ".ui-slider-handle" );
-		this._clickOffset = mouseOverHandle ? { left: 0, top: 0 } : {
-			left: event.pageX - offset.left - ( closestHandle.width() / 2 ),
-			top: event.pageY - offset.top -
-				( closestHandle.height() / 2 ) -
-				( parseInt( closestHandle.css("borderTopWidth"), 10 ) || 0 ) -
-				( parseInt( closestHandle.css("borderBottomWidth"), 10 ) || 0) +
-				( parseInt( closestHandle.css("marginTop"), 10 ) || 0)
-		};
-
-		if ( !this.handles.hasClass( "ui-state-hover" ) ) {
-			this._slide( event, index, normValue );
-		}
-		this._animateOff = true;
-		return true;
-	},
-
-	_mouseStart: function() {
-		return true;
-	},
-
-	_mouseDrag: function( event ) {
-		var position = { x: event.pageX, y: event.pageY },
-			normValue = this._normValueFromMouse( position );
-
-		this._slide( event, this._handleIndex, normValue );
-
-		return false;
-	},
-
-	_mouseStop: function( event ) {
-		this.handles.removeClass( "ui-state-active" );
-		this._mouseSliding = false;
-
-		this._stop( event, this._handleIndex );
-		this._change( event, this._handleIndex );
-
-		this._handleIndex = null;
-		this._clickOffset = null;
-		this._animateOff = false;
-
-		return false;
-	},
-
-	_detectOrientation: function() {
-		this.orientation = ( this.options.orientation === "vertical" ) ? "vertical" : "horizontal";
-	},
-
-	_normValueFromMouse: function( position ) {
-		var pixelTotal,
-			pixelMouse,
-			percentMouse,
-			valueTotal,
-			valueMouse;
-
-		if ( this.orientation === "horizontal" ) {
-			pixelTotal = this.elementSize.width;
-			pixelMouse = position.x - this.elementOffset.left - ( this._clickOffset ? this._clickOffset.left : 0 );
-		} else {
-			pixelTotal = this.elementSize.height;
-			pixelMouse = position.y - this.elementOffset.top - ( this._clickOffset ? this._clickOffset.top : 0 );
-		}
-
-		percentMouse = ( pixelMouse / pixelTotal );
-		if ( percentMouse > 1 ) {
-			percentMouse = 1;
-		}
-		if ( percentMouse < 0 ) {
-			percentMouse = 0;
-		}
-		if ( this.orientation === "vertical" ) {
-			percentMouse = 1 - percentMouse;
-		}
-
-		valueTotal = this._valueMax() - this._valueMin();
-		valueMouse = this._valueMin() + percentMouse * valueTotal;
-
-		return this._trimAlignValue( valueMouse );
-	},
-
-	_start: function( event, index ) {
-		var uiHash = {
-			handle: this.handles[ index ],
-			value: this.value()
-		};
-		if ( this.options.values && this.options.values.length ) {
-			uiHash.value = this.values( index );
-			uiHash.values = this.values();
-		}
-		return this._trigger( "start", event, uiHash );
-	},
-
-	_slide: function( event, index, newVal ) {
-		var otherVal,
-			newValues,
-			allowed;
-
-		if ( this.options.values && this.options.values.length ) {
-			otherVal = this.values( index ? 0 : 1 );
-
-			if ( ( this.options.values.length === 2 && this.options.range === true ) &&
-					( ( index === 0 && newVal > otherVal) || ( index === 1 && newVal < otherVal ) )
-				) {
-				newVal = otherVal;
-			}
-
-			if ( newVal !== this.values( index ) ) {
-				newValues = this.values();
-				newValues[ index ] = newVal;
-				// A slide can be canceled by returning false from the slide callback
-				allowed = this._trigger( "slide", event, {
-					handle: this.handles[ index ],
-					value: newVal,
-					values: newValues
-				} );
-				otherVal = this.values( index ? 0 : 1 );
-				if ( allowed !== false ) {
-					this.values( index, newVal );
-				}
-			}
-		} else {
-			if ( newVal !== this.value() ) {
-				// A slide can be canceled by returning false from the slide callback
-				allowed = this._trigger( "slide", event, {
-					handle: this.handles[ index ],
-					value: newVal
-				} );
-				if ( allowed !== false ) {
-					this.value( newVal );
-				}
-			}
-		}
-	},
-
-	_stop: function( event, index ) {
-		var uiHash = {
-			handle: this.handles[ index ],
-			value: this.value()
-		};
-		if ( this.options.values && this.options.values.length ) {
-			uiHash.value = this.values( index );
-			uiHash.values = this.values();
-		}
-
-		this._trigger( "stop", event, uiHash );
-	},
-
-	_change: function( event, index ) {
-		if ( !this._keySliding && !this._mouseSliding ) {
-			var uiHash = {
-				handle: this.handles[ index ],
-				value: this.value()
-			};
-			if ( this.options.values && this.options.values.length ) {
-				uiHash.value = this.values( index );
-				uiHash.values = this.values();
-			}
-
-			//store the last changed value index for reference when handles overlap
-			this._lastChangedValue = index;
-
-			this._trigger( "change", event, uiHash );
-		}
-	},
-
-	value: function( newValue ) {
-		if ( arguments.length ) {
-			this.options.value = this._trimAlignValue( newValue );
-			this._refreshValue();
-			this._change( null, 0 );
-			return;
-		}
-
-		return this._value();
-	},
-
-	values: function( index, newValue ) {
-		var vals,
-			newValues,
-			i;
-
-		if ( arguments.length > 1 ) {
-			this.options.values[ index ] = this._trimAlignValue( newValue );
-			this._refreshValue();
-			this._change( null, index );
-			return;
-		}
-
-		if ( arguments.length ) {
-			if ( $.isArray( arguments[ 0 ] ) ) {
-				vals = this.options.values;
-				newValues = arguments[ 0 ];
-				for ( i = 0; i < vals.length; i += 1 ) {
-					vals[ i ] = this._trimAlignValue( newValues[ i ] );
-					this._change( null, i );
-				}
-				this._refreshValue();
-			} else {
-				if ( this.options.values && this.options.values.length ) {
-					return this._values( index );
-				} else {
-					return this.value();
-				}
-			}
-		} else {
-			return this._values();
-		}
-	},
-
-	_setOption: function( key, value ) {
-		var i,
-			valsLength = 0;
-
-		if ( key === "range" && this.options.range === true ) {
-			if ( value === "min" ) {
-				this.options.value = this._values( 0 );
-				this.options.values = null;
-			} else if ( value === "max" ) {
-				this.options.value = this._values( this.options.values.length-1 );
-				this.options.values = null;
-			}
-		}
-
-		if ( $.isArray( this.options.values ) ) {
-			valsLength = this.options.values.length;
-		}
-
-		$.Widget.prototype._setOption.apply( this, arguments );
-
-		switch ( key ) {
-			case "orientation":
-				this._detectOrientation();
-				this.element
-					.removeClass( "ui-slider-horizontal ui-slider-vertical" )
-					.addClass( "ui-slider-" + this.orientation );
-				this._refreshValue();
-				break;
-			case "value":
-				this._animateOff = true;
-				this._refreshValue();
-				this._change( null, 0 );
-				this._animateOff = false;
-				break;
-			case "values":
-				this._animateOff = true;
-				this._refreshValue();
-				for ( i = 0; i < valsLength; i += 1 ) {
-					this._change( null, i );
-				}
-				this._animateOff = false;
-				break;
-			case "min":
-			case "max":
-				this._animateOff = true;
-				this._refreshValue();
-				this._animateOff = false;
-				break;
-			case "range":
-				this._animateOff = true;
-				this._refresh();
-				this._animateOff = false;
-				break;
-		}
-	},
-
-	//internal value getter
-	// _value() returns value trimmed by min and max, aligned by step
-	_value: function() {
-		var val = this.options.value;
-		val = this._trimAlignValue( val );
-
-		return val;
-	},
-
-	//internal values getter
-	// _values() returns array of values trimmed by min and max, aligned by step
-	// _values( index ) returns single value trimmed by min and max, aligned by step
-	_values: function( index ) {
-		var val,
-			vals,
-			i;
-
-		if ( arguments.length ) {
-			val = this.options.values[ index ];
-			val = this._trimAlignValue( val );
-
-			return val;
-		} else if ( this.options.values && this.options.values.length ) {
-			// .slice() creates a copy of the array
-			// this copy gets trimmed by min and max and then returned
-			vals = this.options.values.slice();
-			for ( i = 0; i < vals.length; i+= 1) {
-				vals[ i ] = this._trimAlignValue( vals[ i ] );
-			}
-
-			return vals;
-		} else {
-			return [];
-		}
-	},
-
-	// returns the step-aligned value that val is closest to, between (inclusive) min and max
-	_trimAlignValue: function( val ) {
-		if ( val <= this._valueMin() ) {
-			return this._valueMin();
-		}
-		if ( val >= this._valueMax() ) {
-			return this._valueMax();
-		}
-		var step = ( this.options.step > 0 ) ? this.options.step : 1,
-			valModStep = (val - this._valueMin()) % step,
-			alignValue = val - valModStep;
-
-		if ( Math.abs(valModStep) * 2 >= step ) {
-			alignValue += ( valModStep > 0 ) ? step : ( -step );
-		}
-
-		// Since JavaScript has problems with large floats, round
-		// the final value to 5 digits after the decimal point (see #4124)
-		return parseFloat( alignValue.toFixed(5) );
-	},
-
-	_valueMin: function() {
-		return this.options.min;
-	},
-
-	_valueMax: function() {
-		return this.options.max;
-	},
-
-	_refreshValue: function() {
-		var lastValPercent, valPercent, value, valueMin, valueMax,
-			oRange = this.options.range,
-			o = this.options,
-			that = this,
-			animate = ( !this._animateOff ) ? o.animate : false,
-			_set = {};
-
-		if ( this.options.values && this.options.values.length ) {
-			this.handles.each(function( i ) {
-				valPercent = ( that.values(i) - that._valueMin() ) / ( that._valueMax() - that._valueMin() ) * 100;
-				_set[ that.orientation === "horizontal" ? "left" : "bottom" ] = valPercent + "%";
-				$( this ).stop( 1, 1 )[ animate ? "animate" : "css" ]( _set, o.animate );
-				if ( that.options.range === true ) {
-					if ( that.orientation === "horizontal" ) {
-						if ( i === 0 ) {
-							that.range.stop( 1, 1 )[ animate ? "animate" : "css" ]( { left: valPercent + "%" }, o.animate );
-						}
-						if ( i === 1 ) {
-							that.range[ animate ? "animate" : "css" ]( { width: ( valPercent - lastValPercent ) + "%" }, { queue: false, duration: o.animate } );
-						}
-					} else {
-						if ( i === 0 ) {
-							that.range.stop( 1, 1 )[ animate ? "animate" : "css" ]( { bottom: ( valPercent ) + "%" }, o.animate );
-						}
-						if ( i === 1 ) {
-							that.range[ animate ? "animate" : "css" ]( { height: ( valPercent - lastValPercent ) + "%" }, { queue: false, duration: o.animate } );
-						}
-					}
-				}
-				lastValPercent = valPercent;
-			});
-		} else {
-			value = this.value();
-			valueMin = this._valueMin();
-			valueMax = this._valueMax();
-			valPercent = ( valueMax !== valueMin ) ?
-					( value - valueMin ) / ( valueMax - valueMin ) * 100 :
-					0;
-			_set[ this.orientation === "horizontal" ? "left" : "bottom" ] = valPercent + "%";
-			this.handle.stop( 1, 1 )[ animate ? "animate" : "css" ]( _set, o.animate );
-
-			if ( oRange === "min" && this.orientation === "horizontal" ) {
-				this.range.stop( 1, 1 )[ animate ? "animate" : "css" ]( { width: valPercent + "%" }, o.animate );
-			}
-			if ( oRange === "max" && this.orientation === "horizontal" ) {
-				this.range[ animate ? "animate" : "css" ]( { width: ( 100 - valPercent ) + "%" }, { queue: false, duration: o.animate } );
-			}
-			if ( oRange === "min" && this.orientation === "vertical" ) {
-				this.range.stop( 1, 1 )[ animate ? "animate" : "css" ]( { height: valPercent + "%" }, o.animate );
-			}
-			if ( oRange === "max" && this.orientation === "vertical" ) {
-				this.range[ animate ? "animate" : "css" ]( { height: ( 100 - valPercent ) + "%" }, { queue: false, duration: o.animate } );
-			}
-		}
-	},
-
-	_handleEvents: {
-		keydown: function( event ) {
-			var allowed, curVal, newVal, step,
-				index = $( event.target ).data( "ui-slider-handle-index" );
-
-			switch ( event.keyCode ) {
-				case $.ui.keyCode.HOME:
-				case $.ui.keyCode.END:
-				case $.ui.keyCode.PAGE_UP:
-				case $.ui.keyCode.PAGE_DOWN:
-				case $.ui.keyCode.UP:
-				case $.ui.keyCode.RIGHT:
-				case $.ui.keyCode.DOWN:
-				case $.ui.keyCode.LEFT:
-					event.preventDefault();
-					if ( !this._keySliding ) {
-						this._keySliding = true;
-						$( event.target ).addClass( "ui-state-active" );
-						allowed = this._start( event, index );
-						if ( allowed === false ) {
-							return;
-						}
-					}
-					break;
-			}
-
-			step = this.options.step;
-			if ( this.options.values && this.options.values.length ) {
-				curVal = newVal = this.values( index );
-			} else {
-				curVal = newVal = this.value();
-			}
-
-			switch ( event.keyCode ) {
-				case $.ui.keyCode.HOME:
-					newVal = this._valueMin();
-					break;
-				case $.ui.keyCode.END:
-					newVal = this._valueMax();
-					break;
-				case $.ui.keyCode.PAGE_UP:
-					newVal = this._trimAlignValue( curVal + ( (this._valueMax() - this._valueMin()) / numPages ) );
-					break;
-				case $.ui.keyCode.PAGE_DOWN:
-					newVal = this._trimAlignValue( curVal - ( (this._valueMax() - this._valueMin()) / numPages ) );
-					break;
-				case $.ui.keyCode.UP:
-				case $.ui.keyCode.RIGHT:
-					if ( curVal === this._valueMax() ) {
-						return;
-					}
-					newVal = this._trimAlignValue( curVal + step );
-					break;
-				case $.ui.keyCode.DOWN:
-				case $.ui.keyCode.LEFT:
-					if ( curVal === this._valueMin() ) {
-						return;
-					}
-					newVal = this._trimAlignValue( curVal - step );
-					break;
-			}
-
-			this._slide( event, index, newVal );
-		},
-		click: function( event ) {
-			event.preventDefault();
-		},
-		keyup: function( event ) {
-			var index = $( event.target ).data( "ui-slider-handle-index" );
-
-			if ( this._keySliding ) {
-				this._keySliding = false;
-				this._stop( event, index );
-				this._change( event, index );
-				$( event.target ).removeClass( "ui-state-active" );
-			}
-		}
-	}
-
-});
-
-}(jQuery));
-
-},{}]},{},[3])
+},{"jquery":1}]},{},[2])
