@@ -1,15 +1,14 @@
 var Mustache = require('mustache');
 var $ = require('jquery');
 var ajxLoader = require('../lib/ajxLoader');
-var DEF_CONST = require('../constants/common');
+var DEF_CONST = require('../helpers/constants');
 require('nanoscroller');
 
     var ajxUrl = {};
+    var addUrl = require('../helpers/urls')(ajxUrl);
     var ENV_CONST = DEF_CONST.ENV_CONST;
-    var RESTYPE_CONST = ENV_CONST?'get':'post';
-    function addUrl (name, urls) {
-        ajxUrl[name] = DEF_CONST.AJX_PATH + urls[ENV_CONST == 'dev'?0:1];
-    }
+    var RESTYPE_CONST = 'post';
+
 
     addUrl('town', ['town.html','town.html']);
     addUrl('addItem', ['additem.json','additem.html?']);
@@ -92,7 +91,7 @@ require('nanoscroller');
                     }
                 }
             }
-            !IS_MOBILE && this.$sizes.CustomSelect({visRows:4});
+            !DEF_CONST.IS_MOBILE && this.$sizes.CustomSelect({visRows:4});
             this.updatePrice(true);
         },
         _sizeChange: function(e) {
@@ -141,7 +140,7 @@ require('nanoscroller');
         },
         _linkItem: function(e) {
             var self = e.data;
-            if ($(this).closest('.basket_order').length && !IS_MOBILE) {
+            if ($(this).closest('.basket_order').length && !DEF_CONST.IS_MOBILE) {
                 e.preventDefault();
                 self.basket.modalItem(self);
             }
@@ -194,7 +193,7 @@ require('nanoscroller');
             $.ajax({
                 url: ajxUrl.addItem,
                 cache: false,
-                type: ENV_CONST?'get':'post',
+                type: 'post',
                 dataType: 'json',
                 data: {data: data}, // data.id, data.count, data.size
                 success: function(resp,status,xhr){
@@ -212,7 +211,7 @@ require('nanoscroller');
             $.ajax({
                 url: ajxUrl.removeItem,
                 cache: false,
-                type: ENV_CONST?'get':'post',
+                type: 'post',
                 dataType: 'json',
                 data: {id: item.id}, // data.id, data.count, data.size
                 success: function(data,status,xhr){
@@ -230,12 +229,12 @@ require('nanoscroller');
 
         this.addToBasket = function(data, isBuy) {
             self.toggleBasket();
-            if (isBuy && !IS_MOBILE) {
+            if (isBuy && !DEF_CONST.IS_MOBILE) {
                 data.isBuy = true
             }
             items.push(new BasketItem(self, data));
             self.updateBasket();
-            if (isBuy && !IS_MOBILE) {
+            if (isBuy && !DEF_CONST.IS_MOBILE) {
                 self.$topList.trigger('open');
             }
         };
@@ -275,7 +274,7 @@ require('nanoscroller');
             $.ajax({
                 url: ajxUrl.getItem,
                 cache: false,
-                type: ENV_CONST?'get':'get',
+                type: 'get',
                 dataType: 'json',
                 data: {id : id},
                 success: function(data,status,xhr){
@@ -354,7 +353,7 @@ require('nanoscroller');
             $.ajax({
                 url: ajxUrl.modalItem,
                 cache: false,
-                type: ENV_CONST?'get':'post',
+                type: 'post',
                 dataType: 'html',
                 data: {id: item.id},
                 success: function(data,status,xhr){
@@ -420,7 +419,7 @@ require('nanoscroller');
                 containerVideo: '.pitem-preview-main_side .pitem-preview-main__video'
             });
             //select
-            !IS_MOBILE && $('.select_size', self.itemModal).CustomSelect({visRows:4});
+            !DEF_CONST.IS_MOBILE && $('.select_size', self.itemModal).CustomSelect({visRows:4});
             var $curItem = $('.js-item-data', self.itemModal),
                 itemData = eval('('+$curItem.data('item')+')'),
                 $selectSize = $('.select_size',$curItem),
@@ -453,7 +452,7 @@ require('nanoscroller');
         self.$total = $('.total__summ .summ', self.$self);
         self.$scroller = $('.nano-scroll', self.$self);
         self.$topCount = $('.basket-top__icon .count',self.$self);
-        self.tplItem = IS_MOBILE?$('#basket-item__mobile').html():$('#basket-item').html();
+        self.tplItem = DEF_CONST.IS_MOBILE?$('#basket-item__mobile').html():$('#basket-item').html();
         self.tplSale = $('#basket-sale').html();
         self.$couponForm = $('.basket-promocode__form');
         self.$couponFormVal = $('.basket-promocode__val');
@@ -504,7 +503,7 @@ require('nanoscroller');
                 case 1:
                     var $sel = $('.select_delivery-start');
                     $('.basket-promocode').folding({});
-                    if ($sel.data('plugin') != 'select' && !IS_MOBILE)
+                    if ($sel.data('plugin') != 'select' && !DEF_CONST.IS_MOBILE)
                         $sel.CustomSelect({visRows:5, modifier: 'delivery'});
                     break;
 
@@ -537,7 +536,7 @@ require('nanoscroller');
                     self.$deliveryInfo.hide();
                     self.$addresss.show();
                     self.$destSel.show();
-                    if (!selInit && !IS_MOBILE) {
+                    if (!selInit && !DEF_CONST.IS_MOBILE) {
                         $('.post-select', self.$self).CustomSelect({visRows:5, modifier: 'delivery'});
                     }
                     selInit = true;
@@ -557,7 +556,7 @@ require('nanoscroller');
             $.ajax({
                 url: ajxUrl.delivInfo,
                 cache: false,
-                type: ENV_CONST?'get':'post',
+                type: 'post',
                 dataType: 'json',
                 data: {type: self.dType, destination: dest || ''},
                 success: function(data,status,xhr){
@@ -585,7 +584,7 @@ require('nanoscroller');
             $.ajax({
                 url: ajxUrl.town,
                 cache: false,
-                type: ENV_CONST?'get':'post',
+                type: 'post',
                 dataType: 'html',
                 data: {region: region},
                 success: function(data,status,xhr){
@@ -632,7 +631,7 @@ require('nanoscroller');
                 $.ajax({
                     url: ajxUrl.delivSubmit,
                     cache: false,
-                    type: ENV_CONST?'get':'post',
+                    type: 'post',
                     dataType: 'json',
                     data: {data: self.$form.serialize()},
                     success: function(data,status,xhr){

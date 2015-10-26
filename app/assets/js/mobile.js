@@ -12148,15 +12148,14 @@ return jQuery;
 var Mustache = require('mustache');
 var $ = require('jquery');
 var ajxLoader = require('../lib/ajxLoader');
-var DEF_CONST = require('../constants/common');
+var DEF_CONST = require('../helpers/constants');
 require('nanoscroller');
 
     var ajxUrl = {};
+    var addUrl = require('../helpers/urls')(ajxUrl);
     var ENV_CONST = DEF_CONST.ENV_CONST;
-    var RESTYPE_CONST = ENV_CONST?'get':'post';
-    function addUrl (name, urls) {
-        ajxUrl[name] = DEF_CONST.AJX_PATH + urls[ENV_CONST == 'dev'?0:1];
-    }
+    var RESTYPE_CONST = 'post';
+
 
     addUrl('town', ['town.html','town.html']);
     addUrl('addItem', ['additem.json','additem.html?']);
@@ -12239,7 +12238,7 @@ require('nanoscroller');
                     }
                 }
             }
-            !IS_MOBILE && this.$sizes.CustomSelect({visRows:4});
+            !DEF_CONST.IS_MOBILE && this.$sizes.CustomSelect({visRows:4});
             this.updatePrice(true);
         },
         _sizeChange: function(e) {
@@ -12288,7 +12287,7 @@ require('nanoscroller');
         },
         _linkItem: function(e) {
             var self = e.data;
-            if ($(this).closest('.basket_order').length && !IS_MOBILE) {
+            if ($(this).closest('.basket_order').length && !DEF_CONST.IS_MOBILE) {
                 e.preventDefault();
                 self.basket.modalItem(self);
             }
@@ -12341,7 +12340,7 @@ require('nanoscroller');
             $.ajax({
                 url: ajxUrl.addItem,
                 cache: false,
-                type: ENV_CONST?'get':'post',
+                type: 'post',
                 dataType: 'json',
                 data: {data: data}, // data.id, data.count, data.size
                 success: function(resp,status,xhr){
@@ -12359,7 +12358,7 @@ require('nanoscroller');
             $.ajax({
                 url: ajxUrl.removeItem,
                 cache: false,
-                type: ENV_CONST?'get':'post',
+                type: 'post',
                 dataType: 'json',
                 data: {id: item.id}, // data.id, data.count, data.size
                 success: function(data,status,xhr){
@@ -12377,12 +12376,12 @@ require('nanoscroller');
 
         this.addToBasket = function(data, isBuy) {
             self.toggleBasket();
-            if (isBuy && !IS_MOBILE) {
+            if (isBuy && !DEF_CONST.IS_MOBILE) {
                 data.isBuy = true
             }
             items.push(new BasketItem(self, data));
             self.updateBasket();
-            if (isBuy && !IS_MOBILE) {
+            if (isBuy && !DEF_CONST.IS_MOBILE) {
                 self.$topList.trigger('open');
             }
         };
@@ -12422,7 +12421,7 @@ require('nanoscroller');
             $.ajax({
                 url: ajxUrl.getItem,
                 cache: false,
-                type: ENV_CONST?'get':'get',
+                type: 'get',
                 dataType: 'json',
                 data: {id : id},
                 success: function(data,status,xhr){
@@ -12501,7 +12500,7 @@ require('nanoscroller');
             $.ajax({
                 url: ajxUrl.modalItem,
                 cache: false,
-                type: ENV_CONST?'get':'post',
+                type: 'post',
                 dataType: 'html',
                 data: {id: item.id},
                 success: function(data,status,xhr){
@@ -12567,7 +12566,7 @@ require('nanoscroller');
                 containerVideo: '.pitem-preview-main_side .pitem-preview-main__video'
             });
             //select
-            !IS_MOBILE && $('.select_size', self.itemModal).CustomSelect({visRows:4});
+            !DEF_CONST.IS_MOBILE && $('.select_size', self.itemModal).CustomSelect({visRows:4});
             var $curItem = $('.js-item-data', self.itemModal),
                 itemData = eval('('+$curItem.data('item')+')'),
                 $selectSize = $('.select_size',$curItem),
@@ -12600,7 +12599,7 @@ require('nanoscroller');
         self.$total = $('.total__summ .summ', self.$self);
         self.$scroller = $('.nano-scroll', self.$self);
         self.$topCount = $('.basket-top__icon .count',self.$self);
-        self.tplItem = IS_MOBILE?$('#basket-item__mobile').html():$('#basket-item').html();
+        self.tplItem = DEF_CONST.IS_MOBILE?$('#basket-item__mobile').html():$('#basket-item').html();
         self.tplSale = $('#basket-sale').html();
         self.$couponForm = $('.basket-promocode__form');
         self.$couponFormVal = $('.basket-promocode__val');
@@ -12651,7 +12650,7 @@ require('nanoscroller');
                 case 1:
                     var $sel = $('.select_delivery-start');
                     $('.basket-promocode').folding({});
-                    if ($sel.data('plugin') != 'select' && !IS_MOBILE)
+                    if ($sel.data('plugin') != 'select' && !DEF_CONST.IS_MOBILE)
                         $sel.CustomSelect({visRows:5, modifier: 'delivery'});
                     break;
 
@@ -12684,7 +12683,7 @@ require('nanoscroller');
                     self.$deliveryInfo.hide();
                     self.$addresss.show();
                     self.$destSel.show();
-                    if (!selInit && !IS_MOBILE) {
+                    if (!selInit && !DEF_CONST.IS_MOBILE) {
                         $('.post-select', self.$self).CustomSelect({visRows:5, modifier: 'delivery'});
                     }
                     selInit = true;
@@ -12704,7 +12703,7 @@ require('nanoscroller');
             $.ajax({
                 url: ajxUrl.delivInfo,
                 cache: false,
-                type: ENV_CONST?'get':'post',
+                type: 'post',
                 dataType: 'json',
                 data: {type: self.dType, destination: dest || ''},
                 success: function(data,status,xhr){
@@ -12732,7 +12731,7 @@ require('nanoscroller');
             $.ajax({
                 url: ajxUrl.town,
                 cache: false,
-                type: ENV_CONST?'get':'post',
+                type: 'post',
                 dataType: 'html',
                 data: {region: region},
                 success: function(data,status,xhr){
@@ -12779,7 +12778,7 @@ require('nanoscroller');
                 $.ajax({
                     url: ajxUrl.delivSubmit,
                     cache: false,
-                    type: ENV_CONST?'get':'post',
+                    type: 'post',
                     dataType: 'json',
                     data: {data: self.$form.serialize()},
                     success: function(data,status,xhr){
@@ -12861,17 +12860,7 @@ require('nanoscroller');
 
 module.exports = Basket;
 
-},{"../constants/common":6,"../lib/ajxLoader":8,"jquery":2,"mustache":3,"nanoscroller":4}],6:[function(require,module,exports){
-module.exports = (function(){
-  var _const =  {};
-
-  _const.ENV_CONST = window.location.host && (/^[^\:]+\:[\d]+/.test(window.location.host))?'dev':'prod';
-  _const.AJX_PATH = _const.ENV_CONST === 'dev'?'../../source/back/':'/ajax/';
-
-  return _const
-})()
-
-},{}],7:[function(require,module,exports){
+},{"../helpers/constants":7,"../helpers/urls":8,"../lib/ajxLoader":9,"jquery":2,"mustache":3,"nanoscroller":4}],6:[function(require,module,exports){
 (function (global){
 global.jQuery = $ =  require("jquery");
 var Mustache = require('mustache');
@@ -13231,7 +13220,26 @@ function closePopup ($popup) {
 }
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./components/basket":5,"./lib/dropdown.plugin":9,"./lib/folding.plugin":10,"./lib/subscribe":11,"./mobile/changeTown":12,"./mobile/main-nav":13,"./vendor/jquery.bxslider":14,"./vendor/jquery.formstyler.min":15,"./vendor/jquery.maskedinput":16,"./vendor/size.scroll":17,"jquery":2,"jquery.browser":1,"mustache":3}],8:[function(require,module,exports){
+},{"./components/basket":5,"./lib/dropdown.plugin":10,"./lib/folding.plugin":11,"./lib/subscribe":12,"./mobile/changeTown":13,"./mobile/main-nav":14,"./vendor/jquery.bxslider":15,"./vendor/jquery.formstyler.min":16,"./vendor/jquery.maskedinput":17,"./vendor/size.scroll":18,"jquery":2,"jquery.browser":1,"mustache":3}],7:[function(require,module,exports){
+module.exports = (function(){
+  var _const =  {};
+
+  _const.ENV_CONST = window.location.host && (/^[^\:]+\:[\d]+/.test(window.location.host))?'dev':'prod';
+  _const.AJX_PATH = _const.ENV_CONST === 'dev'?'../../source/back/':'/ajax/';
+  _const.IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
+  return _const
+})()
+
+},{}],8:[function(require,module,exports){
+var DEF_CONST = require('./constants');
+
+module.exports = function(o) {
+  return function addUrl (name, urls) {
+      o[name] = DEF_CONST.AJX_PATH + urls[DEF_CONST.ENV_CONST == 'dev'?0:1];
+  }
+}
+
+},{"./constants":7}],9:[function(require,module,exports){
 var $ = require('jquery');
 
 var ajxLoader  =  (function() {
@@ -13259,7 +13267,7 @@ var ajxLoader  =  (function() {
 
 module.exports = ajxLoader;
 
-},{"jquery":2}],9:[function(require,module,exports){
+},{"jquery":2}],10:[function(require,module,exports){
 (function($){
     'use strict';
 
@@ -13346,7 +13354,7 @@ module.exports = ajxLoader;
         })
     }
 })(jQuery);
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 (function($){
     'use strict';
 
@@ -13416,7 +13424,7 @@ module.exports = ajxLoader;
         })
     }
 })(jQuery);
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 (function($) {
 	$.fn.subscribe = function(opt) {
 		var opt = $.extend({
@@ -13487,7 +13495,7 @@ module.exports = ajxLoader;
 		});
 	};
 })(jQuery);
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 $(function(){
 
     var $adrs_holder = $('.header .address-info__holder'),
@@ -13593,7 +13601,7 @@ $(function(){
     });
 
 });
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 (function($) {
 
     $(function(){
@@ -13650,7 +13658,7 @@ $(function(){
         }
     });
 })(jQuery);
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /**
  * BxSlider v4.1.2 - Fully loaded, responsive content slider
  * http://bxslider.com
@@ -15083,7 +15091,7 @@ var sliderConstructor = function(sliders) {
     };
     return sliderInit();
 };
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /* jQuery Form Styler v1.5.3.2 | (c) Dimox | https://github.com/Dimox/jQueryFormStyler */
 (function(c){c.fn.styler=function(E){var e=c.extend({wrapper:"form",idSuffix:"-styler",filePlaceholder:"\u0424\u0430\u0439\u043b \u043d\u0435 \u0432\u044b\u0431\u0440\u0430\u043d",fileBrowse:"\u041e\u0431\u0437\u043e\u0440...",selectSearch:!0,selectSearchLimit:10,selectSearchNotFound:"\u0421\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e",selectSearchPlaceholder:"\u041f\u043e\u0438\u0441\u043a...",selectVisibleOptions:0,singleSelectzIndex:"100",
     selectSmartPositioning:!0,onSelectOpened:function(){},onSelectClosed:function(){},onFormStyled:function(){}},E);return this.each(function(){function w(){var c="",m="",b="",u="";void 0!==a.attr("id")&&""!==a.attr("id")&&(c=' id="'+a.attr("id")+e.idSuffix+'"');void 0!==a.attr("title")&&""!==a.attr("title")&&(m=' title="'+a.attr("title")+'"');void 0!==a.attr("class")&&""!==a.attr("class")&&(b=" "+a.attr("class"));for(var t=a.data(),f=0;f<t.length;f++)""!==t[f]&&(u+=" data-"+f+'="'+t[f]+'"');this.id=
@@ -15114,7 +15122,7 @@ var sliderConstructor = function(sliders) {
     f.each(function(a){c(this).data("optionIndex",a)}),a.on("change.styler",function(){n.removeClass("selected");var a=[];f.filter(":selected").each(function(){a.push(c(this).data("optionIndex"))});n.not(".optgroup").filter(function(b){return-1<c.inArray(b,a)}).addClass("selected")}).on("focus.styler",function(){d.addClass("focused")}).on("blur.styler",function(){d.removeClass("focused")}),p>d.height())a.on("keydown.styler",function(a){38!=a.which&&37!=a.which&&33!=a.which||g.scrollTop(g.scrollTop()+
     n.filter(".selected").position().top-k);40!=a.which&&39!=a.which&&34!=a.which||g.scrollTop(g.scrollTop()+n.filter(".selected:last").position().top-g.innerHeight()+2*k)})}var f=c("option",a),x="";a.is("[multiple]")?t():g()};g();a.on("refresh",function(){a.off(".styler").parent().before(a).remove();g()})}});else if(a.is(":reset"))a.on("click",function(){setTimeout(function(){a.closest(e.wrapper).find("input, select").trigger("refresh")},1)})}).promise().done(function(){e.onFormStyled.call()})}})(jQuery);
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 (function (factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
@@ -15564,7 +15572,7 @@ $.fn.extend({
 });
 }));
 
-},{"jquery":2}],17:[function(require,module,exports){
+},{"jquery":2}],18:[function(require,module,exports){
 /*
  * CustomSelect - jQuery plugin for stylize select
  * author: Shashenko Andrei
@@ -16044,4 +16052,4 @@ $.fn.extend({
             });
     }
 })(jQuery);
-},{}]},{},[7])
+},{}]},{},[6])

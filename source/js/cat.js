@@ -3,7 +3,7 @@ require('./vendor/jquery-ui');
 require('./vendor/jquery-ui-slider-pips.min');
 require('nanoscroller');
 var ajxLoader = require('./lib/ajxLoader');
-var DEF_CONST = require('./constants/common');
+var DEF_CONST = require('./helpers/constants');
 
 var AppUtils = { //вспомогашки
         hasClass: function(el, cls) {
