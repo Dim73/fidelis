@@ -3,6 +3,7 @@ require('./vendor/jquery-ui');
 require('./vendor/jquery-ui-slider-pips.min');
 require('nanoscroller');
 var ajxLoader = require('./lib/ajxLoader');
+var DEF_CONST = require('./constants/common');
 
 var AppUtils = { //вспомогашки
         hasClass: function(el, cls) {
@@ -31,8 +32,7 @@ var AppUtils = { //вспомогашки
     };
 
     var goodsUrl = '';
-    var ENV_CONST = window.location.host && (/^[^\:]+\:[\d]+/.test(window.location.host))?'dev':'prod';
-    if(ENV_CONST) {
+    if(DEF_CONST.ENV_CONST == 'dev') {
         goodsUrl = '../../source/back/catalogue.json?';
     } else {
         goodsUrl = '/ajax/catalogue.html?';

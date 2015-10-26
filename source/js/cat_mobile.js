@@ -1,4 +1,5 @@
 var ajxLoader = require('./lib/ajxLoader');
+var DEF_CONST = require('./constants/common');
 
     var AppUtils = { //вспомогашки
         hasClass: function(el, cls) {
@@ -27,7 +28,7 @@ var ajxLoader = require('./lib/ajxLoader');
     };
 
     var goodsUrl = '';
-    if(window.location.host && (/\:300/.test(window.location.host))) {
+    if(DEF_CONST.ENV_CONST == 'dev') {
         goodsUrl = '../../source/back/catalogue.json?';
     } else {
         goodsUrl = '/ajax/catalogue.html?';

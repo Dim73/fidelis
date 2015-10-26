@@ -1,18 +1,14 @@
 var Mustache = require('mustache');
 var $ = require('jquery');
 var ajxLoader = require('../lib/ajxLoader');
+var DEF_CONST = require('../constants/common');
 require('nanoscroller');
 
     var ajxUrl = {};
-
-    var ENV_CONST = window.location.host && (/^[^\:]+\:[\d]+/.test(window.location.host))?'dev':'prod';
+    var ENV_CONST = DEF_CONST.ENV_CONST;
     var RESTYPE_CONST = ENV_CONST?'get':'post';
     function addUrl (name, urls) {
-        if(ENV_CONST == 'dev') {
-            ajxUrl[name] = '../../source/back/' + urls[0];
-        } else {
-            ajxUrl[name] = '/ajax/' + urls[1];
-        }
+        ajxUrl[name] = DEF_CONST.AJX_PATH + urls[ENV_CONST == 'dev'?0:1];
     }
 
     addUrl('town', ['town.html','town.html']);

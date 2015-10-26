@@ -10352,7 +10352,18 @@ return jQuery;
 }));
 
 },{}],2:[function(require,module,exports){
+module.exports = (function(){
+  var _const =  {};
+
+  _const.ENV_CONST = window.location.host && (/^[^\:]+\:[\d]+/.test(window.location.host))?'dev':'prod';
+  _const.AJX_PATH = _const.ENV_CONST === 'dev'?'../../source/back/':'/ajax/';
+
+  return _const
+})()
+
+},{}],3:[function(require,module,exports){
 var ajxLoader = require('./lib/ajxLoader');
+var DEF_CONST = require('./constants/common');
 
     var AppUtils = { //вспомогашки
         hasClass: function(el, cls) {
@@ -10381,7 +10392,7 @@ var ajxLoader = require('./lib/ajxLoader');
     };
 
     var goodsUrl = '';
-    if(window.location.host && (/\:300/.test(window.location.host))) {
+    if(DEF_CONST.ENV_CONST == 'dev') {
         goodsUrl = '../../source/back/catalogue.json?';
     } else {
         goodsUrl = '/ajax/catalogue.html?';
@@ -11255,7 +11266,7 @@ var ajxLoader = require('./lib/ajxLoader');
         CatalogManager.init(Goods, [Filters, ShowOptions]);
     })
 
-},{"./lib/ajxLoader":3}],3:[function(require,module,exports){
+},{"./constants/common":2,"./lib/ajxLoader":4}],4:[function(require,module,exports){
 var $ = require('jquery');
 
 var ajxLoader  =  (function() {
@@ -11283,4 +11294,4 @@ var ajxLoader  =  (function() {
 
 module.exports = ajxLoader;
 
-},{"jquery":1}]},{},[2])
+},{"jquery":1}]},{},[3])

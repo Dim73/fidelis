@@ -54,7 +54,7 @@ gulp.task('scripts', function () {
     return gulp.src(SRC_PATH.js+'*.js')
         .pipe(plumber())
         // .pipe(coffee())
-        .pipe(browserify(/*{ transform: ['coffeeify'], extensions: ['.coffee'] }*/))
+        .pipe(browserify(/*{ transform: ['babelify']}*/))
         // .pipe(browserify())
     //    .pipe(concat('app.js'))
         .pipe(gulp.dest(DIST_PATH.js));

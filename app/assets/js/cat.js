@@ -11330,11 +11330,22 @@ return jQuery;
 //# sourceMappingURL=jquery.nanoscroller.js.map
 
 },{"jquery":1}],3:[function(require,module,exports){
+module.exports = (function(){
+  var _const =  {};
+
+  _const.ENV_CONST = window.location.host && (/^[^\:]+\:[\d]+/.test(window.location.host))?'dev':'prod';
+  _const.AJX_PATH = _const.ENV_CONST === 'dev'?'../../source/back/':'/ajax/';
+
+  return _const
+})()
+
+},{}],4:[function(require,module,exports){
 //var $ = require('jquery');
 require('./vendor/jquery-ui');
 require('./vendor/jquery-ui-slider-pips.min');
 require('nanoscroller');
 var ajxLoader = require('./lib/ajxLoader');
+var DEF_CONST = require('./constants/common');
 
 var AppUtils = { //вспомогашки
         hasClass: function(el, cls) {
@@ -11363,8 +11374,7 @@ var AppUtils = { //вспомогашки
     };
 
     var goodsUrl = '';
-    var ENV_CONST = window.location.host && (/^[^\:]+\:[\d]+/.test(window.location.host))?'dev':'prod';
-    if(ENV_CONST) {
+    if(DEF_CONST.ENV_CONST == 'dev') {
         goodsUrl = '../../source/back/catalogue.json?';
     } else {
         goodsUrl = '/ajax/catalogue.html?';
@@ -12204,7 +12214,7 @@ var AppUtils = { //вспомогашки
         CatalogManager.init(Goods, [Filters, ShowOptions]);
     });
 
-},{"./lib/ajxLoader":4,"./vendor/jquery-ui":6,"./vendor/jquery-ui-slider-pips.min":5,"nanoscroller":2}],4:[function(require,module,exports){
+},{"./constants/common":3,"./lib/ajxLoader":5,"./vendor/jquery-ui":7,"./vendor/jquery-ui-slider-pips.min":6,"nanoscroller":2}],5:[function(require,module,exports){
 var $ = require('jquery');
 
 var ajxLoader  =  (function() {
@@ -12232,7 +12242,7 @@ var ajxLoader  =  (function() {
 
 module.exports = ajxLoader;
 
-},{"jquery":1}],5:[function(require,module,exports){
+},{"jquery":1}],6:[function(require,module,exports){
 
 // PIPS
 
@@ -12999,7 +13009,7 @@ module.exports = ajxLoader;
     $.extend(true, $.ui.slider.prototype, extensionMethods);
 
 })(jQuery);
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /*! jQuery UI - v1.10.4 - 2015-10-24
 * http://jqueryui.com
 * Includes: jquery.ui.core.js, jquery.ui.widget.js, jquery.ui.mouse.js, jquery.ui.slider.js
@@ -14643,4 +14653,4 @@ $.widget( "ui.slider", $.ui.mouse, {
 
 }(jQuery));
 
-},{}]},{},[3])
+},{}]},{},[4])
