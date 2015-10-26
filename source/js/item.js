@@ -1,15 +1,16 @@
 require('./main/itemImg.plugin');
-
+var DEF_CONST = require('./helpers/constants');
 
 function QuickOrder()  {
     var self = this;
 
     this.init = function() {
         self.$fade.bind('click', self.close);
+        self.$close.bind('click', self.close);
         self.$form.bind('submit', self._submit);
         $('#qo-phone').mask("+7 (999) 999-99-99");
         self.$self.height(self.$self.height());
-        $('body').append(self.$fade);
+        //$('body').append(self.$fade);
     };
 
     this.show = function(){
@@ -17,7 +18,8 @@ function QuickOrder()  {
         self.$self.fadeIn();
     };
 
-    this.close = function() {
+    this.close = function(e) {
+        e.preventDefault();
         self.$fade.fadeOut();
         self.$self.fadeOut();
     };
@@ -39,7 +41,7 @@ function QuickOrder()  {
         self.$error.text('');
         if (self.validated()) {
             $.ajax({
-                url: '../../source/back/qo.json',
+                url: DEF_CONST.AJX_PATH + 'qo.json',
                 cache: false,
                 type: 'post',
                 data: {data: self.$form.serialize()},
@@ -58,8 +60,9 @@ function QuickOrder()  {
     };
 
     self.$self = $('.quick-order');
-    self.$fade = $('<div class="fade fade-fixed"></div>');
+    self.$fade = $('.fade-fixed');
     self.$form = $('.quick-order__form', self.$self);
+    self.$close = $('.close', self.$self);
     self.$selfInner = $('.quick-order__inner',  self.$self);
 
     self.$desc = $('.desc',self.$self);

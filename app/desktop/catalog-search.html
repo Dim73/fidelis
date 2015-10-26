@@ -601,7 +601,7 @@
                     <div class="list">
                       <div class="price-slider__holder">
                         <input id="maxcost" data-max="180800" type="hidden">
-                        <input id="mincost" data-min="180800" type="hidden">
+                        <input id="mincost" data-min="0" type="hidden">
                         <div id="price-slider" class="price-slider"></div>
                       </div>
                     </div>
@@ -612,47 +612,73 @@
                 <div class="rheader folding__title"><a href="#">размеры в наличии</a></div>
                 <div class="folding__wrap">
                   <div class="folding__inner">
-                    <div id="fsizes" class="square_sizes">
-                      <label>
-                        <input data-filter="size" data-value="0" value="Б.Р." type="checkbox" class="squaresize"><span>Б.Р.</span>
-                      </label>
-                      <label>
-                        <input data-filter="size" data-value="14" value="14" type="checkbox" class="squaresize"><span>  14		</span>
-                      </label>
-                      <label>
-                        <input data-filter="size" data-value="15" value="15" type="checkbox" class="squaresize"><span> 15	</span>
-                      </label>
-                      <label>
-                        <input data-filter="size" data-value="15.5" value="15.5" type="checkbox" class="squaresize"><span> 15.5</span>
-                      </label>
-                      <label>
-                        <input data-filter="size" data-value="16" value="16" type="checkbox" class="squaresize"><span> 16	</span>
-                      </label>
-                      <label>
-                        <input data-filter="size" data-value="16.5" value="16.5" type="checkbox" class="squaresize"><span> 16.5</span>
-                      </label>
-                      <label>
-                        <input data-filter="size" data-value="17" value="17" type="checkbox" class="squaresize"><span> 17		</span>
-                      </label>
-                      <label>
-                        <input data-filter="size" data-value="17.5" value="17.5" type="checkbox" class="squaresize"><span>17.5</span>
-                      </label>
-                      <label>
-                        <input data-filter="size" data-value="18" value="18" type="checkbox" class="squaresize"><span> 18		</span>
-                      </label>
-                      <label>
-                        <input data-filter="size" data-value="18.5" value="18.5" type="checkbox" class="squaresize"><span>18.5	</span>
-                      </label>
-                      <label>
-                        <input data-filter="size" data-value="19" value="19" type="checkbox" class="squaresize"><span> 19		</span>
-                      </label>
-                      <label>
-                        <input data-filter="size" data-value="19.5" value="19.5" type="checkbox" class="squaresize"><span> 19.5</span>
-                      </label>
-                      <label>
-                        <input data-filter="size" data-value="20" value="20" type="checkbox" class="squaresize"><span> 20	</span>
-                      </label>
-                    </div>
+                    <ul id="fsizes" class="square_sizes">
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="0" value="Б.Р." type="checkbox" class="squaresize"><span>Б.Р.</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="14" value="14" type="checkbox" class="squaresize"><span>  14</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="15" value="15" type="checkbox" class="squaresize"><span> 15</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="15.5" value="15.5" type="checkbox" class="squaresize"><span> 15.5</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="16" value="16" type="checkbox" class="squaresize"><span> 16</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="16.5" value="16.5" type="checkbox" class="squaresize"><span> 16.5</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="17" value="17" type="checkbox" class="squaresize"><span> 17</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="17.5" value="17.5" type="checkbox" class="squaresize"><span>17.5</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="18" value="18" type="checkbox" class="squaresize"><span> 18</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="18.5" value="18.5" type="checkbox" class="squaresize"><span>18.5</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="19" value="19" type="checkbox" class="squaresize"><span> 19</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="19.5" value="19.5" type="checkbox" class="squaresize"><span> 19.5</span>
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input data-filter="size" data-value="20" value="20" type="checkbox" class="squaresize"><span> 20</span>
+                        </label>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>

@@ -22,10 +22,10 @@
                 $dropContent = $self.children(),
                 isOpen = false,
                 fadeTop = 0,
-                $fade =  $('<div class="fade fade-fixed"></div>');//            $('.fade-fixed');// $('<div class="fade fade-fixed"></div>');
+                $fade = $('.fade-fixed');// $('<div class="fade fade-fixed"></div>');//            $('.fade-fixed');// $('<div class="fade fade-fixed"></div>');
 
             if (opt.fade) {
-                $('body').append($fade);
+               // $('body').append($fade);
                 $fade.css({
                     "z-index": 400
                 });

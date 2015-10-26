@@ -25,7 +25,7 @@ $(function(){
 
 
     $goodsItem.on('mouseenter', function(){
-       $(this).trigger('onHover');
+        $(this).trigger('onHover');
     });
 
     $goodsItem.bind('onHover', function() {
@@ -80,7 +80,7 @@ $(function(){
                 viewText.init();
             },
             addLink: function(link, id) {
-              model.items.push({$link: link, id: id});
+                model.items.push({$link: link, id: id});
             },
             setActive: function(id) {
                 model.curLink = this.getLinkByid(id);
@@ -148,8 +148,8 @@ $(function(){
 
         var viewText = {
             init: function() {
-               this.$holder =  $('.styles-list', _submenu);
-               this.item = '.styles-list__item';
+                this.$holder =  $('.styles-list', _submenu);
+                this.item = '.styles-list__item';
                 this.$holder.height(0);
             },
             render: function() {

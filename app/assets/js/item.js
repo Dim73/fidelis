@@ -10590,17 +10590,18 @@ return jQuery;
 
 },{}],3:[function(require,module,exports){
 require('./main/itemImg.plugin');
-
+var DEF_CONST = require('./helpers/constants');
 
 function QuickOrder()  {
     var self = this;
 
     this.init = function() {
         self.$fade.bind('click', self.close);
+        self.$close.bind('click', self.close);
         self.$form.bind('submit', self._submit);
         $('#qo-phone').mask("+7 (999) 999-99-99");
         self.$self.height(self.$self.height());
-        $('body').append(self.$fade);
+        //$('body').append(self.$fade);
     };
 
     this.show = function(){
@@ -10608,7 +10609,8 @@ function QuickOrder()  {
         self.$self.fadeIn();
     };
 
-    this.close = function() {
+    this.close = function(e) {
+        e.preventDefault();
         self.$fade.fadeOut();
         self.$self.fadeOut();
     };
@@ -10630,7 +10632,7 @@ function QuickOrder()  {
         self.$error.text('');
         if (self.validated()) {
             $.ajax({
-                url: '../../source/back/qo.json',
+                url: DEF_CONST.AJX_PATH + 'qo.json',
                 cache: false,
                 type: 'post',
                 data: {data: self.$form.serialize()},
@@ -10649,8 +10651,9 @@ function QuickOrder()  {
     };
 
     self.$self = $('.quick-order');
-    self.$fade = $('<div class="fade fade-fixed"></div>');
+    self.$fade = $('.fade-fixed');
     self.$form = $('.quick-order__form', self.$self);
+    self.$close = $('.close', self.$self);
     self.$selfInner = $('.quick-order__inner',  self.$self);
 
     self.$desc = $('.desc',self.$self);
@@ -10726,7 +10729,17 @@ $(document).ready(function() {
     }
 });
 
-},{"./main/itemImg.plugin":5}],4:[function(require,module,exports){
+},{"./helpers/constants":4,"./main/itemImg.plugin":6}],4:[function(require,module,exports){
+module.exports = (function(){
+  var _const =  {};
+
+  _const.ENV_CONST = window.location.host && (/^[^\:]+\:[\d]+/.test(window.location.host))?'dev':'prod';
+  _const.AJX_PATH = _const.ENV_CONST === 'dev'?'../../source/back/':'/ajax/';
+  _const.IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
+  return _const
+})()
+
+},{}],5:[function(require,module,exports){
 var $ = require('jquery');
 
 var ajxLoader  =  (function() {
@@ -10754,7 +10767,7 @@ var ajxLoader  =  (function() {
 
 module.exports = ajxLoader;
 
-},{"jquery":2}],5:[function(require,module,exports){
+},{"jquery":2}],6:[function(require,module,exports){
 var ajxLoader = require('../lib/ajxLoader');
 require('jquery-zoom');
 
@@ -10889,4 +10902,4 @@ require('jquery-zoom');
       })
   }
 
-},{"../lib/ajxLoader":4,"jquery-zoom":1}]},{},[3])
+},{"../lib/ajxLoader":5,"jquery-zoom":1}]},{},[3])
