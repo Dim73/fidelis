@@ -1,12 +1,12 @@
-(function($) {
+var DEF_CONST = require('../helpers/constants');
 	$.fn.subscribe = function(opt) {
 		var opt = $.extend({
 			submitClass : '.submit',
 			inputClass : '.inputtext',
 			errorMessage : '.inner-error',
-			url : '../../source/back/qo.json'
+			url : DEF_CONST.AJX_PATH + (DEF_CONST.ENV_CONST === 'dev'?'qo.json':'go.html')
 		}, opt);
-		
+
 		return this.each(function() {
 			var $self = $(this),
                 $form = $('.subscribe__form', $self),
@@ -64,7 +64,6 @@
                     }
 				}
 			});
-			
+
 		});
 	};
-})(jQuery);
