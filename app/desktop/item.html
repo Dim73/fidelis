@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <script type="text/javascript" src="../assets/js/main.js"></script>
+    <script type="text/javascript" src="../assets/js/item.js"></script>
+    <link rel="stylesheet" href="../assets/css/jquery-ui-1.10.3.custom.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script type="text/javascript" async="async" src="http://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="header">
+        <div class="header-top wrap"><a href="#" class="logo"><img src="../assets/images/svg/logo.svg" alt=""></a>
+          <div class="magazine-info">
+            <div class="col magazine-info__address"><a href="#" class="js-address-popup"><span class="magazine-info__title">Москва<i class="icon icon-pin"></i></span>
+                <div class="desc">Берсеневская набережная д. 6 стр. 1</div></a>
+              <div class="address-info__holder dropdown_top">
+                <div class="address-info">
+                  <div class="address-info__title dropdown-fade-to dropdown__header">ВАШ ГОРОД</div>
+                  <div class="dropdown__body">
+                    <script>
+                      ymaps.ready(function () {
+                      
+                          var map = new ymaps.Map("address-map", {
+                              center: [55.74011678, 37.60888550],
+                              zoom: 15,
+                              controls: ['zoomControl']
+                          });
+                          console.log(map);
+                          var moscowPin = new ymaps.Placemark(map.getCenter(), {
+                              hintContent: 'Fidelis style'
+                          }, {
+                              // Опции.
+                              // Необходимо указать данный тип макета.
+                              iconLayout: 'default#image'
+                          });
+                          map.geoObjects.add(moscowPin);
+                      });
+                    </script>
+                    <div class="address-info__inner">
+                      <div class="address-info__town"><span class="magazine-info__title">Москва<i class="icon icon-pin"></i></span>
+                        <div class="address-info__town-change"><a href="#" class="js-change-town">Изменить город</a></div>
+                      </div>
+                      <div class="address-map__container">
+                        <div id="address-map" class="address-map"></div>
+                      </div>
+                      <div class="address-info__body">
+                        <div class="address-time">
+                          <div class="address_moscow"><span>Режим работы шоурума:</span>                                            В буднии дни с 9:00 до 19:00<br><i>Сб. Вс. - Выходной</i></div>
+                        </div>
+                        <!--
+                        <div class="address-select">
+                        <select name="" id="address-select">
+                        <option value="moscow">Москва</option>
+                        <option value="moscow">Воронеж</option>
+                        </select>
+                        </div>
+                        -->
+                        <div class="btn-holder"><a href="#" class="btn">ПОДРОБНЕЕ</a></div>
+                      </div>
+                    </div>
+                    <div class="town-changer">
+                      <div class="hint">Укажите  город, в котором собираетесь получить товар</div>
+                      <form action="#townChange" data-autocompleteurl="../../source/back/townComplete.html" class="town-changer__form">
+                        <div class="row">
+                          <label for="changeTown">Ваш Город</label>
+                          <input id="changeTown" name="town" type="text" class="inputtext"><a href="#" class="btn btn-submit">СОХРАНИТЬ
+                            <input type="submit" value=""></a>
+                        </div>
+                        <div class="town-changer__related-list"><a href="#" class="js-town">Москва</a><a href="#" class="js-town">Нижний Новгород</a><a href="#" class="js-town">Якутск</a></div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col magazine-info__return"><span class="magazine-info__title">Удобный возврат<i class="icon icon-wallet"></i></span>
+              <div class="desc">если украшение не подошло</div>
+            </div>
+            <!-- не в регионах доставки-->
+            <div style="display: none;" class="col magazine-info__shipment"><a href="#" class="js-shipment-info"><span class="magazine-info__title">Доставка<i class="icon icon-car2"></i></span>
+                <div class="desc">Ежедневно с 10:00 до 22:00</div></a>
+              <div class="shipment-info__holder dropdown_top">
+                <div class="shipment-info">
+                  <div class="shipment-info__title dropdown-fade-to dropdown__header">ДОСТАВКА</div>
+                  <div class="shipment-info__body dropdown__body">
+                    <div class="type-list">
+                      <div class="type-list__item"><span class="type-title"><span class="place">ПО МОСКВЕ</span> (ежедневно с 10:00 до 22:00):</span>
+                        <div class="line"><span class="name">Курьером</span><span class="price">300<span class="rub"><span>руб</span></span></span></div>
+                        <div class="line line-bonus"><span class="name">При заказе свыше 2 500<span class="rub"><span>руб</span></span></span><span class="price">БЕСПЛАТНО</span></div>
+                      </div>
+                      <div class="type-list__item"><span class="type-title"><span class="place">по России:</span></span>
+                        <div class="line"><span class="name">Почта России</span><span class="price">650<span class="rub"><span>руб</span></span></span></div>
+                        <div class="line"><span class="name">СПСР Экспресс</span><span class="price">650<span class="rub"><span>руб</span></span></span></div>
+                        <div class="line line-bonus"><span class="name">При заказе свыше 10 000<span class="rub"><span>руб</span></span></span><span class="price">БЕСПЛАТНО</span></div>
+                      </div>
+                    </div><a href="" class="btn">Подробнее</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col magazine-info__selfshipment"><span class="magazine-info__title">Самовывоз<i class="icon icon-clock"></i></span>
+              <div class="desc">в будние дни с 9:00 до 19:00</div>
+            </div>
+            <div class="col magazine-info__call"><a href="#" class="js-call"><span class="magazine-info__title">+7 (495) 255 11 08<i class="icon icon-phone"></i></span>
+                <div class="desc">+7  (800) 255 11 08 Бесплатно</div></a>
+              <div class="call-info__holder dropdown_top">
+                <div class="call-info">
+                  <div class="call-info__title dropdown-fade-to dropdown__header">КОЛЛ-ЦЕНТР</div>
+                  <div class="call-info__body dropdown__body">
+                    <form action="" class="call-form"><span class="call-form__title">ОБРАТНЫЙ ЗВОНОК</span>
+                      <div class="row">
+                        <label for="call-i-name">Ваше имя</label>
+                        <input id="call-i-name" name="name" type="text" class="inputtext">
+                      </div>
+                      <div class="row">
+                        <label for="call-i-phone">Телефон</label>
+                        <input id="call-i-phone" name="name" type="text" class="inputtext phone-mask">
+                      </div>
+                      <div class="call-info__info">Колл-центр работает ежедневно с 9:00 до 22:00</div>
+                      <div class="btn-holder"><a href="#" class="btn btn-submit">ПЕРЕЗВОНИТЕ МНЕ
+                          <input type="submit" value="" class="submit"></a></div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="header-menu">
+          <div class="wrap">
+            <ul class="main-menu">
+              <li class="main-menu__item"><a href="#" class="main-menu__link">НОВИНКИ</a></li>
+              <li class="main-menu__item hasSubmenu"><a href="#" class="main-menu__link">ИЗДЕЛИЯ</a>
+                <div class="main-menu__collection main-menu__collection_goods">
+                  <div class="collection__inner wrap">
+                    <div class="goods__list"><a href="#" class="goods__item"><span>АКССЕСУАРЫ</span></a><a href="#" class="goods__item"><span>БРАСЛЕТЫ</span></a><a href="#" class="goods__item"><span>БРОШИ</span></a><a href="#" class="goods__item"><span>БУСЫ</span></a><a href="#" class="goods__item"><span>КОЛЬЕ</span></a><a href="#" class="goods__item"><span>КОЛЬЦА</span></a><a href="#" class="goods__item"><span>ПОДВЕСКИ</span></a><a href="#" class="goods__item"><span>СЕРЬГИ</span></a><a href="#" class="goods__item"><span>ЦЕПИ</span></a></div>
+                    <div class="goods-category">
+                      <div class="goods-category__title">Категории</div>
+                      <div class="goods-category__items">
+                        <div class="goods-category__items-list">
+                          <div class="goods-category__col"><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с гранатом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с александритом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги из агата</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c топазом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c жемчугом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c кварцем</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с аметистом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с рубином</a></div>
+                          <div class="goods-category__col"><a href="#" class="goods-category__item">Серьги с кристаллами Swarovski</a><a href="#" class="goods-category__item">Серьги с фианитами</a><a href="#" class="goods-category__item">Серьги с перламутром</a><a href="#" class="goods-category__item">Cерьги каффы</a><a href="#" class="goods-category__item">Серьги конго</a></div>
+                        </div>
+                        <!-- category-list-->
+                        <div class="goods-category__items-list">
+                          <div class="goods-category__col"><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с гранатом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с александритом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги из агата</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c топазом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c жемчугом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c кварцем</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с аметистом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с рубином</a></div>
+                        </div>
+                        <!-- category-list-->
+                        <div class="goods-category__items-list">
+                          <div class="goods-category__col"><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с гранатом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с александритом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги из агата</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c топазом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c жемчугом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c кварцем</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с аметистом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с рубином</a></div>
+                          <div class="goods-category__col"><a href="#" class="goods-category__item">Серьги с кристаллами Swarovski</a><a href="#" class="goods-category__item">Серьги с фианитами</a><a href="#" class="goods-category__item">Серьги с перламутром</a><a href="#" class="goods-category__item">Cерьги каффы</a><a href="#" class="goods-category__item">Серьги конго</a></div>
+                        </div>
+                        <!-- category-list-->
+                        <div class="goods-category__items-list">
+                          <div class="goods-category__col"><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с гранатом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с александритом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги из агата</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c топазом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c жемчугом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c кварцем</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с аметистом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с рубином</a></div>
+                        </div>
+                        <!-- category-list-->
+                        <div class="goods-category__items-list">
+                          <div class="goods-category__col"><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с гранатом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с александритом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги из агата</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c топазом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c жемчугом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c кварцем</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с аметистом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с рубином</a></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="collection__preview">
+                      <!-- <img src="&lt;!&ndash;#echo var="assets-path"&ndash;&gt;/goods-item.jpg" alt=""/>-->
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="main-menu__item hasSubmenu"><a href="#" class="main-menu__link">КОЛЛЕКЦИИ</a>
+                <div class="main-menu__collection main-menu__collection_asis">
+                  <div class="collection__inner wrap">
+                    <div class="collection__list">
+                      <div class="col">
+                        <div class="collection__item"><a data-img="../assets/images/tmp/item.jpg" href="#" class="collection__link">Silver Design (Breuning)</a></div>
+                        <div class="collection__item"><a data-img="../assets/images/tmp/item2.jpg" href="#" class="collection__link">Silver Diamond  (Breuning)</a></div>
+                        <div class="collection__item"><a data-img="../assets/images/tmp/item.jpg" href="#" class="collection__link">Silver Colors  (Breuning)</a></div>
+                        <div class="collection__item"><a data-img="../assets/images/tmp/menu-collection.jpg" href="#" class="collection__link">Fashion (Graziella)</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Chic (Graziella)</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Classic (Graziella)</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Базовая</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">ГлиттерингГГлиттерингГ литтеринг</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Жемчужная</a></div>
+                      </div>
+                      <div class="col">
+                        <div class="collection__item"><a href="#" class="collection__link">Silver Design (Breuning)</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Silver Diamond  (Breuning)</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Silver Colors  (Breuning)</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Fashion (Graziella)</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Chic (Graziella)</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Classic (Graziella)</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Базовая</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Глиттеринг</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Жемчужная</a></div>
+                      </div>
+                      <div class="col">
+                        <div class="collection__item"><a href="#" class="collection__link">Classic (Graziella)</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Базовая</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Глиттеринг</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Жемчужная</a></div>
+                      </div>
+                    </div>
+                    <div class="collection__preview">
+                      <!-- <img src="&lt;!&ndash;#echo var="assets-path"&ndash;&gt;/menu-collection.jpg" alt=""/>-->
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="main-menu__item hasSubmenu"><a href="#" class="main-menu__link">СТИЛИ</a>
+                <div data-url="../../source/back/style-text.html" class="main-menu__collection main-menu__collection_style">
+                  <div class="collection__inner wrap">
+                    <div class="goods__list"><a href="#" data-id="1" class="goods__item"><span>ВЕЧЕРНИЙ</span></a><a href="#" data-id="2" class="goods__item"><span>ДЕЛОВОЙ</span></a><a href="#" data-id="3" class="goods__item"><span>КЛАССИЧЕСКИЙ</span></a><a href="#" data-id="4" class="goods__item"><span>ПОВСЕДНЕВНЫЙ</span></a><a href="#" data-id="5" class="goods__item"><span>ОРИГИНАЛЬНЫЙ</span></a><a href="#" data-id="6" class="goods__item"><span>ПРАЗДНИЧНЫЙ</span></a><a href="#" data-id="7" class="goods__item"><span>РОМАНТИЧЕСКИЙ</span></a><a href="#" data-id="8" class="goods__item"><span>УЛЬТРАМОДНЫЙ</span></a><a href="#" data-id="9" class="goods__item"><span>СПОРТИВНЫЙ</span></a></div>
+                    <div class="goods-category">
+                      <div class="styles-list"></div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="main-menu__item hasSubmenu"><a href="#" class="main-menu__link">БРЕНДЫ</a>
+                <div data-url="../../source/back/style-text.html?111" class="main-menu__collection main-menu__brand main-menu__collection_brand">
+                  <div class="collection__inner wrap">
+                    <div class="goods__list"><a href="#" data-id="1" class="goods__item"><span>ВЕЧЕРНИЙ</span></a><a href="#" data-id="2" class="goods__item"><span>ДЕЛОВОЙ</span></a><a href="#" data-id="3" class="goods__item"><span>КЛАССИЧЕСКИЙ</span></a><a href="#" data-id="4" class="goods__item"><span>ПОВСЕДНЕВНЫЙ</span></a><a href="#" data-id="5" class="goods__item"><span>ОРИГИНАЛЬНЫЙ</span></a><a href="#" data-id="6" class="goods__item"><span>ПРАЗДНИЧНЫЙ</span></a><a href="#" data-id="7" class="goods__item"><span>РОМАНТИЧЕСКИЙ</span></a><a href="#" data-id="8" class="goods__item"><span>УЛЬТРАМОДНЫЙ</span></a><a href="#" data-id="9" class="goods__item"><span>СПОРТИВНЫЙ</span></a></div>
+                    <div class="goods-category">
+                      <div class="styles-list"></div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="main-menu__item main-menu__item-sale"><a href="#" class="main-menu__link">SALE</a></li>
+              <li class="main-menu__item"><a href="#" class="main-menu__link">О КОМПАНИИ</a></li>
+              <li class="main-menu__item"><a href="#" class="main-menu__link">КОНТАКТЫ</a></li>
+            </ul>
+            <div class="basket basket-top">
+              <div class="basket-top__items"><a href="#" class="js-basket-open"><span class="basket-top__icon icon-basket"><span class="count"></span></span><span class="basket-top__info">Корзина</span></a>
+                <div class="basket-items__holder dropdown-holder dropdown_top">
+                  <div class="basket-items">
+                    <div class="basket-items__body dropdown-fade-to">
+                      <div class="basket-empty">
+                        <h2>Корзина пуста</h2>
+                      </div>
+                      <div class="nano-scroll">
+                        <div class="basket-items__list nano-content">
+                          <!--
+                          <div class="basket-item">
+                          <div class="basket-item__holder">
+                          <div class="basket-item__img">
+                          <img src="&lt;!&ndash;#echo var="assets-path"&ndash;&gt;/basket-item.jpg" alt=""/>
+                          </div>
+                          <div class="basket-item__name">
+                          Фаланговое кольцо из серебра с фианитами в форме короны
+                          </div>
+                          <div class="basket-item__price">
+                          19 100Р
+                          </div>
+                          <div class="basket-item__service">
+                          <a class="basket-item__delete icon-close">
+                          </a>
+                          </div>
+                          </div>
+                          </div>
+                          -->
+                        </div>
+                      </div>
+                      <div class="basket-items__bottom">
+                        <div class="btn-holder"><a href="basket.html" class="btn btn_black">перейти в корзину</a></div>
+                        <div class="basket__total">
+                          <div class="total__summ"><span class="lbl">Сумма заказа:</span><span class="summ"></span><span class="rub"><span>руб</span></span></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="service-link__holder service-link_favorites"><a href="customer-favorites.html" class="service-link"><span class="icon icon-heart"></span><span class="service-count">26</span><span class="service-lbl">Избранное</span></a></div>
+            <div class="service-link__holder service-link_account not-logged"><a href="" class="service-link js-login-open"><span class="icon icon-customer"></span><span class="service-lbl">Василий</span></a><a href="#exit" class="account-exit icon icon-x"></a>
+              <!-- login-->
+              <div class="login-dropdown__holder dropdown_top">
+                <div class="login-dropdown">
+                  <div class="login__body dropdown__body">
+                    <form action="customer.html" class="login-form">
+                      <!-- #include virtual="../includes/layouts/row_input.html?id=login-email&type=email&label=E-mail"-->
+                      <!-- #include virtual="../includes/layouts/row_input.html?id=login-pass&label=Пароль"-->
+                      <div class="login-form__bottom">
+                        <div class="add-links"><a href="customer-registration.html">Регистрация</a><a href="#">Забыли пароль?</a></div><a href="#" class="btn btn-submit btn_black">Вход
+                          <input type="submit" value=""></a>
+                      </div>
+                    </form>
+                    <div class="login-social"><span class="login-social__lbl">Или войти через:</span>
+                      <div class="social-dark"><a href="#" class="icon icon-fb"></a><a href="#" class="icon icon-vk"></a><a href="#" class="icon icon-tw"></a><a href="#" class="icon icon-ok"></a><a href="#" class="icon icon-gplus"></a></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content-info wrap">
+        <div class="breadcrumbs"><a href="/">Главная</a>        /<a href="#">Каталог</a>        /<a href="#">бренды</a>        /<span>GRAZIELLA</span></div>
+        <div class="search">
+          <form method="post">
+            <input type="text" placeholder="Поиск по названию или артикулу..." name="search"><span class="btn-submit icon icon-zoom">
+              <input type="submit"></span>
+          </form>
+        </div>
+      </div>
+      <div class="content wrap">
+        <div itemscope="" itemtype="http://schema.org/Product" class="pitem">
+          <div class="container">
+            <div class="pitem-preview">
+              <div class="pitem-slider pitem-slider_side">
+                <div class="slider-container">
+                  <div class="slider-item"><a data-img="../assets/images/tmp/pitem.jpg" data-zoom="../assets/images/tmp/pitem-big.jpg" href="" class="pitem-slider__link"><img itemprop="image" src="../assets/images/tmp/pitem-slider.jpg" alt=""></a></div>
+                  <div class="slider-item"><a data-img="../assets/images/tmp/pitem.jpg" data-zoom="../assets/images/tmp/pitem-big.jpg" href="" class="pitem-slider__link"><img src="../assets/images/tmp/pitem-slider.jpg" alt=""></a></div>
+                  <div class="slider-item"><a data-img="../assets/images/tmp/pitem.jpg" data-zoom="../assets/images/tmp/pitem-big.jpg" href="" class="pitem-slider__link"><img src="../assets/images/tmp/pitem-slider.jpg" alt=""></a></div>
+                  <div class="slider-item"><a href="" class="pitem-slider__link link_video"><img src="../assets/images/tmp/pitem-video.jpg" alt=""></a></div>
+                </div>
+              </div>
+              <div class="pitem-preview-main pitem-preview-main_side">
+                <div class="pitem-preview-main__loader"></div>
+                <div class="pitem-preview-main__video">
+                  <video loop="loop" preload="metadata">
+                    <source src="http://cdn.names.ru/upload/video_1c/v032504.webm" type="video/webm">
+                    <source src="http://cdn.names.ru/upload/video_1c/v032504.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <div class="pitem-preview-main__fullscreen"><a href="#" class="pitem-preview-main__fullscreen-link">Открыть на весь экран</a><a href="javascript:void(0)" onclick="$(this).toggleClass('added')" class="favorite-link icon"><span>Добавить товар в избранное</span></a></div>
+              </div>
+            </div>
+            <!-- -item-gallery-->
+            <div data-item="{id: 700,sizes: [{17.00: '2 300'},{17.50: '2 300'}]}" class="pitem-specs js-item-data">
+              <h1 itemprop="name">ЗОЛОТОЕ КОЛЬЦО С ГРАФИТОВОЙ ЭМАЛЬЮ ROSA ОТ КОМПАНИИ GRAZIELLA</h1>
+              <div class="pitem-specs__about">
+                <div class="about-item">Тип зделия: <span title="Колечко" class="tooltip">Кольцо</span></div>
+                <div class="about-item">Артикул: M0000047748</div>
+                <div class="about-item">Бренд:  <span title="Колечко" itemprop="brand" class="tooltip">Graziella</span></div>
+              </div>
+              <div class="pitem-specs__spoilers">
+                <div class="spoiler-item folding">
+                  <div class="folding__title"><a href="#">Описание</a></div>
+                  <div class="folding__wrap">
+                    <div class="folding__inner">
+                      <div class="nano-scroll">
+                        <div class="nano-content">
+                          <div itemprop="description" class="description">
+                            Мужской браслет, добавляющий обладателю брутального «варварства», состоящий из
+                            тонких кожаных шнуров, соединенных между собой, украшенный разнообразными кольцами из искусственно
+                            состаренного серебра, с жемчугом, и аметистом круглой огранки.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="spoiler-item folding">
+                  <div class="folding__title"><a href="#">Детали</a></div>
+                  <div class="folding__wrap">
+                    <div class="folding__inner">
+                      <div class="nano-scroll">
+                        <div class="nano-content">Тип металла: Золото <br>                                        Проба: 585<br>                                        Минимальный вес: 8,72 г<br>                                        Покрытие: <span title="Нанесение тонкого слоя родия на поверхность изделия из металла, для его защиты от повреждений и потемнения, придания ему более яркого блеска и определенного цвета.Холодный белый блеск родия хорошо сочетается с бриллиантами, фианитами и другими вставками." class="tooltip">Родирование</span>, Позолота, Рутенирование <br>                                        Вставка: <span title="Колечко" class="tooltip">Аметист</span>, <span title="Колечко" class="tooltip">Топаз</span>, <span title="Колечко" class="tooltip">Турмалин</span><br>                                        Коллекция: Fashion (Graziella)<br>                                        Стиль: Романтический, Праздничный
+                                                                  Тип металла: Золото <br>                                        Проба: 585<br>                                        Минимальный вес: 8,72 г<br>                                        Покрытие: Родирование, Позолота, Рутенирование <br>                                        Вставка: <span title="Колечко" class="tooltip">Аметист</span>, <span title="Колечко" class="tooltip">Топаз</span>, <span title="Колечко" class="tooltip">Турмалин</span><br>                                        Коллекция: Fashion (Graziella)<br>                                        Стиль: Романтический, Праздничный
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="spoiler-item folding spoiler_complect">
+                  <div class="folding__title"><a href="#">Комплект к этому изделию</a></div>
+                  <div class="folding__wrap">
+                    <div class="folding__inner">
+                      <div class="complect-slider">
+                        <div class="slider-container">
+                          <div class="slider-item"><a href="" class="complect-slider__link"><img width="106" src="../assets/images/tmp/pitem-slider.jpg" alt=""><span class="price">цена: 96 400<span class="rub"><span>руб</span></span></span></a></div>
+                          <div class="slider-item"><a href="" class="complect-slider__link"><img width="106" src="../assets/images/tmp/pitem-slider.jpg" alt=""><span class="price">цена: 96 400<span class="rub"><span>руб</span></span></span></a></div>
+                          <div class="slider-item"><a href="" class="complect-slider__link"><img width="106" src="../assets/images/tmp/pitem-slider.jpg" alt=""><span class="price">цена: 96 400<span class="rub"><span>руб</span></span></span></a></div>
+                          <div class="slider-item"><a href="" class="complect-slider__link"><img width="106" src="../assets/images/tmp/pitem-slider.jpg" alt=""><span class="price">цена: 96 400<span class="rub"><span>руб</span></span></span></a></div>
+                          <div class="slider-item"><a href="" class="complect-slider__link"><img width="106" src="../assets/images/tmp/pitem-slider.jpg" alt=""><span class="price">цена: 96 400<span class="rub"><span>руб</span></span></span></a></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="line-price">
+                <div class="pitem-cost">
+                  <div class="old-cost"><span class="dec">старая цена: </span>4 220<span class="rub"><span>руб</span></span></div>
+                  <div itemprop="offers" itemscope="" itemtype="http://schema.org/Offer" class="cost">
+                    <meta itemprop="price" content="42200.00">
+                    <meta itemprop="priceCurrency" content="RUB"><span class="dec">цена: </span><span class="count">4 200</span><span class="rub"><span>руб</span></span>
+                    <link itemprop="availability" href="http://schema.org/InStock">
+                    <!--
+                    Discontinued
+                    InStock
+                    InStoreOnly
+                    LimitedAvailability
+                    OnlineOnly
+                    OutOfStock
+                    PreOrder
+                    SoldOut - цена не указывается
+                    -->
+                  </div>
+                </div>
+                <div class="pitem-shipment"><span class="tooltip shipment-title">бесплатно доставим  по России </span><i class="icon icon-car2"></i></div>
+              </div>
+              <div class="line-size">
+                <div class="pitem-size">
+                  <div class="select-size__wrap">
+                    <select id="item_size" class="no-styler select_size"></select>
+                  </div>
+                </div><a href="#" class="pitem-size__help">Как определить свой размер</a>
+              </div>
+              <div class="pitem-order"><a href="#" class="btn js-quick-order">БЫСТРЫЙ ЗАКАЗ</a><a href="#" class="btn btn_black js-buy">КУПИТЬ</a>
+                <div class="quick-order"><a href="javascript:void(0)" class="close icon-close"></a>
+                  <div class="quick-order__inner"><span class="title">БЫСТРЫЙ ЗАКАЗ<i class="icon"></i></span>
+                    <div class="desc">Заполните форму и мы с Вами свяжемся для оформления заказа в самое ближайшее время</div>
+                    <form action="/" class="quick-order__form">
+                      <div class="row">
+                        <label for="qo-name">Ваше имя:</label>
+                        <input id="qo-name" type="text" name="name" class="inputtext">
+                      </div>
+                      <div class="row">
+                        <label for="qo-phone">Ваш телефон:</label>
+                        <input id="qo-phone" type="text" name="phone" class="inputtext">
+                      </div><span class="btn btn_black btn-submit">Заказать
+                        <input type="submit"></span>
+                      <div class="send-error"></div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class="social">
+                <script type="text/javascript" src="//yastatic.net/share/share.js" charset="utf-8"></script>
+                <div data-yasharel10n="ru" data-yasharetype="link" data-yasharequickservices="vkontakte,facebook,twitter,odnoklassniki,gplus" class="yashare-auto-init"><span class="b-share"><a id="ya-share-0.4825254096649587-1429644749154" data-hdirection="" data-vdirection="" class="b-share__handle"><span class="b-share__text">Поделиться</span></a><a rel="nofollow" target="_blank" title="ВКонтакте" href="http://share.yandex.ru/go.xml?service=vkontakte&amp;url=http%3A%2F%2Ffidelis-style.ru%2Fitem%2FM0000045595.html&amp;title=%D0%9C%D1%83%D0%B6%D1%81%D0%BA%D0%BE%D0%B9%20%D0%B1%D1%80%D0%B0%D1%81%D0%BB%D0%B5%D1%82%20%D0%B8%D0%B7%20%D0%BA%D0%BE%D0%B6%D0%B8%20%D0%B8%20%D1%81%D0%B5%D1%80%D0%B5%D0%B1%D1%80%D0%B0%2C%20%D1%81%20%D0%B6%D0%B5%D0%BC%D1%87%D1%83%D0%B3%D0%BE%D0%BC%2C%20%D0%B8%20%D0%B0%D0%BC%D0%B5%D1%82%D0%B8%D1%81%D1%82%D0%BE%D0%BC%2C%20%D0%BE%D1%82%20Eugenio%20Campos%20%D0%B7%D0%B0%207500%2C00%20%D1%80%20%D0%B2%20%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%BD%D0%B5%D1%82-%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD%D0%B5%20Fidelis%20Style" data-service="vkontakte" class="b-share__handle b-share__link b-share-btn__vkontakte"><span class="b-share-icon b-share-icon_vkontakte"></span></a><a rel="nofollow" target="_blank" title="Facebook" href="http://share.yandex.ru/go.xml?service=facebook&amp;url=http%3A%2F%2Ffidelis-style.ru%2Fitem%2FM0000045595.html&amp;title=%D0%9C%D1%83%D0%B6%D1%81%D0%BA%D0%BE%D0%B9%20%D0%B1%D1%80%D0%B0%D1%81%D0%BB%D0%B5%D1%82%20%D0%B8%D0%B7%20%D0%BA%D0%BE%D0%B6%D0%B8%20%D0%B8%20%D1%81%D0%B5%D1%80%D0%B5%D0%B1%D1%80%D0%B0%2C%20%D1%81%20%D0%B6%D0%B5%D0%BC%D1%87%D1%83%D0%B3%D0%BE%D0%BC%2C%20%D0%B8%20%D0%B0%D0%BC%D0%B5%D1%82%D0%B8%D1%81%D1%82%D0%BE%D0%BC%2C%20%D0%BE%D1%82%20Eugenio%20Campos%20%D0%B7%D0%B0%207500%2C00%20%D1%80%20%D0%B2%20%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%BD%D0%B5%D1%82-%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD%D0%B5%20Fidelis%20Style" data-service="facebook" class="b-share__handle b-share__link b-share-btn__facebook"><span class="b-share-icon b-share-icon_facebook"></span></a><a rel="nofollow" target="_blank" title="Twitter" href="http://share.yandex.ru/go.xml?service=twitter&amp;url=http%3A%2F%2Ffidelis-style.ru%2Fitem%2FM0000045595.html&amp;title=%D0%9C%D1%83%D0%B6%D1%81%D0%BA%D0%BE%D0%B9%20%D0%B1%D1%80%D0%B0%D1%81%D0%BB%D0%B5%D1%82%20%D0%B8%D0%B7%20%D0%BA%D0%BE%D0%B6%D0%B8%20%D0%B8%20%D1%81%D0%B5%D1%80%D0%B5%D0%B1%D1%80%D0%B0%2C%20%D1%81%20%D0%B6%D0%B5%D0%BC%D1%87%D1%83%D0%B3%D0%BE%D0%BC%2C%20%D0%B8%20%D0%B0%D0%BC%D0%B5%D1%82%D0%B8%D1%81%D1%82%D0%BE%D0%BC%2C%20%D0%BE%D1%82%20Eugenio%20Campos%20%D0%B7%D0%B0%207500%2C00%20%D1%80%20%D0%B2%20%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%BD%D0%B5%D1%82-%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD%D0%B5%20Fidelis%20Style" data-service="twitter" class="b-share__handle b-share__link b-share-btn__twitter"><span class="b-share-icon b-share-icon_twitter"></span></a><a rel="nofollow" target="_blank" title="Одноклассники" href="http://share.yandex.ru/go.xml?service=odnoklassniki&amp;url=http%3A%2F%2Ffidelis-style.ru%2Fitem%2FM0000045595.html&amp;title=%D0%9C%D1%83%D0%B6%D1%81%D0%BA%D0%BE%D0%B9%20%D0%B1%D1%80%D0%B0%D1%81%D0%BB%D0%B5%D1%82%20%D0%B8%D0%B7%20%D0%BA%D0%BE%D0%B6%D0%B8%20%D0%B8%20%D1%81%D0%B5%D1%80%D0%B5%D0%B1%D1%80%D0%B0%2C%20%D1%81%20%D0%B6%D0%B5%D0%BC%D1%87%D1%83%D0%B3%D0%BE%D0%BC%2C%20%D0%B8%20%D0%B0%D0%BC%D0%B5%D1%82%D0%B8%D1%81%D1%82%D0%BE%D0%BC%2C%20%D0%BE%D1%82%20Eugenio%20Campos%20%D0%B7%D0%B0%207500%2C00%20%D1%80%20%D0%B2%20%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%BD%D0%B5%D1%82-%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD%D0%B5%20Fidelis%20Style" data-service="odnoklassniki" class="b-share__handle b-share__link b-share-btn__odnoklassniki"><span class="b-share-icon b-share-icon_odnoklassniki"></span></a><a rel="nofollow" target="_blank" title="Google Plus" href="http://share.yandex.ru/go.xml?service=gplus&amp;url=http%3A%2F%2Ffidelis-style.ru%2Fitem%2FM0000045595.html&amp;title=%D0%9C%D1%83%D0%B6%D1%81%D0%BA%D0%BE%D0%B9%20%D0%B1%D1%80%D0%B0%D1%81%D0%BB%D0%B5%D1%82%20%D0%B8%D0%B7%20%D0%BA%D0%BE%D0%B6%D0%B8%20%D0%B8%20%D1%81%D0%B5%D1%80%D0%B5%D0%B1%D1%80%D0%B0%2C%20%D1%81%20%D0%B6%D0%B5%D0%BC%D1%87%D1%83%D0%B3%D0%BE%D0%BC%2C%20%D0%B8%20%D0%B0%D0%BC%D0%B5%D1%82%D0%B8%D1%81%D1%82%D0%BE%D0%BC%2C%20%D0%BE%D1%82%20Eugenio%20Campos%20%D0%B7%D0%B0%207500%2C00%20%D1%80%20%D0%B2%20%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%BD%D0%B5%D1%82-%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD%D0%B5%20Fidelis%20Style" data-service="gplus" class="b-share__handle b-share__link b-share-btn__gplus"><span class="b-share-icon b-share-icon_gplus"></span></a></span></div>
+              </div>
+            </div>
+            <!-- -item-info-->
+            <div class="pitem-fullscreen">
+              <div class="pitem-fullscreen__holder wrap"><a href="#" class="close icon-close"></a>
+                <div class="pitem-fullscreen__inner">
+                  <div class="pitem-slider pitem-slider_full">
+                    <div class="slider-container">
+                      <div class="slider-item"><a data-img="../assets/images/tmp/pitem-big.jpg" href="" class="pitem-slider__link"><img src="../assets/images/tmp/pitem-slider.jpg" alt=""></a></div>
+                      <div class="slider-item"><a data-img="../assets/images/tmp/pitem-big.jpg" href="" class="pitem-slider__link active"><img src="../assets/images/tmp/pitem-slider.jpg" alt=""></a></div>
+                      <div class="slider-item"><a data-img="../assets/images/tmp/pitem-big.jpg" href="" class="pitem-slider__link"><img src="../assets/images/tmp/pitem-slider.jpg" alt=""></a></div>
+                      <div class="slider-item"><a data-img="../assets/images/tmp/pitem-big.jpg" href="" class="pitem-slider__link link_video"><img src="../assets/images/tmp/pitem-video.jpg" alt=""></a></div>
+                      <div class="slider-item"><a data-img="../assets/images/tmp/pitem-big.jpg" href="" class="pitem-slider__link"><img src="../assets/images/tmp/pitem-slider.jpg" alt=""></a></div>
+                    </div>
+                  </div>
+                  <div class="pitem-preview-main pitem-preview-main_full">
+                    <div class="pitem-preview-main__loader"></div>
+                    <div class="pitem-preview-main__video">
+                      <video loop="loop" preload="metadata">
+                        <source src="http://cdn.names.ru/upload/video_1c/v032504.webm" type="video/webm">
+                        <source src="http://cdn.names.ru/upload/video_1c/v032504.mp4" type="video/mp4">
+                      </video>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- FULLSCREEN-->
+          </div>
+        </div>
+      </div>
+      <div class="catdes catdes_pitem">
+        <div class="title">
+          <div class="wrap">ВАМ МОЖЕТ ПОНРАВИТЬСЯ</div>
+        </div>
+        <div class="wrap">
+          <div class="catdes-slider">
+            <div class="slider-container">
+              <div class="slider-item"><a href="#fsizes"><span style="background-image: url(../assets/images/tmp/item-also2.jpg)" class="img"></span><span class="name">Кольцо Graziella, модель Rose, позолоченное серебро, белая эмаль</span><span class="price">цена: 13 700<span class="rub"><span>руб</span></span></span></a></div>
+              <div class="slider-item"><a href="#fsizes"><span style="background-image: url(../assets/images/tmp/item-also2.jpg)" class="img"></span><span class="name">Кольцо Graziella, модель Rose, позолоченное серебро, белая эмаль</span><span class="price">цена: 13 700<span class="rub"><span>руб</span></span></span></a></div>
+              <div class="slider-item"><a href="#fsizes"><span style="background-image: url(../assets/images/tmp/item-also2.jpg)" class="img"></span><span class="name">Кольцо Graziella, модель Rose, позолоченное серебро, белая эмаль</span><span class="price">цена: 13 700<span class="rub"><span>руб</span></span></span></a></div>
+              <div class="slider-item"><a href="#fsizes"><span style="background-image: url(../assets/images/tmp/item-also2.jpg)" class="img"></span><span class="name">Кольцо Graziella, модель Rose, позолоченное серебро, белая эмаль</span><span class="price">цена: 13 700<span class="rub"><span>руб</span></span></span></a></div>
+              <div class="slider-item"><a href="#fsizes"><span style="background-image: url(../assets/images/tmp/item-also2.jpg)" class="img"></span><span class="name">Кольцо Graziella, модель Rose, позолоченное серебро, белая эмаль</span><span class="price">цена: 13 700<span class="rub"><span>руб</span></span></span></a></div>
+              <div class="slider-item"><a href="#fsizes"><span style="background-image: url(../assets/images/tmp/item-also2.jpg)" class="img"></span><span class="name">Кольцо Graziella, модель Rose, позолоченное серебро, белая эмаль</span><span class="price">цена: 13 700<span class="rub"><span>руб</span></span></span></a></div>
+              <div class="slider-item"><a href="#fsizes"><span style="background-image: url(../assets/images/tmp/item-also2.jpg)" class="img"></span><span class="name">Кольцо Graziella, модель Rose, позолоченное серебро, белая эмаль</span><span class="price">цена: 13 700<span class="rub"><span>руб</span></span></span></a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="footer-inner wrap">
+          <div class="footer-col__holder">
+            <div class="footer-col"><span class="footer-header">Информация</span>
+              <ul class="add-menu">
+                <li><a href="#">О компании</a></li>
+                <li><a href="#">Контакты</a></li>
+                <li><a href="#">Вакансии</a></li>
+                <li><a href="#">Дистрибуция</a></li>
+                <li><a href="#">Оптовым покупателям</a></li>
+              </ul>
+            </div>
+            <div class="footer-col"><span class="footer-header">сервис</span>
+              <ul class="add-menu">
+                <li><a href="#">Примерка на выбор</a></li>
+                <li><a href="#">Доставка по Москве и области</a></li>
+                <li><a href="#">Доставка по РФ и СНГ</a></li>
+                <li><a href="#">Гарантия</a></li>
+                <li><a href="#">Возврат</a></li>
+                <li><a href="#">Оплата</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <div class="social-footer"><span class="footer-header">Мы в соц. сетях</span>
+                <ul class="social-menu">
+                  <li><a href="#" class="icon-moon icon-tw"></a></li>
+                  <li><a href="#" class="icon-moon icon-fb"></a></li>
+                  <li><a href="#" class="icon-moon icon-ins"></a></li>
+                  <li><a href="#" class="icon-moon icon-vk"></a></li>
+                </ul>
+              </div>
+              <div class="subscribe subscribe_footer"><span class="title footer-header">Подписка на рассылку</span>
+                <div class="subscribe__body">
+                  <form action="" class="subscribe__form">
+                    <div class="row">
+                      <input type="email" name="email" placeholder="Введите ваш e-mail" class="inputtext">
+                    </div><a href="#" class="btn btn_white btn-submit">ок
+                      <input type="submit"></a>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="footer-col">
+              <div class="magazine-info"><span class="magazine-info__phone">+7 (495) 255 11 08</span>
+                <div class="magazine-info__address"><span href="#" class="magazine-info__title">Москва<i class="icon icon-pin"></i></span>
+                  <div class="desc">Берсеневская набережная д. 6 стр. 1<br> в будние дни с 9:00 до 19:00</div>
+                </div>
+                <div class="magazine-info__shipment"><span class="magazine-info__title">Доставка<i class="icon icon-car2"></i></span>
+                  <div class="desc">Ежедневно с 10:00 до 22:00</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer__bottom">
+          <div class="wrap">
+            <div class="copyright">Ювелирный интернет-магазин FIDELIS-STYLE<img src="../assets/images/svg/logo-sign.svg" alt=""><br>                2013-2015 © All rights reserved.</div>
+            <div class="pay"><img src="../assets/images/svg/pay-system.svg" alt=""></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script id="basket-item" type="x-tmpl-mustache">
+      <div class="basket-item" data-id="{{id}}">
+          <div class="basket-item__holder">
+              <div class="basket-item__img">
+                  <img src="{{img}}" alt=""/>
+              </div>
+              <div class="basket-item__name">
+                  <a href="{{link}}" class="basket-item__link">{{name}}</a>
+                  <span class="article">Артикул: {{articul}}</span>
+              </div>
+              <div class="basket-item__size">
+                  <div class="select-size__wrap">
+                      <select class="no-styler select_size-order">
+                          {{#sizes}}
+                          <option value="{{size}}" {{selected}}>{{size}}</option>
+                          {{/sizes}}
+                      </select>
+                  </div>
+              </div>
+              <div class="basket-item__counter">
+                  <div class="counter">
+                      <span class="counter__val">{{count}}</span>
+                      <div class="counter__controls">
+                          <a class="counter__control control_up" data-control="inc" href="#">+</a>
+                          <a class="counter__control control_up" data-control="desc" href="#">-</a>
+                      </div>
+                  </div>
+              </div>
+              <div class="basket-item__price">
+                  <span class="summ"></span><span class="rub"><span>руб</span></span>
+              </div>
+              <div class="basket-item__service">
+                  <a class="basket-item__delete icon-close">
+                  </a>
+              </div>
+          </div>
+      </div>
+      
+    </script>
+    <script id="basket-item__mobile" type="x-tmpl-mustache">
+      <div class="basket-item" data-id="{{id}}">
+          <div class="basket-item__holder">
+              <div class="basket-item__img">
+                  <img src="{{img}}" alt=""/>
+              </div>
+              <div class="basket-item__middle">
+                  <div class="basket-item__name">
+                      <a href="{{link}}" class="basket-item__link">{{name}}</a>
+                      <span class="article">Артикул: {{articul}}</span>
+                  </div>
+                   <div class="basket-item__counter">
+                      <span class="counter__title">К-во</span>
+                      <div class="counter">
+                          <span class="counter__val">{{count}}</span>
+                          <div class="counter__controls">
+                              <a class="counter__control control_up" data-control="inc" href="#">+</a>
+                              <a class="counter__control control_up" data-control="desc" href="#">-</a>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="basket-item__size">
+                      <span class="select-size__title">Размер</span>
+                      <div class="select-size__wrap">
+                          <select class="no-styler select_size-order">
+                              {{#sizes}}
+                              <option value="{{size}}" {{selected}}>{{size}}</option>
+                              {{/sizes}}
+                          </select>
+                      </div>
+                  </div>
+      
+                  <div class="basket-item__price">
+                      <span class="summ"></span><span class="rub"><span>руб</span></span>
+                  </div>
+              </div>
+              <div class="basket-item__service">
+                  <a class="basket-item__delete icon-x" href="#">
+                  </a>
+              </div>
+          </div>
+      </div>
+      
+    </script>
+    <script id="basket-sale" type="x-tmpl-mustache">
+      <div class="total__sale">
+          <span class="lbl">Итого c учетом {{sale}}% скидки:</span>
+          <span class="summ"></span><span class="rub"><span>руб</span></span>
+      </div>
+      
+    </script>
+    <script id="template-popup-size" type="x-tmpl-mustache">
+      <div class="item-img">
+          <img class="" src="{{img}}" alt=""/>
+      </div>
+      <div class="pitem-size">
+          <div class="select-size__wrap">
+              <select class="no-styler select_size">
+                  <option value="">Выберите размер</option>
+                  {{#sizes}}
+                  <option value="{{size}}">{{size}}</option>
+                  {{/sizes}}
+              </select>
+          </div>
+      </div>
+      <div class="cost">
+      
+      </div>
+      <a href="#" class="btn">Купить</a>
+      
+      
+    </script>
+    <script id="template-popup-cost" type="x-tmpl-mustache">
+      <span class="dec">Цена: </span><span class="count">{{price}}</span><span class="rub"><span>руб</span></span>
+      
+      
+      
+      
+    </script>
+    <script id="town-change" type="x-tmpl-mustache">
+      <div class="town-autocomplete">
+          <div class="town-autocomplete__inner" data-action="load">
+      
+          </div>
+      </div>
+      
+    </script>
+    <div class="fade fade-fixed"></div>
+    <div class="scroll-top">
+      <div class="wrap"><a href="#" class="scroll-top__link"></a></div>
+    </div>
+    <div class="size-popup popup"><a href="#" class="close icon-close"></a>
+      <div class="size__inner"></div>
+    </div>
+    <div class="loader"><i class="loader__icon"></i></div>
+  </body>
+</html>
