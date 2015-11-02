@@ -11158,7 +11158,7 @@ var DEF_CONST = require('./helpers/constants');
                 type: 'get',
                 dataType: 'json',
                 beforeSend: function (xhr, setting) {
-                    ajxLoader.attachTo($GoodsBlock);
+                    ajxLoader.attachTo($('.filter-pane'));
                 },
                 success: function (data, status, xhr) {
                     lastData = data;
@@ -11254,7 +11254,6 @@ var DEF_CONST = require('./helpers/constants');
         CatalogManager.init(Goods, [Filters, ShowOptions]);
 
         var $fp = $('.filter-pane');
-     //   var scrollManager = require('./mobile/stopScroll');
 
         function toogleFP (flag) {
             flag = flag == undefined?!flag: flag;
