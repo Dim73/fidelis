@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <script type="text/javascript" src="../assets/js/main.js"></script>
+    <script type="text/javascript" src="../assets/js/basket.js"></script>
+    <link rel="stylesheet" href="../assets/css/jquery-ui-1.10.3.custom.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script type="text/javascript" async="async" src="http://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="header">
+        <div class="header-top wrap"><a href="#" class="logo"><img src="../assets/images/svg/logo.svg" alt=""></a>
+          <div class="magazine-info">
+            <div class="col magazine-info__address"><a href="#" class="js-address-popup"><span class="magazine-info__title">Москва<i class="icon icon-pin"></i></span>
+                <div class="desc">Берсеневская набережная д. 6 стр. 1</div></a>
+              <div class="address-info__holder dropdown_top">
+                <div class="address-info">
+                  <div class="address-info__title dropdown-fade-to dropdown__header">ВАШ ГОРОД</div>
+                  <div class="dropdown__body">
+                    <script>
+                      ymaps.ready(function () {
+                      
+                          var map = new ymaps.Map("address-map", {
+                              center: [55.74011678, 37.60888550],
+                              zoom: 15,
+                              controls: ['zoomControl']
+                          });
+                          console.log(map);
+                          var moscowPin = new ymaps.Placemark(map.getCenter(), {
+                              hintContent: 'Fidelis style'
+                          }, {
+                              // Опции.
+                              // Необходимо указать данный тип макета.
+                              iconLayout: 'default#image'
+                          });
+                          map.geoObjects.add(moscowPin);
+                      });
+                    </script>
+                    <div class="address-info__inner">
+                      <div class="address-info__town"><span class="magazine-info__title">Москва<i class="icon icon-pin"></i></span>
+                        <div class="address-info__town-change"><a href="#" class="js-change-town">Изменить город</a></div>
+                      </div>
+                      <div class="address-map__container">
+                        <div id="address-map" class="address-map"></div>
+                      </div>
+                      <div class="address-info__body">
+                        <div class="address-time">
+                          <div class="address_moscow"><span>Режим работы шоурума:</span>                                            В буднии дни с 9:00 до 19:00<br><i>Сб. Вс. - Выходной</i></div>
+                        </div>
+                        <!--
+                        <div class="address-select">
+                        <select name="" id="address-select">
+                        <option value="moscow">Москва</option>
+                        <option value="moscow">Воронеж</option>
+                        </select>
+                        </div>
+                        -->
+                        <div class="btn-holder"><a href="#" class="btn">ПОДРОБНЕЕ</a></div>
+                      </div>
+                    </div>
+                    <div class="town-changer">
+                      <div class="hint">Укажите  город, в котором собираетесь получить товар</div>
+                      <form action="#townChange" data-autocompleteurl="../../source/back/townComplete.html" class="town-changer__form">
+                        <div class="row">
+                          <label for="changeTown">Ваш Город</label>
+                          <input id="changeTown" name="town" type="text" class="inputtext"><a href="#" class="btn btn-submit">СОХРАНИТЬ
+                            <input type="submit" value=""></a>
+                        </div>
+                        <div class="town-changer__related-list"><a href="#" class="js-town">Москва</a><a href="#" class="js-town">Нижний Новгород</a><a href="#" class="js-town">Якутск</a></div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col magazine-info__return"><span class="magazine-info__title">Удобный возврат<i class="icon icon-wallet"></i></span>
+              <div class="desc">если украшение не подошло</div>
+            </div>
+            <!-- не в регионах доставки-->
+            <div style="display: none;" class="col magazine-info__shipment"><a href="#" class="js-shipment-info"><span class="magazine-info__title">Доставка<i class="icon icon-car2"></i></span>
+                <div class="desc">Ежедневно с 10:00 до 22:00</div></a>
+              <div class="shipment-info__holder dropdown_top">
+                <div class="shipment-info">
+                  <div class="shipment-info__title dropdown-fade-to dropdown__header">ДОСТАВКА</div>
+                  <div class="shipment-info__body dropdown__body">
+                    <div class="type-list">
+                      <div class="type-list__item"><span class="type-title"><span class="place">ПО МОСКВЕ</span> (ежедневно с 10:00 до 22:00):</span>
+                        <div class="line"><span class="name">Курьером</span><span class="price">300<span class="rub"><span>руб</span></span></span></div>
+                        <div class="line line-bonus"><span class="name">При заказе свыше 2 500<span class="rub"><span>руб</span></span></span><span class="price">БЕСПЛАТНО</span></div>
+                      </div>
+                      <div class="type-list__item"><span class="type-title"><span class="place">по России:</span></span>
+                        <div class="line"><span class="name">Почта России</span><span class="price">650<span class="rub"><span>руб</span></span></span></div>
+                        <div class="line"><span class="name">СПСР Экспресс</span><span class="price">650<span class="rub"><span>руб</span></span></span></div>
+                        <div class="line line-bonus"><span class="name">При заказе свыше 10 000<span class="rub"><span>руб</span></span></span><span class="price">БЕСПЛАТНО</span></div>
+                      </div>
+                    </div><a href="" class="btn">Подробнее</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col magazine-info__selfshipment"><span class="magazine-info__title">Самовывоз<i class="icon icon-clock"></i></span>
+              <div class="desc">в будние дни с 9:00 до 19:00</div>
+            </div>
+            <div class="col magazine-info__call"><a href="#" class="js-call"><span class="magazine-info__title">+7 (495) 255 11 08<i class="icon icon-phone"></i></span>
+                <div class="desc">+7  (800) 255 11 08 Бесплатно</div></a>
+              <div class="call-info__holder dropdown_top">
+                <div class="call-info">
+                  <div class="call-info__title dropdown-fade-to dropdown__header">КОЛЛ-ЦЕНТР</div>
+                  <div class="call-info__body dropdown__body">
+                    <form action="" class="call-form"><span class="call-form__title">ОБРАТНЫЙ ЗВОНОК</span>
+                      <div class="row">
+                        <label for="call-i-name">Ваше имя</label>
+                        <input id="call-i-name" name="name" type="text" class="inputtext">
+                      </div>
+                      <div class="row">
+                        <label for="call-i-phone">Телефон</label>
+                        <input id="call-i-phone" name="name" type="text" class="inputtext phone-mask">
+                      </div>
+                      <div class="call-info__info">Колл-центр работает ежедневно с 9:00 до 22:00</div>
+                      <div class="btn-holder"><a href="#" class="btn btn-submit">ПЕРЕЗВОНИТЕ МНЕ
+                          <input type="submit" value="" class="submit"></a></div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="header-menu">
+          <div class="wrap">
+            <ul class="main-menu">
+              <li class="main-menu__item"><a href="#" class="main-menu__link">НОВИНКИ</a></li>
+              <li class="main-menu__item hasSubmenu"><a href="#" class="main-menu__link">ИЗДЕЛИЯ</a>
+                <div class="main-menu__collection main-menu__collection_goods">
+                  <div class="collection__inner wrap">
+                    <div class="goods__list"><a href="#" class="goods__item"><span>АКССЕСУАРЫ</span></a><a href="#" class="goods__item"><span>БРАСЛЕТЫ</span></a><a href="#" class="goods__item"><span>БРОШИ</span></a><a href="#" class="goods__item"><span>БУСЫ</span></a><a href="#" class="goods__item"><span>КОЛЬЕ</span></a><a href="#" class="goods__item"><span>КОЛЬЦА</span></a><a href="#" class="goods__item"><span>ПОДВЕСКИ</span></a><a href="#" class="goods__item"><span>СЕРЬГИ</span></a><a href="#" class="goods__item"><span>ЦЕПИ</span></a></div>
+                    <div class="goods-category">
+                      <div class="goods-category__title">Категории</div>
+                      <div class="goods-category__items">
+                        <div class="goods-category__items-list">
+                          <div class="goods-category__col"><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с гранатом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с александритом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги из агата</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c топазом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c жемчугом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c кварцем</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с аметистом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с рубином</a></div>
+                          <div class="goods-category__col"><a href="#" class="goods-category__item">Серьги с кристаллами Swarovski</a><a href="#" class="goods-category__item">Серьги с фианитами</a><a href="#" class="goods-category__item">Серьги с перламутром</a><a href="#" class="goods-category__item">Cерьги каффы</a><a href="#" class="goods-category__item">Серьги конго</a></div>
+                        </div>
+                        <!-- category-list-->
+                        <div class="goods-category__items-list">
+                          <div class="goods-category__col"><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с гранатом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с александритом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги из агата</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c топазом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c жемчугом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c кварцем</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с аметистом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с рубином</a></div>
+                        </div>
+                        <!-- category-list-->
+                        <div class="goods-category__items-list">
+                          <div class="goods-category__col"><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с гранатом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с александритом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги из агата</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c топазом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c жемчугом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c кварцем</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с аметистом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с рубином</a></div>
+                          <div class="goods-category__col"><a href="#" class="goods-category__item">Серьги с кристаллами Swarovski</a><a href="#" class="goods-category__item">Серьги с фианитами</a><a href="#" class="goods-category__item">Серьги с перламутром</a><a href="#" class="goods-category__item">Cерьги каффы</a><a href="#" class="goods-category__item">Серьги конго</a></div>
+                        </div>
+                        <!-- category-list-->
+                        <div class="goods-category__items-list">
+                          <div class="goods-category__col"><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с гранатом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с александритом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги из агата</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c топазом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c жемчугом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c кварцем</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с аметистом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с рубином</a></div>
+                        </div>
+                        <!-- category-list-->
+                        <div class="goods-category__items-list">
+                          <div class="goods-category__col"><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с гранатом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с александритом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги из агата</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c топазом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c жемчугом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги c кварцем</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с аметистом</a><a data-img="../assets/images/tmp/goods-item.jpg" href="#" class="goods-category__item">Серьги с рубином</a></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="collection__preview">
+                      <!-- <img src="&lt;!&ndash;#echo var="assets-path"&ndash;&gt;/goods-item.jpg" alt=""/>-->
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="main-menu__item hasSubmenu"><a href="#" class="main-menu__link">КОЛЛЕКЦИИ</a>
+                <div class="main-menu__collection main-menu__collection_asis">
+                  <div class="collection__inner wrap">
+                    <div class="collection__list">
+                      <div class="col">
+                        <div class="collection__item"><a data-img="../assets/images/tmp/item.jpg" href="#" class="collection__link">Silver Design (Breuning)</a></div>
+                        <div class="collection__item"><a data-img="../assets/images/tmp/item2.jpg" href="#" class="collection__link">Silver Diamond  (Breuning)</a></div>
+                        <div class="collection__item"><a data-img="../assets/images/tmp/item.jpg" href="#" class="collection__link">Silver Colors  (Breuning)</a></div>
+                        <div class="collection__item"><a data-img="../assets/images/tmp/menu-collection.jpg" href="#" class="collection__link">Fashion (Graziella)</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Chic (Graziella)</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Classic (Graziella)</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Базовая</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">ГлиттерингГГлиттерингГ литтеринг</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Жемчужная</a></div>
+                      </div>
+                      <div class="col">
+                        <div class="collection__item"><a href="#" class="collection__link">Silver Design (Breuning)</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Silver Diamond  (Breuning)</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Silver Colors  (Breuning)</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Fashion (Graziella)</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Chic (Graziella)</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Classic (Graziella)</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Базовая</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Глиттеринг</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Жемчужная</a></div>
+                      </div>
+                      <div class="col">
+                        <div class="collection__item"><a href="#" class="collection__link">Classic (Graziella)</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Базовая</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Глиттеринг</a></div>
+                        <div class="collection__item"><a href="#" class="collection__link">Жемчужная</a></div>
+                      </div>
+                    </div>
+                    <div class="collection__preview">
+                      <!-- <img src="&lt;!&ndash;#echo var="assets-path"&ndash;&gt;/menu-collection.jpg" alt=""/>-->
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="main-menu__item hasSubmenu"><a href="#" class="main-menu__link">СТИЛИ</a>
+                <div data-url="../../source/back/style-text.html" class="main-menu__collection main-menu__collection_style">
+                  <div class="collection__inner wrap">
+                    <div class="goods__list"><a href="#" data-id="1" class="goods__item"><span>ВЕЧЕРНИЙ</span></a><a href="#" data-id="2" class="goods__item"><span>ДЕЛОВОЙ</span></a><a href="#" data-id="3" class="goods__item"><span>КЛАССИЧЕСКИЙ</span></a><a href="#" data-id="4" class="goods__item"><span>ПОВСЕДНЕВНЫЙ</span></a><a href="#" data-id="5" class="goods__item"><span>ОРИГИНАЛЬНЫЙ</span></a><a href="#" data-id="6" class="goods__item"><span>ПРАЗДНИЧНЫЙ</span></a><a href="#" data-id="7" class="goods__item"><span>РОМАНТИЧЕСКИЙ</span></a><a href="#" data-id="8" class="goods__item"><span>УЛЬТРАМОДНЫЙ</span></a><a href="#" data-id="9" class="goods__item"><span>СПОРТИВНЫЙ</span></a></div>
+                    <div class="goods-category">
+                      <div class="styles-list"></div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="main-menu__item hasSubmenu"><a href="#" class="main-menu__link">БРЕНДЫ</a>
+                <div data-url="../../source/back/style-text.html?111" class="main-menu__collection main-menu__brand main-menu__collection_brand">
+                  <div class="collection__inner wrap">
+                    <div class="goods__list"><a href="#" data-id="1" class="goods__item"><span>ВЕЧЕРНИЙ</span></a><a href="#" data-id="2" class="goods__item"><span>ДЕЛОВОЙ</span></a><a href="#" data-id="3" class="goods__item"><span>КЛАССИЧЕСКИЙ</span></a><a href="#" data-id="4" class="goods__item"><span>ПОВСЕДНЕВНЫЙ</span></a><a href="#" data-id="5" class="goods__item"><span>ОРИГИНАЛЬНЫЙ</span></a><a href="#" data-id="6" class="goods__item"><span>ПРАЗДНИЧНЫЙ</span></a><a href="#" data-id="7" class="goods__item"><span>РОМАНТИЧЕСКИЙ</span></a><a href="#" data-id="8" class="goods__item"><span>УЛЬТРАМОДНЫЙ</span></a><a href="#" data-id="9" class="goods__item"><span>СПОРТИВНЫЙ</span></a></div>
+                    <div class="goods-category">
+                      <div class="styles-list"></div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="main-menu__item main-menu__item-sale"><a href="#" class="main-menu__link">SALE</a></li>
+              <li class="main-menu__item"><a href="#" class="main-menu__link">О КОМПАНИИ</a></li>
+              <li class="main-menu__item"><a href="#" class="main-menu__link">КОНТАКТЫ</a></li>
+            </ul>
+            <div class="basket basket-top">
+              <div class="basket-top__items"><a href="#" class="js-basket-open"><span class="basket-top__icon icon-basket"><span class="count"></span></span><span class="basket-top__info">Корзина</span></a>
+                <div class="basket-items__holder dropdown-holder dropdown_top">
+                  <div class="basket-items">
+                    <div class="basket-items__body dropdown-fade-to">
+                      <div class="basket-empty">
+                        <h2>Корзина пуста</h2>
+                      </div>
+                      <div class="nano-scroll">
+                        <div class="basket-items__list nano-content">
+                          <!--
+                          <div class="basket-item">
+                          <div class="basket-item__holder">
+                          <div class="basket-item__img">
+                          <img src="&lt;!&ndash;#echo var="assets-path"&ndash;&gt;/basket-item.jpg" alt=""/>
+                          </div>
+                          <div class="basket-item__name">
+                          Фаланговое кольцо из серебра с фианитами в форме короны
+                          </div>
+                          <div class="basket-item__price">
+                          19 100Р
+                          </div>
+                          <div class="basket-item__service">
+                          <a class="basket-item__delete icon-close">
+                          </a>
+                          </div>
+                          </div>
+                          </div>
+                          -->
+                        </div>
+                      </div>
+                      <div class="basket-items__bottom">
+                        <div class="btn-holder"><a href="basket.html" class="btn btn_black">перейти в корзину</a></div>
+                        <div class="basket__total">
+                          <div class="total__summ"><span class="lbl">Сумма заказа:</span><span class="summ"></span><span class="rub"><span>руб</span></span></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="service-link__holder service-link_favorites"><a href="customer-favorites.html" class="service-link"><span class="icon icon-heart"></span><span class="service-count">26</span><span class="service-lbl">Избранное</span></a></div>
+            <div class="service-link__holder service-link_account not-logged"><a href="" class="service-link js-login-open"><span class="icon icon-customer"></span><span class="service-lbl">Василий</span></a><a href="#exit" class="account-exit icon icon-x"></a>
+              <!-- login-->
+              <div class="login-dropdown__holder dropdown_top">
+                <div class="login-dropdown">
+                  <div class="login__body dropdown__body">
+                    <form action="customer.html" class="login-form">
+                      <!-- #include virtual="../includes/layouts/row_input.html?id=login-email&type=email&label=E-mail"-->
+                      <!-- #include virtual="../includes/layouts/row_input.html?id=login-pass&label=Пароль"-->
+                      <div class="login-form__bottom">
+                        <div class="add-links"><a href="customer-registration.html">Регистрация</a><a href="#">Забыли пароль?</a></div><a href="#" class="btn btn-submit btn_black">Вход
+                          <input type="submit" value=""></a>
+                      </div>
+                    </form>
+                    <div class="login-social"><span class="login-social__lbl">Или войти через:</span>
+                      <div class="social-dark"><a href="#" class="icon icon-fb"></a><a href="#" class="icon icon-vk"></a><a href="#" class="icon icon-tw"></a><a href="#" class="icon icon-ok"></a><a href="#" class="icon icon-gplus"></a></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content-info wrap">
+        <div class="breadcrumbs"><a href="/">Главная</a>        /<a href="#">Каталог</a>        /<a href="#">бренды</a>        /<span>GRAZIELLA</span></div>
+        <h1>Корзина</h1>
+        <div class="search">
+          <form method="post">
+            <input type="text" placeholder="Поиск по названию или артикулу..." name="search"><span class="btn-submit icon icon-zoom">
+              <input type="submit"></span>
+          </form>
+        </div>
+      </div>
+      <div class="order">
+        <div class="basket-empty">
+          <div class="wrap">
+            <h2>Корзина пуста</h2>
+          </div>
+        </div>
+        <div class="basket basket_order order-step">
+          <div class="basket-items scroll-to">
+            <div class="basket-items__header">
+              <div class="basket-item">
+                <div class="basket-item__holder">
+                  <div class="basket-item__img">ТОВАР</div>
+                  <div class="basket-item__name">описание</div>
+                  <div class="basket-item__size">Размер</div>
+                  <div class="basket-item__counter">К-во</div>
+                  <div class="basket-item__price">Цена</div>
+                  <div class="basket-item__service">Убрать</div>
+                </div>
+              </div>
+            </div>
+            <div class="basket-items__body">
+              <div class="basket-items__list"></div>
+            </div>
+          </div>
+          <div class="basket__bottom">
+            <div class="wrap">
+              <div class="basket__total">
+                <div class="cell total">
+                  <div class="total__summ"><span class="lbl">Итого:</span><span class="summ"></span><span class="rub"><span>руб</span></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="basket__buttons"><a href="#" class="btn btn_back">ВЕРНУТСЯ В КАТАЛОГ</a><a href="#" class="btn btn_order btn_checkout">ОФОРМИТЬ ЗАКАЗ</a></div>
+        </div>
+        <div id="order-delivery" class="order-delivery order-step">
+          <div class="order__inner order-expand">
+            <div class="order-delivery__top"><span class="delivery__title scroll-to">АДРЕС ДОСТАВКИ</span><span class="delivery__tip">* поля обязательны для заполнения</span></div>
+            <div class="order-delivery__body">
+              <form action="" class="delivery-form">
+                <div class="delivery-form__fieldset">
+                  <div class="div-2">
+                    <div class="row">
+                      <label for="s-name">ваше имя<span class="req">*</span></label>
+                      <input id="s-name" name="name" type="text" class="inputtext require">
+                    </div>
+                    <div class="row">
+                      <label for="s-lastname">фамилия</label>
+                      <input id="s-lastname" name="family" type="text" class="inputtext">
+                    </div>
+                  </div>
+                  <div class="div-2">
+                    <div class="row">
+                      <label for="s-phone">Телефон<span class="req">*</span></label>
+                      <input id="s-phone" name="phone" type="text" class="inputtext require phone-mask">
+                    </div>
+                    <div class="row">
+                      <label for="s-email">E-mail</label>
+                      <input id="s-email" name="email" type="email" class="inputtext">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label for="s-paytype">Варианты оплаты</label>
+                    <div class="select_delivery">
+                      <select id="s-paytype" name="paytype" class="no-styler select_delivery-start">
+                        <option value="">Наличными либо картой при получении</option>
+                        <option value="">Картой Visa/Mastercard на сайте</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label for="s-delivery">СПОСОБ ДОСТАВКИ</label>
+                    <div class="select_delivery">
+                      <select id="s-delivery" name="delivery" class="no-styler select_delivery-start">
+                        <option value="courier">Курьером по Москве и области</option>
+                        <option value="self">Самовывоз</option>
+                        <option value="spsr_regions">Курьером СПСР-ЭКСПРЕСС в регионы РФ</option>
+                        <option value="post">Почта России</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="selected_delivery">
+                    <div class="row">
+                      <label for="s-region">Регион<span class="req">*</span></label>
+                      <div class="select_delivery">
+                        <select id="s-region" name="region" class="no-styler require post-select">
+                          <option value="">Выберите регион</option>
+                          <option value="53">Адыгея респ.</option>
+                          <option value="54">Алтай респ.</option>
+                          <option value="3">Алтайский край</option>
+                          <option value="4">Амурская обл.</option>
+                          <option value="6">Архангельская обл.</option>
+                          <option value="7">Астраханская обл.</option>
+                          <option value="55">Башкортостан респ.</option>
+                          <option value="8">Белгородская обл.</option>
+                          <option value="10">Брянская обл.</option>
+                          <option value="56">Бурятия респ.</option>
+                          <option value="11">Владимирская обл.</option>
+                          <option value="12">Волгоградская обл.</option>
+                          <option value="13">Вологодская обл.</option>
+                          <option value="14">Воронежская обл.</option>
+                          <option value="57">Дагестан респ.</option>
+                          <option value="16">Еврейская авт. обл.</option>
+                          <option value="229758847">Забайкальский край</option>
+                          <option value="17">Ивановская обл.</option>
+                          <option value="101">Ингушская респ.</option>
+                          <option value="18">Иркутская обл.</option>
+                          <option value="19">Кабардино-Балкарская респ.</option>
+                          <option value="21">Калининградская обл.</option>
+                          <option value="58">Калмыкия респ.</option>
+                          <option value="22">Калужская обл.</option>
+                          <option value="23">Камчатский край</option>
+                          <option value="24">Карачаево-Черкесская респ.</option>
+                          <option value="59">Карелия респ.</option>
+                          <option value="25">Кемеровская обл.</option>
+                          <option value="27">Кировская обл.</option>
+                          <option value="60">Коми респ.</option>
+                          <option value="29">Костромская обл.</option>
+                          <option value="30">Краснодарский край</option>
+                          <option value="31">Красноярский край</option>
+                          <option value="694008984">Крым респ.</option>
+                          <option value="32">Курганская обл.</option>
+                          <option value="33">Курская обл.</option>
+                          <option value="35">Ленинградская обл.</option>
+                          <option value="36">Липецкая обл.</option>
+                          <option value="38">Магаданская обл.</option>
+                          <option value="61">Марий Эл респ.</option>
+                          <option value="62">Мордовия респ.</option>
+                          <option value="40">Московская обл.</option>
+                          <option value="41">Мурманская обл.</option>
+                          <option value="42">Ненецкий авт. округ</option>
+                          <option value="43">Нижегородская обл.</option>
+                          <option value="44">Новгородская обл.</option>
+                          <option value="45">Новосибирская обл.</option>
+                          <option value="46">Омская обл.</option>
+                          <option value="47">Оренбургская обл.</option>
+                          <option value="48">Орловская обл.</option>
+                          <option value="49">Пензенская обл.</option>
+                          <option value="50">Пермский край</option>
+                          <option value="51">Приморский край</option>
+                          <option value="52">Псковская обл.</option>
+                          <option value="68">Ростовская обл.</option>
+                          <option value="69">Рязанская обл.</option>
+                          <option value="70">Самарская обл.</option>
+                          <option value="71">Саратовская обл.</option>
+                          <option value="63">Саха (Якутия) респ.</option>
+                          <option value="72">Сахалинская обл.</option>
+                          <option value="73">Свердловская обл.</option>
+                          <option value="64">Северная Осетия-Алания респ.</option>
+                          <option value="74">Смоленская обл.</option>
+                          <option value="75">Ставропольский край</option>
+                          <option value="78">Тамбовская обл.</option>
+                          <option value="65">Татарстан респ.</option>
+                          <option value="79">Тверская обл.</option>
+                          <option value="80">Томская обл.</option>
+                          <option value="81">Тульская обл.</option>
+                          <option value="66">Тыва респ.</option>
+                          <option value="83">Тюменская обл.</option>
+                          <option value="84">Удмуртская респ.</option>
+                          <option value="87">Ульяновская обл.</option>
+                          <option value="427838930">Фиктивный регион</option>
+                          <option value="89">Хабаровский край</option>
+                          <option value="67">Хакасия респ.</option>
+                          <option value="90">Ханты-Мансийский авт. округ-Югра</option>
+                          <option value="91">Челябинская обл.</option>
+                          <option value="92">Чечня респ.</option>
+                          <option value="94">Чувашия респ.</option>
+                          <option value="95">Чукотский авт. округ</option>
+                          <option value="99">Ямало-Ненецкий авт. округ</option>
+                          <option value="100">Ярославская обл.</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <label for="s-city">Город <span class="req">*</span></label>
+                      <div class="select_delivery">
+                        <select id="s-city" name="city" class="no-styler require post-select">
+                          <option value="">Выберите город</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="selected_post">
+                    <div class="row">
+                      <label for="s-postTown">Город<span class="req">*</span></label>
+                      <input id="s-postTown" name="postTown" type="text" class="inputtext require">
+                    </div>
+                  </div>
+                  <div class="row delivery__address">
+                    <label for="s-address">Адрес</label>
+                    <textarea id="s-address" name="address"></textarea>
+                  </div>
+                </div>
+                <div class="basket-promocode folding"><a href="#" class="basket-promocode__link folding__title">Промокод</a>
+                  <div class="folding__wrap">
+                    <div class="basket-promocode__inner folding__inner">
+                      <div class="basket-promocode__form">
+                        <input type="text" placeholder="ВВЕДИТЕ  ПРОМОКОД" class="inputtext"><a href="#" class="btn-submit"></a><span title="Нанесение тонкого слоя родия на поверхность изделия из металла, для его защиты от повреждений и потемнения, придания ему более яркого блеска и определенного цвета.Холодный белый блеск родия хорошо сочетается с бриллиантами, фианитами и другими вставками." class="basket-promocode__hint tooltip">Как получить промокод</span>
+                      </div>
+                      <div class="basket-promocode__val">Ваша скидка по промокоду <span></span>%</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="order-delivery__total">
+                  <div class="delivery-total">
+                    <div class="delivery__info"><span class="icon icon-car2"></span>                                Срок доставки <span class="delivery-day">3-5 дней</span>, стоимость <span class="delivery-summ">764</span><span class="rub"><span>руб</span></span></div>
+                    <div class="order__total"><span class="lbl">Стоимость заказа</span><span class="lbl__add"></span>:<span class="summ">194 900</span><span class="rub"><span>руб</span></span></div>
+                  </div>
+                  <div class="order__controls">
+                    <div class="subscribe__info">
+                      <input id="wannaaction" type="checkbox" name="wannaaction">
+                      <label for="wannaaction">Я хочу получать информацию об акциях и скидках</label>
+                    </div><a href="#" class="btn btn_order btn-submit"><span class="status">ЗАВЕРШИТЬ ОФОРМЛЕНИЕ</span>
+                      <input type="submit" value=""></a>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="order__agree">Нажимая на кнопку «Подтвердить заказ», вы принимаете условия <a href="#">Публичной оферты</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="ajxItemModal">
+        <div class="ajxItemModal__holder">
+          <div class="ajxItemModal__inner"><a href="javascript:void(0)" class="close icon-close"></a></div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="footer-inner wrap">
+          <div class="footer-col__holder">
+            <div class="footer-col"><span class="footer-header">Информация</span>
+              <ul class="add-menu">
+                <li><a href="#">О компании</a></li>
+                <li><a href="#">Контакты</a></li>
+                <li><a href="#">Вакансии</a></li>
+                <li><a href="#">Дистрибуция</a></li>
+                <li><a href="#">Оптовым покупателям</a></li>
+              </ul>
+            </div>
+            <div class="footer-col"><span class="footer-header">сервис</span>
+              <ul class="add-menu">
+                <li><a href="#">Примерка на выбор</a></li>
+                <li><a href="#">Доставка по Москве и области</a></li>
+                <li><a href="#">Доставка по РФ и СНГ</a></li>
+                <li><a href="#">Гарантия</a></li>
+                <li><a href="#">Возврат</a></li>
+                <li><a href="#">Оплата</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <div class="social-footer"><span class="footer-header">Мы в соц. сетях</span>
+                <ul class="social-menu">
+                  <li><a href="#" class="icon-moon icon-tw"></a></li>
+                  <li><a href="#" class="icon-moon icon-fb"></a></li>
+                  <li><a href="#" class="icon-moon icon-ins"></a></li>
+                  <li><a href="#" class="icon-moon icon-vk"></a></li>
+                </ul>
+              </div>
+              <div class="subscribe subscribe_footer"><span class="title footer-header">Подписка на рассылку</span>
+                <div class="subscribe__body">
+                  <form action="" class="subscribe__form">
+                    <div class="row">
+                      <input type="email" name="email" placeholder="Введите ваш e-mail" class="inputtext">
+                    </div><a href="#" class="btn btn_white btn-submit">ок
+                      <input type="submit"></a>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="footer-col">
+              <div class="magazine-info"><span class="magazine-info__phone">+7 (495) 255 11 08</span>
+                <div class="magazine-info__address"><span href="#" class="magazine-info__title">Москва<i class="icon icon-pin"></i></span>
+                  <div class="desc">Берсеневская набережная д. 6 стр. 1<br> в будние дни с 9:00 до 19:00</div>
+                </div>
+                <div class="magazine-info__shipment"><span class="magazine-info__title">Доставка<i class="icon icon-car2"></i></span>
+                  <div class="desc">Ежедневно с 10:00 до 22:00</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer__bottom">
+          <div class="wrap">
+            <div class="copyright">Ювелирный интернет-магазин FIDELIS-STYLE<img src="../assets/images/svg/logo-sign.svg" alt=""><br>                2013-2015 © All rights reserved.</div>
+            <div class="pay"><img src="../assets/images/svg/pay-system.svg" alt=""></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script id="basket-item" type="x-tmpl-mustache">
+      <div class="basket-item" data-id="{{id}}">
+          <div class="basket-item__holder">
+              <div class="basket-item__img">
+                  <img src="{{img}}" alt=""/>
+              </div>
+              <div class="basket-item__name">
+                  <a href="{{link}}" class="basket-item__link">{{name}}</a>
+                  <span class="article">Артикул: {{articul}}</span>
+              </div>
+              <div class="basket-item__size">
+                  <div class="select-size__wrap">
+                      <select class="no-styler select_size-order">
+                          {{#sizes}}
+                          <option value="{{size}}" {{selected}}>{{size}}</option>
+                          {{/sizes}}
+                      </select>
+                  </div>
+              </div>
+              <div class="basket-item__counter">
+                  <div class="counter">
+                      <span class="counter__val">{{count}}</span>
+                      <div class="counter__controls">
+                          <a class="counter__control control_up" data-control="inc" href="#">+</a>
+                          <a class="counter__control control_up" data-control="desc" href="#">-</a>
+                      </div>
+                  </div>
+              </div>
+              <div class="basket-item__price">
+                  <span class="summ"></span><span class="rub"><span>руб</span></span>
+              </div>
+              <div class="basket-item__service">
+                  <a class="basket-item__delete icon-close">
+                  </a>
+              </div>
+          </div>
+      </div>
+      
+    </script>
+    <script id="basket-item__mobile" type="x-tmpl-mustache">
+      <div class="basket-item" data-id="{{id}}">
+          <div class="basket-item__holder">
+              <div class="basket-item__img">
+                  <img src="{{img}}" alt=""/>
+              </div>
+              <div class="basket-item__middle">
+                  <div class="basket-item__name">
+                      <a href="{{link}}" class="basket-item__link">{{name}}</a>
+                      <span class="article">Артикул: {{articul}}</span>
+                  </div>
+                   <div class="basket-item__counter">
+                      <span class="counter__title">К-во</span>
+                      <div class="counter">
+                          <span class="counter__val">{{count}}</span>
+                          <div class="counter__controls">
+                              <a class="counter__control control_up" data-control="inc" href="#">+</a>
+                              <a class="counter__control control_up" data-control="desc" href="#">-</a>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="basket-item__size">
+                      <span class="select-size__title">Размер</span>
+                      <div class="select-size__wrap">
+                          <select class="no-styler select_size-order">
+                              {{#sizes}}
+                              <option value="{{size}}" {{selected}}>{{size}}</option>
+                              {{/sizes}}
+                          </select>
+                      </div>
+                  </div>
+      
+                  <div class="basket-item__price">
+                      <span class="summ"></span><span class="rub"><span>руб</span></span>
+                  </div>
+              </div>
+              <div class="basket-item__service">
+                  <a class="basket-item__delete icon-x" href="#">
+                  </a>
+              </div>
+          </div>
+      </div>
+      
+    </script>
+    <script id="basket-sale" type="x-tmpl-mustache">
+      <div class="total__sale">
+          <span class="lbl">Итого c учетом {{sale}}% скидки:</span>
+          <span class="summ"></span><span class="rub"><span>руб</span></span>
+      </div>
+      
+    </script>
+    <script id="template-popup-size" type="x-tmpl-mustache">
+      <div class="item-img">
+          <img class="" src="{{img}}" alt=""/>
+      </div>
+      <div class="pitem-size">
+          <div class="select-size__wrap">
+              <select class="no-styler select_size">
+                  <option value="">Выберите размер</option>
+                  {{#sizes}}
+                  <option value="{{size}}">{{size}}</option>
+                  {{/sizes}}
+              </select>
+          </div>
+      </div>
+      <div class="cost">
+      
+      </div>
+      <a href="#" class="btn">Купить</a>
+      
+      
+    </script>
+    <script id="template-popup-cost" type="x-tmpl-mustache">
+      <span class="dec">Цена: </span><span class="count">{{price}}</span><span class="rub"><span>руб</span></span>
+      
+      
+      
+      
+    </script>
+    <script id="town-change" type="x-tmpl-mustache">
+      <div class="town-autocomplete">
+          <div class="town-autocomplete__inner" data-action="load">
+      
+          </div>
+      </div>
+      
+    </script>
+    <div class="fade fade-fixed"></div>
+    <div class="scroll-top">
+      <div class="wrap"><a href="#" class="scroll-top__link"></a></div>
+    </div>
+    <div class="size-popup popup"><a href="#" class="close icon-close"></a>
+      <div class="size__inner"></div>
+    </div>
+    <div class="loader"><i class="loader__icon"></i></div>
+  </body>
+</html>
