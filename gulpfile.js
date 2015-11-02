@@ -111,3 +111,15 @@ gulp.task('webserver', function() {
       port: 35280
     }));
 });
+
+var browserSync = require('browser-sync').create();
+
+// Static server
+gulp.task('browser-sync', function() {
+    browserSync.init({
+        server: {
+            baseDir: "./",
+            directory: true
+        }
+    });
+});
