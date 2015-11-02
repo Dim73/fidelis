@@ -10413,7 +10413,8 @@ var DEF_CONST = require('./helpers/constants');
             this.state[this.filterName] = data;
         },
         view: function() {
-            var $activeLink = $('.category-section-block input');
+            var $activeLink = $('.category-section-block .list .selected');
+            
             this.setName($activeLink.data('filter'));
             this.updateState($activeLink.data('value'));
 
