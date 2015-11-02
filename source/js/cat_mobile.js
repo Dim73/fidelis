@@ -804,7 +804,7 @@ var DEF_CONST = require('./helpers/constants');
                 type: 'get',
                 dataType: 'json',
                 beforeSend: function (xhr, setting) {
-                    ajxLoader.attachTo($GoodsBlock);
+                    ajxLoader.attachTo($('.filter-pane'));
                 },
                 success: function (data, status, xhr) {
                     lastData = data;
