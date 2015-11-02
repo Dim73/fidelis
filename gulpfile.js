@@ -64,6 +64,7 @@ gulp.task('styles', function() {
     return gulp.src(SRC_PATH.css + '*.less')
             .pipe(less())
             .pipe(gulp.dest(DIST_PATH.css))
+            .pipe(browserSync.stream());
 });
 
 gulp.task('watch', ['scripts', 'styles'], function() {

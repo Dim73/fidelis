@@ -10413,7 +10413,7 @@ var DEF_CONST = require('./helpers/constants');
             this.state[this.filterName] = data;
         },
         view: function() {
-            var $activeLink = $('.category-section-block input');
+            var $activeLink = $('.category-section-block .list .selected');
             this.setName($activeLink.data('filter'));
             this.updateState($activeLink.data('value'));
 
@@ -11254,6 +11254,7 @@ var DEF_CONST = require('./helpers/constants');
         CatalogManager.init(Goods, [Filters, ShowOptions]);
 
         var $fp = $('.filter-pane');
+     //   var scrollManager = require('./mobile/stopScroll');
 
         function toogleFP (flag) {
             flag = flag == undefined?!flag: flag;
@@ -11269,7 +11270,7 @@ var DEF_CONST = require('./helpers/constants');
             toogleFP(false);
         })
 
-    })
+    });
 
 },{"./helpers/constants":3,"./lib/ajxLoader":4}],3:[function(require,module,exports){
 module.exports = (function(){
