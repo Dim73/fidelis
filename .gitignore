@@ -1,3 +1,4 @@
 *
-!app/**
-!.gitignore
+!app
+!app/**/*
+*/.DS_Store
