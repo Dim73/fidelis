@@ -2423,14 +2423,16 @@ h1 {
 }
 .select-size__wrap,
 .select_delivery,
-.select-scroll_transparent {
+.select-scroll_transparent,
+.select-custom {
   position: relative;
   border: 1px solid #444444;
   background-color: #FFFFFF;
 }
 .select-size__wrap select,
 .select_delivery select,
-.select-scroll_transparent select {
+.select-scroll_transparent select,
+.select-custom select {
   position: absolute;
   left: 0;
   top: 0;
@@ -2447,7 +2449,8 @@ h1 {
 }
 .select-size__wrap:after,
 .select_delivery:after,
-.select-scroll_transparent:after {
+.select-scroll_transparent:after,
+.select-custom:after {
   content: "";
   position: absolute;
   z-index: 10;
@@ -2458,6 +2461,10 @@ h1 {
   border-style: solid;
   border-width: 8px 7.5px 0 7.5px;
   border-color: #2f2f2f transparent transparent transparent;
+}
+.select-custom {
+  height: 48px;
+  width: 100%;
 }
 .select_size {
   min-width: 103px;
@@ -2769,7 +2776,38 @@ h1 {
   margin-top: 2px;
 }
 .counter {
-  display: inline-block;
+  /*
+  &__val {
+    display: inline-block;
+    color: #444444;
+    font-size: 16px;
+    line-height: 50px;
+  }
+
+  &__controls {
+    display: inline-block;
+    vertical-align: top;
+    height: 50px;
+    margin-left: 4px;
+  }
+
+  &__control {
+    display: block;
+    width: 24px;
+    height: 24px;
+    color: #ffffff;
+    line-height: 24px;
+    font-size: 18px;
+    background-color: #444444;
+    margin-bottom: 2px;
+    text-decoration: none;
+    font-family: Georgia;
+    text-align: center;
+
+    .select-custom & {
+
+    }
+  }*/
 }
 .counter__title {
   display: block;
@@ -2778,31 +2816,6 @@ h1 {
   margin-bottom: 12px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-}
-.counter__val {
-  display: inline-block;
-  color: #444444;
-  font-size: 16px;
-  line-height: 50px;
-}
-.counter__controls {
-  display: inline-block;
-  vertical-align: top;
-  height: 50px;
-  margin-left: 4px;
-}
-.counter__control {
-  display: block;
-  width: 24px;
-  height: 24px;
-  color: #ffffff;
-  line-height: 24px;
-  font-size: 18px;
-  background-color: #444444;
-  margin-bottom: 2px;
-  text-decoration: none;
-  font-family: Georgia;
-  text-align: center;
 }
 .dropdown-holder {
   position: absolute;
@@ -3772,6 +3785,7 @@ h1 {
   padding-left: 10px;
 }
 .basket_order .basket-item__counter {
+  width: 87px;
   display: inline-block;
   vertical-align: middle;
 }
@@ -3780,7 +3794,6 @@ h1 {
   display: inline-block;
   vertical-align: middle;
   font-size: 18px;
-  margin-top: 28px;
   margin-left: 28px;
   font-family: Arial;
   font-weight: bold;

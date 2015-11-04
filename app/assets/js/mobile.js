@@ -12223,7 +12223,11 @@ require('nanoscroller');
             this.$link = this.$self.find('.basket-item__link');
 
             this.$sizes.on('change',this,this._sizeChange);
-            this.$countControl.on('click',this,this._countChange);
+            if (DEF_CONST.IS_MOBILE) {
+                this.$countControl.on('change', this, this._countSelectChange);
+            } else {
+                this.$countControl.on('click', this, this._countChange);
+            }
             this.$delete.on('click',this,this._remove);
             this.$link.on('click',this,this._linkItem);
 
@@ -12273,6 +12277,12 @@ require('nanoscroller');
             self.updatePrice();
             self.updateRefresh();
         },
+        _countSelectChange: function(e) {
+            var self = e.data;
+            self.count = e.target.value;
+            self.updatePrice();
+            self.updateRefresh();
+        },
         _remove: function(e) {
             e.preventDefault();
             var self = e.data;
@@ -12307,6 +12317,13 @@ require('nanoscroller');
                     return property;
                 }
             };
+            if (DEF_CONST.IS_MOBILE) {
+                var countG = 0;
+                renderData.counter = [];
+                while ( ++countG <= renderData.maxCount) {
+                    renderData.counter.push({countVal: countG, selected: +renderData.count == countG?'selected':''});
+                }
+            }
             this.$self = $(Mustache.render(this.basket.tplItem, renderData));
         },
         updatePrice: function(onlyItem) {
