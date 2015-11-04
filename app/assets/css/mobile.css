@@ -1523,6 +1523,7 @@ li {
   left: 0;
   width: 100%;
   height: 100%;
+  opacity: 0;
   cursor: pointer;
 }
 .social .b-share {
@@ -4485,11 +4486,11 @@ h1 {
   top: 0;
   width: 100%;
   background: #6a6a6a;
-  -webkit-transform: translate3d(0, 0, 0);
+  /*-webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   -ms-transform: translate3d(0, 0, 0);
   -o-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);*/
   display: none;
 }
 .filter-pane__title {
