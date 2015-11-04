@@ -978,7 +978,9 @@
 //size select
 .select {
 
-  &-size__wrap, &_delivery, &-scroll_transparent {
+
+
+  &-size__wrap, &_delivery, &-scroll_transparent, &-custom {
     position: relative;
     border: 1px solid #444444;
     background-color: #FFFFFF;
@@ -1011,6 +1013,13 @@
       border-width: 8px 7.5px 0 7.5px;
       border-color: #2f2f2f transparent transparent transparent;
     }
+  }
+
+  &-custom {
+    height: 48px;
+    width: 100%;
+
+
   }
 
   &_size {
@@ -1375,7 +1384,6 @@
 }
 
 .counter {
-  display: inline-block;
 
   &__title {
     display: block;
@@ -1385,7 +1393,7 @@
     letter-spacing: 0.05em;
     text-transform: uppercase;
   }
-
+/*
   &__val {
     display: inline-block;
     color: #444444;
@@ -1412,7 +1420,11 @@
     text-decoration: none;
     font-family: Georgia;
     text-align: center;
-  }
+
+    .select-custom & {
+
+    }
+  }*/
 }
 
 

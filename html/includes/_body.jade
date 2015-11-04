@@ -35,49 +35,93 @@ script#basket-item(type="x-tmpl-mustache").
           </div>
       </div>
   </div>
-  
-script#basket-item__mobile(type="x-tmpl-mustache").
-  <div class="basket-item" data-id="{{id}}">
-      <div class="basket-item__holder">
-          <div class="basket-item__img">
-              <img src="{{img}}" alt=""/>
-          </div>
-          <div class="basket-item__middle">
-              <div class="basket-item__name">
-                  <a href="{{link}}" class="basket-item__link">{{name}}</a>
-                  <span class="article">Артикул: {{articul}}</span>
+
+if device == '__m'
+    script#basket-item__mobile(type="x-tmpl-mustache").
+      <div class="basket-item" data-id="{{id}}">
+          <div class="basket-item__holder">
+              <div class="basket-item__img">
+                  <img src="{{img}}" alt=""/>
               </div>
-               <div class="basket-item__counter">
-                  <span class="counter__title">К-во</span>
-                  <div class="counter">
-                      <span class="counter__val">{{count}}</span>
-                      <div class="counter__controls">
-                          <a class="counter__control control_up" data-control="inc" href="#">+</a>
-                          <a class="counter__control control_up" data-control="desc" href="#">-</a>
+              <div class="basket-item__middle">
+                  <div class="basket-item__name">
+                      <a href="{{link}}" class="basket-item__link">{{name}}</a>
+                      <span class="article">Артикул: {{articul}}</span>
+                  </div>
+                   <div class="basket-item__counter">
+                      <span class="counter__title">К-во</span>
+                      <div class="counter select-custom">
+                          <select class="counter__control">
+                                {{#counter}}
+                                    <option {{selected}} value={{countVal}}>{{countVal}}</option>
+                                {{/counter}}
+                          </select>
                       </div>
                   </div>
-              </div>
-              <div class="basket-item__size">
-                  <span class="select-size__title">Размер</span>
-                  <div class="select-size__wrap">
-                      <select class="no-styler select_size-order">
-                          {{#sizes}}
-                          <option value="{{size}}" {{selected}}>{{size}}</option>
-                          {{/sizes}}
-                      </select>
+                  <div class="basket-item__size">
+                      <span class="select-size__title">Размер</span>
+                      <div class="select-size__wrap">
+                          <select class="no-styler select_size-order">
+                              {{#sizes}}
+                              <option value="{{size}}" {{selected}}>{{size}}</option>
+                              {{/sizes}}
+                          </select>
+                      </div>
+                  </div>
+
+                  <div class="basket-item__price">
+                      <span class="summ"></span><span class="rub"><span>руб</span></span>
                   </div>
               </div>
-
-              <div class="basket-item__price">
-                  <span class="summ"></span><span class="rub"><span>руб</span></span>
+              <div class="basket-item__service">
+                  <a class="basket-item__delete icon-x" href="#">
+                  </a>
               </div>
           </div>
-          <div class="basket-item__service">
-              <a class="basket-item__delete icon-x" href="#">
-              </a>
-          </div>
       </div>
-  </div>
+else
+    script#basket-item__mobile(type="x-tmpl-mustache").
+        <div class="basket-item" data-id="{{id}}">
+            <div class="basket-item__holder">
+                <div class="basket-item__img">
+                    <img src="{{img}}" alt=""/>
+                </div>
+                <div class="basket-item__middle">
+                    <div class="basket-item__name">
+                        <a href="{{link}}" class="basket-item__link">{{name}}</a>
+                        <span class="article">Артикул: {{articul}}</span>
+                    </div>
+                     <div class="basket-item__counter">
+                        <span class="counter__title">К-во</span>
+                        <div class="counter">
+                          <span class="counter__val">{{count}}</span>
+                          <div class="counter__controls">
+                              <a class="counter__control control_up" data-control="inc" href="#">+</a>
+                              <a class="counter__control control_up" data-control="desc" href="#">-</a>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="basket-item__size">
+                        <span class="select-size__title">Размер</span>
+                        <div class="select-size__wrap">
+                            <select class="no-styler select_size-order">
+                                {{#sizes}}
+                                <option value="{{size}}" {{selected}}>{{size}}</option>
+                                {{/sizes}}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="basket-item__price">
+                        <span class="summ"></span><span class="rub"><span>руб</span></span>
+                    </div>
+                </div>
+                <div class="basket-item__service">
+                    <a class="basket-item__delete icon-x" href="#">
+                    </a>
+                </div>
+            </div>
+        </div>
 
 script#basket-sale(type="x-tmpl-mustache").
     <div class="total__sale">
