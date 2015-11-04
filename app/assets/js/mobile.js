@@ -13032,7 +13032,7 @@ var Basket = require('./components/basket');
                     slideWidth: 255,
                     infiniteLoop: false,
                     pager: false,
-                    auto: true,
+                    auto: false,
                     controls: false,
                     mode: 'horizontal',
                     onSliderLoad: function() {

@@ -1818,7 +1818,7 @@ h1 {
   left: 0;
   text-align: right;
   width: 100%;
-  height: 30px;
+  height: 50px;
   -webkit-box-sizing: border-box;
   /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box;
@@ -1994,7 +1994,8 @@ h1 {
   padding-bottom: 60px;
 }
 .address-info .dropdown__body .icon-x {
-  margin: 0 0 10px;
+  display: block;
+  margin: 20px 12px 10px;
 }
 .address-info__body {
   position: relative;
@@ -4501,6 +4502,7 @@ h1 {
   font: bold 18px/76px "LatoBold";
   text-align: center;
   position: fixed;
+  z-index: 99;
   top: 0;
   left: 0;
   width: 100%;
@@ -4565,7 +4567,7 @@ h1 {
   border-top: 1px solid;
 }
 .filter-pane__items .folding__title a {
-  font: bold 16px/69px "LatoBold";
+  font: bold 20px/69px "LatoBold";
   text-transform: uppercase;
   color: #444;
   padding-left: 22px;
@@ -4583,10 +4585,10 @@ h1 {
   margin: 6px 0 0px 22px;
 }
 .filter-pane__items .list a {
-  font-size: 16px;
+  font-size: 20px;
   color: #303030;
   display: block;
-  line-height: 28px;
+  line-height: 34px;
 }
 .filter-pane__items .list a.selected {
   color: #e30c19;
@@ -4596,18 +4598,20 @@ h1 {
   padding-bottom: 12px;
 }
 .filter-pane__items .jq-checkbox {
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
   margin-right: 16px;
 }
 .filter-pane__items .jq-checkbox__div {
-  width: 8px;
-  height: 8px;
+  top: 2px;
+  left: 2px;
+  width: 10px;
+  height: 10px;
 }
 .filter-pane__items label {
-  font-size: 16px;
+  font-size: 20px;
   color: #303030;
-  line-height: 30px;
+  line-height: 36px;
 }
 .filter-pane__items .disabled label {
   color: #888888;
