@@ -5128,21 +5128,24 @@ h1 {
   height: 70px;
 }
 .order .subscribe__info {
-  margin-bottom: 5px;
+  margin-bottom: 15px;
 }
 .order .subscribe__info label {
   display: inline-block;
-  vertical-align: top;
   cursor: pointer;
-  margin-left: 3px;
+  margin-left: 5px;
+  font-size: 16px;
+  margin-bottom: 0;
+  vertical-align: middle;
 }
 .order .subscribe__info .jq-checkbox {
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
 }
 .order .subscribe__info .jq-checkbox__div {
-  width: 9px;
-  height: 9px;
+  width: 14px;
+  height: 14px;
   top: 2px;
   left: 2px;
 }
