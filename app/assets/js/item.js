@@ -120,7 +120,7 @@
 					$target.css('overflow', overflow);
 					$img.remove();
 				});
-				
+
 			}());
 
 			img.onload = function () {
@@ -222,7 +222,7 @@
 							zoom.move( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
 						});
 				}
-				
+
 				if ($.isFunction(settings.callback)) {
 					settings.callback.call(img);
 				}
@@ -10632,7 +10632,7 @@ function QuickOrder()  {
         self.$error.text('');
         if (self.validated()) {
             $.ajax({
-                url: DEF_CONST.AJX_PATH + 'qo.json',
+                url: DEF_CONST.AJX_PATH + 'qo.'+(ENV_CONST==='dev'?'json':'html'),
                 cache: false,
                 type: 'post',
                 data: {data: self.$form.serialize()},
