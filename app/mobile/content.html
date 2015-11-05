@@ -445,12 +445,12 @@
                   </div>
                    <div class="basket-item__counter">
                       <span class="counter__title">К-во</span>
-                      <div class="counter">
-                          <span class="counter__val">{{count}}</span>
-                          <div class="counter__controls">
-                              <a class="counter__control control_up" data-control="inc" href="#">+</a>
-                              <a class="counter__control control_up" data-control="desc" href="#">-</a>
-                          </div>
+                      <div class="counter select-custom">
+                          <select class="counter__control">
+                                {{#counter}}
+                                    <option {{selected}} value={{countVal}}>{{countVal}}</option>
+                                {{/counter}}
+                          </select>
                       </div>
                   </div>
                   <div class="basket-item__size">
@@ -474,7 +474,6 @@
               </div>
           </div>
       </div>
-      
     </script>
     <script id="basket-sale" type="x-tmpl-mustache">
       <div class="total__sale">
