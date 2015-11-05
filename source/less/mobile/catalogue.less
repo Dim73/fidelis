@@ -581,17 +581,18 @@
 .filter-pane {
   position: fixed;
   height: 100%;
-  overflow-y: scroll;
-  z-index: 500;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  z-index: 9999;
   left: 0;
   top: 0;
   width: 100%;
   background: #6a6a6a;
-  /*-webkit-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   -ms-transform: translate3d(0, 0, 0);
   -o-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);*/
+  transform: translate3d(0, 0, 0);
   display: none;
 
   &__title {
