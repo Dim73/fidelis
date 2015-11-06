@@ -41,7 +41,7 @@ function QuickOrder()  {
         self.$error.text('');
         if (self.validated()) {
             $.ajax({
-                url: DEF_CONST.AJX_PATH + 'qo.'+(ENV_CONST==='dev'?'json':'html'),
+                url: DEF_CONST.AJX_PATH + 'qo.'+(DEF_CONST.ENV_CONST==='dev'?'json':'html'),
                 cache: false,
                 type: 'post',
                 data: {data: self.$form.serialize()},
