@@ -905,6 +905,7 @@ var DEF_CONST = require('./helpers/constants');
             flag = flag == undefined?!flag: flag;
             $fp.fadeToggle();
             $('body').toggleClass('popup-show',flag);
+            flag && setFilterHeight()
         }
 
         $('.goods-filter').click(function(){
@@ -913,6 +914,17 @@ var DEF_CONST = require('./helpers/constants');
 
         $('.filter-pane__title').click(function(){
             toogleFP(false);
+        })
+
+        function setFilterHeight () {
+            var $fi = $('.filter-pane__inner');
+            var winHeight = window.innerHeight;
+            var offsetImg = $fi.offset().top - $('.filter-pane').offset().top;
+            $fi.height(winHeight - offsetImg);
+        }
+
+        $(window).bind('resize', function(){
+            setFilterHeight ()
         })
 
     });
