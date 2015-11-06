@@ -4494,8 +4494,8 @@ h1 {
 .filter-pane {
   position: fixed;
   height: 100%;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
+  /*  overflow: auto;
+  -webkit-overflow-scrolling: touch;*/
   z-index: 9999;
   left: 0;
   top: 0;
@@ -4515,7 +4515,7 @@ h1 {
   border-bottom: 1px solid;
   font: bold 18px/76px "LatoBold";
   text-align: center;
-  position: fixed;
+  /*position: fixed;*/
   z-index: 99;
   top: 0;
   left: 0;
@@ -4535,8 +4535,13 @@ h1 {
   top: 24px;
 }
 .filter-pane__inner {
+  position: absolute;
+  width: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.filter-pane__body {
   padding: 29px 21px 0;
-  margin-top: 73px;
 }
 .filter-pane__choosen-title {
   text-transform: uppercase;
