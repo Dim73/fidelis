@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>О КОМПАНИИ</title>
+    <script type="text/javascript" src="../assets/js/mobile.js"></script>
+    <script type="text/javascript" src="../assets/js/shipmentCalc.js"></script>
+    <link rel="stylesheet" href="../assets/css/jquery-ui-1.10.3.custom.css">
+    <link rel="stylesheet" href="../assets/css/mobile.css">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+    <meta id="Viewport" name="viewport" width="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <script type="text/javascript" async="async" src="http://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="header">
+        <div class="header-top wrap"><a href="#" class="logo"><img src="../assets/images/svg/logo.svg" alt=""></a>
+          <div class="main-nav">
+            <nav class="main-nav-items"><a href="#" class="main-nav-toggle js-menu-toggle"><span class="nav-icon"><span></span><span></span><span></span></span></a>
+              <div class="main-nav-line">
+                <div class="main-nav-line__holder">
+                  <ul class="main-nav-line__list">
+                    <li class="item"><a href="catalog.html" class="link"><span>НОВИНКИ</span></a></li>
+                    <li class="item hasSubmenu"><a href="catalog.html" class="link"><span>ИЗДЕЛИЯ</span></a>
+                      <div class="main-nav__submenu submenu_lvl1">
+                        <ul class="main-nav-line__list">
+                          <li class="item hasSubmenu"><a href="catalog.html" class="link"><span>Аксессуары</span></a>
+                            <div class="main-nav__submenu submenu_lvl2">
+                              <ul class="main-nav-line__list">
+                                <li class="item"><a href="catalog.html" class="link"><span>Аксессуары</span></a></li>
+                                <li class="item"><a href="catalog.html" class="link"><span>Аксессуары</span></a></li>
+                                <li class="item"><a href="catalog.html" class="link"><span>Аксессуары</span></a></li>
+                              </ul>
+                            </div>
+                          </li>
+                          <li class="item"><a href="catalog.html" class="link"><span>Браслеты</span></a></li>
+                          <li class="item"><a href="catalog.html" class="link"><span>Броши</span></a></li>
+                          <li class="item"><a href="catalog.html" class="link"><span>Бусы</span></a></li>
+                          <li class="item"><a href="catalog.html" class="link"><span>Колье</span></a></li>
+                          <li class="item"><a href="catalog.html" class="link"><span>Кольца</span></a></li>
+                          <li class="item"><a href="catalog.html" class="link"><span>Подвески</span></a></li>
+                          <li class="item"><a href="catalog.html" class="link"><span>Серьги</span></a></li>
+                          <li class="item"><a href="catalog.html" class="link"><span>Цепи</span></a></li>
+                        </ul>
+                      </div>
+                    </li>
+                    <li class="item"><a href="catalog.html" class="link"><span>КОЛЛЕКЦИИ</span></a></li>
+                    <li class="item"><a href="catalog.html" class="link"><span>СТИЛИ</span></a></li>
+                    <li class="item"><a href="catalog.html" class="link"><span>БРЕНДЫ</span></a></li>
+                    <li class="item"><a href="catalog.html" class="link"><span>SALE</span></a></li>
+                    <li class="item"><a href="catalog.html" class="link"><span>О КОМПАНИИ</span></a></li>
+                    <li class="item"><a href="catalog.html" class="link"><span>КОНТАКТЫ</span></a></li>
+                  </ul><a href="" class="icon-x js-menu-toggle btn-close"></a>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+        <div class="site-phone"><span class="magazine-info__title"><i class="icon icon-phone"></i><a href="tel:8(800)2551108" class="link_phone">8 (800) 255 11 08</a>  Звонок бесплатный</span></div>
+        <div class="service-menu">
+          <div class="service-menu__item magazine-info__address"><a href="#" class="js-address-popup"><i class="icon icon-pin"></i></a>
+            <div class="address-info__holder dropdown_top">
+              <div class="address-info">
+                <div class="address-info__title dropdown-fade-to dropdown__header">ВАШ ГОРОД</div>
+                <div class="dropdown__body">
+                  <script>
+                    ymaps.ready(function () {
+                    var map = new ymaps.Map("address-map", {
+                    center: [55.74011678, 37.60888550],
+                    zoom: 15,
+                    controls: ['zoomControl']
+                    });
+                    var moscowPin = new ymaps.Placemark(map.getCenter(), {
+                    hintContent: 'Fidelis style'
+                    }, {
+                    // Опции.
+                    // Необходимо указать данный тип макета.
+                    iconLayout: 'default#image'
+                    });
+                    map.geoObjects.add(moscowPin);
+                    });
+                  </script>
+                  <div class="address-info__inner">
+                    <div class="address-info__town"><span class="magazine-info__title">Москва <i class="icon icon-pin"></i></span>
+                      <div class="address-time">
+                        <div class="address_moscow">Берсеневская набережная д. 6 стр. 1 <br>                                        пн-пт 9:00–18:00, <i>Сб. Вс. - Выходной</i></div>
+                      </div>
+                      <div class="address-info__town-change"><a href="#" class="js-change-town">Изменить город</a></div>
+                    </div>
+                    <div class="address-map__container">
+                      <div id="address-map" class="address-map"></div>
+                    </div>
+                    <div class="address-info__body">
+                      <div class="address__phone">7 (495) 255-11-08 <br>                                    Колл-центр работает ежедневно с 9:00 до 22:00</div>
+                      <div class="btn-holder"><a href="#" class="btn">ПОДРОБНЕЕ</a></div>
+                    </div>
+                  </div>
+                  <div class="town-changer">
+                    <div class="hint">Укажите город, в котором собираетесь получить товар</div>
+                    <form action="#townChange" data-autocompleteurl="../../source/back/townComplete.html" class="town-changer__form">
+                      <div class="row">
+                        <label for="changeTown">Ваш Город</label>
+                        <input id="changeTown" name="town" type="text" class="inputtext">
+                        <div class="town-changer__related-list"><a href="#" class="js-town">Москва</a><a href="#" class="js-town">Нижний Новгород</a><a href="#" class="js-town">Якутск</a></div><a href="#" class="btn btn-submit">СОХРАНИТЬ 
+                          <input type="submit" value=""></a>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="dropdown__close"><a href="#" class="icon icon-x"></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--          
+          .service-menu__item.service-link__holder.service-link_account.not-logged
+            .service-link_relative
+              a.service-link.js-login-open(href='')
+                span.icon.icon-customer
+              a.account-exit.icon.icon-x(href='#exit')
+            .login-dropdown__holder.dropdown_top
+              .login-dropdown
+                .dropdown-fade-to.dropdown__header
+                  | ВХОД В ЛИЧНЫЙ КАБИНЕТ
+                .login__body.dropdown__body
+                  form.login-form(action='customer.html')
+                    //- | <!–#include virtual="../includes/layouts/row_input.html?id=login-email&type=email&label=E-mail"–>
+                    //- | <!–#include virtual="../includes/layouts/row_input.html?id=login-pass&label=Пароль"–>
+                    .login-form__bottom
+                      a.btn.btn-submit.btn_black(href='#')
+                        | Вход
+                        input(type='submit', value='')
+                      .add-links
+                        a(href='customer-registration.html') Регистрация
+                        a(href='#') Забыли пароль?
+                  .login-social
+                    span.login-social__lbl Или войти через:
+                    .social-dark
+                      a.icon.icon-fb(href='#')
+                      a.icon.icon-vk(href='#')
+                      a.icon.icon-tw(href='#')
+                      a.icon.icon-ok(href='#')
+                      a.icon.icon-gplus(href='#')
+                  .dropdown__close
+                    a.icon.icon-x(href='#')
+          .service-menu__item.service-link__holder.service-link_favorites
+            a.service-link(href='customer-favorites.html')
+              span.icon.icon-heart
+              span.service-count
+                | 26
+          -->
+          <div class="service-menu__item basket basket-top">
+            <div class="basket-top__items"><a href="basket.html" class="js-basket-open"><span class="basket-top__icon icon-basket"><span class="count"></span></span></a></div>
+          </div>
+        </div>
+      </div>
+      <div class="content-info wrap">
+        <div class="breadcrumbs"><a href="/">Главная</a>        /<a href="#">Каталог</a>        /<a href="#">бренды</a>        /<span>GRAZIELLA</span></div>
+        <h1>О КОМПАНИИ</h1>
+        <div class="search">
+          <form method="post">
+            <input type="text" placeholder="Поиск по названию или артикулу..." name="search"><span class="btn-submit icon icon-zoom">
+              <input type="submit"></span>
+          </form>
+        </div>
+      </div>
+      <div class="content wrap">
+        <div class="content-text">
+          <div class="container">
+            <div class="content-text__body">
+              <p><span class="bold">FIDELIS - это группа компаний, в которую входят:</span></p>
+              <ul>
+                <li>оптовая ювелирная компания, присутствующая на рынке более 11 лет, с центральным офисом в Москве (приходите к нам в гости);</li>
+                <li>сеть филиалов в Новосибирске, Нижнем Новгороде, Иркутске, Ростове-на -Дону и Якутске;</li>
+                <li>международные представительства в Италии и Китае;</li>
+                <li>и, конечно, розничный интернет – магазин «FIDELIS STYLE»;</li>
+              </ul>
+              <p>Ювелирная компания Fidelis специализируется на серебряных украшениях. Ведь серебро – это уникальный и красивый драгоценный металл, обладающий особой энергетикой, полезными свойствами, и открывающий возможности для осуществления самых неожиданных дизайнерских идей, так как гораздо дешевле золота.</p>
+              <p>Мы ездим по разным странам и сами подбираем качественный и интересный ассортимент украшений из серебра, чтобы предлагать его Вам. Преимущественно, это изделия итальянских производителей: в них всегда есть «изюминка» и чувствуется вкус.</p>
+              <p>Отдельно, как дистрибьюторы, мы представляем коллекции известных итальянских брендов: Graziella и Eclat. <br>                В ассортименте Fidelis, конечно, есть и собственная продукция. К ней относятся украшения с натуральным жемчугом высокого качества, которые мы предлагаем по доступной цене, обладая особыми возможностями для производства этой категории изделий.</p>
+              <p>Также среди представленной в ассортименте собственной продукции - специально разработанные коллекции от Fidelis, каждая из которых - уникальный продукт.</p>
+              <p>Любая наша коллекция несет в себе определенную идею и обладает своим «характером».  Отличительная черта в том, что каждая коллекция подкреплена подарочным дополнением, и, конечно, теми эмоциями, которые были вложены в нее на этапе создания и воплощения.</p>
+              <p>Важными чертами нашей компании являются динамичность, открытость для новых идей и способов работы и, главное, ориентированность на интересы наших покупателей. Не стоять на месте компании помогает коллектив из молодых, веселых, амбициозных и полных идей сотрудников.</p>
+              <script type="text/javascript">
+                ymaps.ready(init);
+                var myMap,
+                myPlacemark;
+                function init(){
+                myMap = new ymaps.Map("mappiter", {
+                center: [59.964007, 30.306175],
+                zoom: 15,
+                controls: ['geolocationControl', 'zoomControl', 'fullscreenControl']
+                });
+                myPlacemark = new ymaps.Placemark([59.96371992, 30.30695193], {
+                hintContent: '<strong>Шоурум точка-выдачи Fidelis-style.ru в Санкт-Петербурге</strong>',
+                balloonContent: '<img src="/assets/images/svg/logo-sign.svg" width="19" height="18" alt=""><strong> FIDELIS-STYLE шоурум точка-выдачи</strong> <br/><strong>Адрес:</strong><br/>Санкт-Петербург, Большой проспект П.С., дом 74, <br/><strong>Режим работы:</strong> <br/>с 9:00 до 19:00, Сб. Вс. - Выходной'}, {
+                iconLayout: 'default#image',
+                iconImageHref: '/images/balloon.png',
+                iconImageSize: [37, 42],
+                iconImageOffset: [-10, -42]
+                });
+                myMap.geoObjects.add(myPlacemark);
+                }
+              </script>
+              <div id="mappiter" style=" border: 1px solid #DFDFDF; width: 772px; height: 320px;"></div>                Предлагая нашу продукцию, мы гарантируем Вам: <br>
+              <ul>
+                <li>Высокое качество изделий;</li>
+                <li>Достойный уровень сервиса и внимательное отношение к Вам;</li>
+                <li>Объективные и невысокие цены в контексте соотношения «цена-качество»</li>
+              </ul>
+              <p>Об остальном судить Вам. Мы искренне будем рады, если Вы найдете в FIDELIS STYLE то, что Вам понравится и подойдет!</p>
+              <p><span class="bold">ЮРИДИЧЕСКАЯ ИНФОРМАЦИЯ:</span></p>
+              <p>ООО «ФИДЕЛИС-СТАЙЛ»</p>
+              <p>Юридический адрес: <br>                119180, г. Москва, ул. Полянка Б., стр. 3, пом. IX, к. 20</p>
+              <p>КПП: 770601001 <br>                ИНН: 770601001 <br>                ОГРН: 1137746888080</p>
+              <div class="shipment-calculator">
+                <script src="../../assets/js/shipmentCalc.js"></script>
+                <div style="margin-bottom: 10px;font-size: 20px;font-weight: bold">РАССЧЕТ ДОСТАВКИ</div>
+                <div class="selected_delivery">
+                  <div class="row">
+                    <label for="s-region">Регион</label>
+                    <div class="select_delivery">
+                      <select id="s-region" name="region" class="no-styler require post-select">
+                        <option value="">Выберите регион</option>
+                        <option value="53">Адыгея респ.</option>
+                        <option value="54">Алтай респ.</option>
+                        <option value="3">Алтайский край</option>
+                        <option value="4">Амурская обл.</option>
+                        <option value="6">Архангельская обл.</option>
+                        <option value="7">Астраханская обл.</option>
+                        <option value="55">Башкортостан респ.</option>
+                        <option value="8">Белгородская обл.</option>
+                        <option value="10">Брянская обл.</option>
+                        <option value="56">Бурятия респ.</option>
+                        <option value="11">Владимирская обл.</option>
+                        <option value="12">Волгоградская обл.</option>
+                        <option value="13">Вологодская обл.</option>
+                        <option value="14">Воронежская обл.</option>
+                        <option value="57">Дагестан респ.</option>
+                        <option value="16">Еврейская авт. обл.</option>
+                        <option value="229758847">Забайкальский край</option>
+                        <option value="17">Ивановская обл.</option>
+                        <option value="101">Ингушская респ.</option>
+                        <option value="18">Иркутская обл.</option>
+                        <option value="19">Кабардино-Балкарская респ.</option>
+                        <option value="21">Калининградская обл.</option>
+                        <option value="58">Калмыкия респ.</option>
+                        <option value="22">Калужская обл.</option>
+                        <option value="23">Камчатский край</option>
+                        <option value="24">Карачаево-Черкесская респ.</option>
+                        <option value="59">Карелия респ.</option>
+                        <option value="25">Кемеровская обл.</option>
+                        <option value="27">Кировская обл.</option>
+                        <option value="60">Коми респ.</option>
+                        <option value="29">Костромская обл.</option>
+                        <option value="30">Краснодарский край</option>
+                        <option value="31">Красноярский край</option>
+                        <option value="694008984">Крым респ.</option>
+                        <option value="32">Курганская обл.</option>
+                        <option value="33">Курская обл.</option>
+                        <option value="35">Ленинградская обл.</option>
+                        <option value="36">Липецкая обл.</option>
+                        <option value="38">Магаданская обл.</option>
+                        <option value="61">Марий Эл респ.</option>
+                        <option value="62">Мордовия респ.</option>
+                        <option value="40">Московская обл.</option>
+                        <option value="41">Мурманская обл.</option>
+                        <option value="42">Ненецкий авт. округ</option>
+                        <option value="43">Нижегородская обл.</option>
+                        <option value="44">Новгородская обл.</option>
+                        <option value="45">Новосибирская обл.</option>
+                        <option value="46">Омская обл.</option>
+                        <option value="47">Оренбургская обл.</option>
+                        <option value="48">Орловская обл.</option>
+                        <option value="49">Пензенская обл.</option>
+                        <option value="50">Пермский край</option>
+                        <option value="51">Приморский край</option>
+                        <option value="52">Псковская обл.</option>
+                        <option value="68">Ростовская обл.</option>
+                        <option value="69">Рязанская обл.</option>
+                        <option value="70">Самарская обл.</option>
+                        <option value="71">Саратовская обл.</option>
+                        <option value="63">Саха (Якутия) респ.</option>
+                        <option value="72">Сахалинская обл.</option>
+                        <option value="73">Свердловская обл.</option>
+                        <option value="64">Северная Осетия-Алания респ.</option>
+                        <option value="74">Смоленская обл.</option>
+                        <option value="75">Ставропольский край</option>
+                        <option value="78">Тамбовская обл.</option>
+                        <option value="65">Татарстан респ.</option>
+                        <option value="79">Тверская обл.</option>
+                        <option value="80">Томская обл.</option>
+                        <option value="81">Тульская обл.</option>
+                        <option value="66">Тыва респ.</option>
+                        <option value="83">Тюменская обл.</option>
+                        <option value="84">Удмуртская респ.</option>
+                        <option value="87">Ульяновская обл.</option>
+                        <option value="427838930">Фиктивный регион</option>
+                        <option value="89">Хабаровский край</option>
+                        <option value="67">Хакасия респ.</option>
+                        <option value="90">Ханты-Мансийский авт. округ-Югра</option>
+                        <option value="91">Челябинская обл.</option>
+                        <option value="92">Чечня респ.</option>
+                        <option value="94">Чувашия респ.</option>
+                        <option value="95">Чукотский авт. округ</option>
+                        <option value="99">Ямало-Ненецкий авт. округ</option>
+                        <option value="100">Ярославская обл.</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label for="s-city">Город</label>
+                    <div class="select_delivery">
+                      <select id="s-city" name="city" class="no-styler require post-select">
+                        <option value="">Выберите город</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="delivery__info"><span class="icon icon-car2"></span>                        Срок доставки <span class="delivery-day"></span>, стоимость <span class="delivery-summ"></span><span class="rub"><span>руб</span></span></div>
+              </div>
+              <!-- calculator-->
+            </div>
+            <!-- #endif-->
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="footer-inner wrap">
+          <div class="footer-col__holder">
+            <div class="footer-col">
+              <div class="magazine-info"><span class="magazine-info__phone"><a href="tel:+7 (495) 255 11 08" class="link_phone">+7 (495) 255 11 08</a></span>
+                <div class="magazine-info__address"><span class="magazine-info__title">Москва <i class="icon icon-pin"></i></span>
+                  <div class="desc">Берсеневская набережная д. 6 стр. 1 <br> в будние дни с 9:00 до 19:00</div>
+                </div>
+              </div>
+            </div>
+            <div class="footer-col">
+              <div class="magazine-info">
+                <div class="magazine-info__shipment"><span class="magazine-info__title">Доставка <i class="icon icon-car2"></i></span>
+                  <div class="desc">Ежедневно с 10:00 до 22:00</div>
+                </div>
+              </div>
+            </div>
+            <div class="footer-col">
+              <div class="footer-menu">
+                <label for="info-menu" class="footer-menu__title footer-header">Информация</label>
+                <select id="info-menu" onchange="window.location.href=this.querySelector('option:checked').getAttribute('value')" class="footer-menu__select no-styler">
+                  <option value="content.html">О компании</option>
+                  <option value="content.html">Контакты</option>
+                  <option value="content.html">Вакансии</option>
+                  <option value="content.html">Дистрибуция</option>
+                  <option value="content.html">Оптовым покупателям</option>
+                </select>
+              </div>
+            </div>
+            <div class="footer-col">
+              <div class="footer-menu">
+                <label for="service-menu" class="footer-menu__title footer-header">сервис</label>
+                <select id="service-menu" onchange="window.location.href=this.querySelector('option:checked').getAttribute('value')" class="footer-menu__select no-styler">
+                  <option value="content.html">Примерка на выбор</option>
+                  <option value="content.html">Доставка по Москве и области</option>
+                  <option value="content.html">Доставка по РФ и СНГ</option>
+                  <option value="content.html">Гарантия</option>
+                  <option value="content.html">Возврат</option>
+                  <option value="content.html">Оплата</option>
+                </select>
+              </div>
+            </div>
+            <div class="footer-col">
+              <div class="subscribe subscribe_footer"><span class="title footer-header">Подписка на рассылку</span>
+                <div class="subscribe__body">
+                  <form action="" class="subscribe__form">
+                    <div class="row">
+                      <input type="email" name="email" placeholder="Введите ваш e-mail" class="inputtext">
+                    </div><a href="#" class="btn btn_white btn-submit">ок
+                      <input type="submit"></a>
+                  </form>
+                </div>
+              </div>
+              <div class="social-footer">
+                <ul class="social-menu">
+                  <li><a href="#" class="icon-moon icon-tw"></a></li>
+                  <li><a href="#" class="icon-moon icon-fb"></a></li>
+                  <li><a href="#" class="icon-moon icon-ins"></a></li>
+                  <li><a href="#" class="icon-moon icon-vk"></a></li>
+                </ul>
+              </div>
+              <div class="copyright">Ювелирный интернет-магазин FIDELIS-STYLE <br>                   2013-2015 © All rights reserved.</div>
+            </div>
+          </div>
+        </div><a href="" class="desktop-version">перейти на полную <br> версию сайта</a>
+      </div>
+    </div>
+    <script id="basket-item" type="x-tmpl-mustache">
+      <div class="basket-item" data-id="{{id}}">
+          <div class="basket-item__holder">
+              <div class="basket-item__img">
+                  <img src="{{img}}" alt=""/>
+              </div>
+              <div class="basket-item__name">
+                  <a href="{{link}}" class="basket-item__link">{{name}}</a>
+                  <span class="article">Артикул: {{articul}}</span>
+              </div>
+              <div class="basket-item__size">
+                  <div class="select-size__wrap">
+                      <select class="no-styler select_size-order">
+                          {{#sizes}}
+                          <option value="{{size}}" {{selected}}>{{size}}</option>
+                          {{/sizes}}
+                      </select>
+                  </div>
+              </div>
+              <div class="basket-item__counter">
+                  <div class="counter">
+                      <span class="counter__val">{{count}}</span>
+                      <div class="counter__controls">
+                          <a class="counter__control control_up" data-control="inc" href="#">+</a>
+                          <a class="counter__control control_up" data-control="desc" href="#">-</a>
+                      </div>
+                  </div>
+              </div>
+              <div class="basket-item__price">
+                  <span class="summ"></span><span class="rub"><span>руб</span></span>
+              </div>
+              <div class="basket-item__service">
+                  <a class="basket-item__delete icon-close">
+                  </a>
+              </div>
+          </div>
+      </div>
+      
+    </script>
+    <script id="basket-item__mobile" type="x-tmpl-mustache">
+      <div class="basket-item" data-id="{{id}}">
+          <div class="basket-item__holder">
+              <div class="basket-item__img">
+                  <img src="{{img}}" alt=""/>
+              </div>
+              <div class="basket-item__middle">
+                  <div class="basket-item__name">
+                      <a href="{{link}}" class="basket-item__link">{{name}}</a>
+                      <span class="article">Артикул: {{articul}}</span>
+                  </div>
+                   <div class="basket-item__counter">
+                      <span class="counter__title">К-во</span>
+                      <div class="counter select-custom">
+                          <select class="counter__control">
+                                {{#counter}}
+                                    <option {{selected}} value={{countVal}}>{{countVal}}</option>
+                                {{/counter}}
+                          </select>
+                      </div>
+                  </div>
+                  <div class="basket-item__size">
+                      <span class="select-size__title">Размер</span>
+                      <div class="select-size__wrap">
+                          <select class="no-styler select_size-order">
+                              {{#sizes}}
+                              <option value="{{size}}" {{selected}}>{{size}}</option>
+                              {{/sizes}}
+                          </select>
+                      </div>
+                  </div>
+      
+                  <div class="basket-item__price">
+                      <span class="summ"></span><span class="rub"><span>руб</span></span>
+                  </div>
+              </div>
+              <div class="basket-item__service">
+                  <a class="basket-item__delete icon-x" href="#">
+                  </a>
+              </div>
+          </div>
+      </div>
+    </script>
+    <script id="basket-sale" type="x-tmpl-mustache">
+      <div class="total__sale">
+          <span class="lbl">Итого c учетом {{sale}}% скидки:</span>
+          <span class="summ"></span><span class="rub"><span>руб</span></span>
+      </div>
+      
+    </script>
+    <script id="template-popup-size" type="x-tmpl-mustache">
+      <div class="item-img">
+          <img class="" src="{{img}}" alt=""/>
+      </div>
+      <div class="pitem-size">
+          <div class="select-size__wrap">
+              <select class="no-styler select_size">
+                  <option value="">Выберите размер</option>
+                  {{#sizes}}
+                  <option value="{{size}}">{{size}}</option>
+                  {{/sizes}}
+              </select>
+          </div>
+      </div>
+      <div class="cost">
+      
+      </div>
+      <a href="#" class="btn">Купить</a>
+      
+      
+    </script>
+    <script id="template-popup-cost" type="x-tmpl-mustache">
+      <span class="dec">Цена: </span><span class="count">{{price}}</span><span class="rub"><span>руб</span></span>
+      
+      
+      
+      
+    </script>
+    <script id="town-change" type="x-tmpl-mustache">
+      <div class="town-autocomplete">
+          <div class="town-autocomplete__inner" data-action="load">
+      
+          </div>
+      </div>
+      
+    </script>
+    <div class="fade fade-fixed"></div>
+    <div class="scroll-top">
+      <div class="wrap"><a href="#" class="scroll-top__link"></a></div>
+    </div>
+    <div class="size-popup popup"><a href="#" class="close icon-close"></a>
+      <div class="size__inner"></div>
+    </div>
+    <div class="loader"><i class="loader__icon"></i></div>
+  </body>
+</html>

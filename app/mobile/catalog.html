@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Grazzela</title>
+    <script type="text/javascript" src="../assets/js/mobile.js"></script>
+    <script type="text/javascript" src="../assets/js/cat_mobile.js"></script>
+    <link rel="stylesheet" href="../assets/css/jquery-ui-1.10.3.custom.css">
+    <link rel="stylesheet" href="../assets/css/mobile.css">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+    <meta id="Viewport" name="viewport" width="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <script type="text/javascript" async="async" src="http://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="header">
+        <div class="header-top wrap"><a href="#" class="logo"><img src="../assets/images/svg/logo.svg" alt=""></a>
+          <div class="main-nav">
+            <nav class="main-nav-items"><a href="#" class="main-nav-toggle js-menu-toggle"><span class="nav-icon"><span></span><span></span><span></span></span></a>
+              <div class="main-nav-line">
+                <div class="main-nav-line__holder">
+                  <ul class="main-nav-line__list">
+                    <li class="item"><a href="catalog.html" class="link"><span>НОВИНКИ</span></a></li>
+                    <li class="item hasSubmenu"><a href="catalog.html" class="link"><span>ИЗДЕЛИЯ</span></a>
+                      <div class="main-nav__submenu submenu_lvl1">
+                        <ul class="main-nav-line__list">
+                          <li class="item hasSubmenu"><a href="catalog.html" class="link"><span>Аксессуары</span></a>
+                            <div class="main-nav__submenu submenu_lvl2">
+                              <ul class="main-nav-line__list">
+                                <li class="item"><a href="catalog.html" class="link"><span>Аксессуары</span></a></li>
+                                <li class="item"><a href="catalog.html" class="link"><span>Аксессуары</span></a></li>
+                                <li class="item"><a href="catalog.html" class="link"><span>Аксессуары</span></a></li>
+                              </ul>
+                            </div>
+                          </li>
+                          <li class="item"><a href="catalog.html" class="link"><span>Браслеты</span></a></li>
+                          <li class="item"><a href="catalog.html" class="link"><span>Броши</span></a></li>
+                          <li class="item"><a href="catalog.html" class="link"><span>Бусы</span></a></li>
+                          <li class="item"><a href="catalog.html" class="link"><span>Колье</span></a></li>
+                          <li class="item"><a href="catalog.html" class="link"><span>Кольца</span></a></li>
+                          <li class="item"><a href="catalog.html" class="link"><span>Подвески</span></a></li>
+                          <li class="item"><a href="catalog.html" class="link"><span>Серьги</span></a></li>
+                          <li class="item"><a href="catalog.html" class="link"><span>Цепи</span></a></li>
+                        </ul>
+                      </div>
+                    </li>
+                    <li class="item"><a href="catalog.html" class="link"><span>КОЛЛЕКЦИИ</span></a></li>
+                    <li class="item"><a href="catalog.html" class="link"><span>СТИЛИ</span></a></li>
+                    <li class="item"><a href="catalog.html" class="link"><span>БРЕНДЫ</span></a></li>
+                    <li class="item"><a href="catalog.html" class="link"><span>SALE</span></a></li>
+                    <li class="item"><a href="catalog.html" class="link"><span>О КОМПАНИИ</span></a></li>
+                    <li class="item"><a href="catalog.html" class="link"><span>КОНТАКТЫ</span></a></li>
+                  </ul><a href="" class="icon-x js-menu-toggle btn-close"></a>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+        <div class="site-phone"><span class="magazine-info__title"><i class="icon icon-phone"></i><a href="tel:8(800)2551108" class="link_phone">8 (800) 255 11 08</a>  Звонок бесплатный</span></div>
+        <div class="service-menu">
+          <div class="service-menu__item magazine-info__address"><a href="#" class="js-address-popup"><i class="icon icon-pin"></i></a>
+            <div class="address-info__holder dropdown_top">
+              <div class="address-info">
+                <div class="address-info__title dropdown-fade-to dropdown__header">ВАШ ГОРОД</div>
+                <div class="dropdown__body">
+                  <script>
+                    ymaps.ready(function () {
+                    var map = new ymaps.Map("address-map", {
+                    center: [55.74011678, 37.60888550],
+                    zoom: 15,
+                    controls: ['zoomControl']
+                    });
+                    var moscowPin = new ymaps.Placemark(map.getCenter(), {
+                    hintContent: 'Fidelis style'
+                    }, {
+                    // Опции.
+                    // Необходимо указать данный тип макета.
+                    iconLayout: 'default#image'
+                    });
+                    map.geoObjects.add(moscowPin);
+                    });
+                  </script>
+                  <div class="address-info__inner">
+                    <div class="address-info__town"><span class="magazine-info__title">Москва <i class="icon icon-pin"></i></span>
+                      <div class="address-time">
+                        <div class="address_moscow">Берсеневская набережная д. 6 стр. 1 <br>                                        пн-пт 9:00–18:00, <i>Сб. Вс. - Выходной</i></div>
+                      </div>
+                      <div class="address-info__town-change"><a href="#" class="js-change-town">Изменить город</a></div>
+                    </div>
+                    <div class="address-map__container">
+                      <div id="address-map" class="address-map"></div>
+                    </div>
+                    <div class="address-info__body">
+                      <div class="address__phone">7 (495) 255-11-08 <br>                                    Колл-центр работает ежедневно с 9:00 до 22:00</div>
+                      <div class="btn-holder"><a href="#" class="btn">ПОДРОБНЕЕ</a></div>
+                    </div>
+                  </div>
+                  <div class="town-changer">
+                    <div class="hint">Укажите город, в котором собираетесь получить товар</div>
+                    <form action="#townChange" data-autocompleteurl="../../source/back/townComplete.html" class="town-changer__form">
+                      <div class="row">
+                        <label for="changeTown">Ваш Город</label>
+                        <input id="changeTown" name="town" type="text" class="inputtext">
+                        <div class="town-changer__related-list"><a href="#" class="js-town">Москва</a><a href="#" class="js-town">Нижний Новгород</a><a href="#" class="js-town">Якутск</a></div><a href="#" class="btn btn-submit">СОХРАНИТЬ 
+                          <input type="submit" value=""></a>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="dropdown__close"><a href="#" class="icon icon-x"></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--          
+          .service-menu__item.service-link__holder.service-link_account.not-logged
+            .service-link_relative
+              a.service-link.js-login-open(href='')
+                span.icon.icon-customer
+              a.account-exit.icon.icon-x(href='#exit')
+            .login-dropdown__holder.dropdown_top
+              .login-dropdown
+                .dropdown-fade-to.dropdown__header
+                  | ВХОД В ЛИЧНЫЙ КАБИНЕТ
+                .login__body.dropdown__body
+                  form.login-form(action='customer.html')
+                    //- | <!–#include virtual="../includes/layouts/row_input.html?id=login-email&type=email&label=E-mail"–>
+                    //- | <!–#include virtual="../includes/layouts/row_input.html?id=login-pass&label=Пароль"–>
+                    .login-form__bottom
+                      a.btn.btn-submit.btn_black(href='#')
+                        | Вход
+                        input(type='submit', value='')
+                      .add-links
+                        a(href='customer-registration.html') Регистрация
+                        a(href='#') Забыли пароль?
+                  .login-social
+                    span.login-social__lbl Или войти через:
+                    .social-dark
+                      a.icon.icon-fb(href='#')
+                      a.icon.icon-vk(href='#')
+                      a.icon.icon-tw(href='#')
+                      a.icon.icon-ok(href='#')
+                      a.icon.icon-gplus(href='#')
+                  .dropdown__close
+                    a.icon.icon-x(href='#')
+          .service-menu__item.service-link__holder.service-link_favorites
+            a.service-link(href='customer-favorites.html')
+              span.icon.icon-heart
+              span.service-count
+                | 26
+          -->
+          <div class="service-menu__item basket basket-top">
+            <div class="basket-top__items"><a href="basket.html" class="js-basket-open"><span class="basket-top__icon icon-basket"><span class="count"></span></span></a></div>
+          </div>
+        </div>
+      </div>
+      <div class="content-info wrap">
+        <div class="breadcrumbs"><a href="/">Главная</a>        /<a href="#">Каталог</a>        /<a href="#">бренды</a>        /<span>GRAZIELLA</span></div>
+        <h1>Grazzela</h1>
+        <div class="search">
+          <form method="post">
+            <input type="text" placeholder="Поиск по названию или артикулу..." name="search"><span class="btn-submit icon icon-zoom">
+              <input type="submit"></span>
+          </form>
+        </div>
+      </div>
+      <div data-ratio="3" class="main-banner main-banner_catalog">
+        <div class="main-banner__slider">
+          <div class="slider-container">
+            <div style="background-color: blue" class="slider-item prlx-item">
+              <div class="slider-item__inner"><img src="../assets/images/tmp/banner-mobile.png" alt="" class="bg">
+                <div class="banner-desc__holder">
+                  <div class="banner-desc"><img src="../assets/images/tmp/banner-logo.png" alt="" class="logo">
+                    <div class="banner-text">
+                      <p>GRAZIELLA Group SPA является владельцем марки “GRAZIELLA”. Итальянская компания моды была основана в 1958 г. при инициативе Грациеллы Буонкомпани, нынешнего почетного президента компании. В юношеском возрасте она основала небольшую мастерскую, где начала изготовление оригинальных ювелирных изделий из золота.</p>
+                      <p>Высокая оценка ювелирных изделий GRAZIELLA покупателями во всем мире способствует постоянному росту компании, и на сегодняшний день она является одной из самых значительных ювелирных компаний Италии. На данный момент вдохновение марки обеспечено Креативным Центром Graziella, ответственным за постоянное развитие и обновление спектра предлагаемых изделий.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content wrap">
+        <div class="filter-pane">
+          <div class="filter-pane__body">
+            <div class="filter-pane__title"><i class="icon icon-filter"></i>            ФИЛЬТР<span class="icon-close"></span></div>
+            <div class="filter-pane__inner">
+              <div class="widget-list">
+                <div class="widget-scroll">
+                  <div class="filter-pane__choosen">
+                    <div class="filter-pane__choosen-title">ВЫ ВЫБРАЛИ:</div>
+                    <div id="itemsfilterresult" class="filter-pane__choosen-list">
+                      <div data-filter="collection" data-value="30" class="filter_item">Graziella</div>
+                      <div data-filter="collection" data-value="30" class="filter_item">Graziella</div>
+                      <div data-filter="collection" data-value="30" class="filter_item">Graziella</div>
+                      <div data-filter="collection" data-value="30" class="filter_item">Graziella</div>
+                      <div data-filter="collection" data-value="30" class="filter_item">Graziella</div>
+                    </div>
+                  </div>
+                  <div class="filter-pane__items">
+                    <div class="block folding category-section-block">
+                      <div class="rheader folding__title"><a href="#">Бренд</a></div>
+                      <div class="folding__wrap">
+                        <div class="folding__inner">
+                          <div class="list">
+                            <ul id="ftypes" data-seltype="single">
+                              <li><a data-filter="type" data-value="19" href="/cat/type/19.html" class="selected">Аксессуары</a></li>
+                              <li><a data-filter="type" data-value="11" href="/cat/type/11.html" class="back">Браслеты</a></li>
+                              <li><a data-filter="type" data-value="12" href="/cat/type/12.html" class="back">Броши</a></li>
+                              <li><a data-filter="type" data-value="15" href="/cat/type/15.html" class="back">Бусы</a></li>
+                              <li><a data-filter="type" data-value="6" href="/cat/type/6.html" class="back">Колье</a></li>
+                              <li><a data-filter="type" data-value="13" href="/cat/type/13.html" class="back">Кольца</a></li>
+                              <li><a data-filter="type" data-value="10" href="/cat/type/10.html" class="back">Подвески</a></li>
+                              <li><a data-filter="type" data-value="2" href="/cat/type/2.html" class="back">Серьги</a></li>
+                              <li><a data-filter="type" data-value="14" href="/cat/type/14.html" class="back">Цепи</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="block folding">
+                      <div class="rheader folding__title"><a href="#">Тип изделия</a></div>
+                      <div class="folding__wrap">
+                        <div class="folding__inner">
+                          <div class="list">
+                            <ul id="fcollection" data-seltype="single">
+                              <li style="" class="disabled">
+                                <label>
+                                  <input type="checkbox" data-filter="collection" data-value="30" disabled="" checked="">Graziella
+                                </label>
+                              </li>
+                              <li style="">
+                                <label>
+                                  <input type="checkbox" data-filter="collection" data-value="27" checked="">Dea
+                                                                          (Италия)
+                                </label>
+                              </li>
+                              <li>
+                                <label>
+                                  <input type="checkbox" data-filter="collection" data-value="23">Graziella (Италия)
+                                </label>
+                              </li>
+                              <li>
+                                <label>
+                                  <input type="checkbox" data-filter="collection" data-value="13">Graziella
+                                                                          Золото
+                                </label>
+                              </li>
+                              <li style="">
+                                <label>
+                                  <input type="checkbox" data-filter="collection" data-value="15">Базовая
+                                </label>
+                              </li>
+                              <li style="">
+                                <label>
+                                  <input type="checkbox" data-filter="collection" data-value="21">Глиттеринг
+                                </label>
+                              </li>
+                              <li style="">
+                                <label>
+                                  <input type="checkbox" data-filter="collection" data-value="31">Жемчужная
+                                </label>
+                              </li>
+                              <li style="">
+                                <label>
+                                  <input type="checkbox" data-filter="collection" data-value="20">Кавальери
+                                </label>
+                              </li>
+                              <li style="">
+                                <label>
+                                  <input type="checkbox" data-filter="collection" data-value="18">Макраме
+                                </label>
+                              </li>
+                              <li style="">
+                                <label>
+                                  <input type="checkbox" data-filter="collection" data-value="19">Микро-Фьюжн
+                                </label>
+                              </li>
+                              <li style="">
+                                <label>
+                                  <input type="checkbox" data-filter="collection" data-value="17">Мужская
+                                </label>
+                              </li>
+                              <li style="">
+                                <label>
+                                  <input type="checkbox" data-filter="collection" data-value="36">Перламутровая
+                                                                          мозаика
+                                </label>
+                              </li>
+                              <li style="">
+                                <label>
+                                  <input type="checkbox" data-filter="collection" data-value="25">Полудрагоценные
+                                                                          камни
+                                </label>
+                              </li>
+                              <li style="">
+                                <label>
+                                  <input type="checkbox" data-filter="collection" data-value="26">Природные
+                                                                          камни
+                                </label>
+                              </li>
+                              <li style="">
+                                <label>
+                                  <input type="checkbox" data-filter="collection" data-value="35">реплика
+                                                                          "Диор"
+                                </label>
+                              </li>
+                              <li style="">
+                                <label>
+                                  <input type="checkbox" data-filter="collection" data-value="11">Сеточка
+                                </label>
+                              </li>
+                              <li style="">
+                                <label>
+                                  <input type="checkbox" data-filter="collection" data-value="28">Фианитовая
+                                </label>
+                              </li>
+                              <li style="">
+                                <label>
+                                  <input type="checkbox" data-filter="collection" data-value="22">Филигрань
+                                </label>
+                              </li>
+                              <li style="">
+                                <label>
+                                  <input type="checkbox" data-filter="collection" data-value="24">Фэшн
+                                                                          (Италия)
+                                </label>
+                              </li>
+                              <li style="">
+                                <label>
+                                  <input type="checkbox" data-filter="collection" data-value="12">Цветная
+                                </label>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="block folding">
+                      <div class="rheader folding__title"><a href="#">размер</a></div>
+                      <div class="folding__wrap">
+                        <div class="folding__inner">
+                          <ul id="fsizes" class="square_sizes">
+                            <li>
+                              <label>
+                                <input data-filter="size" data-value="0" value="Б.Р." type="checkbox" class="squaresize"><span>Б.Р.</span>
+                              </label>
+                            </li>
+                            <li>
+                              <label>
+                                <input data-filter="size" data-value="14" value="14" type="checkbox" class="squaresize"><span>  14</span>
+                              </label>
+                            </li>
+                            <li>
+                              <label>
+                                <input data-filter="size" data-value="15" value="15" type="checkbox" class="squaresize"><span> 15</span>
+                              </label>
+                            </li>
+                            <li>
+                              <label>
+                                <input data-filter="size" data-value="15.5" value="15.5" type="checkbox" class="squaresize"><span> 15.5</span>
+                              </label>
+                            </li>
+                            <li>
+                              <label>
+                                <input data-filter="size" data-value="16" value="16" type="checkbox" class="squaresize"><span> 16</span>
+                              </label>
+                            </li>
+                            <li>
+                              <label>
+                                <input data-filter="size" data-value="16.5" value="16.5" type="checkbox" class="squaresize"><span> 16.5</span>
+                              </label>
+                            </li>
+                            <li>
+                              <label>
+                                <input data-filter="size" data-value="17" value="17" type="checkbox" class="squaresize"><span> 17</span>
+                              </label>
+                            </li>
+                            <li>
+                              <label>
+                                <input data-filter="size" data-value="17.5" value="17.5" type="checkbox" class="squaresize"><span>17.5</span>
+                              </label>
+                            </li>
+                            <li>
+                              <label>
+                                <input data-filter="size" data-value="18" value="18" type="checkbox" class="squaresize"><span> 18</span>
+                              </label>
+                            </li>
+                            <li>
+                              <label>
+                                <input data-filter="size" data-value="18.5" value="18.5" type="checkbox" class="squaresize"><span>18.5</span>
+                              </label>
+                            </li>
+                            <li>
+                              <label>
+                                <input data-filter="size" data-value="19" value="19" type="checkbox" class="squaresize"><span> 19</span>
+                              </label>
+                            </li>
+                            <li>
+                              <label>
+                                <input data-filter="size" data-value="19.5" value="19.5" type="checkbox" class="squaresize"><span> 19.5</span>
+                              </label>
+                            </li>
+                            <li>
+                              <label>
+                                <input data-filter="size" data-value="20" value="20" type="checkbox" class="squaresize"><span> 20</span>
+                              </label>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="catalogue">
+          <input type="hidden" name="extra" value="">
+          <div class="container">
+            <div class="left">
+              <div class="goods-filter goods-filter__title folding__title"><i class="icon icon-filter"></i>                    ФИЛЬТР</div>
+            </div>
+            <div class="right">
+              <div class="line-filter">
+                <div class="itemsfilter">
+                  <label class="btn-select setcatcount"><span class="btn-select__label">Показать по: <span class="select-value">12</span></span>
+                    <select data-type="items_per_page">
+                      <option selected="" value="12">12</option>
+                      <option value="24">24</option>
+                      <option value="36">36</option>
+                      <option value="all">Все</option>
+                    </select>
+                  </label>
+                  <label class="btn-select setcatorder"><span class="btn-select__label">Сортировать  по: <span class="select-value">умолчанию</span></span>
+                    <select data-type="items_sort_order">
+                      <option value="casc">По возрастанию цены</option>
+                      <option value="cdesc">По убыванию цены</option>
+                      <option value="default">По умолчанию</option>
+                      <option value="pop">По популярности</option>
+                      <option selected="" value="new">По новизне</option>
+                    </select>
+                  </label>
+                </div>
+                <div class="pageswitch"><a href="#" class="arrow arrow-prev icon-drop icon-drop__left"></a><a href="/cat/type/13/1.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13" class="active">1</a><a href="/cat/type/13/2.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13">2</a><a href="/cat/type/13/2.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13">3</a><a href="/cat/type/13/2.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13">4</a><span>. . .</span><a href="/cat/type/13/5.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13">224</a><a href="#" class="arrow arrow-next icon-drop icon-drop__right"></a></div>
+              </div>
+              <div class="itemlist itemlist_catalog">
+                <div data-item="{id: 26216,sizes: [{26: 22000},{27: 33333}]}" class="item js-item-data">
+                  <div class="item-inner"><span class="info-lbl"><span>30%</span></span>
+                    <div class="item-preview"><a href="javascript:void(0)" onclick="$(this).toggleClass('added')" class="favorite-link icon"></a>
+                      <div class="item-preview__slider">
+                        <div class="slider-contaniner">
+                          <div class="slider-item"><a href="#"><img src="../assets/images/tmp/item1.jpg" alt=""/></a></div>
+                          <div class="slider-item"><a href="#"><img src="../assets/images/tmp/item2.jpg" alt=""/></a></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="description"><a href="item.html">Кольцо от Graziella, модель Geometrie11, желтое золото, эмальжелтое золото, эмаль</a></div>
+                    <div class="old-cost"><span class="dec">старая цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
+                    <div class="cost"><span class="dec">Цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
+                    <div class="buttons"><a href="#" data-item="26216" class="btn js-buy">Купить</a></div>
+                  </div>
+                </div>
+                <div data-item="{id: 60759,sizes: [{21: 22222},{22: 33333}]}" class="item js-item-data">
+                  <div class="item-inner"><span class="info-lbl"><span>30%</span></span>
+                    <div class="item-preview"><a href="javascript:void(0)" onclick="$(this).toggleClass('added')" class="favorite-link icon"></a>
+                      <div class="item-preview__slider">
+                        <div class="slider-contaniner">
+                          <div class="slider-item"><a href="#"><img src="../assets/images/tmp/item1.jpg" alt=""/></a></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="description"><a href="item.html">Кольцо от Graziella, модель Geometrie11, желтое золото, эмальжелтое золото, эмаль</a></div>
+                    <div class="cost"><span class="dec">Цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
+                    <div class="buttons"><a href="#" data-item="60759" class="btn js-buy">Купить</a></div>
+                  </div>
+                </div>
+                <div data-item="{id: 28125,sizes: []}" class="item js-item-data">
+                  <div class="item-inner"><span class="info-lbl info-lbl__orange"><span>Новинка</span></span>
+                    <div class="item-preview"><a href="javascript:void(0)" onclick="$(this).toggleClass('added')" class="favorite-link icon"></a>
+                      <div class="item-preview__slider">
+                        <div class="slider-contaniner">
+                          <div class="slider-item"><a href="#"><img src="../assets/images/tmp/item1.jpg" alt=""/></a></div>
+                          <div class="slider-item"><a href="#"><img src="../assets/images/tmp/item2.jpg" alt=""/></a></div>
+                          <div class="slider-item"><a href="#"><img src="../assets/images/tmp/item3.jpg" alt=""/></a></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="description"><a href="item.html">Кольцо от Graziella, модель Geometrie11, желтое золото, эмальжелтое золото, эмаль</a></div>
+                    <div class="old-cost"><span class="dec">старая цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
+                    <div class="cost"><span class="dec">Цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
+                    <div class="buttons"><a href="#" data-item="28125" class="btn js-buy">Купить</a></div>
+                  </div>
+                </div>
+                <div data-item="{id: 45066,sizes: []}" class="item js-item-data">
+                  <div class="item-inner"><span class="info-lbl"><span>30%</span></span>
+                    <div class="item-preview"><a href="javascript:void(0)" onclick="$(this).toggleClass('added')" class="favorite-link icon"></a>
+                      <div class="item-preview__slider">
+                        <div class="slider-contaniner">
+                          <div class="slider-item"><a href="#"><img src="../assets/images/tmp/item1.jpg" alt=""/></a></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="description"><a href="item.html">Кольцо от Graziella, модель Geometrie11, желтое золото, эмальжелтое золото, эмаль</a></div>
+                    <div class="old-cost"><span class="dec">старая цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
+                    <div class="cost"><span class="dec">Цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
+                    <div class="buttons"><a href="#" data-item="45066" class="btn js-buy">Купить</a></div>
+                  </div>
+                </div>
+                <div data-item="{id: 86208,sizes: []}" class="item js-item-data">
+                  <div class="item-inner"><span class="info-lbl"><span>30%</span></span>
+                    <div class="item-preview"><a href="javascript:void(0)" onclick="$(this).toggleClass('added')" class="favorite-link icon"></a>
+                      <div class="item-preview__slider">
+                        <div class="slider-contaniner">
+                          <div class="slider-item"><a href="#"><img src="../assets/images/tmp/item1.jpg" alt=""/></a></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="description"><a href="item.html">Кольцо от Graziella, модель Geometrie11, желтое золото, эмальжелтое золото, эмаль</a></div>
+                    <div class="old-cost"><span class="dec">старая цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
+                    <div class="cost"><span class="dec">Цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
+                    <div class="buttons"><a href="#" data-item="86208" class="btn js-buy">Купить</a></div>
+                  </div>
+                </div>
+                <div data-item="{id: 83684,sizes: []}" class="item js-item-data">
+                  <div class="item-inner"><span class="info-lbl"><span>30%</span></span>
+                    <div class="item-preview"><a href="javascript:void(0)" onclick="$(this).toggleClass('added')" class="favorite-link icon"></a>
+                      <div class="item-preview__slider">
+                        <div class="slider-contaniner">
+                          <div class="slider-item"><a href="#"><img src="../assets/images/tmp/item1.jpg" alt=""/></a></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="description"><a href="item.html">Кольцо от Graziella, модель Geometrie11, желтое золото, эмальжелтое золото, эмаль</a></div>
+                    <div class="old-cost"><span class="dec">старая цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
+                    <div class="cost"><span class="dec">Цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
+                    <div class="buttons"><a href="#" data-item="83684" class="btn js-buy">Купить</a></div>
+                  </div>
+                </div>
+                <div data-item="{id: 77690,sizes: []}" class="item js-item-data">
+                  <div class="item-inner"><span class="info-lbl"><span>30%</span></span>
+                    <div class="item-preview"><a href="javascript:void(0)" onclick="$(this).toggleClass('added')" class="favorite-link icon"></a>
+                      <div class="item-preview__slider">
+                        <div class="slider-contaniner">
+                          <div class="slider-item"><a href="#"><img src="../assets/images/tmp/item1.jpg" alt=""/></a></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="description"><a href="item.html">Кольцо от Graziella, модель Geometrie11, желтое золото, эмальжелтое золото, эмаль</a></div>
+                    <div class="old-cost"><span class="dec">старая цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
+                    <div class="cost"><span class="dec">Цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
+                    <div class="buttons"><a href="#" data-item="77690" class="btn js-buy">Купить</a></div>
+                  </div>
+                </div>
+                <div data-item="{id: 54978,sizes: []}" class="item js-item-data">
+                  <div class="item-inner"><span class="info-lbl"><span>30%</span></span>
+                    <div class="item-preview"><a href="javascript:void(0)" onclick="$(this).toggleClass('added')" class="favorite-link icon"></a>
+                      <div class="item-preview__slider">
+                        <div class="slider-contaniner">
+                          <div class="slider-item"><a href="#"><img src="../assets/images/tmp/item1.jpg" alt=""/></a></div>
+                          <div class="slider-item"><a href="#"><img src="../assets/images/tmp/item2.jpg" alt=""/></a></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="description"><a href="item.html">Кольцо от Graziella, модель Geometrie11, желтое золото, эмальжелтое золото, эмаль</a></div>
+                    <div class="old-cost"><span class="dec">старая цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
+                    <div class="cost"><span class="dec">Цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
+                    <div class="buttons"><a href="#" data-item="54978" class="btn js-buy">Купить</a></div>
+                  </div>
+                </div>
+                <div data-item="{id: 24003,sizes: []}" class="item js-item-data">
+                  <div class="item-inner"><span class="info-lbl"><span>30%</span></span>
+                    <div class="item-preview"><a href="javascript:void(0)" onclick="$(this).toggleClass('added')" class="favorite-link icon"></a>
+                      <div class="item-preview__slider">
+                        <div class="slider-contaniner">
+                          <div class="slider-item"><a href="#"><img src="../assets/images/tmp/item1.jpg" alt=""/></a></div>
+                          <div class="slider-item"><a href="#"><img src="../assets/images/tmp/item2.jpg" alt=""/></a></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="description"><a href="item.html">Кольцо от Graziella, модель Geometrie11, желтое золото, эмальжелтое золото, эмаль</a></div>
+                    <div class="old-cost"><span class="dec">старая цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
+                    <div class="cost"><span class="dec">Цена: </span>46400.00<span class="rub"><span>руб</span></span></div>
+                    <div class="buttons"><a href="#" data-item="24003" class="btn js-buy">Купить</a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="line-filter">
+            <div class="pageswitch"><a href="#" class="arrow arrow-prev icon-drop icon-drop__left"></a><a href="/cat/type/13/1.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13" class="active">1</a><a href="/cat/type/13/2.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13">2</a><a href="/cat/type/13/2.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13">3</a><a href="/cat/type/13/2.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13">4</a><span>. . .</span><a href="/cat/type/13/5.html?items_sort_order=new&amp;items_per_page=12&amp;brand=7&amp;type=13">224</a><a href="#" class="arrow arrow-next icon-drop icon-drop__right"></a></div>
+          </div>
+          <script type="text/javascript">var avfilters = {"style":[6,4,5,3,13,11],"type":[11],"collection":[17,42,24,18,28,12,15,13],"brand":[0,8,14,12,10,15,16,7],"insert":[2,24,29,1,11,37,4,8,39,10,16,15,59,47,55,46,38,23,61,49],"cover":[1,2,7,8,3,4],"size":["22.0","0.0","21.5","18.0","23.0","20.0","21.0","19.0","17.0","16.0","17.5","18.5","20.5","16.5"],"metals":[1,4,3]};</script>
+        </div>
+      </div>
+      <div class="catdes catdes_catalog">
+        <div class="wrap"><span class="title">GRAZIELLA </span>
+          <p>Таким образом, сочетая итальянский вкус и мастерство отделки, рождается безупречный результат: каждое ювелирное изделие превращается в маленькое произведение искусства.</p>
+          <p>Креативный Центр со временем создал новые направления предметов роскоши, которые были добавлены к исходной коллекции украшений из золота и серебра. В частности, линия бриллианты Graziella предлагает ювелирные изделия из золота, серебра, бриллиантов и драгоценных камней. Линия аксессуаров GRAZIELLA включает сумки и ремни, изготовленные из высококачественной кожи, обогащенные деталями из золота и серебра, а также драгоценных камней. Детали из драгоценных металлов изготовлены с использованием тех же креативных концепций что и ювелирные изделия, для создания совершенной координации с аксессуарами. Такой подход позволяет GRAZIELLA предложить своим потребителям ювелирные скульптуры и аксессуары.</p>
+          <p>Отличное сочетание творчества и технологии. Обещания GRAZIELLA своим клиентам проявляются в скульптурных формах ювелирных изделий, их стиль настолько уникален, что некоторые идентифицируют его как “современное барокко”. Темы разрабатываются в зависимости от рынка, размер и формы адаптируются к стране назначения. В арабских странах предпочитают драгоценности больших форм, в соответствии с эстетическими канонами. В других странах изделия GRAZIELLA с использованием тех же креативных тематик становятся меньше в размере, и порой могут быть обогащены драгоценными камнями. Общие черты лежат в типе изделий, которые легко идентифицируются по своему стилю и точным деталям, а также легкостью.</p>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="footer-inner wrap">
+          <div class="footer-col__holder">
+            <div class="footer-col">
+              <div class="magazine-info"><span class="magazine-info__phone"><a href="tel:+7 (495) 255 11 08" class="link_phone">+7 (495) 255 11 08</a></span>
+                <div class="magazine-info__address"><span class="magazine-info__title">Москва <i class="icon icon-pin"></i></span>
+                  <div class="desc">Берсеневская набережная д. 6 стр. 1 <br> в будние дни с 9:00 до 19:00</div>
+                </div>
+              </div>
+            </div>
+            <div class="footer-col">
+              <div class="magazine-info">
+                <div class="magazine-info__shipment"><span class="magazine-info__title">Доставка <i class="icon icon-car2"></i></span>
+                  <div class="desc">Ежедневно с 10:00 до 22:00</div>
+                </div>
+              </div>
+            </div>
+            <div class="footer-col">
+              <div class="footer-menu">
+                <label for="info-menu" class="footer-menu__title footer-header">Информация</label>
+                <select id="info-menu" onchange="window.location.href=this.querySelector('option:checked').getAttribute('value')" class="footer-menu__select no-styler">
+                  <option value="content.html">О компании</option>
+                  <option value="content.html">Контакты</option>
+                  <option value="content.html">Вакансии</option>
+                  <option value="content.html">Дистрибуция</option>
+                  <option value="content.html">Оптовым покупателям</option>
+                </select>
+              </div>
+            </div>
+            <div class="footer-col">
+              <div class="footer-menu">
+                <label for="service-menu" class="footer-menu__title footer-header">сервис</label>
+                <select id="service-menu" onchange="window.location.href=this.querySelector('option:checked').getAttribute('value')" class="footer-menu__select no-styler">
+                  <option value="content.html">Примерка на выбор</option>
+                  <option value="content.html">Доставка по Москве и области</option>
+                  <option value="content.html">Доставка по РФ и СНГ</option>
+                  <option value="content.html">Гарантия</option>
+                  <option value="content.html">Возврат</option>
+                  <option value="content.html">Оплата</option>
+                </select>
+              </div>
+            </div>
+            <div class="footer-col">
+              <div class="subscribe subscribe_footer"><span class="title footer-header">Подписка на рассылку</span>
+                <div class="subscribe__body">
+                  <form action="" class="subscribe__form">
+                    <div class="row">
+                      <input type="email" name="email" placeholder="Введите ваш e-mail" class="inputtext">
+                    </div><a href="#" class="btn btn_white btn-submit">ок
+                      <input type="submit"></a>
+                  </form>
+                </div>
+              </div>
+              <div class="social-footer">
+                <ul class="social-menu">
+                  <li><a href="#" class="icon-moon icon-tw"></a></li>
+                  <li><a href="#" class="icon-moon icon-fb"></a></li>
+                  <li><a href="#" class="icon-moon icon-ins"></a></li>
+                  <li><a href="#" class="icon-moon icon-vk"></a></li>
+                </ul>
+              </div>
+              <div class="copyright">Ювелирный интернет-магазин FIDELIS-STYLE <br>                   2013-2015 © All rights reserved.</div>
+            </div>
+          </div>
+        </div><a href="" class="desktop-version">перейти на полную <br> версию сайта</a>
+      </div>
+    </div>
+    <script id="basket-item" type="x-tmpl-mustache">
+      <div class="basket-item" data-id="{{id}}">
+          <div class="basket-item__holder">
+              <div class="basket-item__img">
+                  <img src="{{img}}" alt=""/>
+              </div>
+              <div class="basket-item__name">
+                  <a href="{{link}}" class="basket-item__link">{{name}}</a>
+                  <span class="article">Артикул: {{articul}}</span>
+              </div>
+              <div class="basket-item__size">
+                  <div class="select-size__wrap">
+                      <select class="no-styler select_size-order">
+                          {{#sizes}}
+                          <option value="{{size}}" {{selected}}>{{size}}</option>
+                          {{/sizes}}
+                      </select>
+                  </div>
+              </div>
+              <div class="basket-item__counter">
+                  <div class="counter">
+                      <span class="counter__val">{{count}}</span>
+                      <div class="counter__controls">
+                          <a class="counter__control control_up" data-control="inc" href="#">+</a>
+                          <a class="counter__control control_up" data-control="desc" href="#">-</a>
+                      </div>
+                  </div>
+              </div>
+              <div class="basket-item__price">
+                  <span class="summ"></span><span class="rub"><span>руб</span></span>
+              </div>
+              <div class="basket-item__service">
+                  <a class="basket-item__delete icon-close">
+                  </a>
+              </div>
+          </div>
+      </div>
+      
+    </script>
+    <script id="basket-item__mobile" type="x-tmpl-mustache">
+      <div class="basket-item" data-id="{{id}}">
+          <div class="basket-item__holder">
+              <div class="basket-item__img">
+                  <img src="{{img}}" alt=""/>
+              </div>
+              <div class="basket-item__middle">
+                  <div class="basket-item__name">
+                      <a href="{{link}}" class="basket-item__link">{{name}}</a>
+                      <span class="article">Артикул: {{articul}}</span>
+                  </div>
+                   <div class="basket-item__counter">
+                      <span class="counter__title">К-во</span>
+                      <div class="counter select-custom">
+                          <select class="counter__control">
+                                {{#counter}}
+                                    <option {{selected}} value={{countVal}}>{{countVal}}</option>
+                                {{/counter}}
+                          </select>
+                      </div>
+                  </div>
+                  <div class="basket-item__size">
+                      <span class="select-size__title">Размер</span>
+                      <div class="select-size__wrap">
+                          <select class="no-styler select_size-order">
+                              {{#sizes}}
+                              <option value="{{size}}" {{selected}}>{{size}}</option>
+                              {{/sizes}}
+                          </select>
+                      </div>
+                  </div>
+      
+                  <div class="basket-item__price">
+                      <span class="summ"></span><span class="rub"><span>руб</span></span>
+                  </div>
+              </div>
+              <div class="basket-item__service">
+                  <a class="basket-item__delete icon-x" href="#">
+                  </a>
+              </div>
+          </div>
+      </div>
+    </script>
+    <script id="basket-sale" type="x-tmpl-mustache">
+      <div class="total__sale">
+          <span class="lbl">Итого c учетом {{sale}}% скидки:</span>
+          <span class="summ"></span><span class="rub"><span>руб</span></span>
+      </div>
+      
+    </script>
+    <script id="template-popup-size" type="x-tmpl-mustache">
+      <div class="item-img">
+          <img class="" src="{{img}}" alt=""/>
+      </div>
+      <div class="pitem-size">
+          <div class="select-size__wrap">
+              <select class="no-styler select_size">
+                  <option value="">Выберите размер</option>
+                  {{#sizes}}
+                  <option value="{{size}}">{{size}}</option>
+                  {{/sizes}}
+              </select>
+          </div>
+      </div>
+      <div class="cost">
+      
+      </div>
+      <a href="#" class="btn">Купить</a>
+      
+      
+    </script>
+    <script id="template-popup-cost" type="x-tmpl-mustache">
+      <span class="dec">Цена: </span><span class="count">{{price}}</span><span class="rub"><span>руб</span></span>
+      
+      
+      
+      
+    </script>
+    <script id="town-change" type="x-tmpl-mustache">
+      <div class="town-autocomplete">
+          <div class="town-autocomplete__inner" data-action="load">
+      
+          </div>
+      </div>
+      
+    </script>
+    <div class="fade fade-fixed"></div>
+    <div class="scroll-top">
+      <div class="wrap"><a href="#" class="scroll-top__link"></a></div>
+    </div>
+    <div class="size-popup popup"><a href="#" class="close icon-close"></a>
+      <div class="size__inner"></div>
+    </div>
+    <div class="loader"><i class="loader__icon"></i></div>
+  </body>
+</html>
