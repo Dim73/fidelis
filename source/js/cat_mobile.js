@@ -905,7 +905,7 @@ var DEF_CONST = require('./helpers/constants');
             flag = flag == undefined?!flag: flag;
             $fp.fadeToggle();
             $('body').toggleClass('popup-show',flag);
-            flag && setFilterHeight()
+            //flag && setFilterHeight()
         }
 
         $('.goods-filter').click(function(){
@@ -924,7 +924,7 @@ var DEF_CONST = require('./helpers/constants');
         }
 
         $(window).bind('resize', function(){
-            setFilterHeight ()
+            //setFilterHeight ()
         })
 
     });

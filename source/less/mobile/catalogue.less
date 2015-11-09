@@ -602,10 +602,11 @@
     border-bottom: 1px solid;
     font: bold 18px/76px @font-lb;
     text-align: center;
-    /*position: fixed;*/
+    /*position: fixed;
     z-index: 99;
     top: 0;
     left: 0;
+    */
     width: 100%;
 
     .icon-filter {
@@ -625,18 +626,50 @@
   }
 
   &__inner {
-    position: absolute;
+    /*position: absolute;
     width: 100%;
-    //margin-top: 73px;
     overflow: auto;
-    -webkit-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch;*/
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 73px;
+    width: 100%;
+    overflow-x: hidden;
+
+    .widget {
+
+      &-list {
+        position: relative;
+        height: 100%;
+      }
+
+      &-scroll {
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+        height: 100%;
+      }
+    }
   }
 
   &__body {
-    padding: 29px 21px 0;
+    //padding: 29px 21px 0;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+    z-index: 10400;
+    -webkit-overflow-scrolling: touch;
+    overflow: auto;
   }
 
   &__choosen {
+    padding-top: 25px;
 
     &-title {
       text-transform: uppercase;
