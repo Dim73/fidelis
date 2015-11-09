@@ -13755,7 +13755,7 @@ $(function(){
         }
 
         function toggleHeight($parent, $container, flag) {
-            $parent.height(flag?$container.outerHeight():0);
+            $parent.height(flag?'auto':0);
         }
     });
 })(jQuery);
