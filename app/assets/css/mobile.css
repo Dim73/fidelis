@@ -2892,7 +2892,7 @@ h1 {
   opacity: 1;
 }
 .main-banner .bg {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
@@ -2910,6 +2910,9 @@ h1 {
 }
 .main-banner .banner-desc__holder {
   padding: 0 21px;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 .main-banner .banner-desc__holder:before {
   content: "";
@@ -2946,12 +2949,6 @@ h1 {
 .main-banner_catalog .banner-desc .logo {
   margin: 0 0 15px 0;
 }
-.main-banner_catalog .slider-item {
-  height: 315px;
-}
-.main-banner_catalog .bx-viewport {
-  height: 315px !important;
-}
 .main-banner_catalog .bx-pager {
   position: absolute;
   z-index: 100;
@@ -2983,9 +2980,6 @@ h1 {
   background-color: #211916;
   margin: 40px 0;
 }
-.main-banner_index .slider-item {
-  height: 472px;
-}
 .main-banner_index .banner-desc {
   margin: 0;
   width: 71.42857143%;
@@ -3006,9 +3000,6 @@ h1 {
 }
 .main-banner_index .btn:hover {
   background-color: #e30c19;
-}
-.main-banner_index .bx-viewport {
-  height: 472px !important;
 }
 .main-banner_index .bx-pager {
   position: absolute;

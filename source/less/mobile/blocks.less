@@ -1522,7 +1522,7 @@
   }
 
   .bg {
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     width: 100%;
@@ -1539,6 +1539,9 @@
 
     &__holder {
       padding: 0 21px;
+      position: absolute;
+      top: 0;
+      left: 0;
 
       &:before {
         content: "";
@@ -1593,11 +1596,11 @@
 
     @banner-height: 315px;
     .slider-item {
-      height: @banner-height;
+      //height: @banner-height;
     }
 
     .bx-viewport {
-      height: @banner-height !important;
+      //height: @banner-height !important;
     }
 
     .bx-pager {
@@ -1640,9 +1643,9 @@
       }
     }
 
-    @banner-height: 472px;
+    //@banner-height: 472px;
     .slider-item {
-      height: @banner-height;
+      //height: @banner-height;
     }
 
     .banner-desc {
@@ -1676,7 +1679,7 @@
     }
 
     .bx-viewport {
-      height: @banner-height !important;
+      //height: @banner-height !important;
     }
 
     .bx-pager {
