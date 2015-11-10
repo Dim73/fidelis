@@ -2892,7 +2892,7 @@ h1 {
   opacity: 1;
 }
 .main-banner .bg {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
@@ -2910,6 +2910,9 @@ h1 {
 }
 .main-banner .banner-desc__holder {
   padding: 0 21px;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 .main-banner .banner-desc__holder:before {
   content: "";
@@ -2946,12 +2949,6 @@ h1 {
 .main-banner_catalog .banner-desc .logo {
   margin: 0 0 15px 0;
 }
-.main-banner_catalog .slider-item {
-  height: 315px;
-}
-.main-banner_catalog .bx-viewport {
-  height: 315px !important;
-}
 .main-banner_catalog .bx-pager {
   position: absolute;
   z-index: 100;
@@ -2983,9 +2980,6 @@ h1 {
   background-color: #211916;
   margin: 40px 0;
 }
-.main-banner_index .slider-item {
-  height: 472px;
-}
 .main-banner_index .banner-desc {
   margin: 0;
   width: 71.42857143%;
@@ -3006,9 +3000,6 @@ h1 {
 }
 .main-banner_index .btn:hover {
   background-color: #e30c19;
-}
-.main-banner_index .bx-viewport {
-  height: 472px !important;
 }
 .main-banner_index .bx-pager {
   position: absolute;
@@ -4487,8 +4478,8 @@ h1 {
 .filter-pane {
   position: fixed;
   height: 100%;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
+  /*  overflow: auto;
+  -webkit-overflow-scrolling: touch;*/
   z-index: 9999;
   left: 0;
   top: 0;
@@ -4508,10 +4499,11 @@ h1 {
   border-bottom: 1px solid;
   font: bold 18px/76px "LatoBold";
   text-align: center;
-  position: fixed;
-  z-index: 99;
-  top: 0;
-  left: 0;
+  /*position: fixed;
+    z-index: 99;
+    top: 0;
+    left: 0;
+    */
   width: 100%;
 }
 .filter-pane__title .icon-filter {
@@ -4528,8 +4520,42 @@ h1 {
   top: 24px;
 }
 .filter-pane__inner {
-  padding: 29px 21px 0;
-  margin-top: 73px;
+  /*position: absolute;
+    width: 100%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;*/
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 73px;
+  width: 100%;
+  overflow-x: hidden;
+}
+.filter-pane__inner .widget-list {
+  position: relative;
+  height: 100%;
+}
+.filter-pane__inner .widget-scroll {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  height: 100%;
+}
+.filter-pane__body {
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  z-index: 10400;
+  -webkit-overflow-scrolling: touch;
+  overflow: auto;
+}
+.filter-pane__choosen {
+  padding-top: 25px;
 }
 .filter-pane__choosen-title {
   text-transform: uppercase;
