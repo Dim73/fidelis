@@ -4550,9 +4550,6 @@ h1 {
 }
 .filter-pane__body {
   -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  -ms-transform: translate3d(0, 0, 0);
-  -o-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   position: relative;
   width: 100%;
@@ -4592,6 +4589,9 @@ h1 {
   background: #fff;
   border: 1px solid #888888;
   margin-top: 17px;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-overflow-scrolling: touch;
 }
 .filter-pane__items .block + .block {
   margin-top: -1px;
