@@ -150,6 +150,7 @@ var Basket = require('./components/basket');
                     infiniteLoop: true,
                     slideMargin: 0,
                     controls: false,
+                    responsive: true,
                     pager: true,
                     auto: false,
                     onSliderLoad: function(currentIndex) {
