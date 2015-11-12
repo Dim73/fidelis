@@ -2895,6 +2895,7 @@ h1 {
   position: relative;
   top: 0;
   left: 0;
+  display: block;
   width: 100%;
   -webkit-transition: opacity 0.3s ease 0s;
   -moz-transition: opacity 0.3s ease 0s;
