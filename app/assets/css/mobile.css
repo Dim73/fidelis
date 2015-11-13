@@ -5443,59 +5443,31 @@ h1 {
 .banners-squares {
   position: relative;
   margin-top: 40px;
-  /*@ed : 224px;
-  @border: 2px;
-  @offset: @ed + @border;
-
-  .col1 {
-    width: @ed;
-  }
-  .col2 {
-    width: @ed*2;
-  }
-  .col3 {
-    width: @ed*3 + (@border*2)*2;
-  }
-
-  .row1 {
-    height: @ed;
-  }
-  .row2 {
-    height: @ed*2 + (@border*2);
-  }
-  .row3 {
-
-    height: @ed*3 + (@border*2)*2;
-  }
-
-  .l1 {
-    left: 0;
-  }
-  .l2 {
-    left: @offset + (@border);
-  }
-  .l3 {
-    left: @offset*2 + (@border*2);
-  }
-  .l4 {
-    left: @offset*3 + (@border*3);
-  }
-
-  .t1 {
-    top: 0;
-  }
-  .t2 {
-    top: @offset+ (@border);
-  }
-  .t3 {
-    top: @offset*2+ (@border*2);
-  }*/
+  overflow: hidden;
 }
 .banners-squares .block {
   position: relative;
   z-index: 5;
-  border: 2px solid #ffffff;
+  width: 50%;
+  padding: 25%;
+  -webkit-box-sizing: border-box;
+  /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;
+  /* Firefox, other Gecko */
+  box-sizing: border-box;
+  /* Opera/IE 8+ */
   overflow: hidden;
+  float: left;
+  margin-bottom: -2px;
+}
+.banners-squares .block:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  border: 3px solid #fff;
 }
 .banners-squares .block__link {
   position: absolute;
@@ -5504,36 +5476,19 @@ h1 {
   top: 0;
   width: 100%;
   height: 100%;
-}
-.banners-squares .block__link:after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  -webkit-transition: opacity 0.3s 0s ease-in-out;
-  transition: opacity 0.3s 0s ease-in-out;
-}
-.banners-squares .block:hover .block__link:after {
-  opacity: 1;
-}
-.banners-squares .block:hover .block__text {
-  color: #ffffff;
+  text-decoration: none;
 }
 .banners-squares .block__bg {
   top: 0;
   left: 0;
   position: absolute;
-  width: 100%;
+  height: 100%;
 }
 .banners-squares .block__bg-stretch {
   position: relative;
 }
 .banners-squares .block__text {
-  position: absolute;
+  position: relative;
   z-index: 150;
   color: #2e2e2e;
   -webkit-transition: color 0.3s ease 0s;
@@ -5542,19 +5497,19 @@ h1 {
   -ms-transition: color 0.3s ease 0s;
   transition: color 0.3s ease 0s;
 }
+.banners-squares .block__text-wrap {
+  position: relative;
+  z-index: 200;
+}
 .banners-squares .block__text .title {
   display: block;
-  font: 20px/1 "LatoBold";
+  font: 3vw/1 "LatoBold";
   text-transform: uppercase;
+  margin-bottom: .5em;
 }
 .banners-squares .block__text .text {
-  line-height: 18px;
-}
-.banners-squares .block__text.text_big {
-  width: 100%;
-}
-.banners-squares .block__text.text_big .title {
-  font: 26px/1 "LatoBold";
+  font-size: 2vw;
+  line-height: 1.2em;
 }
 .seo-main {
   border-top: 1px solid #dddddd;
