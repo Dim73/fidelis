@@ -170,6 +170,7 @@ var Basket = require('./components/basket');
                     infiniteLoop: false,
                     pager: false,
                     auto: false,
+                    responsive: true,
                     controls: false,
                     mode: 'horizontal',
                     onSliderLoad: function() {
