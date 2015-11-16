@@ -4522,6 +4522,15 @@ h1 {
   right: 24px;
   top: 24px;
 }
+.filter-pane__title .icon-close.filter-ok {
+  color: #e30c19;
+}
+.filter-pane__title .icon-close.filter-ok:before {
+  display: none;
+}
+.filter-pane__title .icon-close.filter-ok:after {
+  content: "OK";
+}
 .filter-pane__inner {
   /*position: absolute;
     width: 100%;

@@ -465,21 +465,11 @@ var DEF_CONST = require('./helpers/constants');
         view: function() {
             var self = this;
             this.viewFilters.init(this);
-            this.$apply = $('.js-apply-filter');
             this.$close = $('.js-close-filter');
-            this.$self = $('.goods-filter.folding');
-            this.$apply.on('click',function(e){
-                e.preventDefault();
-                console.log(self.getState());
-                self.sendMessage('filtersChange');
-            });
-            this.$close.on('click',function(e){
-                e.preventDefault();
-                self.$self.trigger('close');
-            })
         },
-        render: function() {//рендер FiltersView
-            this.viewFilters.render();
+        render: function() {
+            this.viewFilters.render();//рендер FiltersView
+            this.$close.addClass('filter-ok');
             this.$self.trigger('update');
         },
         getViewData: function() {
@@ -905,6 +895,9 @@ var DEF_CONST = require('./helpers/constants');
             flag = flag == undefined?!flag: flag;
             $fp.fadeToggle();
             $('body').toggleClass('popup-show',flag);
+            if (flag) {
+               $('.js-close-filter', $fp).removeClass('.filter-ok');
+            }
             //flag && setFilterHeight()
         }
 
