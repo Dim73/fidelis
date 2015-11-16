@@ -2665,7 +2665,7 @@ h1 {
   background-color: #ffffff;
 }
 .catdes_pitem .slider-item .img {
-  background-blend-mode: multiply;
+  background-blend-mode: darken;
   background-color: #f8f7f8;
   display: block;
   width: 200px;
