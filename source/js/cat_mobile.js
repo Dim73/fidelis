@@ -164,7 +164,7 @@ var DEF_CONST = require('./helpers/constants');
         updateState: function(data) {
             if (data == null) return;
             var newData = data;
-            console.log(newData, this.state[this.filterName]);
+            //console.log(newData, this.state[this.filterName]);
             if (this.state[this.filterName])
                 try {
                     newData[0] = newData[0] == "" ? this.state[this.filterName][0] : newData[0];
@@ -173,7 +173,7 @@ var DEF_CONST = require('./helpers/constants');
                     console.log(e);
                 }
             this.state[this.filterName] = newData;
-            console.log(this.state[this.filterName]);
+            //console.log(this.state[this.filterName]);
             //this.controller.updateFilters();
         },
         removeFilter: function(data) {
@@ -370,7 +370,7 @@ var DEF_CONST = require('./helpers/constants');
                     var $item = $(this);
                     $li = $item.closest('li');
                     //console.log(filtersData[filter].indexOf("" + $item.data('value')));
-                    console.log(filtersData[filter], $item.data('value'),$item.val(), filtersData[filter].indexOf(filter == 'size'?$item.val():$item.data('value')));
+                    //console.log(filtersData[filter], $item.data('value'),$item.val(), filtersData[filter].indexOf(filter == 'size'?$item.val():$item.data('value')));
                     if (filtersData[filter].indexOf(filter == 'size'?$item.val():$item.data('value')) > -1) {
                         $li.show();
                     } else {
@@ -465,11 +465,11 @@ var DEF_CONST = require('./helpers/constants');
         view: function() {
             var self = this;
             this.viewFilters.init(this);
+            this.$self = $('.goods-filter.folding');
             this.$close = $('.js-close-filter');
         },
         render: function() {
             this.viewFilters.render();//рендер FiltersView
-            this.$close.addClass('filter-ok');
             this.$self.trigger('update');
         },
         getViewData: function() {
@@ -896,10 +896,18 @@ var DEF_CONST = require('./helpers/constants');
             $fp.fadeToggle();
             $('body').toggleClass('popup-show',flag);
             if (flag) {
-               $('.js-close-filter', $fp).removeClass('.filter-ok');
+               $('.js-close-filter', $fp).removeClass('filter-ok');
             }
             //flag && setFilterHeight()
         }
+
+        $('.filter_item', $fp).click(function(){
+            $('.js-close-filter', $fp).addClass('filter-ok');
+        });
+
+        $('input[type=checkbox]', $fp).change(function(){
+            $('.js-close-filter', $fp).addClass('filter-ok');
+        });
 
         $('.goods-filter').click(function(){
             toogleFP(true);

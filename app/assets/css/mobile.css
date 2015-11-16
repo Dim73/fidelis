@@ -4530,6 +4530,10 @@ h1 {
 }
 .filter-pane__title .icon-close.filter-ok:after {
   content: "OK";
+  -webkit-transform: rotate(0);
+  transform: rotate(0);
+  top: 1px;
+  background-color: transparent;
 }
 .filter-pane__inner {
   /*position: absolute;

@@ -633,7 +633,10 @@
         }
 
         &:after {
-          content: "OK"
+          content: "OK";
+          ._transform(rotate(0));
+          top: 1px;
+          background-color: transparent;
         }
       }
     }
