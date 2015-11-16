@@ -11250,7 +11250,7 @@ var DEF_CONST = require('./helpers/constants');
             $fp.fadeToggle();
             $('body').toggleClass('popup-show',flag);
             if (flag) {
-               $('.js-close-filter', $fp).removeClass('.filter-ok')
+               $('.js-close-filter', $fp).removeClass('.filter-ok');
             }
             //flag && setFilterHeight()
         }

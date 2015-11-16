@@ -1,5 +1,242 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /*!
+	Zoom 1.7.14
+	license: MIT
+	http://www.jacklmoore.com/zoom
+*/
+(function ($) {
+	var defaults = {
+		url: false,
+		callback: false,
+		target: false,
+		duration: 120,
+		on: 'mouseover', // other options: grab, click, toggle
+		touch: true, // enables a touch fallback
+		onZoomIn: false,
+		onZoomOut: false,
+		magnify: 1
+	};
+
+	// Core Zoom Logic, independent of event listeners.
+	$.zoom = function(target, source, img, magnify) {
+		var targetHeight,
+			targetWidth,
+			sourceHeight,
+			sourceWidth,
+			xRatio,
+			yRatio,
+			offset,
+			$target = $(target),
+			position = $target.css('position'),
+			$source = $(source);
+
+		// The parent element needs positioning so that the zoomed element can be correctly positioned within.
+		$target.css('position', /(absolute|fixed)/.test(position) ? position : 'relative');
+		$target.css('overflow', 'hidden');
+
+		img.style.width = img.style.height = '';
+
+		$(img)
+			.addClass('zoomImg')
+			.css({
+				position: 'absolute',
+				top: 0,
+				left: 0,
+				opacity: 0,
+				width: img.width * magnify,
+				height: img.height * magnify,
+				border: 'none',
+				maxWidth: 'none',
+				maxHeight: 'none'
+			})
+			.appendTo(target);
+
+		return {
+			init: function() {
+				targetWidth = $target.outerWidth();
+				targetHeight = $target.outerHeight();
+
+				if (source === $target[0]) {
+					sourceWidth = targetWidth;
+					sourceHeight = targetHeight;
+				} else {
+					sourceWidth = $source.outerWidth();
+					sourceHeight = $source.outerHeight();
+				}
+
+				xRatio = (img.width - targetWidth) / sourceWidth;
+				yRatio = (img.height - targetHeight) / sourceHeight;
+
+				offset = $source.offset();
+			},
+			move: function (e) {
+				var left = (e.pageX - offset.left),
+					top = (e.pageY - offset.top);
+
+				top = Math.max(Math.min(top, sourceHeight), 0);
+				left = Math.max(Math.min(left, sourceWidth), 0);
+
+				img.style.left = (left * -xRatio) + 'px';
+				img.style.top = (top * -yRatio) + 'px';
+			}
+		};
+	};
+
+	$.fn.zoom = function (options) {
+		return this.each(function () {
+			var
+			settings = $.extend({}, defaults, options || {}),
+			//target will display the zoomed image
+			target = settings.target || this,
+			//source will provide zoom location info (thumbnail)
+			source = this,
+			$source = $(source),
+			$target = $(target),
+			img = document.createElement('img'),
+			$img = $(img),
+			mousemove = 'mousemove.zoom',
+			clicked = false,
+			touched = false,
+			$urlElement;
+
+			// If a url wasn't specified, look for an image element.
+			if (!settings.url) {
+				$urlElement = $source.find('img');
+				if ($urlElement[0]) {
+					settings.url = $urlElement.data('src') || $urlElement.attr('src');
+				}
+				if (!settings.url) {
+					return;
+				}
+			}
+
+			(function(){
+				var position = $target.css('position');
+				var overflow = $target.css('overflow');
+
+				$source.one('zoom.destroy', function(){
+					$source.off(".zoom");
+					$target.css('position', position);
+					$target.css('overflow', overflow);
+					$img.remove();
+				});
+				
+			}());
+
+			img.onload = function () {
+				var zoom = $.zoom(target, source, img, settings.magnify);
+
+				function start(e) {
+					zoom.init();
+					zoom.move(e);
+
+					// Skip the fade-in for IE8 and lower since it chokes on fading-in
+					// and changing position based on mousemovement at the same time.
+					$img.stop()
+					.fadeTo($.support.opacity ? settings.duration : 0, 1, $.isFunction(settings.onZoomIn) ? settings.onZoomIn.call(img) : false);
+				}
+
+				function stop() {
+					$img.stop()
+					.fadeTo(settings.duration, 0, $.isFunction(settings.onZoomOut) ? settings.onZoomOut.call(img) : false);
+				}
+
+				// Mouse events
+				if (settings.on === 'grab') {
+					$source
+						.on('mousedown.zoom',
+							function (e) {
+								if (e.which === 1) {
+									$(document).one('mouseup.zoom',
+										function () {
+											stop();
+
+											$(document).off(mousemove, zoom.move);
+										}
+									);
+
+									start(e);
+
+									$(document).on(mousemove, zoom.move);
+
+									e.preventDefault();
+								}
+							}
+						);
+				} else if (settings.on === 'click') {
+					$source.on('click.zoom',
+						function (e) {
+							if (clicked) {
+								// bubble the event up to the document to trigger the unbind.
+								return;
+							} else {
+								clicked = true;
+								start(e);
+								$(document).on(mousemove, zoom.move);
+								$(document).one('click.zoom',
+									function () {
+										stop();
+										clicked = false;
+										$(document).off(mousemove, zoom.move);
+									}
+								);
+								return false;
+							}
+						}
+					);
+				} else if (settings.on === 'toggle') {
+					$source.on('click.zoom',
+						function (e) {
+							if (clicked) {
+								stop();
+							} else {
+								start(e);
+							}
+							clicked = !clicked;
+						}
+					);
+				} else if (settings.on === 'mouseover') {
+					zoom.init(); // Preemptively call init because IE7 will fire the mousemove handler before the hover handler.
+
+					$source
+						.on('mouseenter.zoom', start)
+						.on('mouseleave.zoom', stop)
+						.on(mousemove, zoom.move);
+				}
+
+				// Touch fallback
+				if (settings.touch) {
+					$source
+						.on('touchstart.zoom', function (e) {
+							e.preventDefault();
+							if (touched) {
+								touched = false;
+								stop();
+							} else {
+								touched = true;
+								start( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
+							}
+						})
+						.on('touchmove.zoom', function (e) {
+							e.preventDefault();
+							zoom.move( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
+						});
+				}
+				
+				if ($.isFunction(settings.callback)) {
+					settings.callback.call(img);
+				}
+			};
+
+			img.src = settings.url;
+		});
+	};
+
+	$.fn.zoom.defaults = defaults;
+}(window.jQuery));
+
+},{}],2:[function(require,module,exports){
+/*!
  * jQuery Browser Plugin 0.0.8
  * https://github.com/gabceb/jquery-browser-plugin
  *
@@ -184,7 +421,7 @@
   return window.jQBrowser;
 }));
 
-},{"jquery":2}],2:[function(require,module,exports){
+},{"jquery":3}],3:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v1.11.3
  * http://jquery.com/
@@ -10537,7 +10774,7 @@ return jQuery;
 
 }));
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 /*!
  * mustache.js - Logic-less {{mustache}} templates with JavaScript
  * http://github.com/janl/mustache.js
@@ -11166,7 +11403,7 @@ return jQuery;
 
 }));
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 /*! nanoScrollerJS - v0.8.7 - 2015
 * http://jamesflorentino.github.com/nanoScrollerJS/
 * Copyright (c) 2015 James Florentino; Licensed MIT */
@@ -12144,11 +12381,13 @@ return jQuery;
 
 //# sourceMappingURL=jquery.nanoscroller.js.map
 
-},{"jquery":2}],5:[function(require,module,exports){
+},{"jquery":3}],6:[function(require,module,exports){
 var Mustache = require('mustache');
 var $ = require('jquery');
 var ajxLoader = require('../lib/ajxLoader');
 var DEF_CONST = require('../helpers/constants');
+require('../main/itemImg.plugin');
+var sliderConstructor = require('../lib/constructor.bxslider');
 require('nanoscroller');
 
     var ajxUrl = {};
@@ -12877,7 +13116,7 @@ require('nanoscroller');
 
 module.exports = Basket;
 
-},{"../helpers/constants":7,"../helpers/urls":8,"../lib/ajxLoader":9,"jquery":2,"mustache":3,"nanoscroller":4}],6:[function(require,module,exports){
+},{"../helpers/constants":8,"../helpers/urls":9,"../lib/ajxLoader":10,"../lib/constructor.bxslider":11,"../main/itemImg.plugin":15,"jquery":3,"mustache":4,"nanoscroller":5}],7:[function(require,module,exports){
 (function (global){
 global.jQuery = $ =  require("jquery");
 var Mustache = require('mustache');
@@ -13240,7 +13479,7 @@ function closePopup ($popup) {
 }
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./components/basket":5,"./lib/constructor.bxslider":10,"./lib/dropdown.plugin":11,"./lib/folding.plugin":12,"./lib/subscribe":13,"./mobile/changeTown":14,"./mobile/main-nav":15,"./vendor/jquery.bxslider":16,"./vendor/jquery.formstyler.min":17,"./vendor/jquery.maskedinput":18,"./vendor/size.scroll":19,"jquery":2,"jquery.browser":1,"mustache":3}],7:[function(require,module,exports){
+},{"./components/basket":6,"./lib/constructor.bxslider":11,"./lib/dropdown.plugin":12,"./lib/folding.plugin":13,"./lib/subscribe":14,"./mobile/changeTown":16,"./mobile/main-nav":17,"./vendor/jquery.bxslider":18,"./vendor/jquery.formstyler.min":19,"./vendor/jquery.maskedinput":20,"./vendor/size.scroll":21,"jquery":3,"jquery.browser":2,"mustache":4}],8:[function(require,module,exports){
 module.exports = (function(){
   var _const =  {};
 
@@ -13250,7 +13489,7 @@ module.exports = (function(){
   return _const
 })()
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 var DEF_CONST = require('./constants');
 
 module.exports = function(o) {
@@ -13259,7 +13498,7 @@ module.exports = function(o) {
   }
 }
 
-},{"./constants":7}],9:[function(require,module,exports){
+},{"./constants":8}],10:[function(require,module,exports){
 var $ = require('jquery');
 
 var ajxLoader  =  (function() {
@@ -13287,7 +13526,7 @@ var ajxLoader  =  (function() {
 
 module.exports = ajxLoader;
 
-},{"jquery":2}],10:[function(require,module,exports){
+},{"jquery":3}],11:[function(require,module,exports){
 
 var sc =
     (function(bx) {
@@ -13368,7 +13607,7 @@ var sc =
     })(jQuery.fn.bxSlider);
 
 module.exports = sc;
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 (function($){
     'use strict';
 
@@ -13455,7 +13694,7 @@ module.exports = sc;
         })
     }
 })(jQuery);
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 (function($){
     'use strict';
 
@@ -13527,7 +13766,7 @@ module.exports = sc;
         })
     }
 })(jQuery);
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 var DEF_CONST = require('../helpers/constants');
 	$.fn.subscribe = function(opt) {
 		var opt = $.extend({
@@ -13598,7 +13837,142 @@ var DEF_CONST = require('../helpers/constants');
 		});
 	};
 
-},{"../helpers/constants":7}],14:[function(require,module,exports){
+},{"../helpers/constants":8}],15:[function(require,module,exports){
+var ajxLoader = require('../lib/ajxLoader');
+require('jquery-zoom');
+
+  $.fn.itemImg = function(options){
+      var def = {
+              containerImg: '',
+              item : '.slider-item',
+              link : '.pitem-slider__link',
+              resizeImg: false
+
+          };
+
+      var opt = $.extend({}, def, options || {});
+
+      $(this).data('plugin','itemImg');
+
+      var fullscrinImgHeight = {
+          img: '',
+          setHeight: function() {
+              var $img = this.img.parent();
+              var p = $img.parent();
+              var winHeight = window.innerHeight;
+              var offsetImg = $img.offset().top - $('.pitem-fullscreen').offset().top;
+              $img.height(winHeight - offsetImg);
+          }
+      };
+
+      $(window).bind('resize', function(){
+          if (opt.resizeImg && fullscrinImgHeight.img) {
+              fullscrinImgHeight.setHeight();
+          }
+      })
+
+      this.each(function(){
+          //Initialize
+          var $self = $(this),
+              $link = $(opt.link, $self),
+
+              $containerImg = $(opt.containerImg),
+              $containerVideo = $(opt.containerVideo),
+              $containerParent = $containerImg.closest('.pitem-preview-main'),
+              $video = $('video',$containerVideo),
+              $linkVideo = $link.filter('.link_video'),
+              $item = $(opt.item,$self),
+              $oldImg,
+              videoPlay = false,
+              activeInd = 0,
+              loadImages = [];
+
+          $item.click(function(e){
+              e.preventDefault();
+              var $this = $(this),
+                  thisIndex = $this.index(),
+                  $thisLink = $this.find($link);
+              if ($thisLink.is('.active')) return;
+              $link.removeClass('active');
+              $thisLink.addClass('active');
+
+              activeInd = thisIndex;
+
+              if ($oldImg) {
+                  $oldImg.stop().fadeOut(490, function(){
+                      $oldImg.detach();
+                      $containerImg.trigger('zoom.destroy');
+                  });
+              }
+
+              if ($thisLink.is($linkVideo)) return;
+
+              if (videoPlay) {
+                  toggleVideo();
+              }
+
+              $containerVideo.fadeOut();
+
+              if (!!loadImages[thisIndex]) {
+                  switchImg(loadImages[thisIndex], $thisLink);
+              } else {
+                  var img = new Image();
+                  img.onload = function () {
+                      $(this).hide();
+                      loadImages[thisIndex] = $(this);
+                      switchImg(loadImages[thisIndex], $thisLink);
+                  };
+                  img.src = $thisLink.data('img');
+              }
+          });
+
+          function switchImg (img, link) {
+              $containerImg.append(img);
+              ajxLoader.attachTo($containerParent);
+
+              img.stop().fadeIn(500, function(){
+                  $oldImg = img;
+
+                  if (opt.resizeImg) {
+                      fullscrinImgHeight.img = img;
+                      fullscrinImgHeight.setHeight();
+                  }
+                  if (link.data('zoom')) {
+                      $containerImg.zoom({
+                          url: link.data('zoom'),
+                          callback: function() {
+                              ajxLoader._detach();
+                          }
+                      })
+                  } else {
+                      ajxLoader._detach();
+                  }
+              });
+          }
+
+          $linkVideo.click(function(){
+              toggleVideo();
+          });
+
+          function toggleVideo() {
+              if (videoPlay) {
+                  $linkVideo.removeClass('pause');
+                  $video[0].pause();
+              } else {
+                  $containerVideo.fadeIn(500,function(){
+                      $linkVideo.addClass('pause');
+                      $video[0].play();
+                  });
+              }
+              videoPlay = !videoPlay;
+              $oldImg = null;
+          }
+
+          $item.eq(0).trigger('click');
+      })
+  }
+
+},{"../lib/ajxLoader":10,"jquery-zoom":1}],16:[function(require,module,exports){
 $(function(){
 
     var $adrs_holder = $('.header .address-info__holder'),
@@ -13704,7 +14078,7 @@ $(function(){
     });
 
 });
-},{}],15:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 (function($) {
 
     $(function(){
@@ -13761,7 +14135,7 @@ $(function(){
         }
     });
 })(jQuery);
-},{}],16:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 /**
  * BxSlider v4.1.2 - Fully loaded, responsive content slider
  * http://bxslider.com
@@ -15194,7 +15568,7 @@ var sliderConstructor = function(sliders) {
     };
     return sliderInit();
 };
-},{}],17:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 /* jQuery Form Styler v1.5.3.2 | (c) Dimox | https://github.com/Dimox/jQueryFormStyler */
 (function(c){c.fn.styler=function(E){var e=c.extend({wrapper:"form",idSuffix:"-styler",filePlaceholder:"\u0424\u0430\u0439\u043b \u043d\u0435 \u0432\u044b\u0431\u0440\u0430\u043d",fileBrowse:"\u041e\u0431\u0437\u043e\u0440...",selectSearch:!0,selectSearchLimit:10,selectSearchNotFound:"\u0421\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e",selectSearchPlaceholder:"\u041f\u043e\u0438\u0441\u043a...",selectVisibleOptions:0,singleSelectzIndex:"100",
     selectSmartPositioning:!0,onSelectOpened:function(){},onSelectClosed:function(){},onFormStyled:function(){}},E);return this.each(function(){function w(){var c="",m="",b="",u="";void 0!==a.attr("id")&&""!==a.attr("id")&&(c=' id="'+a.attr("id")+e.idSuffix+'"');void 0!==a.attr("title")&&""!==a.attr("title")&&(m=' title="'+a.attr("title")+'"');void 0!==a.attr("class")&&""!==a.attr("class")&&(b=" "+a.attr("class"));for(var t=a.data(),f=0;f<t.length;f++)""!==t[f]&&(u+=" data-"+f+'="'+t[f]+'"');this.id=
@@ -15225,7 +15599,7 @@ var sliderConstructor = function(sliders) {
     f.each(function(a){c(this).data("optionIndex",a)}),a.on("change.styler",function(){n.removeClass("selected");var a=[];f.filter(":selected").each(function(){a.push(c(this).data("optionIndex"))});n.not(".optgroup").filter(function(b){return-1<c.inArray(b,a)}).addClass("selected")}).on("focus.styler",function(){d.addClass("focused")}).on("blur.styler",function(){d.removeClass("focused")}),p>d.height())a.on("keydown.styler",function(a){38!=a.which&&37!=a.which&&33!=a.which||g.scrollTop(g.scrollTop()+
     n.filter(".selected").position().top-k);40!=a.which&&39!=a.which&&34!=a.which||g.scrollTop(g.scrollTop()+n.filter(".selected:last").position().top-g.innerHeight()+2*k)})}var f=c("option",a),x="";a.is("[multiple]")?t():g()};g();a.on("refresh",function(){a.off(".styler").parent().before(a).remove();g()})}});else if(a.is(":reset"))a.on("click",function(){setTimeout(function(){a.closest(e.wrapper).find("input, select").trigger("refresh")},1)})}).promise().done(function(){e.onFormStyled.call()})}})(jQuery);
 
-},{}],18:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 (function (factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
@@ -15675,7 +16049,7 @@ $.fn.extend({
 });
 }));
 
-},{"jquery":2}],19:[function(require,module,exports){
+},{"jquery":3}],21:[function(require,module,exports){
 /*
  * CustomSelect - jQuery plugin for stylize select
  * author: Shashenko Andrei
@@ -16155,4 +16529,4 @@ $.fn.extend({
             });
     }
 })(jQuery);
-},{}]},{},[6])
+},{}]},{},[7])

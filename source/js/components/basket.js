@@ -2,6 +2,8 @@ var Mustache = require('mustache');
 var $ = require('jquery');
 var ajxLoader = require('../lib/ajxLoader');
 var DEF_CONST = require('../helpers/constants');
+require('../main/itemImg.plugin');
+var sliderConstructor = require('../lib/constructor.bxslider');
 require('nanoscroller');
 
     var ajxUrl = {};
