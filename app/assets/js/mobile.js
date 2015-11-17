@@ -12479,7 +12479,7 @@ if (!DEF_CONST.IS_MOBILE) {
             if (this.sizes.length === 1) { //нет размеров
                 for (var size in this.sizes[0]) {
                     if (!size) {
-                        $('.basket-item__size').css('visibility','hidden');
+                        $('.basket-item__size', this.$items).css('visibility','hidden');
                     }
                 }
             }
