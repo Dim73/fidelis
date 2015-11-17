@@ -12388,7 +12388,9 @@ var ajxLoader = require('../lib/ajxLoader');
 var DEF_CONST = require('../helpers/constants');
 require('../main/itemImg.plugin');
 var sliderConstructor = require('../lib/constructor.bxslider');
-require('nanoscroller');
+if (!DEF_CONST.IS_MOBILE) {
+  require('nanoscroller');
+}
 
     var ajxUrl = {};
     var addUrl = require('../helpers/urls')(ajxUrl);
