@@ -12388,7 +12388,9 @@ var ajxLoader = require('../lib/ajxLoader');
 var DEF_CONST = require('../helpers/constants');
 require('../main/itemImg.plugin');
 var sliderConstructor = require('../lib/constructor.bxslider');
-require('nanoscroller');
+if (!DEF_CONST.IS_MOBILE) {
+  require('nanoscroller');
+}
 
     var ajxUrl = {};
     var addUrl = require('../helpers/urls')(ajxUrl);
@@ -12477,7 +12479,7 @@ require('nanoscroller');
             if (this.sizes.length === 1) { //нет размеров
                 for (var size in this.sizes[0]) {
                     if (!size) {
-                        $('.basket-item__size').css('visibility','hidden');
+                        $('.basket-item__size', this.$items).css('visibility','hidden');
                     }
                 }
             }
@@ -12965,8 +12967,7 @@ require('nanoscroller');
                 success: function(data,status,xhr){
                     if (data) {
                         self.shipCost = data.summ;
-                        self.$deliverySumm.text(digitDiv(data.summ));
-                        self.$deliveryDays.text(data.days);
+                        self.$deliveryText.html(data.days);
                         self.updateTotal();
                         self.$deliveryInfo.show();
                     }
@@ -13083,6 +13084,7 @@ require('nanoscroller');
         self.$destSel = $('.selected_delivery',self.$self);
         self.$postSel = $('.selected_post',self.$self);
         self.$deliveryInfo = $('.delivery__info',self.$self);
+        self.$deliveryText = $('.delivery__info-text',self.$self);
         self.$deliverySumm = $('.delivery-summ', self.$deliveryInfo);
         self.$deliveryDays = $('.delivery-day', self.$deliveryInfo);
         self.$addresss = $('.delivery__address',self.$self);

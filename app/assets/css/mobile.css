@@ -4539,8 +4539,15 @@ h1 {
   content: "OK";
   -webkit-transform: rotate(0);
   transform: rotate(0);
-  top: 1px;
-  background-color: transparent;
+  top: -18px;
+  left: -20px;
+  width: 60px;
+  height: 60px;
+  line-height: 54px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: #444444;
 }
 .filter-pane__inner {
   /*position: absolute;
@@ -5106,7 +5113,7 @@ h1 {
   display: block;
   color: #303030;
   letter-spacing: 0.05em;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 .order__total .summ,
 .order__total .rub {
@@ -5311,6 +5318,7 @@ h1 {
   display: none;
   color: #27938b;
   font-size: 20px;
+  line-height: 1.2em;
   font-family: "LatoBold";
   margin-bottom: 30px;
 }
