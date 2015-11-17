@@ -4532,8 +4532,15 @@ h1 {
   content: "OK";
   -webkit-transform: rotate(0);
   transform: rotate(0);
-  top: 1px;
-  background-color: transparent;
+  top: -18px;
+  left: -20px;
+  width: 60px;
+  height: 60px;
+  line-height: 54px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: #444444;
 }
 .filter-pane__inner {
   /*position: absolute;
