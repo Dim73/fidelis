@@ -12967,8 +12967,7 @@ if (!DEF_CONST.IS_MOBILE) {
                 success: function(data,status,xhr){
                     if (data) {
                         self.shipCost = data.summ;
-                        self.$deliverySumm.text(digitDiv(data.summ));
-                        self.$deliveryDays.text(data.days);
+                        self.$deliveryText.html(data.days);
                         self.updateTotal();
                         self.$deliveryInfo.show();
                     }
@@ -13085,6 +13084,7 @@ if (!DEF_CONST.IS_MOBILE) {
         self.$destSel = $('.selected_delivery',self.$self);
         self.$postSel = $('.selected_post',self.$self);
         self.$deliveryInfo = $('.delivery__info',self.$self);
+        self.$deliveryText = $('.delivery__info-text',self.$self);
         self.$deliverySumm = $('.delivery-summ', self.$deliveryInfo);
         self.$deliveryDays = $('.delivery-day', self.$deliveryInfo);
         self.$addresss = $('.delivery__address',self.$self);
