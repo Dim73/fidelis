@@ -4898,7 +4898,7 @@ h1 {
   padding: 4px 0 5px 11px;
 }
 .pitem-specs__spoilers .folding__wrap {
-  overflow: scroll;
+  overflow: hidden;
 }
 .pitem-specs__spoilers .description {
   font-size: 16px;
