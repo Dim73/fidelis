@@ -2915,14 +2915,6 @@ h1 {
   top: 0;
   left: 0;
 }
-.main-banner .banner-desc__holder:before {
-  content: "";
-  display: inline-block;
-  vertical-align: middle;
-  width: 1px;
-  margin-left: -1px;
-  visibility: hidden;
-}
 .main-banner .logo {
   display: block;
 }
@@ -2984,9 +2976,6 @@ h1 {
 .main-banner_index .banner-desc {
   margin: 0;
   width: 71.42857143%;
-}
-.main-banner_index .banner-desc__holder:before {
-  height: 472px;
 }
 .main-banner_index .logo {
   margin: 0 0 30px;
