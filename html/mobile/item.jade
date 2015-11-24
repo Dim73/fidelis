@@ -7,9 +7,6 @@ html(lang="en")
     meta(http-equiv="Content-Type", content="text/html;charset=UTF-8")
     meta(http-equiv="X-UA-Compatible", content="IE=edge")
     title= pageTitle
-    script(type='text/javascript', src='#{paths.js}/mobile.js')
-    script(type='text/javascript', src='#{paths.js}/item.js')
-    link(rel="stylesheet", href='#{paths.css}/jquery-ui-1.10.3.custom.css')
     link(rel="stylesheet", href='#{paths.css}/mobile.css')
     meta(id="Viewport", name="viewport", width="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no")
     include ../includes/_head.jade
@@ -20,3 +17,6 @@ html(lang="en")
       include ../includes/item/primary__m
       include ../includes/layouts/footer__m
     include ../includes/_body
+
+    script(type='text/javascript', src='#{paths.js}/mobile.js')
+    script(type='text/javascript', src='#{paths.js}/item.js')

@@ -4,6 +4,7 @@ var plumber = require('gulp-plumber');
 var jade = require('gulp-jade');
 var less = require('gulp-less');
 var browserify = require('gulp-browserify');
+var minifyCss = require('gulp-minify-css');
 
 var SRC_PATH = {
     'js':  './source/js/',
@@ -57,12 +58,14 @@ gulp.task('scripts', function () {
         .pipe(browserify(/*{ transform: ['babelify']}*/))
         // .pipe(browserify())
     //    .pipe(concat('app.js'))
+        .pipe(uglify())
         .pipe(gulp.dest(DIST_PATH.js));
 });
 
 gulp.task('styles', function() {
     return gulp.src(SRC_PATH.css + '*.less')
             .pipe(less())
+            .pipe(minifyCss({compatibility: 'ie8'}))
             .pipe(gulp.dest(DIST_PATH.css))
             .pipe(browserSync.stream());
 });
