@@ -8,10 +8,13 @@ html(lang="en")
     meta(http-equiv="X-UA-Compatible", content="IE=edge")
     title= pageTitle
     link(rel="stylesheet", href='#{paths.css}/mobile.css')
-    meta(id="Viewport", name="viewport", width="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no")
+
+    meta(id="Viewport", name="viewport", content="width=device-width, initial-scale=1")
     include ../includes/_head.jade
   body
+    //.app-loader
     .main
+
       include ../includes/layouts/header__m
       include ../includes/index/primary__m
       include ../includes/layouts/footer__m

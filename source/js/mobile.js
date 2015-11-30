@@ -17,7 +17,7 @@ var sliderConstructor = require('./lib/constructor.bxslider');
 var Basket = require('./components/basket');
 
     $(function(){
-
+        $('body').addClass('app-loaded');
         setTimeout(function() {
             $('input[type=checkbox]').not('.no-styler').styler({selectSearch:false});
         }, 100);
