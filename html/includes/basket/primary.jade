@@ -17,6 +17,12 @@
         .basket-items__list
     .basket__bottom
       .wrap
+        .basket-promocode
+          form.basket-promocode__form(action='/')
+            input.inputtext(type='text', placeholder='ВВЕДИТЕ  ПРОМОКОД')
+            a.btn-submit(href='#')
+              input(type='submit')
+          span.basket-promocode__hint.tooltip(title='Введите промокод') Как получить промокод
         .basket__total
           .cell.total
             .total__summ

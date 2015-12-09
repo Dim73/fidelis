@@ -12692,8 +12692,8 @@ if (!DEF_CONST.IS_MOBILE) {
         };
 
         this.setCoupon = function(e) {
-
-            $inpt = $('input[type=text]',self.$couponForm);
+            var $couponForm = $(this).closest(self.couponForm);
+            var $inpt = $('input[type=text]', $couponForm);
             var val = $inpt.val();
             if (val) {
                 $.ajax({
@@ -12710,7 +12710,7 @@ if (!DEF_CONST.IS_MOBILE) {
                             self.$coupon = $('.summ',self.$sale);
                             self.$couponFormVal.find('span').text(self.sale);
                             self.$couponFormVal.show();
-                            self.$couponForm.trigger('update');
+                            //self.$couponForm.trigger('update');
                             self.$totalCont.append(self.$sale);
                             $inpt.val('');
                             self.updateTotal();
@@ -12859,9 +12859,9 @@ if (!DEF_CONST.IS_MOBILE) {
         self.$topCount = $('.basket-top__icon .count',self.$self);
         self.tplItem = DEF_CONST.IS_MOBILE?$('#basket-item__mobile').html():$('#basket-item').html();
         self.tplSale = $('#basket-sale').html();
-        self.$couponForm = $('.basket-promocode__form');
+        self.couponForm = '.basket-promocode__form';
         self.$couponFormVal = $('.basket-promocode__val');
-        self.$couponFormSubmit = $('.btn-submit', self.$couponForm);
+        self.$couponFormSubmit = $('.btn-submit', $(self.couponForm));
         self.itemModal = $('.ajxItemModal');
         self.itemModalCont = $('.ajxItemModal__inner');
         self.$emptyBasket = $('.basket-empty');
