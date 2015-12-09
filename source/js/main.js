@@ -257,7 +257,7 @@ var Basket = require('./components/basket');
                     pager: false,
                     minSlides: 4,
                     infiniteLoop: false,
-                    slideMargin: 23,
+                    slideMargin: 24,
                     mode: 'vertical',
                     onSliderLoad: function() {
 

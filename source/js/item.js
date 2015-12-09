@@ -1,4 +1,5 @@
 require('./main/itemImg.plugin');
+var ajxLoader = require('./lib/ajxLoader');
 var DEF_CONST = require('./helpers/constants');
 
 function QuickOrder()  {
@@ -71,6 +72,7 @@ function QuickOrder()  {
 }
 
 $(document).ready(function() {
+    ajxLoader.attachTo($('.pitem-preview-main_side'));
 
     var quickOrder = new QuickOrder();
 

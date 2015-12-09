@@ -7,9 +7,8 @@
 
   &-preview {
     float: left;
-    width: 614px;
     ._clearfix();
-    margin-top: 2px;
+    margin-top: -14px;
 
     &-main {
       text-align: center;
@@ -17,9 +16,11 @@
 
       &_side {
         float: left;
-        margin-top: 19px;
+        margin-top: 35px;
         margin-left: -3px;
         width: 500px;
+        position: relative;
+        z-index: 99;
 
         .pitem-preview-main__loader {
           width: 500px;
@@ -91,7 +92,7 @@
 
       &__fullscreen {
         text-align: center;
-        margin-top: 21px;
+        margin-top: 12px;
 
         &-link {
           position: relative;
@@ -117,7 +118,7 @@
 
         .favorite-link {
           padding-left: 2px;
-          margin-left: 60px;
+          margin-left: 42px;
 
           &:after {
             left: 2px;
@@ -175,12 +176,12 @@
         content: "";
         position: absolute;
         top: 50%;
-        right: -9px;
-        margin-top: -9px;
+        right: 4px;
+        margin-top: 7px;
         width: 0;
         height: 0;
         border-style: solid;
-        border-width: 9px 0 9px 9px;
+        border-width: 8px 0 8px 8px;
         border-color: transparent transparent transparent #999999;
         opacity: 0;
         ._transition(opacity);
@@ -249,8 +250,8 @@
 
     &_side  {
       float: left;
-      width: 117px;
-      padding: 30px 0;
+      width: 123px;
+      padding: 31px 0;
       z-index: 10;
 
       .slider-item {
@@ -340,18 +341,19 @@
   }
 
   &-specs {
-    width: 400px;
+    width: 388px;
     float: right;
+    margin-top: 19px;
 
     h1 {
-      font-size: 16px;
-      line-height: 24px;
-      margin-bottom: 16px;
+      font-size: 14px;
+      line-height: 21px;
+      margin-bottom: 14px;
     }
 
     &__about {
       font-size: 0;
-      margin-bottom: 9px;
+      margin-bottom: -2px;
 
       .about-item {
         display: inline-block;
@@ -368,19 +370,20 @@
     }
 
     &__spoilers {
+      margin-top: 20px;
 
       .folding {
 
         &__title {
-          height: 30px;
+          height: 27px;
           border-color: #e4e4e4;
           border-top: 1px solid #e4e4e4;
 
           a {
-            line-height: 30px;
+            line-height: 26px;
 
             &:before {
-              top: 13px;
+              top: 10px;
             }
           }
         }
@@ -420,7 +423,6 @@
 
   .line-price {
     ._clearfix();
-    margin-top: 19px;
   }
 
   &-cost {
@@ -439,8 +441,8 @@
 
   &-shipment {
     color: @cyan;
-    float: left;
-    margin: 15px 0 0 11px;
+    float: right;
+    margin: 15px 0 0 0px;
 
     .shipment-title {
 
@@ -465,13 +467,13 @@
 
   .line-size {
     ._clearfix();
-    margin-top: 15px;
+    margin-top: 20px;
   }
   
   &-size {
     display: inline-block;
     vertical-align: middle;
-    margin-right: 9px;
+    margin-right: 15px;
     position: relative;
 
     &:after {
@@ -518,11 +520,15 @@
 
   &-order {
     font-size: 0;
-    margin-top: 14px;
+    margin-top: 20px;
     position: relative;
 
+    .btn {
+      width: 190px;
+    }
+
     .btn + .btn {
-      margin-left: 14px;
+      float: right;
     }
 
     .quick-order {
