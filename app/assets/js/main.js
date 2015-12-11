@@ -12921,7 +12921,6 @@ if (!DEF_CONST.IS_MOBILE) {
 
         this.setCoupon = function(e, type) {
             type = type || 'post';
-            console.log (type)
             var $couponForm = $(this).closest(self.couponForm);
             var $inpt = $('input[type=text]', $couponForm);
             var val = $inpt.val();
@@ -13864,6 +13863,7 @@ var Basket = require('./components/basket');
 
     $(window).load(function(){
         //banner prlx
+        $('.prlx-item').trigger('update');
         $('.seo-main').prlx();
     })
 

@@ -502,6 +502,7 @@ var Basket = require('./components/basket');
 
     $(window).load(function(){
         //banner prlx
+        $('.prlx-item').trigger('update');
         $('.seo-main').prlx();
     })
 
