@@ -14,7 +14,7 @@
 
         .basket-top {
 
-          &__icon, &__info {
+          &__icon, &__info F{
             color: #e52e39;
           }
         }
@@ -253,9 +253,12 @@
     .summ {
       color: @red;
       font-size: 18px;
+
+      & + .rub {
+        color: @red;
+      }
     }
     .rub {
-      color: @red;
       font-size: 17px;
     }
   }
@@ -427,8 +430,12 @@
 
         .summ, .rub {
           font-size: 14px;
-          color: @red;
+
           display: inline;
+
+          & + .rub {
+            color: @red;
+          }
         }
 
         .total {
@@ -490,6 +497,7 @@
 
     &__form {
       width: 350px;
+      position: relative;
 
       .inputtext {
         width: 288px;
@@ -504,6 +512,19 @@
 
         &:hover {
           opacity: .7;
+        }
+      }
+
+      &.has-error {
+
+        &:after {
+          content: "Промокод / сертификат устарел";
+          position: absolute;
+          top: 10px;
+          left: 11px;
+          background: white;
+          color: #e30c19;
+          width: 273px;
         }
       }
     }

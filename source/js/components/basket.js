@@ -36,6 +36,7 @@ if (!DEF_CONST.IS_MOBILE) {
         return str.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
     }
 
+
     var BasketItem = function(basket, data) {
         var self = this;
 
@@ -197,6 +198,9 @@ if (!DEF_CONST.IS_MOBILE) {
         this.init = function() {
             self.loadItems();
             self.$couponFormSubmit.on('click', self.setCoupon);
+            self.$couponFormSubmit.closest(self.couponForm).bind('click', function(){
+                $(this).removeClass('has-error')
+            })
             self.itemModal.on('click', self._modalClick);
         };
 
@@ -206,6 +210,7 @@ if (!DEF_CONST.IS_MOBILE) {
               for (var i in data) {
                   self.addToBasket(data[i]);
               }
+              self.setCoupon(null,'get');
           });
         };
 
@@ -307,30 +312,37 @@ if (!DEF_CONST.IS_MOBILE) {
             });
         };
 
-        this.setCoupon = function(e) {
+        this.setCoupon = function(e, type) {
+            type = type || 'post';
             var $couponForm = $(this).closest(self.couponForm);
             var $inpt = $('input[type=text]', $couponForm);
             var val = $inpt.val();
-            if (val) {
+            if (val || type == 'get') {
                 $.ajax({
                     url: ajxUrl.setCoupon,
                     cache: false,
-                    type: 'post',
+                    type: type,
                     dataType: 'json',
                     data: {coupon: val}, // data.id, data.count, data.size
                     success: function(data,status,xhr){
-                        if (data.count) {
-                            self.sale = data.count;
+                        if (data && data.type) {
+                            self.sale = data;
                             self.$sale && self.$sale.remove();
-                            self.$sale = $(Mustache.render(self.tplSale, {sale: self.sale}));
+                            if (self.sale.type == 1)
+                                self.$sale = $(Mustache.render(self.tplSale, {sale: self.sale.num}))
+                            if (self.sale.type == 2)
+                                self.$sale = $(Mustache.render(self.tplSaleSert, {sale: self.sale.num}))
+
                             self.$coupon = $('.summ',self.$sale);
                             self.$couponFormVal.find('span').text(self.sale);
                             self.$couponFormVal.show();
                             //self.$couponForm.trigger('update');
                             self.$totalCont.append(self.$sale);
-                            $inpt.val('');
-                            self.updateTotal();
+                            self.updateTotal(self.sale);
+                        } else {
+                            $couponForm.addClass('has-error');
                         }
+                        $inpt.val('');
                     }
                 });
             }
@@ -353,7 +365,10 @@ if (!DEF_CONST.IS_MOBILE) {
             }
             self.$total.text(digitDiv(self.total));
             if (self.sale) {
-                self.saleTotal = Math.round((100-self.sale)/100 * self.total);
+                if (self.sale.type == 1)
+                    self.saleTotal = Math.round((100-self.sale.num)/100 * self.total);
+                if (self.sale.type == 2)
+                    self.saleTotal = self.total - self.sale.num > 0 ? self.total - self.sale.num : 0;
                 self.$coupon.text(digitDiv(self.saleTotal));
             }
             self.$self.trigger('updateTotal');
@@ -475,6 +490,7 @@ if (!DEF_CONST.IS_MOBILE) {
         self.$topCount = $('.basket-top__icon .count',self.$self);
         self.tplItem = DEF_CONST.IS_MOBILE?$('#basket-item__mobile').html():$('#basket-item').html();
         self.tplSale = $('#basket-sale').html();
+        self.tplSaleSert = $('#basket-sale-sert').html();
         self.couponForm = '.basket-promocode__form';
         self.$couponFormVal = $('.basket-promocode__val');
         self.$couponFormSubmit = $('.btn-submit', $(self.couponForm));
