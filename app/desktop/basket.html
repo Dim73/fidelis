@@ -4,11 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title></title>
-    <script type="text/javascript" src="../assets/js/main.js"></script>
-    <script type="text/javascript" src="../assets/js/basket.js"></script>
-    <link rel="stylesheet" href="../assets/css/jquery-ui-1.10.3.custom.css">
     <link rel="stylesheet" href="../assets/css/main.css">
-    <script type="text/javascript" async="async" src="http://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
   </head>
   <body>
     <div class="main">
@@ -335,6 +331,12 @@
           </div>
           <div class="basket__bottom">
             <div class="wrap">
+              <div class="basket-promocode">
+                <form action="/" class="basket-promocode__form">
+                  <input type="text" placeholder="ВВЕДИТЕ  ПРОМОКОД" class="inputtext"><a href="#" class="btn-submit">
+                    <input type="submit"></a>
+                </form><span title="Введите промокод" class="basket-promocode__hint tooltip">Как получить промокод</span>
+              </div>
               <div class="basket__total">
                 <div class="cell total">
                   <div class="total__summ"><span class="lbl">Итого:</span><span class="summ"></span><span class="rub"><span>руб</span></span></div>
@@ -514,7 +516,7 @@
                 </div>
                 <div class="order-delivery__total">
                   <div class="delivery-total">
-                    <div class="delivery__info"><span class="icon icon-car2"></span>                                Срок доставки <span class="delivery-day">3-5 дней</span>, стоимость <span class="delivery-summ">764</span><span class="rub"><span>руб</span></span></div>
+                    <div class="delivery__info"><span class="icon icon-car2"> </span><span class="delivery__info-text"></span></div>
                     <div class="order__total"><span class="lbl">Стоимость заказа</span><span class="lbl__add"></span>:<span class="summ">194 900</span><span class="rub"><span>руб</span></span></div>
                   </div>
                   <div class="order__controls">
@@ -732,5 +734,8 @@
       <div class="size__inner"></div>
     </div>
     <div class="loader"><i class="loader__icon"></i></div>
+    <script type="text/javascript" async="async" src="http://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
+    <script type="text/javascript" src="../assets/js/main.js"></script>
+    <script type="text/javascript" src="../assets/js/basket.js"></script>
   </body>
 </html>
