@@ -19,8 +19,9 @@
                 bufferRatio = $self.data('ratio') || opt.defRatio,
                 bannerOffsetTop = $self.offset().top;
 
-
+            console.log ('init prlx', $self)
             $(window).bind('scroll.banner', function(){
+                console.log (bannerOffsetTop);
                 var documentScrollTop,
                     startScrollTop,
                     endScrollTop;
@@ -53,6 +54,7 @@
                 .bind('update', function(){
                     bannerOffsetTop = $self.offset().top;
                     $img.css('opacity',1);
+                    console.log ('update prlx')
                     $(window).trigger('scroll.banner');
                 });
 

@@ -58,7 +58,7 @@ gulp.task('scripts', function () {
         .pipe(browserify(/*{ transform: ['babelify']}*/))
         // .pipe(browserify())
     //    .pipe(concat('app.js'))
-    //    .pipe(uglify())
+        .pipe(uglify())
         .pipe(gulp.dest(DIST_PATH.js));
 });
 
