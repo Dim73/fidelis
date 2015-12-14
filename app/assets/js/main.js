@@ -13397,7 +13397,7 @@ var Basket = require('./components/basket');
          }, 100);
         $('.select_size, .select_size-order ').CustomSelect({visRows:4});
         $('.select-scroll').CustomSelect({visRows:8});
-        $('.pitem-specs__spoilers .folding').folding({openHeight: 163, closeOther: '.pitem-specs__spoilers .spoiler-item'});
+        $('.pitem-specs__spoilers .folding').folding({openHeight: 144, closeOther: '.pitem-specs__spoilers .spoiler-item'});
         $('.left .folding').folding({openHeight: 200});
         $('.content-text__side .folding').folding({openHeight: 500});
         $('.order-spoiler').folding({closeOther: '.order-spoiler'});
