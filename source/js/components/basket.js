@@ -603,6 +603,9 @@ if (!DEF_CONST.IS_MOBILE) {
                         self.updateTotal();
                         self.$deliveryInfo.show();
                     }
+                },
+                error: function() {
+                    console.log (arguments)
                 }
             });
         };

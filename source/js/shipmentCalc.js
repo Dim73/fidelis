@@ -37,6 +37,9 @@ function shipmentCalc() {
                 },
                 complete:function(xhr,status) {
                     controller.ajaxProccess(false);
+                },
+                error: function() {
+                    console.log (arguments)
                 }
             });
         },
@@ -123,7 +126,7 @@ function shipmentCalc() {
         init: function() {
             var _self = this;
             _self.select = document.getElementById('s-region');
-            $(_self.select).CustomSelect({visRows:5, modifier: 'delivery'});
+            !DEF_CONST.IS_MOBILE && $(_self.select).CustomSelect({visRows:5, modifier: 'delivery'});
 
             $(_self.select).on('change', function(e) {
                 console.log(e);
@@ -142,7 +145,7 @@ function shipmentCalc() {
             $(_self.select).on('change', function(e) {
                 controller.changeTown(_self.select.value);
             });
-            $(_self.select).CustomSelect({visRows:5, modifier: 'delivery'});
+            !DEF_CONST.IS_MOBILE && $(_self.select).CustomSelect({visRows:5, modifier: 'delivery'});
 
         },
         render: function() {
@@ -161,16 +164,13 @@ function shipmentCalc() {
         init: function() {
             var _self = this;
             _self.target = document.querySelector('.delivery__info');
-            _self.days = _self.target.querySelector('.delivery-day');
-            _self.total = _self.target.querySelector('.delivery-summ');
-
+            _self.text = _self.target.querySelector('.delivery__info-text');
         },
         render: function() {
             var data = controller.getShipmentData();
             if (data && !emptyObject(data)) {
                 this.target.style.display = 'block';
-                this.days.innerText = data.days;
-                this.total.innerText = data.summ;
+                this.text.innerHTML = data.days;
             } else {
                 this.target.style.display = 'none';
             }
