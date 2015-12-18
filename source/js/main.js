@@ -331,8 +331,7 @@ var Basket = require('./components/basket');
         ];
         sliderConstructor(allSliders);
 
-        //smooth scroll
-        smoothScrollInit();
+
 
         ///basket
         var basket = new Basket();
@@ -504,6 +503,8 @@ var Basket = require('./components/basket');
         //banner prlx
         $('.prlx-item').trigger('update');
         $('.seo-main').prlx();
+        //smooth scroll
+        smoothScrollInit();
     })
 
 function smoothScrollInit () {
@@ -513,7 +514,7 @@ function smoothScrollInit () {
             $.srSmoothscroll({
                 step: 100,
                 speed: 600,
-                preventOn: '.nano-scroll, .b-custom-select__dropdown__inner .pitem-fullscreen'
+                preventOn: '.nano-scroll, .b-custom-select__dropdown__inner, .pitem-fullscreen'
             });
         }
     }

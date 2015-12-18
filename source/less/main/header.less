@@ -35,6 +35,7 @@
 
     &.fixed {
       position: fixed;
+      z-index: 1001;
       width: 100%;
       top: 0;
       left: 0;
@@ -173,7 +174,7 @@
         margin-left: @stupidMargin;
         position: relative;
         float: left;
-        
+
         .col {
           float: left;
           width: 170px;
@@ -258,7 +259,7 @@
         }
       }
     }
-    
+
     .goods {
 
       &__list {
@@ -377,10 +378,10 @@
         }
       }
     }
-    
+
     /**submenu style**/
     &__collection_style, &__collection_brand {
-      
+
       .goods-category {
         width: 770px;
         margin-left: -1px;
@@ -391,11 +392,11 @@
           margin-bottom: 20px;
         }
       }
-      
+
       .styles-list {
         position: relative;
         ._transition(height,.5s);
-        
+
         &__item {
           ._clearfix();
           position: absolute;
