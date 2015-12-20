@@ -119,7 +119,7 @@ gulp.task('webserver', function() {
 var browserSync = require('browser-sync').create();
 
 // Static server
-gulp.task('browser-sync', function() {
+gulp.task('serve', function() {
     browserSync.init({
         server: {
             baseDir: "./",

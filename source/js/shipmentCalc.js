@@ -129,7 +129,6 @@ function shipmentCalc() {
             !DEF_CONST.IS_MOBILE && $(_self.select).CustomSelect({visRows:5, modifier: 'delivery'});
 
             $(_self.select).on('change', function(e) {
-                console.log(e);
                 controller.changeRegion(_self.select.value);
             });
         },
