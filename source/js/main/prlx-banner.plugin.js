@@ -3,62 +3,61 @@
 
     $.fn.prlx = function(options){
         var def = {
-               bannerClass: '.bg',
-               defRatio: 3
-            };
+            bannerClass: '.bg'
+        };
+
 
         var opt = $.extend({}, def, options || {}),
             windowSelector = $(window),
             documentSelector = $(document),
             windowHeight = windowSelector.outerHeight();
 
+
         this.each(function(){
             var $self = $(this),
                 $img = $(opt.bannerClass, $self);
             var bannerHeight = $self.height(),
-                bufferRatio = $self.data('ratio') || opt.defRatio,
-                bannerOffsetTop = $self.offset().top;
+                bannerOffsetTop, bannerEnd, halfImg, speedRatio;
+            var startScrollTop, endScrollTop;
+            var newPositionTop;
+            updateParams();
 
-            console.log ('init prlx', $self)
-            $(window).bind('scroll.banner', function(){
-                console.log (bannerOffsetTop);
-                var documentScrollTop,
-                    startScrollTop,
-                    endScrollTop;
-
-                /*if (!$self.is(':visible')) return;*/
-
+            $(window).bind('scroll.banner', function() {
+                var documentScrollTop;
                 documentScrollTop = documentSelector.scrollTop();
-                startScrollTop = documentScrollTop + windowHeight;
-                endScrollTop = documentScrollTop - bannerHeight;
+                if (
+                        !$self.is(':visible')
+                        ||
+                        (
+                            (documentScrollTop < startScrollTop) || (documentScrollTop > endScrollTop)
+                        )
+                    )
+                    return;
 
-                if((startScrollTop > bannerOffsetTop) && (endScrollTop < bannerOffsetTop)){
 
-                    var y = documentScrollTop - bannerOffsetTop;
-                    var newPositionTop =  parseInt(y / bufferRatio);
-                    /*if(!parallaxInvert) {
-                     newPositionTop =  parseInt(y / bufferRatio);
-                     } else {
-                     newPositionTop = -parseInt(y / bufferRatio) - parseInt(windowHeight / bufferRatio)
-                     }*/
 
-                    $img.css({ top: newPositionTop});
-                }
+                newPositionTop =  parseInt((documentScrollTop - (bannerEnd - bannerHeight/2)) * speedRatio);
+                $img.css({ top: newPositionTop});
             });
 
+            function updateParams() {
+                bannerOffsetTop = $self.offset().top;
+                bannerEnd = bannerOffsetTop + bannerHeight;
+                windowHeight = windowSelector.outerHeight();
+                halfImg = ($img.height() - bannerHeight)/2;
+                speedRatio = halfImg/(windowHeight/2);
+                startScrollTop = bannerOffsetTop - windowHeight;
+                endScrollTop = bannerOffsetTop + bannerHeight;
+                $img.css('opacity',1);
+                $(window).trigger('scroll.banner');
+            }
 
             $self.bind('setHeight', function(){
                 bannerHeight = $self.height();
-                console.log(bannerHeight);
             })
-                .bind('update', function(){
-                    bannerOffsetTop = $self.offset().top;
-                    $img.css('opacity',1);
-                    console.log ('update prlx')
-                    $(window).trigger('scroll.banner');
-                });
+                .bind('update', updateParams);
 
-            $(window).trigger('scroll.banner');
+            $(window).on('resize', updateParams);
         })
     }
 })(jQuery);

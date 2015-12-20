@@ -320,6 +320,9 @@ var Basket = require('./components/basket');
                         this.$self.addClass('loaded');
                         $('.main-banner .prlx-item').prlx();
                     },
+                    onSlideBefore: function($item) {
+                        $item.find('.bg').css('opacity', 0);
+                    },
                     onSlideAfter: function($item) {
                         /*$(window).off('scroll.banner');*/
                         if ($item.is('.prlx-item')) {
