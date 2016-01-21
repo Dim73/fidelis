@@ -1,5 +1,0 @@
-AddDefaultCharset UTF-8
-AddType text/html .shtml
-AddOutputFilter INCLUDES .html .htm
-AddType text/html .htm .html
-AddOutputFilter INCLUDES .htm .html

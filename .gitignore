@@ -1,6 +1,0 @@
-*
-!app
-!app/**/*
-*/.DS_Store
-.idea
-.git
